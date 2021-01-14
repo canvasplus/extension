@@ -1,0 +1,11 @@
+{
+  "name": "Canvas+",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["*://*.instructure.com/courses/*/modules"],
+      "js": ["scripts/modules.js"]
+    }
+  ]
+}
