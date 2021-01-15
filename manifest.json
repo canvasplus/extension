@@ -7,5 +7,18 @@
       "matches": ["*://*.instructure.com/courses/*/modules"],
       "js": ["scripts/modules.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["scripts/universal.js"]
+  },
+  "browser_action": {
+   "default_popup": "popup.html"
+  },
+  "background": {
+   "scripts": ["scripts/universal.js"]
+  },
+  "permissions": ["tabs"],
+  "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
+           "48": "assets/icons/canvas-plus-favicon-active-48.png",
+          "128": "assets/icons/canvas-plus-favicon-active-128.png" }
 }
