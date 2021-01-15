@@ -33,6 +33,10 @@ a {
   text-decoration: none;
 }
 
+.home-page-redirect {
+  cursor: pointer;
+}
+
 .navbar ul li:not(.active) a:hover {
   color: #bbb;
 }

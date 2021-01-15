@@ -1,0 +1,24 @@
+@font-face {
+  font-family: Open Sans;
+  src: url(../assets/font/OpenSans-Regular.ttf);
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.links {
+  text-align: center;
+}
+
+.links a::after {
+  content: " \00b7";
+}
+
+.links a:last-child::after {
+  content: none;
+}

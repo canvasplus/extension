@@ -1,4 +1,3 @@
-
 const html = document.getElementsByTagName("html")[0];
 html.style.scrollBehavior = "smooth"; // For smoothness in scrollToBottom()
 
@@ -21,7 +20,6 @@ scrollDownButton.addEventListener("click", function(){
   for(canvasModule of moduleList.children){
     if(!canvasModule.classList.contains("locked")) lastPublished = canvasModule;
   }
-
   lastPublished.scrollIntoView();
 })
 
