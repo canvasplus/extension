@@ -14,7 +14,7 @@
   "browser_action": {
    "default_popup": "popup/popup.html"
  },
-  "permissions": ["tabs", "<all_urls>"],
+  "permissions": ["*://*.instructure.com/courses/*/modules"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
            "48": "assets/icons/canvas-plus-favicon-active-48.png",
           "128": "assets/icons/canvas-plus-favicon-active-128.png" }

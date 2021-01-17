@@ -1,4 +1,4 @@
-document.getElementById("version").innerHTML = "Version " + "1.0";
+document.getElementById("version").innerHTML = "Version " + chrome.app.getDetails().version;
 
 window.addEventListener('click',function(e){
   if(e.target.href!==undefined){
