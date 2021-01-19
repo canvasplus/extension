@@ -1,4 +1,5 @@
 const html = document.getElementsByTagName("html")[0];
+const body = document.body;
 html.style.scrollBehavior = "smooth"; // For smoothness in scrollToBottom()
 
 const moduleList = document.getElementById("context_modules");
@@ -58,3 +59,7 @@ window.onscroll = function(){
     backToTopButton.style.opacity = "0";
   }
 }
+
+const style = document.createElement("style");
+style.innerHTML = '.ic-app-class-tabs a { padding-right: 5px; text-decoration: none;} .ic-app-class-tabs a span:hover { text-decoration: underline;} .ic-app-class-tabs a:after { content: " \\00b7";} .ic-app-class-tabs a:last-child:after { content: none; }"'
+body.appendChild(style);
