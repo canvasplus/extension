@@ -139,6 +139,10 @@ html, body {
   bottom: 0;
 }
 
+.footer a {
+  color: white;
+}
+
 .footer img {
   margin: 10px 0px 5px 0px;
 }
@@ -177,6 +181,7 @@ ul.footer-nav li.active a:hover {
 .footer p.legal {
   max-width: 50%;
   margin: auto;
+  margin-top: 10px;
   margin-bottom: 0;
   color: #aaa;
   font-size: 12px;
