@@ -5,11 +5,11 @@
   "content_scripts": [
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["scripts/modules.js", "scripts/imported/jquery-3.5.1.min.js", "scripts/inject/tabs.js"]
+      "js": ["scripts/modules.js", "scripts/inject/search.js"]
     },
     {
       "matches": ["*://*.instructure.com/*"],
-      "js": ["scripts/imported/quicklink.js"]
+      "js": ["scripts/imported/quicklink.js", "scripts/canvas.js"]
     }
   ],
   "background": {
