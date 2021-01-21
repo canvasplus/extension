@@ -1,9 +1,23 @@
-const wrapper = document.getElementById("wrapper");
-const topNav = wrapper.firstElementChild;
-const tabs = document.createElement("div");
-tabs.id = "ic-app-class-tabs";
-tabs.classList = ["ic-app-class-tabs"];
+injectElement()
 
+function injectElement()
+{
+  const wrapper = document.getElementById("wrapper");
+  const topNav = wrapper.firstElementChild;
+
+  const search = document.createElement("input");
+  search.id = "ic-app-class-search";
+  search.type = "search";
+  search.placeholder = "Search This Course";
+  search.classList = ["ic-app-class-search"];
+  topNav.appendChild(search);
+
+  const searchResults = document.createElement("div");
+  searchResults.id = "ic-app-class-search-results";
+  searchResults.classList = ["ic-app-class-search-results"];
+  searchResults.innerHTML = "<b>Search This Course</b>"
+  topNav.appendChild(searchResults);
+}
 async function searchModules(searchTerm)
 {
   let tempDiv = document.createElement("div")
