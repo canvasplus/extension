@@ -1,4 +1,5 @@
 const html = document.getElementsByTagName("html")[0];
+const body = document.body;
 html.style.scrollBehavior = "smooth"; // For smoothness in scrollToBottom()
 
 const moduleList = document.getElementById("context_modules");

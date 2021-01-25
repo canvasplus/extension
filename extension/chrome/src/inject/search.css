@@ -1,0 +1,58 @@
+input#ic-app-class-search {
+  margin-bottom: 0px;
+}
+
+form#ic-app-class-searchform {
+  margin-bottom: 0px;
+}
+
+.ic-app-class-search-results {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  min-width: 220px;
+  border-radius: 3px;
+  padding: 8px;
+  z-index: 102;
+
+  top: 65px;
+  right: 25px;
+  font-size: .875rem;
+
+  max-height: 300px;
+  max-width: 500px;
+  line-height: 25px;
+  overflow-y: scroll;
+
+  transition: visibility 0.3s, opacity 0.3s linear;
+}
+
+.canvasplus-search-results-no-results {
+  text-align: center;
+}
+
+.canvasplus-search-results-no-results-description {
+  font-size: 10px;
+  margin: 6px 0px 0px 0px;
+}
+
+.ic-app-class-search-results-search-again {
+  display: block;
+  cursor: pointer;
+}
+
+.ic-app-class-search-results-list {
+  padding: 0px 8px;
+}
+
+.canvasplus-search-results-list-course-indicator {
+  display: inline;
+  margin-right: 5px;
+  border: solid 2px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.canvasplus-search-results-list-item {
+  margin: 10px 0px;
+}

@@ -4,17 +4,22 @@
   "manifest_version": 2,
   "content_scripts": [
     {
+      "matches": [ "*://*.instructure.com/*" ],
+      "js": ["src/canvas.js", "src/inject/search.js", "src/imported/quicklink.js"],
+      "css": ["src/canvas.css", "src/inject/search.css"]
+    },
+    {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["scripts/modules.js"]
+      "js": ["src/modules.js"]
     }
   ],
   "background": {
-    "scripts": ["scripts/background.js"]
+    "scripts": ["src/background.js"]
   },
   "browser_action": {
    "default_popup": "popup/popup.html"
  },
-  "permissions": ["*://*.instructure.com/courses/*/modules"],
+  "permissions": ["*://*.instructure.com/*"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
            "48": "assets/icons/canvas-plus-favicon-active-48.png",
           "128": "assets/icons/canvas-plus-favicon-active-128.png" }
