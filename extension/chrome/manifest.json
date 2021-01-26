@@ -6,7 +6,7 @@
     {
       "matches": [ "*://*.instructure.com/*" ],
       "js": ["src/canvas.js", "src/inject/search.js", "src/imported/quicklink.js"],
-      "css": ["src/canvas.css", "src/inject/search.css"]
+      "css": ["src/canvas.css", "src/inject/colors.css", "src/inject/search.css"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],

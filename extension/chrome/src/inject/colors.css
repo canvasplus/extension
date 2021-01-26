@@ -1,0 +1,23 @@
+:root:root {
+  --ic-brand-primary: #e0245e;
+
+  --ic-brand-global-nav-bgd: #e0245e;
+  --ic-brand-global-nav-ic-icon-svg-fill--active: #e0245e;
+  --ic-brand-global-nav-avatar-border: #e0245e;
+  --ic-brand-global-nav-menu-item__text-color--active: #e0245e;
+    /* --ic-brand-primary: #ff0000;
+  --ic-link-color: #ff0000;
+  --ic-brand-global-nav-bgd: #ff0000;
+  --ic-brand-global-nav-logo-bgd: #ff0000;
+  --ic-brand-Login-body-bgd-color: #ff0000;
+  --ic-brand-Login-body-bgd-shadow-color: #ff0000;
+  --ic-brand-global-nav-menu-item__text-color--active: #ff0000;
+  --ic-brand-global-nav-ic-icon-svg-fill--active: #ff0000;
+  --ic-brand-global-nav-avatar-border: #ff0000;
+  --eHiXd-linkColor: #ff0000; */
+}
+
+span[role="menuitemradio"]:hover
+{
+  background-color: #e0245e;
+}
