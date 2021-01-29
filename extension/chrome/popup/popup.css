@@ -5,6 +5,8 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
+  width: 240px;
+  margin: 0;
 }
 
 a {
@@ -21,4 +23,98 @@ a {
 
 .links a:last-child::after {
   content: none;
+}
+
+#canvasplus-tab-control {
+  list-style-type: none;
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 0;
+  overflow: hidden;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+#canvasplus-tab-control li:hover {
+  background-color: #eee;
+}
+
+#canvasplus-tab-control li {
+  float: left;
+  display: block;
+  color: #888;
+  width: 60px;
+  padding: 8px 10px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#canvasplus-tab-control li.active-tab {
+  background-color: #eee
+}
+
+#canvasplus-settings {
+  margin: 0px 8px;
+}
+
+.setting {
+  position: relative;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+/* Default Toggle, From https://www.w3schools.com/howto/howto_css_switch.asp */
+.defl-toggle-container {
+  position: absolute;
+  display: inline-block;
+  width: 32px;
+  height: 16px;
+  margin: 16px 0px 0px 8px;
+  bottom: 8px;
+  right: 8px;
+}
+
+.defl-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.defl-toggle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 32px;
+}
+
+.defl-toggle:before {
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 10px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .defl-toggle {
+  background-color: #0a53d1;
+}
+
+input:focus + .defl-toggle {
+  box-shadow: 0 0 1px #0a53d1;
+}
+
+input:checked + .defl-toggle:before {
+  transform: translateX(14px);
 }

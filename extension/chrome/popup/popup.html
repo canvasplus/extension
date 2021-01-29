@@ -3,12 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Canvas+ Popup</title>
-  <link rel="stylesheet" href="popup.css">
+<link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <img src="../assets/icons/canvas-wide-navy.png" alt="" width="144px" height="48px"></img>
 
   <p id="version">Version: ???</p>
+  <p id="darkmode">Dark Mode is ???</p>
+
+  <ul id="canvasplus-tab-control">
+    <li id="canvasplus-tab-changes" class="active-tab">Changes</li>
+    <li id="canvasplus-tab-settings">Settings</li>
+    <li id="canvasplus-tab-display">Display</li>
+  </ul>
+  <div id="canvasplus-tab-wrapper">
+    <div id="canvasplus-changes">
+      <p>Changes</p>
+    </div>
+
+    <div id="canvasplus-settings" hidden>
+      <div class="setting" id="setting-search">
+        <b>Search Box</b>
+        <p>Search through your courses anywhere on Canvas.</p>
+        <label class="defl-toggle-container">
+          <input type="checkbox" id="setting-search-checkbox">
+          <span class="defl-toggle"></span>
+        </label>
+      </div>
+      <div class="setting" id="setting-smartscroll">
+        <b>Smart Scroll</b>
+        <p>Speed up navigation with helpful scrolling buttons</p>
+        <label class="defl-toggle-container">
+          <input type="checkbox" id="setting-smartscroll-checkbox">
+          <span class="defl-toggle"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="canvasplus-display" hidden>
+      <p>Display</p>
+    </div>
+  </div>
+
   <div class="links">
     <a href="https://canvasplus.adrwas.dev">Website</a>
     <a href="https://github.com/adrWasTaken/CanvasPlus">GitHub</a>
