@@ -28,7 +28,6 @@ a {
 #canvasplus-tab-control {
   list-style-type: none;
   margin: 0;
-  margin-bottom: 8px;
   padding: 0;
   overflow: hidden;
   background-color: #fff;
@@ -70,7 +69,7 @@ a {
   position: absolute;
   display: inline-block;
   width: 32px;
-  height: 16px;
+  height: 18px;
   margin: 16px 0px 0px 8px;
   bottom: 8px;
   right: 8px;
@@ -92,7 +91,7 @@ a {
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
-  border-radius: 32px;
+  border-radius: 34px;
 }
 
 .defl-toggle:before {
@@ -100,8 +99,8 @@ a {
   content: "";
   height: 10px;
   width: 10px;
-  left: 3px;
-  bottom: 3px;
+  left: 5px;
+  bottom: 4px;
   background-color: white;
   transition: .4s;
   border-radius: 50%;
@@ -116,5 +115,74 @@ input:focus + .defl-toggle {
 }
 
 input:checked + .defl-toggle:before {
-  transform: translateX(14px);
+  transform: translateX(12px);
+}
+
+#canvasplus-display {
+  text-align: center;
+  margin: 20px 10px;
+}
+
+#canvasplus-changes {
+  width: 240px;
+  height: 240px;
+  background-color: #0E95E4;
+  text-align: center;
+  position: relative;
+}
+
+#cpc-triangle {
+  width: 0;
+	height: 0;
+	border-left: 240px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 240px solid #0B8EDB;
+  position: absolute;
+  z-index: 1;
+}
+
+#cpc-hover {
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: absolute;
+  opacity: .5;
+  visibility: hidden;
+}
+
+#canvasplus-changes:hover #cpc-hover {
+  visibility: visible;
+}
+#canvasplus-changes p {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+}
+
+#cpc-change-list {
+  position: absolute;
+  z-index: 2;
+  line-height: 2rem;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#cpc-header {
+  padding-top: 10px;
+}
+
+#canvasplus-changes .cpc-fire {
+  position: absolute;
+  bottom: 116px;
+  z-index: 3;
+}
+
+#cpc-fire-left {
+  left: 60px;
+}
+
+#cpc-fire-right {
+  right: 60px;
 }

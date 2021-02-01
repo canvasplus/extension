@@ -6,12 +6,7 @@ window.addEventListener('click',function(e){
   }
 })
 
-chrome.storage.local.get(['dark_mode'], function(data) {
-  if(data.dark_mode) document.getElementById("darkmode").innerHTML = "Dark Mode is ON"
-  else document.getElementById("darkmode").innerHTML = "Dark Mode is OFF"
-})
-
-const settings = ["search", "smartscroll"];
+const settings = ["quicklink", "search", "smartscroll"];
 
 for(let setting of settings)
 {

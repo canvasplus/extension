@@ -1,12 +1,12 @@
-const settingsList = ["canvasplus-setting-search", "canvasplus-setting-smartscroll"];
+const settingsList = ["canvasplus-setting-quicklink", "canvasplus-setting-search", "canvasplus-setting-smartscroll"];
 let settings = {};
 
 chrome.storage.local.get(settingsList, function(data) {
   settings = data;
   if(Object.entries(data).length < settingsList.length)
   {
-    window.open("https://canvasplus.adrwas.dev/");
-    chrome.storage.local.set({"canvasplus-setting-search": true, "canvasplus-setting-smartscroll": true});
+    window.open("https://canvasplus.adrwas.dev/welcome");
+    chrome.storage.local.set({"canvasplus-setting-quicklink": true, "canvasplus-setting-search": true, "canvasplus-setting-smartscroll": true});
   }
 });
 
@@ -42,3 +42,7 @@ settingsUpdateBox.innerHTML = "<h2>Canvas+ Settings were Changed</h2><p>Your cha
 
 alert.appendChild(settingsUpdateBox);
 document.body.insertBefore(alert, document.body.firstElementChild);
+
+chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
+  if(data["canvasplus-setting-search"]) run();
+});

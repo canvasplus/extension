@@ -10,7 +10,7 @@
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/modules.js"]
+      "js": ["src/inject/scroll.js"]
     }
   ],
   "background": {
