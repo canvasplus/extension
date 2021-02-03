@@ -24,6 +24,9 @@ for(let setting of settings)
   });
 }
 
+document.getElementById("cpc-hover").addEventListener('click', function () {
+  window.open("https://canvasplus.adrwas.dev/changelog")
+});
 
 // document.getElementById("toggledarkmode").addEventListener('click', function () {
 //   chrome.storage.local.get(['dark_mode'], function(data) {
