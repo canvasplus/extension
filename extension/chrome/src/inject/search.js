@@ -4,8 +4,8 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
     if(document.getElementById("wrapper").firstElementChild.classList == "ic-app-nav-toggle-and-crumbs no-print" || document.getElementById("dashboard_header_container") != null) {
 
       console.log("[Canvas+] Injecting Search Bar...");
-      let previous = [];
-      let allLinks = [];
+      var previous = [];
+      var allLinks = [];
 
       let search = inject();
       let searchResultsElement;
@@ -17,8 +17,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
       async function prepare()
       {
-        let entries = {};
-        let links = [];
+        var entries = {};
 
         let courses = await fetch('/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
               headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
@@ -37,11 +36,68 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
           let name = course.name;
           let color = colors["course_" + id]
 
-          if(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id) != null)
+          let entry = {"id": id, "color": color, "pages": loadPages(id, name, color), "modules": loadModules(id, name, color)};
+          entries[entry.id] = entry;
+          allLinks = allLinks.concat(entry.modules);
+          if(Object.keys(entries).length >= courses.length) {
+               injectResults();
+               return entries;
+          }
+          // loadModules(id, name, color).then(entry => function () {
+          //   entries[entry.id] = entry;
+          //   console.log(entry);
+          //   allLinks = allLinks.concat(entry.modules);
+          //   if(Object.keys(entries).length >= courses.length) {
+          //     console.log("Done!");
+          //     return entries;
+          //   }
+          // })
+        }
+      }
+
+      function loadModules(id, name, color) {
+        let links = [];
+        if(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id) != null)
+        {
+          let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id));
+          for(linkData of modules)
           {
-            let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id));
-            for(linkData of modules)
-            {
+            let formatted = document.createElement("div");
+            formatted.classList = "canvasplus-search-results-list-item";
+
+            let courseIndicator = document.createElement("p");
+            courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
+            courseIndicator.style.color = color;
+            courseIndicator.innerHTML = name;
+
+            let link = document.createElement("a")
+            link.classList = "ig-title title item_link";
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            link.innerHTML = linkData.name;
+            link.href = linkData.href;
+
+            formatted.setAttribute("link-name", link.innerHTML);
+            formatted.appendChild(courseIndicator);
+            formatted.appendChild(link);
+
+            links.push(formatted);
+          }
+
+          return links;
+        }
+        else
+        {
+          getModules(id).then(output => {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = output.modules;
+
+            let compressed = [];
+
+            for(link of tempDiv.getElementsByClassName("ig-title title item_link")){
+              link.target = "_blank";
+              link.rel = "noreferrer noopener";
+
               let formatted = document.createElement("div");
               formatted.classList = "canvasplus-search-results-list-item";
 
@@ -50,70 +106,86 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
               courseIndicator.style.color = color;
               courseIndicator.innerHTML = name;
 
-              let link = document.createElement("a")
-              link.classList = "ig-title title item_link";
+              formatted.setAttribute("link-name", link.innerHTML);
+              formatted.appendChild(courseIndicator);
+              formatted.appendChild(link);
+
+              links.push(formatted);
+
+              compressed.push({"name": link.innerHTML, "href": link.href});
+            }
+
+            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
+
+            return links;
+          })
+        }
+      }
+
+      function loadPages(id, name, color) {
+        let links = [];
+        if(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + id) != null)
+        {
+          let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id));
+          for(linkData of modules)
+          {
+            let formatted = document.createElement("div");
+            formatted.classList = "canvasplus-search-results-list-item";
+
+            let courseIndicator = document.createElement("p");
+            courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
+            courseIndicator.style.color = color;
+            courseIndicator.innerHTML = name;
+
+            let link = document.createElement("a")
+            link.classList = "ig-title title item_link";
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            link.innerHTML = linkData.name;
+            link.href = linkData.href;
+
+            formatted.setAttribute("link-name", link.innerHTML);
+            formatted.appendChild(courseIndicator);
+            formatted.appendChild(link);
+
+            links.push(formatted);
+          }
+
+          return links;
+        }
+        else
+        {
+          getModules(id).then(output => {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = output.modules;
+
+            let compressed = [];
+
+            for(link of tempDiv.getElementsByClassName("ig-title title item_link")){
               link.target = "_blank";
               link.rel = "noreferrer noopener";
-              link.innerHTML = linkData.name;
-              link.href = linkData.href;
+
+              let formatted = document.createElement("div");
+              formatted.classList = "canvasplus-search-results-list-item";
+
+              let courseIndicator = document.createElement("p");
+              courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
+              courseIndicator.style.color = color;
+              courseIndicator.innerHTML = name;
 
               formatted.setAttribute("link-name", link.innerHTML);
               formatted.appendChild(courseIndicator);
               formatted.appendChild(link);
 
-              allLinks.push(formatted);
               links.push(formatted);
+
+              compressed.push({"name": link.innerHTML, "href": link.href});
             }
 
-            let entry = {"id": id, "color": color, "modules": links};
-            entries[id] = entry;
+            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
 
-            if(Object.keys(entries).length >= courses.length) {
-              injectResults()
-              return entries;
-            }
-          }
-          else
-          {
-            getModules(id).then(output => {
-              let tempDiv = document.createElement("div");
-              tempDiv.innerHTML = output.modules;
-
-              let compressed = [];
-
-              for(link of tempDiv.getElementsByClassName("ig-title title item_link")){
-                link.target = "_blank";
-                link.rel = "noreferrer noopener";
-
-                let formatted = document.createElement("div");
-                formatted.classList = "canvasplus-search-results-list-item";
-
-                let courseIndicator = document.createElement("p");
-                courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
-                courseIndicator.style.color = color;
-                courseIndicator.innerHTML = name;
-
-                formatted.setAttribute("link-name", link.innerHTML);
-                formatted.appendChild(courseIndicator);
-                formatted.appendChild(link);
-
-                allLinks.push(formatted);
-                links.push(formatted);
-
-                compressed.push({"name": link.innerHTML, "href": link.href});
-              }
-
-              sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
-
-              let entry = {"id": id, "color": color, "modules": links};
-              entries[id] = entry;
-
-              if(Object.keys(entries).length >= courses.length) {
-                injectResults()
-                return entries;
-              }
-            })
-          }
+            return links;
+          })
         }
       }
 
@@ -206,6 +278,23 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         if(document.activeElement == search && search.value.length > 0) searchResults.hidden = false;
         ready = true;
         search.disabled = false;
+      }
+
+      async function checkPagesAvailable(courseId) {
+        let pages = await fetch('/api/v1/courses/'+ courseId +'/pages')
+        pages = await pages.json()
+        console.log(pages);
+        return pages;
+      }
+
+      async function getPages(courseId) {
+        console.log("doing");
+        checkPagesAvailable(courseId);
+        console.log("doing");
+        let pages = await fetch('/courses/'+ courseId +'/pages')
+        pages = await pages.text()
+        let output = {"id": courseId, "pages": pages};
+        return output;
       }
 
       async function getModules(courseId) {
