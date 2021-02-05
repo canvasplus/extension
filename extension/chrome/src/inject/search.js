@@ -35,13 +35,13 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
           let id = course.id;
           let name = course.name;
           let color = colors["course_" + id]
+          let modules = await loadModules(id, name, color);
+          let entry = {"id": id, "color": color, "modules": modules};
 
-          let entry = {"id": id, "color": color, "pages": loadPages(id, name, color), "modules": loadModules(id, name, color)};
           entries[entry.id] = entry;
-          allLinks = allLinks.concat(entry.modules);
           if(Object.keys(entries).length >= courses.length) {
-               injectResults();
-               return entries;
+              injectResults(entries);
+              return entries;
           }
           // loadModules(id, name, color).then(entry => function () {
           //   entries[entry.id] = entry;
@@ -88,7 +88,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         }
         else
         {
-          getModules(id).then(output => {
+          return getModules(id).then(output => {
             let tempDiv = document.createElement("div");
             tempDiv.innerHTML = output.modules;
 
@@ -117,6 +117,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
             sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
 
+            console.log("Done");
             return links;
           })
         }
@@ -126,8 +127,8 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         let links = [];
         if(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + id) != null)
         {
-          let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id));
-          for(linkData of modules)
+          let pages = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + id));
+          for(linkData of pages)
           {
             let formatted = document.createElement("div");
             formatted.classList = "canvasplus-search-results-list-item";
@@ -155,9 +156,9 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         }
         else
         {
-          getModules(id).then(output => {
+          getPages(id).then(output => {
             let tempDiv = document.createElement("div");
-            tempDiv.innerHTML = output.modules;
+            tempDiv.innerHTML = output.pages;
 
             let compressed = [];
 
@@ -182,7 +183,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
               compressed.push({"name": link.innerHTML, "href": link.href});
             }
 
-            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
+            sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + id, JSON.stringify(compressed));
 
             return links;
           })
@@ -215,8 +216,13 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         return search;
       }
 
-      function injectResults()
+      function injectResults(entries)
       {
+        for(entry of Object.values(entries)){
+          console.log(entry.modules.length);
+          allLinks = allLinks.concat(entry.modules);
+        }
+        console.log(allLinks);
         const wrapper = document.getElementById("wrapper");
         const topNav = wrapper.firstElementChild;
 
@@ -282,19 +288,29 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
       async function checkPagesAvailable(courseId) {
         let pages = await fetch('/api/v1/courses/'+ courseId +'/pages')
-        pages = await pages.json()
-        console.log(pages);
-        return pages;
+        pages = await pages.text()
+        let output = false;
+        if(pages == 'while(1);{"message":"That page has been disabled for this course"}') output = true;
+        output = false; // Modules API was having some issues with not displaying everything, so I'm just going to scrape right
+        // off of the frontend website, its very easy.
       }
 
       async function getPages(courseId) {
-        console.log("doing");
-        checkPagesAvailable(courseId);
-        console.log("doing");
-        let pages = await fetch('/courses/'+ courseId +'/pages')
-        pages = await pages.text()
-        let output = {"id": courseId, "pages": pages};
-        return output;
+        console.log("getting pages for " + courseId);
+
+        if(checkPagesAvailable(courseId))
+        {
+          console.log("pages was available for " + courseId);
+          let pages = await fetch('/courses/'+ courseId +'/pages')
+          pages = await pages.json()
+          let output = {"id": courseId, "pages": pages};
+          return output;
+        }
+        else {
+          console.log("pages was not available for " + courseId);
+          let output = {"id": courseId, "pages": []};
+          return output;
+        }
       }
 
       async function getModules(courseId) {
