@@ -13,12 +13,12 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
       let searchResultsNoResultsElement;
       let searchReady = false;
 
+      var entries = {};
+
       prepare();
 
       async function prepare()
       {
-        var entries = {};
-
         let courses = await fetch('/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
               headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
         });
@@ -32,26 +32,22 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
         for(course of courses)
         {
-          let id = course.id;
-          let name = course.name;
-          let color = colors["course_" + id]
-          let modules = await loadModules(id, name, color);
-          let entry = {"id": id, "color": color, "modules": modules};
+          course.color = colors["course_" + course.id];
+          loadCourse(course, courses.length);
+        }
+      }
 
-          entries[entry.id] = entry;
-          if(Object.keys(entries).length >= courses.length) {
-              injectResults(entries);
-              return entries;
-          }
-          // loadModules(id, name, color).then(entry => function () {
-          //   entries[entry.id] = entry;
-          //   console.log(entry);
-          //   allLinks = allLinks.concat(entry.modules);
-          //   if(Object.keys(entries).length >= courses.length) {
-          //     console.log("Done!");
-          //     return entries;
-          //   }
-          // })
+      async function loadCourse(course, courses) {
+        let id = course.id;
+        let name = course.name;
+        let color = course.color;
+        let modules = await loadModules(id, name, color);
+        let entry = {"id": id, "color": color, "modules": modules};
+
+        entries[entry.id] = entry;
+        if(Object.keys(entries).length >= courses) {
+            injectResults(entries);
+            return entries;
         }
       }
 
@@ -117,7 +113,6 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
             sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
 
-            console.log("Done");
             return links;
           })
         }
@@ -219,10 +214,8 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
       function injectResults(entries)
       {
         for(entry of Object.values(entries)){
-          console.log(entry.modules.length);
           allLinks = allLinks.concat(entry.modules);
         }
-        console.log(allLinks);
         const wrapper = document.getElementById("wrapper");
         const topNav = wrapper.firstElementChild;
 
