@@ -5,8 +5,8 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/colors/darkmode.js", "src/inject/search.js", "src/imported/quicklink.js"],
-      "css": ["src/canvas.css", "src/inject/scroll/search.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
