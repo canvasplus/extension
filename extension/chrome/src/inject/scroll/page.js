@@ -22,7 +22,12 @@ chrome.storage.local.get(["canvasplus-setting-smartscroll"], function(data) {
     headerBar.insertBefore(scrollDownButton, firstButton);
 
     scrollDownButton.addEventListener("click", function(){
-      const bottom = document.getElementById("module_sequence_footer");
+      if(document.getElementsByClassName("module-sequence-footer-content")[0] != null){
+        bottom = document.getElementsByClassName("module-sequence-footer-content")[0];
+      } else {
+        bottom = document.getElementById("content").lastElementChild;
+      }
+
       bottom.scrollIntoView();
       this.blur();
     })

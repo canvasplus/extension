@@ -23,7 +23,7 @@ h1{
   margin-bottom: 30px;
 }
 
-.features {
+.features, .features-2 {
   width: auto;
   margin: auto;
   display: table;
@@ -34,7 +34,7 @@ h1{
 .content {
   margin: 10px 25px;
 }
-@media only screen and (min-width: 950px) {
+@media only screen and (min-width: 975px) {
   .feature {
     padding: 20px;
     margin: auto;
@@ -43,17 +43,33 @@ h1{
     display: inline-block;
     margin-top: 50px;
   }
+
   .smart-scroll {
-    float:left;
+    margin-top: 82px;
+  }
+  
+  .speed-boost {
+    margin-top: 117px;
+  }
+
+  .search-bar {
+    margin: 0;
   }
 
   .open-source {
+    margin-top: 108px;
+  }
+
+  .speed-boost, .search-bar {
+    float:left;
+  }
+
+  .open-source,  .smart-scroll {
     float:right;
-    margin-top: 82px;
   }
 }
 
-@media only screen and (max-width: 949px) {
+@media only screen and (max-width: 974px) {
   .feature {
     padding: 20px;
     margin: auto;
@@ -61,6 +77,10 @@ h1{
     max-width: 400px;
     display: block;
     margin-top: 50px;
+  }
+
+  .features-2 {
+    display: none;
   }
 }
 
@@ -95,7 +115,7 @@ h1{
   max-height: 200px;
   height: inherit;
   overflow: hidden;
-  max-width: 60%;
+  max-width: 600px;
   transition: background-color 0.2s;
   cursor: pointer;
 }
@@ -104,6 +124,7 @@ h1{
   background-color: #eee;
 }
 .articles article p.preview {
+  font-size: 13px;
   color: #555;
 }
 .articles article p.dateline {

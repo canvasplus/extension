@@ -25,23 +25,8 @@ for(let setting of settings)
 }
 
 document.getElementById("cpc-hover").addEventListener('click', function () {
-  window.open("https://canvasplus.adrwas.dev/changelog")
+  window.open("https://canvasplus.adrwas.dev/articles/changelog-patch-0.1")
 });
-
-// document.getElementById("toggledarkmode").addEventListener('click', function () {
-//   chrome.storage.local.get(['dark_mode'], function(data) {
-//     if(data.dark_mode)
-//     {
-//       chrome.storage.local.set({"dark_mode": false})
-//       document.getElementById("darkmode").innerHTML = "Dark Mode is OFF"
-//     }
-//     else
-//     {
-//       chrome.storage.local.set({"dark_mode": true})
-//       document.getElementById("darkmode").innerHTML = "Dark Mode is ON"
-//     }
-//   })
-// })
 
 document.getElementById("canvasplus-tab-changes").addEventListener('click', function () {
   for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
