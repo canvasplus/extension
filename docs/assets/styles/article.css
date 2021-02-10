@@ -53,3 +53,13 @@
 .article-content .pgrp {
   margin-bottom: 50px;
 }
+
+.img-container {
+  margin: 30px 0px;
+  text-align: center;
+}
+
+h2 {
+  color: #555;
+  font-size: 20px;
+}

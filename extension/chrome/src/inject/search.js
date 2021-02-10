@@ -30,7 +30,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         colors = await colors.json();
         colors = await colors.custom_colors;
 
-        for(course of courses)
+        for(let course of courses)
         {
           course.color = colors["course_" + course.id];
           loadCourse(course, courses.length);
@@ -41,9 +41,9 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         let id = course.id;
         let name = course.name;
         let color = course.color;
-        let modules = await loadModules(id, name, color);
-        let entry = {"id": id, "color": color, "modules": modules};
-
+        let pages = await loadPages(id, name, color);
+        let modules = await loadModules(id, name, color, pages);
+        let entry = {"id": id, "color": color, "pages": pages, "modules": modules};
         entries[entry.id] = entry;
         if(Object.keys(entries).length >= courses) {
             injectResults(entries);
@@ -51,11 +51,12 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         }
       }
 
-      function loadModules(id, name, color) {
+      function loadModules(id, name, color, pages) {
+        let courseId = id;
         let links = [];
-        if(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id) != null)
+        if(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + courseId) != null)
         {
-          let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + id));
+          let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-modules-course_" + courseId));
           for(linkData of modules)
           {
             let formatted = document.createElement("div");
@@ -84,7 +85,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         }
         else
         {
-          return getModules(id).then(output => {
+          return getModules(courseId).then(output => {
             let tempDiv = document.createElement("div");
             tempDiv.innerHTML = output.modules;
 
@@ -111,7 +112,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
               compressed.push({"name": link.innerHTML, "href": link.href});
             }
 
-            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + id, JSON.stringify(compressed));
+            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + courseId, JSON.stringify(compressed));
 
             return links;
           })
@@ -120,10 +121,12 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
       function loadPages(id, name, color) {
         let links = [];
-        if(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + id) != null)
+        let courseId = id;
+
+        if(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + courseId) != null)
         {
-          let pages = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + id));
-          for(linkData of pages)
+          let modules = JSON.parse(sessionStorage.getItem("canvasplus-searchIndex-pages-course_" + courseId));
+          for(linkData of modules)
           {
             let formatted = document.createElement("div");
             formatted.classList = "canvasplus-search-results-list-item";
@@ -151,16 +154,9 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         }
         else
         {
-          getPages(id).then(output => {
-            let tempDiv = document.createElement("div");
-            tempDiv.innerHTML = output.pages;
-
+          return getPages(courseId).then(output => {
             let compressed = [];
-
-            for(link of tempDiv.getElementsByClassName("ig-title title item_link")){
-              link.target = "_blank";
-              link.rel = "noreferrer noopener";
-
+            if(output.modules.length >= 1) for(page of output.modules) {
               let formatted = document.createElement("div");
               formatted.classList = "canvasplus-search-results-list-item";
 
@@ -169,20 +165,27 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
               courseIndicator.style.color = color;
               courseIndicator.innerHTML = name;
 
+              let link = document.createElement("a")
+              link.classList = "ig-title title item_link";
+              link.target = "_blank";
+              link.rel = "noreferrer noopener";
+              link.innerHTML = page.title;
+              link.href = page["html_url"];
+
               formatted.setAttribute("link-name", link.innerHTML);
               formatted.appendChild(courseIndicator);
               formatted.appendChild(link);
 
               links.push(formatted);
 
-              compressed.push({"name": link.innerHTML, "href": link.href});
+              compressed.push({"name": page.title, "href": page["html_url"]});
             }
 
-            sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + id, JSON.stringify(compressed));
+            sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + courseId, JSON.stringify(compressed));
 
             return links;
           })
-        }
+        };
       }
 
       function inject()
@@ -213,9 +216,10 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
 
       function injectResults(entries)
       {
-        for(entry of Object.values(entries)){
-          allLinks = allLinks.concat(entry.modules);
+        for(let entry of Object.values(entries)){
+          allLinks = allLinks.concat(entry.modules, entry.pages);
         }
+        console.log(allLinks);
         const wrapper = document.getElementById("wrapper");
         const topNav = wrapper.firstElementChild;
 
@@ -240,7 +244,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         searchResultsNoResults.hidden = true;
         searchResultsNoResults.id = "canvasplus-search-results-no-results";
         searchResultsNoResults.classList = "canvasplus-search-results-no-results";
-        searchResultsNoResults.innerHTML = "<b class='canvasplus-search-results-no-results-header'>No Results</b><p class='canvasplus-search-results-no-results-description'>At this time, Canvas+ only searches your course modules.</p>";
+        searchResultsNoResults.innerHTML = "<b class='canvasplus-search-results-no-results-header'>No Results</b><p class='canvasplus-search-results-no-results-description'>At this time, Canvas+ only searches your course pages and modules.</p>";
 
         searchResults.appendChild(searchResultsCounter);
         searchResults.appendChild(searchResultsNoResults);
@@ -283,34 +287,39 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         let pages = await fetch('/api/v1/courses/'+ courseId +'/pages')
         pages = await pages.text()
         let output = false;
-        if(pages == 'while(1);{"message":"That page has been disabled for this course"}') output = true;
-        output = false; // Modules API was having some issues with not displaying everything, so I'm just going to scrape right
-        // off of the frontend website, its very easy.
+        if(pages == 'while(1);{"message":"That page has been disabled for this course"}') output = false;
+        else output = true;
+        return output;
       }
 
       async function getPages(courseId) {
-        console.log("getting pages for " + courseId);
-
-        if(checkPagesAvailable(courseId))
-        {
-          console.log("pages was available for " + courseId);
-          let pages = await fetch('/courses/'+ courseId +'/pages')
-          pages = await pages.json()
-          let output = {"id": courseId, "pages": pages};
-          return output;
-        }
-        else {
-          console.log("pages was not available for " + courseId);
-          let output = {"id": courseId, "pages": []};
-          return output;
-        }
+        let output = await checkPagesAvailable(courseId);
+          if(output)
+          {
+            let pagesFinal = [];
+            let page = 1;
+            while(true)
+            {
+              let pages = await fetch('/api/v1/courses/'+ courseId +'/pages?per_page=100&page=' + page)
+              pages = await pages.text();
+              pages = JSON.parse(pages.substr(9));
+              pagesFinal = pagesFinal.concat(pages);
+              if(pages.length < 100) break;
+              else page++;
+            }
+            let output = {"id": courseId, "modules": pagesFinal};
+            return output;
+          }
+          else {
+            return {"id": courseId, "modules": {}};
+          }
       }
 
       async function getModules(courseId) {
-        let modules = await fetch('/courses/'+ course.id +'/modules')
+        let modules = await fetch('/courses/'+ courseId +'/modules')
         modules = await modules.text()
         let output = {"id": courseId, "modules": modules};
-        return output;
+        return output; // No check needed for modules, as a course with disabled modules would just return no results.
       }
 
       function updateSearchResults()
