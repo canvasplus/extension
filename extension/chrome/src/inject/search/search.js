@@ -219,7 +219,6 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         for(let entry of Object.values(entries)){
           allLinks = allLinks.concat(entry.modules, entry.pages);
         }
-        console.log(allLinks);
         const wrapper = document.getElementById("wrapper");
         const topNav = wrapper.firstElementChild;
 

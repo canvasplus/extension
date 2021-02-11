@@ -2,6 +2,8 @@
   "name": "Canvas+",
   "version": "0.1",
   "manifest_version": 2,
+  "description": "CanvasPlus: Faster links, smart scrolling, search bar.",
+  "homepage_url": "http://canvasplus.adrwas.dev/",
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
@@ -28,7 +30,7 @@
   "browser_action": {
    "default_popup": "popup/popup.html"
  },
-  "permissions": ["*://*.instructure.com/*", "storage"],
+  "permissions": ["storage"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
            "48": "assets/icons/canvas-plus-favicon-active-48.png",
           "128": "assets/icons/canvas-plus-favicon-active-128.png" }
