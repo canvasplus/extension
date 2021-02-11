@@ -5,10 +5,16 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
+  width: 240px;
+  margin: 0;
 }
 
 a {
   text-decoration: none;
+}
+
+p {
+  margin: 0;
 }
 
 .links {
@@ -21,4 +27,192 @@ a {
 
 .links a:last-child::after {
   content: none;
+}
+
+#canvasplus-popup-header {
+  background-color: #39506e;
+  text-align: center;
+  padding: 20px;
+  height: 60px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#canvasplus-tab-control {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+#canvasplus-tab-control li:hover {
+  background-color: #eee;
+}
+
+#canvasplus-tab-control li {
+  float: left;
+  display: block;
+  color: #888;
+  width: 60px;
+  padding: 8px 10px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+#canvasplus-tab-control li.active-tab {
+  background-color: #eee
+}
+
+#canvasplus-settings {
+  margin: 8px;
+}
+
+.setting {
+  position: relative;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.setting p {
+  color: #888;
+  max-width: 170px;
+  margin-top: 10px;
+}
+/* Default Toggle, From https://www.w3schools.com/howto/howto_css_switch.asp */
+.defl-toggle-container {
+  position: absolute;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  margin: 16px 0px 0px 8px;
+  bottom: 8px;
+  right: 8px;
+}
+
+.defl-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.defl-toggle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.defl-toggle:before {
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 10px;
+  left: 5px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .defl-toggle {
+  background-color: #0a53d1;
+}
+
+input:focus + .defl-toggle {
+  box-shadow: 0 0 1px #0a53d1;
+}
+
+input:checked + .defl-toggle:before {
+  transform: translateX(12px);
+}
+
+#canvasplus-display {
+  text-align: center;
+  margin: 20px 10px;
+}
+
+#canvasplus-changes {
+  width: 240px;
+  height: 240px;
+  background-color: #0E95E4;
+  text-align: center;
+  position: relative;
+}
+
+#cpc-triangle {
+  width: 0;
+	height: 0;
+	border-left: 240px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 240px solid #0B8EDB;
+  position: absolute;
+  z-index: 1;
+}
+
+#cpc-hover {
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0.2s, opacity 0.2s linear;
+  cursor: pointer;
+}
+
+#canvasplus-changes:hover #cpc-hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+#cpc-hover-text {
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+  font-style: italic;
+}
+
+#canvasplus-changes p {
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+}
+
+#cpc-change-list {
+  position: absolute;
+  z-index: 2;
+  line-height: 2rem;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#cpc-header {
+  padding-top: 20px;
+}
+
+#canvasplus-changes .cpc-fire {
+  position: absolute;
+  bottom: 116px;
+  z-index: 3;
+}
+
+#cpc-fire-left {
+  left: 60px;
+}
+
+#cpc-fire-right {
+  right: 60px;
 }

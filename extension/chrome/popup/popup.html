@@ -3,15 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <title>Canvas+ Popup</title>
-  <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <img src="../assets/icons/canvas-wide-navy.png" alt="" width="144px" height="48px"></img>
+  <div id="canvasplus-popup-header">
+    <img id="cpc-logo" src="../assets/icons/canvas-wide-white.png" alt="" width="108px" height="36px"></img>
+    <p id="version">Unkown Version</p>
+  </div>
 
-  <p id="version">Version: ???</p>
-  <div class="links">
-    <a href="https://canvasplus.adrwas.dev">Website</a>
-    <a href="https://github.com/adrWasTaken/CanvasPlus">GitHub</a>
+  <ul id="canvasplus-tab-control">
+    <li id="canvasplus-tab-changes" class="active-tab">Changes</li>
+    <li id="canvasplus-tab-settings">Settings</li>
+    <li id="canvasplus-tab-display">Display</li>
+  </ul>
+  <div id="canvasplus-tab-wrapper">
+
+    <div id="canvasplus-changes">
+      <div id="cpc-hover">
+        <p id="cpc-hover-text">Click to view Changelog</p>
+      </div>
+      <div id="cpc-triangle"></div>
+      <div id="cpc-header">
+        <img id="cpc-logo" src="../assets/icons/canvas-wide-white.png" alt="" width="108px" height="36px"></img>
+        <p id="cpc-version">Patch 0.1</p>
+      </div>
+      <div id="cpc-change-list">
+        <p>Faster Links</p>
+        <p>Search Bar</p>
+        <p>Smarter Scrolling</p>
+      </div>
+      <img id="cpc-fire-left" class="cpc-fire" height="21px" width="16px" src="https://marketplace.canva.com/MADr0A5ZBAw/1/thumbnail_large/canva-fire-flame-security-flat-style-icon-MADr0A5ZBAw.png">
+      <img id="cpc-fire-right" class="cpc-fire" height="21px" width="16px" src="https://marketplace.canva.com/MADr0A5ZBAw/1/thumbnail_large/canva-fire-flame-security-flat-style-icon-MADr0A5ZBAw.png">
+    </div>
+
+    <div id="canvasplus-settings" hidden>
+      <div class="setting" id="setting-search">
+        <b>Search Box</b>
+        <p>Search through your courses anywhere on Canvas.</p>
+        <label class="defl-toggle-container">
+          <input type="checkbox" id="setting-search-checkbox">
+          <span class="defl-toggle"></span>
+        </label>
+      </div>
+      <div class="setting" id="setting-smartscroll">
+        <b>Smart Scroll</b>
+        <p>Speed up navigation with helpful scrolling buttons</p>
+        <label class="defl-toggle-container">
+          <input type="checkbox" id="setting-smartscroll-checkbox">
+          <span class="defl-toggle"></span>
+        </label>
+      </div>
+      <div class="setting" id="setting-quicklink">
+        <b>Speed Boost</b>
+        <p>Improve loading speeds by pre-loading Canvas links.</p>
+        <label class="defl-toggle-container">
+          <input type="checkbox" id="setting-quicklink-checkbox">
+          <span class="defl-toggle"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="canvasplus-display" hidden>
+      <b>Coming Soon</b>
+      <p>Display settings are on their way!</p>
+    </div>
   </div>
   <script src="popup.js" charset="utf-8"></script> <!-- Must be loaded after paragraphs -->
 </body>

@@ -1,0 +1,58 @@
+.splash h1{
+  font-size: 30px;
+  text-align: center;
+  color: #333;
+}
+
+.splash p {
+  margin: 25px auto;
+  text-align: center;
+  max-width: 400px;
+  color: #bbb;
+}
+
+.articles {
+  padding: 5px;
+  display: block;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 50px;
+  position: static;
+}
+
+.articles h2 {
+  max-width: 200px;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+.articles article {
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: left;
+  position: relative;
+  margin: 6px;
+  padding: 10px;
+  border: 1px solid #efefef;
+  border-radius: 5px;
+  max-height: 200px;
+  height: inherit;
+  overflow: hidden;
+  max-width: 600px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.articles article:hover {
+  background-color: #eee;
+}
+.articles article p.preview {
+  font-size: 13px;
+  color: #888;
+}
+.articles article p.dateline {
+  color: #aaa;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+  font-size: 10px;
+}

@@ -1,25 +1,36 @@
 {
   "name": "Canvas+",
-  "version": "0.0.1",
+  "version": "0.1",
   "manifest_version": 2,
+  "description": "CanvasPlus: Faster links, smart scrolling, search bar.",
+  "homepage_url": "http://canvasplus.adrwas.dev/",
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search.js", "src/imported/quicklink.js"],
-      "css": ["src/canvas.css", "src/inject/search.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/modules.js"]
+      "js": ["src/inject/scroll/modules.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
+      "js": ["src/inject/scroll/discussion.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/assignments"],
+      "js": ["src/inject/scroll/assignments.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/pages/*"],
+      "js": ["src/inject/scroll/page.js"]
     }
   ],
-  "background": {
-    "scripts": ["src/background.js"]
-  },
   "browser_action": {
    "default_popup": "popup/popup.html"
  },
-  "permissions": ["*://*.instructure.com/*"],
+  "permissions": ["storage"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
            "48": "assets/icons/canvas-plus-favicon-active-48.png",
           "128": "assets/icons/canvas-plus-favicon-active-128.png" }
