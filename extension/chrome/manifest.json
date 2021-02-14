@@ -4,11 +4,19 @@
   "manifest_version": 2,
   "description": "CanvasPlus: Faster links, smart scrolling, search bar.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
+  "web_accessible_resources": [
+         "src/inject/colors/dark.css"
+     ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
       "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css"]
+    },
+    {
+      "matches": [ "*://*.instructure.com/*" ],
+      "js": ["src/inject/colors/dark.js"],
+      "run_at": "document_start"
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
@@ -30,7 +38,7 @@
   "browser_action": {
    "default_popup": "popup/popup.html"
  },
-  "permissions": ["storage"],
+ "permissions": ["storage"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
            "48": "assets/icons/canvas-plus-favicon-active-48.png",
           "128": "assets/icons/canvas-plus-favicon-active-128.png" }

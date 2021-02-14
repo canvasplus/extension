@@ -96,3 +96,17 @@ chrome.storage.local.get(['canvasplus-popup-active-tab'], function(data) {
     document.getElementById("canvasplus-tab-" + activeTab).classList = "active-tab";
   }
 });
+
+chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
+  let appearance = data['canvasplus-display-appearance'];
+  if(appearance != null)
+  {
+    document.getElementById("appearance-setting-" + appearance).checked = true;
+  }
+});
+
+for(element of document.getElementsByClassName("appearance-setting")){
+  element.addEventListener('click', function () {
+    chrome.storage.local.set({"canvasplus-display-appearance": this.id.substring(19)});
+  })
+}

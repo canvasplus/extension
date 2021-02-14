@@ -1,0 +1,65 @@
+:root:root {
+  --ic-brand-font-color-dark: #f2f2f2;
+  --ic-brand-font-color-dark-lightened-15: #e5e5e5;
+}
+
+#content {
+  color: #ccc;
+}
+
+.page-title {
+  color: white !important;
+}
+
+body, .header-bar, .item-group-container {
+  color: #f2f2f2;
+  background-color: #1d1d21 !important;
+}
+
+.item-group-condensed .ig-header {
+  background-color: #454545 !important;
+  border: 1px solid black !important;
+}
+
+.ig-header .name {
+  color: #f2f2f2 !important;
+  text-shadow: 1px 1px 0 rgba(64,64,64,0.5) !important;
+}
+
+#breadcrumbs, .module-sequence-footer .module-sequence-footer-content, .ic-Dashboard-header__layout {
+  background: #1d1d21 !important;
+}
+
+.btn, .Button, .ui-button, #immersive_reader_mount_point div button span {
+    background: #2D3B45 !important;
+    color: white !important;
+    border-color: #0b0f12 !important;
+}
+
+.btn:hover, .Button:hover, .ui-button:hover, #immersive_reader_mount_point div button:hover span {
+    background: #1f2930 !important;
+    color: #ededed !important;
+    border-color: #090d0f !important;
+}
+
+#immersive_reader_mount_point div button span span span svg g g g path:first-child {
+  fill: white;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  border: 1px solid #0b0f12;
+  background-color: #2D3B45;
+}
+
+.item-group-condensed .ig-row {
+  background: #1d1d21 !important;
+  border-bottom: 1px solid black !important;
+}
+
+.ig-list .ig-row {
+  border: 1px solid black !important;
+}
+
+.ic-app-nav-toggle-and-crumbs, .header-bar, .ic-Dashboard-header__layout {
+    border-bottom: 1px solid #383a42 !important;
+}

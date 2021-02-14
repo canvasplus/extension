@@ -1,4 +1,4 @@
-const settingsList = ["canvasplus-setting-quicklink", "canvasplus-setting-search", "canvasplus-setting-smartscroll"];
+const settingsList = ["canvasplus-setting-quicklink", "canvasplus-setting-search", "canvasplus-setting-smartscroll", "canvasplus-display-appearance"];
 let settings = {};
 
 chrome.storage.local.get(settingsList, function(data) {
