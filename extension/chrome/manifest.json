@@ -16,7 +16,8 @@
     {
       "matches": [ "*://*.instructure.com/*" ],
       "js": ["src/inject/colors/dark.js"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "all_frames": true
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
