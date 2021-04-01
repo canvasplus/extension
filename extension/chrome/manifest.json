@@ -1,8 +1,8 @@
 {
   "name": "Canvas+",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version": 2,
-  "description": "CanvasPlus: Faster links, smart scrolling, search bar.",
+  "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
          "src/inject/colors/dark.css"
@@ -14,10 +14,14 @@
       "css": ["src/canvas.css", "src/inject/search/search.css"]
     },
     {
-      "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/inject/colors/dark.js"],
+      "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/colors/color-controller.js"],
       "run_at": "document_start",
       "all_frames": true
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/colors/color-controller-on-load.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],

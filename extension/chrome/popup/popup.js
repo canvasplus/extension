@@ -25,7 +25,7 @@ for(let setting of settings)
 }
 
 document.getElementById("cpc-hover").addEventListener('click', function () {
-  window.open("https://canvasplus.adrwas.dev/articles/changelog-patch-0.1")
+  window.open("https://canvasplus.adrwas.dev/articles/changelog-patch-0.2")
 });
 
 document.getElementById("canvasplus-tab-changes").addEventListener('click', function () {
@@ -101,12 +101,19 @@ chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
   let appearance = data['canvasplus-display-appearance'];
   if(appearance != null)
   {
+    document.getElementById("css-vars").href = "vars-" + appearance + ".css"
+    document.getElementById("appearance-setting-" + appearance).parentElement.classList = "container selected";
     document.getElementById("appearance-setting-" + appearance).checked = true;
   }
 });
 
 for(element of document.getElementsByClassName("appearance-setting")){
   element.addEventListener('click', function () {
+    document.getElementById("css-vars").href = "vars-" + this.id.substring(19) + ".css"
+    for(element of document.getElementsByClassName("appearance-setting")){
+      element.parentElement.classList = "container";
+    }
+    this.parentElement.classList = "container selected";
     chrome.storage.local.set({"canvasplus-display-appearance": this.id.substring(19)});
   })
 }
