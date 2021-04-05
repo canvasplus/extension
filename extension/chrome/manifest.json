@@ -43,6 +43,10 @@
   "browser_action": {
    "default_popup": "popup/popup.html"
  },
+ "background": {
+    "scripts": ["src/background.js"],
+    "persistent": false
+  },
  "permissions": ["storage"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
            "48": "assets/icons/canvas-plus-favicon-active-48.png",

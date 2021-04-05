@@ -5,13 +5,8 @@ chrome.storage.local.get(settingsList, function(data) {
   settings = data;
   if(Object.entries(data).length < settingsList.length)
   {
-    window.open("https://canvasplus.adrwas.dev/welcome");
-    chrome.storage.local.set({"canvasplus-setting-quicklink": true, "canvasplus-setting-search": true, "canvasplus-setting-smartscroll": true});
+    chrome.storage.local.set({"canvasplus-setting-quicklink": true, "canvasplus-setting-search": true, "canvasplus-setting-smartscroll": true, "canvasplus-display-appearance": "light"});
   }
-});
-
-window.addEventListener('focus', function () {
-  checkSettingsChange();
 });
 
 function checkSettingsChange() {
