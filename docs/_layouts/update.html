@@ -1,0 +1,15 @@
+---
+layout: master
+style: update
+---
+<link rel="stylesheet" href="{{ 'assets/css/update.css' | relative_url }}">
+<div class="update-content">
+  <div class="update-meta">
+    <p class="update-version">{{ page.version }}</p>
+    <h1 class="update-title">{{ page.title }}</h1>
+  </div>
+  <div class="divider"></div>
+  <div class="update-paragraph">
+    {{ content }}
+  </div>
+</div>
