@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.version }}</title>
+    <link rel="stylesheet" href="{{ 'assets/css/master.css' | relative_url }}">
+    <link rel="icon" type="image/png" href="{{ 'assets/img/favicon.png' | relative_url }}">
+  </head>
+  <body>
+    <div id="content">
+      {{ content }}
+      <div id="content-bottom">
+        <div id="content-bottom-nav">
+          <a href="https://github.com/adrWasTaken/CanvasPlus" id="contribute-button">Contribute</a>
+          <a id="install-button" href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install</a>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if(urlParams.get("from") === "404") {
+      let alert = document.createElement("div");
+      alert.classList = "content-alert";
+      alert.innerHTML = "We couldn't find the page you were looking for. Sorry about that.";
+      let content = document.getElementById("content");
+      content.insertBefore(alert, content.firstChild);
+    }
+  </script>
+</html>

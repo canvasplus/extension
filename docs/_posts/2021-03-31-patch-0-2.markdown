@@ -1,0 +1,8 @@
+---
+layout: update
+title:  "Dark Mode"
+date:   2021-03-31
+categories: update
+version: "Canvas+ Patch 0.2"
+---
+Hey Canvas+ Users, Today Canvas+ 0.2 has been released, brining one monumental feature: Dark Mode. You can now browse your canvas courses in the new color scheme, changable in the "Display" tab of the extension popup.
