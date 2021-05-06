@@ -160,7 +160,7 @@ input:checked + .defl-toggle:before {
 #canvasplus-changes {
   width: 240px;
   height: 240px;
-  background: url(https://24.media.tumblr.com/62b016cb7693193ec05be058c3feeb0e/tumblr_n62at06Iun1swm1iso1_500.gif);
+  background: url(https://i.imgur.com/etM8U8h.png);
   text-align: center;
   position: relative;
 }
@@ -201,6 +201,7 @@ input:checked + .defl-toggle:before {
   top: 120px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
 }
 
 #cpc-header {

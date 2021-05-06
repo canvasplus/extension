@@ -46,7 +46,6 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         let entry = {"id": id, "color": color, "pages": pages, "modules": modules};
         entries[entry.id] = entry;
         if(Object.keys(entries).length >= courses) {
-            console.log(entries);
             injectResults(entries);
             return entries;
         }
@@ -87,99 +86,41 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         else
         {
           let p = new Promise(function(resolve, reject) {
-            chrome.storage.local.get(['canvasplus-search-modules-cache'], function(data) {
+            chrome.storage.local.get(['canvasplus-searchIndex-modules-course_' + courseId], function(data) {
               resolve(data)
             })
           })
-          let data = await p;
-          if(Object.entries(data) > 0) {
+            let cache = await p;
+            let data = cache['canvasplus-searchIndex-modules-course_' + courseId]
+            if(data != null && data.length > 0) {
+                sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + courseId, JSON.stringify(data));
+
+                let refresh = new Promise(function(resolve, reject) {
+                  console.log("Refreshing search index for modules of " + courseId);
+                  getModules(courseId).then((output) => {
+                    sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + courseId, JSON.stringify(output));
+
+                    let toChange = {};
+                    toChange['canvasplus-searchIndex-modules-course_' + courseId] = compressed;
+                    chrome.storage.local.set(toChange);
+                    console.log("Done refreshing search index for modules of " + courseId);
+                  })
+                })
+
+                let m = await loadModules(id, name, color);
+                console.log(m);
+                return m;
+          } else {
+            let output = await getModules(courseId);
+            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + courseId, JSON.stringify(output));
+
             let toChange = {};
-            toChange['canvasplus-search-modules-cache'] = data;
+            toChange['canvasplus-searchIndex-modules-course_' + courseId] = output;
             chrome.storage.local.set(toChange);
 
-            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + courseId, JSON.stringify(data));
-
-            return loadModules(id, name, color);
-          } else {
-            // var p = new Promise(function(resolve, reject){
-            //   chrome.storage.sync.get({"disableautoplay": true}, function(options){
-            //     resolve(options.disableautoplay);
-            //   })
-            // });
-            //
-            // const configOut = await p;
-            // console.log(p);
-            //let e = await getModules(courseId);
-            //console.log(e);
-            let output = await getModules(courseId);
-            // console.log(output);
-            // let compressed = [];
-            // if(output.modules.length >= 1) for(page of output.modules) {
-            //   let formatted = document.createElement("div");
-            //   formatted.classList = "canvasplus-search-results-list-item";
-            //
-            //   let courseIndicator = document.createElement("p");
-            //   courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
-            //   courseIndicator.style.color = color;
-            //   courseIndicator.innerHTML = name;
-            //
-            //   let link = document.createElement("a")
-            //   link.classList = "ig-title title item_link";
-            //   link.target = "_blank";
-            //   link.rel = "noreferrer noopener";
-            //   link.innerHTML = page.name;
-            //   link.href = page["items_url"];
-            //
-            //   formatted.setAttribute("link-name", link.innerHTML);
-            //   formatted.appendChild(courseIndicator);
-            //   formatted.appendChild(link);
-            //
-            //   links.push(formatted);
-            //
-            //   compressed.push({"name": page.title, "href": page["html_url"]});
-            // }
-            //
-            // let toChange = {};
-            // toChange['canvasplus-search-modules-cache'] = compressed;
-            // chrome.storage.local.set(toChange);
-            console.log(output);
-            sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + courseId, JSON.stringify(output));
             let m = await loadModules(id, name, color);
-            console.log(m);
             return m;
-            //return links;
           }
-          // return getModules(courseId).then(output => {
-          //   let tempDiv = document.createElement("div");
-          //   tempDiv.innerHTML = output.modules;
-          //
-          //   let compressed = [];
-          //
-          //   for(link of tempDiv.getElementsByClassName("ig-title title item_link")){
-          //     link.target = "_blank";
-          //     link.rel = "noreferrer noopener";
-          //
-          //     let formatted = document.createElement("div");
-          //     formatted.classList = "canvasplus-search-results-list-item";
-          //
-          //     let courseIndicator = document.createElement("p");
-          //     courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
-          //     courseIndicator.style.color = color;
-          //     courseIndicator.innerHTML = name;
-          //
-          //     formatted.setAttribute("link-name", link.innerHTML);
-          //     formatted.appendChild(courseIndicator);
-          //     formatted.appendChild(link);
-          //
-          //     links.push(formatted);
-          //
-          //     compressed.push({"name": link.innerHTML, "href": link.href});
-          //   }
-          //
-          //   sessionStorage.setItem("canvasplus-searchIndex-modules-course_" + courseId, JSON.stringify(compressed));
-          //
-          //   return links;
-          // })
         }
       }
 
@@ -219,17 +160,53 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         else
         {
           let p = new Promise(function(resolve, reject) {
-            chrome.storage.local.get(['canvasplus-search-cache'], function(data) {
+            chrome.storage.local.get(['canvasplus-searchIndex-pages-course_' + courseId], function(data) {
               resolve(data)
             })
           })
           let cache = await p;
-          if(Object.entries(data) > 0) {
-              let toChange = {};
-              toChange['canvasplus-search-cache'] = data;
-              chrome.storage.local.set(toChange);
-
+          let data = cache['canvasplus-searchIndex-pages-course_' + courseId]
+          if(data != null && data.length > 0) {
               sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + courseId, JSON.stringify(data));
+
+              let refresh = new Promise(function(resolve, reject) {
+                console.log("Refreshing search index for pages of " + courseId);
+                getPages(courseId).then(output => {
+                  let compressed = [];
+                  if(output.modules.length >= 1) for(page of output.modules) {
+                    let formatted = document.createElement("div");
+                    formatted.classList = "canvasplus-search-results-list-item";
+
+                    let courseIndicator = document.createElement("p");
+                    courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
+                    courseIndicator.style.color = color;
+                    courseIndicator.innerHTML = name;
+
+                    let link = document.createElement("a")
+                    link.classList = "ig-title title item_link";
+                    link.target = "_blank";
+                    link.rel = "noreferrer noopener";
+                    link.innerHTML = page.title;
+                    link.href = page["html_url"];
+
+                    formatted.setAttribute("link-name", link.innerHTML);
+                    formatted.appendChild(courseIndicator);
+                    formatted.appendChild(link);
+
+                    links.push(formatted);
+
+                    compressed.push({"name": page.title, "href": page["html_url"]});
+                  }
+
+                  let toChange = {};
+                  toChange['canvasplus-searchIndex-pages-course_' + courseId] = compressed;
+                  chrome.storage.local.set(toChange);
+
+                  sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + courseId, JSON.stringify(compressed));
+
+                  console.log("Done refreshing search index for pages of " + courseId);
+                })
+              })
 
               return loadPages(id, name, color);
           } else {
@@ -261,7 +238,7 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
               }
 
               let toChange = {};
-              toChange['canvasplus-search-cache'] = compressed;
+              toChange['canvasplus-searchIndex-pages-course_' + courseId] = compressed;
               chrome.storage.local.set(toChange);
 
               sessionStorage.setItem("canvasplus-searchIndex-pages-course_" + courseId, JSON.stringify(compressed));
@@ -277,6 +254,9 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         const wrapper = document.getElementById("wrapper");
         const topNav = wrapper.firstElementChild;
 
+        const searchWrapper = document.createElement("div");
+        searchWrapper.id = "ic-app-class-search-wrapper";
+
         const search = document.createElement("input");
         search.id = "ic-app-class-search";
         search.type = "search";
@@ -285,26 +265,43 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         search.autocomplete = "off";
         search.disabled = true;
 
+        const searchProgress = document.createElement("span");
+        searchProgress.id = "ic-app-class-search-progress";
+        searchProgress.classList = "ic-app-class-search-progress";
+
+        searchWrapper.appendChild(search);
+        searchWrapper.appendChild(searchProgress);
+
         if(document.getElementById("dashboard_header_container") != null) // Sidebar is not exclusive to wrapper
         {
-          search.style.marginBottom = "40px";
+          searchWrapper.style.marginBottom = "40px";
           const sidebar = document.getElementById("right-side-wrapper");
-          sidebar.insertBefore(search, sidebar.firstChild);
+          sidebar.insertBefore(searchWrapper, sidebar.firstChild);
         }
         else
         {
-          topNav.appendChild(search);
+          topNav.appendChild(searchWrapper);
         }
+
+        setTimeout(() => {
+          if(document.body.contains(searchProgress)) {
+            search.placeholder = "Search is taking longer than expected...";
+            search.classList.add("taking-longer-than-expected")
+          }
+        }, 10000)
+        setTimeout(() => {
+          if(document.body.contains(searchProgress)) {
+            search.placeholder = "Search may have failed. Try reloading.";
+          }
+        }, 20000)
         return search;
       }
 
       function injectResults(entries)
       {
-        console.log(entries);
         for(let entry of Object.values(entries)){
           allLinks = allLinks.concat(entry.modules, entry.pages);
         }
-        console.log(allLinks);
         const wrapper = document.getElementById("wrapper");
         const topNav = wrapper.firstElementChild;
 
@@ -366,6 +363,11 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         if(document.activeElement == search && search.value.length > 0) searchResults.hidden = false;
         ready = true;
         search.disabled = false;
+
+        document.getElementById("ic-app-class-search-progress").classList.add("removing");
+        setTimeout(() => {
+          document.getElementById("ic-app-class-search-progress").remove();
+        }, 600)
       }
 
       async function checkPagesAvailable(courseId) {
@@ -410,7 +412,6 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
           let pages = await fetch('/api/v1/courses/'+ courseId +'/modules?per_page=100&page=' + page)
           if(!pages.ok) break;
           pages = await pages.json();
-          console.log(pages);
           modulesFinal = modulesFinal.concat(pages);
           if(pages.length < 100) break;
           else page++;
@@ -432,10 +433,9 @@ chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
         })
 
         let pagesFinal = await p;
-        console.log(pagesFinal)
 
         let output = {"id": courseId, "modules": pagesFinal};
-        console.log(output);
+
         return output;
       }
 
