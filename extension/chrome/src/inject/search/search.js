@@ -61,7 +61,6 @@ const injectSearchResults = (results) => {
     const topNav = wrapper.firstElementChild;
 
     const searchResults = document.createElement('div');
-    searchResults.hidden = true;
     searchResults.id = 'ic-app-class-search-results'
     searchResults.classList = 'ic-app-class-search-results'
     searchResults.innerHTML = ''
@@ -76,6 +75,21 @@ const injectSearchResults = (results) => {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     }).then(colors => {
         colors.json().then(colors => {
+            let searchResultsCounter = document.createElement("b");
+            searchResultsCounter.hidden = true;
+            searchResultsCounter.id = "canvasplus-search-results-counter";
+            searchResultsCounter.classList = "canvasplus-search-results-counter";
+            searchResultsCounter.innerHTML = "??? Results";
+
+            let searchResultsNoResults = document.createElement("div");
+            searchResultsNoResults.hidden = true;
+            searchResultsNoResults.id = "canvasplus-search-results-no-results";
+            searchResultsNoResults.classList = "canvasplus-search-results-no-results";
+            searchResultsNoResults.innerHTML = "<b class='canvasplus-search-results-no-results-header'>No Results</b><p class='canvasplus-search-results-no-results-description'>At this time, Canvas+ only searches your course pages and modules.</p>";
+
+            searchResults.appendChild(searchResultsCounter);
+            searchResults.appendChild(searchResultsNoResults);
+
             results.forEach(item => {
                 const row = document.createElement('div')
                 row.classList = 'canvasplus-search-results-list-item'
@@ -95,10 +109,61 @@ const injectSearchResults = (results) => {
                 row.setAttribute("link-name", link.innerHTML);
                 row.appendChild(courseIndicator);
                 row.appendChild(link);
-        
+                
+                item.element = row
+
                 searchResults.appendChild(row)
             });
             topNav.appendChild(searchResults);
+
+            let search = document.getElementById("ic-app-class-search")
+            search.placeholder = 'Search'
+            search.disabled = false
+            search.classList.remove('taking-longer-than-expected')
+
+            search.onblur = () => {
+                searchResults.style.visibility = "hidden";
+                searchResults.style.opacity = "0";
+            }
+      
+            search.onfocus = () => {
+                if(search.value.length > 0)
+                {
+                    searchResults.style.visibility = "visible";
+                    searchResults.style.opacity = "1";
+                }
+            }
+
+            search.onkeyup = () => {
+                let query = search.value.toLowerCase()
+                if(query.length == 0) {
+                    searchResults.style.visibility = "hidden";
+                    searchResults.style.opacity = "0";
+                } else {
+                    searchResults.style.visibility = "visible";
+                    searchResults.style.opacity = "1";
+                }
+                let length = results.filter(item => {
+                    if(item.title.toLowerCase().includes(query)) {
+                        item.element.hidden = false
+                        return true
+                    } else {
+                        item.element.hidden = true
+                        return false
+                    }
+                }).length
+                if(length > 0) {
+                    searchResultsCounter.innerHTML = length + " Results"
+                    searchResultsCounter.hidden = false
+                    searchResultsNoResults.hidden = true
+                } else {
+                    searchResultsCounter.hidden = true
+                    searchResultsNoResults.hidden = false
+                }
+            }
+
+            searchResults.style.visibility = "hidden";
+            searchResults.style.opacity = "0";
 
             setTimeout(() => {
                 document.getElementById("ic-app-class-search-progress").classList.add("removing");
@@ -169,6 +234,25 @@ const doneSearchingCourses = (items) => {
 }
 
 const searchPages = async (courseId) => {
+    let storageName = ('canvasplus-searchcache-v3-pages-' + courseId)
+
+    if(sessionStorage.getItem(storageName) !== null) {
+        return JSON.parse(sessionStorage.getItem(storageName))
+    }
+
+    let getStorage = new Promise(resolve => {
+        chrome.storage.local.get(storageName, output => {
+            resolve(output)
+        })
+    })
+    
+    let storageList = await getStorage
+    let storageItem = storageList[storageName]
+
+    if(storageItem) {
+        return storageItem
+    }
+
     let pages = []
     let pageIndex = 1
 
@@ -200,10 +284,18 @@ const searchPages = async (courseId) => {
         pageIndex += 1 // "Turn" the page
     }
     
+    sessionStorage.setItem(storageName, JSON.stringify(pages))
+    let storageChanges = {}
+    storageChanges[storageName] = pages
+    chrome.storage.local.set(storageChanges)
+
     return pages
 }
 
 const searchModules = (courseId) => {
+    
+    let storageName = ('canvasplus-searchcache-v3-modules-' + courseId)
+
     return new Promise((resolve, reject) => {
         const getModulesPage = (pageIndex, existing) => {
             fetch('https://aisdblend.instructure.com/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
@@ -242,7 +334,12 @@ const searchModules = (courseId) => {
                         }
                         items.push(obj)
                     })
-    
+                    
+                    sessionStorage.setItem(storageName, JSON.stringify(items))
+                    let storageChanges = {}
+                    storageChanges[storageName] = items
+                    chrome.storage.local.set(storageChanges)
+
                     resolve(items)
                 } else {
                     data = await fetch(item.items_url)
@@ -258,8 +355,24 @@ const searchModules = (courseId) => {
                 }
             }, 100)
         }
+
+        if(sessionStorage.getItem(storageName) !== null) {
+            resolve(JSON.parse(sessionStorage.getItem(storageName)))
+        }
+
+        new Promise(resolve => {
+            chrome.storage.local.get(storageName, output => {
+                resolve(output)
+            })
+        }).then(storageList => {
+            let storageItem = storageList[storageName]
     
-        getModulesPage(1, [])
+            if(storageItem) {
+                resolve(storageItem)
+            }
+    
+            getModulesPage(1, [])
+        })
     })
 }
 
