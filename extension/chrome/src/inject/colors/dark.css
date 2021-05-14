@@ -303,3 +303,15 @@ svg:not([aria-labelledby="LoadingSpinner"]) g circle:first-child {
 svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
   stroke: none;
 }
+
+.equation_image {
+  filter: invert(1)
+}
+
+.tox .tox-split-button:hover {
+  box-shadow: none;
+}
+
+.tox .tox-edit-area {
+  border: none;
+}
