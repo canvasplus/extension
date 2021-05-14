@@ -1,4 +1,5 @@
 const courseNames = {}
+const searchLog = []
 
 const runSearch = () => {
     const search = injectSearchBox()
@@ -220,8 +221,6 @@ const searchCourses = (courses) => {
                 document.getElementById('ic-app-class-search-progress').style.backgroundSize = (1500 / (i / Object.values(courses).length)) + "%"
 
                 if(i >= Object.values(courses).length) {
-                    console.log("All done!")
-                    console.log(allItems)
                     injectSearchResults(allItems)
                 }
             })
@@ -230,27 +229,34 @@ const searchCourses = (courses) => {
 }
 
 const doneSearchingCourses = (items) => {
-    console.log(items)
+    searchLog.push(items)
 }
 
-const searchPages = async (courseId) => {
+const searchPages = async (courseId, checkStorage) => {
+    if(checkStorage === undefined) checkStorage = true
+
     let storageName = ('canvasplus-searchcache-v3-pages-' + courseId)
 
-    if(sessionStorage.getItem(storageName) !== null) {
-        return JSON.parse(sessionStorage.getItem(storageName))
-    }
+    if(checkStorage) {
+        if(sessionStorage.getItem(storageName) !== null) {
+            searchLog.push('Used session storage to get pages from course ' + courseId + ' ...')
+            return JSON.parse(sessionStorage.getItem(storageName))
+        }
 
-    let getStorage = new Promise(resolve => {
-        chrome.storage.local.get(storageName, output => {
-            resolve(output)
+        let getStorage = new Promise(resolve => {
+            chrome.storage.local.get(storageName, output => {
+                resolve(output)
+            })
         })
-    })
-    
-    let storageList = await getStorage
-    let storageItem = storageList[storageName]
+        
+        let storageList = await getStorage
+        let storageItem = storageList[storageName]
 
-    if(storageItem) {
-        return storageItem
+        if(storageItem) {
+            searchLog.push('Refreshing page index of course ' + courseId + ' ...')
+            searchPages(courseId, false)
+            return storageItem
+        }
     }
 
     let pages = []
@@ -289,11 +295,13 @@ const searchPages = async (courseId) => {
     storageChanges[storageName] = pages
     chrome.storage.local.set(storageChanges)
 
+    searchLog.push('Done getting pages from course ' + courseId + ' ...')
     return pages
 }
 
-const searchModules = (courseId) => {
-    
+const searchModules = (courseId, checkStorage) => {
+    if(checkStorage === undefined) checkStorage = true
+
     let storageName = ('canvasplus-searchcache-v3-modules-' + courseId)
 
     return new Promise((resolve, reject) => {
@@ -320,6 +328,7 @@ const searchModules = (courseId) => {
                 if(modules.length <= i) {
                     clearInterval(interval)
                     if(item === undefined) {
+                        searchLog.push('Done getting modules from course ' + courseId + ' ...')
                         resolve(items)
                         return    
                     }
@@ -339,7 +348,8 @@ const searchModules = (courseId) => {
                     let storageChanges = {}
                     storageChanges[storageName] = items
                     chrome.storage.local.set(storageChanges)
-
+                    
+                    searchLog.push('Done getting modules from course ' + courseId + ' ...')
                     resolve(items)
                 } else {
                     data = await fetch(item.items_url)
@@ -356,30 +366,37 @@ const searchModules = (courseId) => {
             }, 100)
         }
 
-        if(sessionStorage.getItem(storageName) !== null) {
-            resolve(JSON.parse(sessionStorage.getItem(storageName)))
-        }
-
-        new Promise(resolve => {
-            chrome.storage.local.get(storageName, output => {
-                resolve(output)
-            })
-        }).then(storageList => {
-            let storageItem = storageList[storageName]
-    
-            if(storageItem) {
-                resolve(storageItem)
+        if(checkStorage) {
+            if(sessionStorage.getItem(storageName) !== null) {
+                searchLog.push('Used session storage to get modules from course ' + courseId + ' ...')
+                resolve(JSON.parse(sessionStorage.getItem(storageName)))
             }
-    
+
+            new Promise(resolve => {
+                chrome.storage.local.get(storageName, output => {
+                    resolve(output)
+                })
+            }).then(storageList => {
+                let storageItem = storageList[storageName]
+        
+                if(storageItem) {
+                    searchLog.push('Refreshing modules index of course ' + courseId + ' ...')
+                    searchPages(courseId, false)
+                    resolve(storageItem)
+                }
+        
+                getModulesPage(1, [])
+            })
+        } else {
             getModulesPage(1, [])
-        })
+        }
     })
 }
 
 chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
     if(data["canvasplus-setting-search"])
     {
+        console.warn('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
         runSearch()
     }
-    else runSearch() // TEMP
 })
