@@ -25,7 +25,7 @@ for(let setting of settings)
 }
 
 document.getElementById("cpc-hover").addEventListener('click', function () {
-  window.open("https://canvasplus.adrwas.dev/update/patch-0-2-1")
+  window.open("https://canvasplus.adrwas.dev/update/patch-0-2-2")
 });
 
 document.getElementById("canvasplus-tab-changes").addEventListener('click', function () {

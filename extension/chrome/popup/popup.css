@@ -160,7 +160,8 @@ input:checked + .defl-toggle:before {
 #canvasplus-changes {
   width: 240px;
   height: 240px;
-  background: url(https://i.imgur.com/etM8U8h.png);
+  background: url(https://expertphotography.com/wp-content/uploads/2020/07/cloud-photography-6.jpg);
+  background-size: 170%;
   text-align: center;
   position: relative;
 }
