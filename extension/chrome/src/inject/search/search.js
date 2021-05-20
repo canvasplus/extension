@@ -94,23 +94,23 @@ const injectSearchResults = (results) => {
             results.forEach(item => {
                 const row = document.createElement('div')
                 row.classList = 'canvasplus-search-results-list-item'
-        
+
                 const courseIndicator = document.createElement("p");
                 courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
                 courseIndicator.style.color = colors.custom_colors['course_' + item.course];
                 courseIndicator.innerHTML = courseNames[item.course];
-        
+
                 let link = document.createElement("a")
                 link.classList = "ig-title title item_link";
                 link.target = "_blank";
                 link.rel = "noreferrer noopener";
                 link.innerHTML = item.title;
                 link.href = item.url;
-        
+
                 row.setAttribute("link-name", link.innerHTML);
                 row.appendChild(courseIndicator);
                 row.appendChild(link);
-                
+
                 item.element = row
 
                 searchResults.appendChild(row)
@@ -126,7 +126,7 @@ const injectSearchResults = (results) => {
                 searchResults.style.visibility = "hidden";
                 searchResults.style.opacity = "0";
             }
-      
+
             search.onfocus = () => {
                 if(search.value.length > 0)
                 {
@@ -204,17 +204,19 @@ const searchCourses = (courses) => {
     const searchStages = 1 // number of places that are search per course
 
     let items = []
-    
+
     let i = 0
     let allItems = []
 
-    Object.values(courses).forEach(item => {
-        searchPages(item.id).then(pages => {
+    const searchCourseContinue = (id) => {
+        searchPages(id).then(pages => {
             allItems = allItems.concat(pages)
 
-            searchModules(item.id).then(modules => {
+            searchModules(id).then(modules => {
+                console.log("Done for " + id)
                 allItems = allItems.concat(modules)
                 i++
+
 
                 document.getElementById('ic-app-class-search-progress').classList.remove('dont-round-borders')
                 document.getElementById('ic-app-class-search-progress').style.width = (i / Object.values(courses).length * 100) + '%'
@@ -223,6 +225,29 @@ const searchCourses = (courses) => {
                 if(i >= Object.values(courses).length) {
                     injectSearchResults(allItems)
                 }
+            })
+        })
+    }
+
+    let j = 0
+    Object.values(courses).forEach(item => {
+        chrome.storage.local.get('canvasplus-searchcache-v3-pages-' + item.id, pagesStorageObj => {
+            let pagesStorage = pagesStorageObj['canvasplus-searchcache-v3-pages-' + item.id]
+
+            chrome.storage.local.get('canvasplus-searchcache-v3-modules-' + item.id, modulesStorageObj => {
+                let modulesStorage = modulesStorageObj['canvasplus-searchcache-v3-modules-' + item.id]
+
+                let pagesSession = sessionStorage.getItem('canvasplus-searchcache-v3-pages-' + item.id)
+                let modulesSession = sessionStorage.getItem('canvasplus-searchcache-v3-modules-' + item.id)
+
+                if((pagesStorage || pagesSession) && (modulesStorage || modulesSession)) {
+                    searchCourseContinue(item.id)
+                } else {
+                    setTimeout(() => {
+                        searchCourseContinue(item.id)
+                    }, j * 1000)
+                }
+                j++
             })
         })
     })
@@ -248,7 +273,7 @@ const searchPages = async (courseId, checkStorage) => {
                 resolve(output)
             })
         })
-        
+
         let storageList = await getStorage
         let storageItem = storageList[storageName]
 
@@ -258,6 +283,7 @@ const searchPages = async (courseId, checkStorage) => {
             return storageItem
         }
     }
+
 
     let pages = []
     let pageIndex = 1
@@ -289,7 +315,7 @@ const searchPages = async (courseId, checkStorage) => {
 
         pageIndex += 1 // "Turn" the page
     }
-    
+
     sessionStorage.setItem(storageName, JSON.stringify(pages))
     let storageChanges = {}
     storageChanges[storageName] = pages
@@ -305,65 +331,38 @@ const searchModules = (courseId, checkStorage) => {
     let storageName = ('canvasplus-searchcache-v3-modules-' + courseId)
 
     return new Promise((resolve, reject) => {
+        console.log("getting " + courseId + " ...")
+        searchLog.push("getting " + courseId + " ...")
+
         const getModulesPage = (pageIndex, existing) => {
-            fetch('/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
+            fetch('/api/v1/courses/' + courseId + '/modules?include=items&per_page=100&page=' + pageIndex).then(output => {
                 output.json().then(json => {
                     if(json.length < 100) {
-                        done(existing.concat(json))
+                        existing = existing.concat(json)
+                        let items = []
+                        existing.forEach(module => {
+                            module.items.forEach(item => {
+                                let obj = {
+                                    title: item.title,
+                                    url: item.html_url,
+                                    course: courseId
+                                }
+                                items.push(obj)
+                            })
+                        })
+
+                        sessionStorage.setItem(storageName, JSON.stringify(items))
+                        let storageChanges = {}
+                        storageChanges[storageName] = items
+                        chrome.storage.local.set(storageChanges)
+
+                        searchLog.push('Done getting modules from course ' + courseId + ' ...')
+                        resolve(items);
                     } else {
                         getModulesPage(pageIndex + 1, existing.concat(json))
                     }
                 })
             })
-        }
-    
-        const done = (modules) => {
-            let i = 0
-            let items = []
-    
-            const interval = setInterval(async() => {
-                let item = modules[i]
-                i++
-                
-                if(modules.length <= i) {
-                    clearInterval(interval)
-                    if(item === undefined) {
-                        searchLog.push('Done getting modules from course ' + courseId + ' ...')
-                        resolve(items)
-                        return    
-                    }
-
-                    data = await fetch(item.items_url)
-                    data = await data.json()
-                    data.forEach(page => {
-                        let obj = {
-                            title: page.title,
-                            url: page.html_url,
-                            course: courseId
-                        }
-                        items.push(obj)
-                    })
-                    
-                    sessionStorage.setItem(storageName, JSON.stringify(items))
-                    let storageChanges = {}
-                    storageChanges[storageName] = items
-                    chrome.storage.local.set(storageChanges)
-                    
-                    searchLog.push('Done getting modules from course ' + courseId + ' ...')
-                    resolve(items)
-                } else {
-                    data = await fetch(item.items_url)
-                    data = await data.json()
-                    data.forEach(page => {
-                        let obj = {
-                            title: page.title,
-                            url: page.html_url,
-                            course: courseId
-                        }
-                        items.push(obj)
-                    })
-                }
-            }, 100)
         }
 
         if(checkStorage) {
@@ -378,13 +377,13 @@ const searchModules = (courseId, checkStorage) => {
                 })
             }).then(storageList => {
                 let storageItem = storageList[storageName]
-        
+
                 if(storageItem) {
                     searchLog.push('Refreshing modules index of course ' + courseId + ' ...')
                     searchPages(courseId, false)
                     resolve(storageItem)
                 }
-        
+
                 getModulesPage(1, [])
             })
         } else {
