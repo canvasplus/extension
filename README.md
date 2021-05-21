@@ -20,6 +20,7 @@
 </p>
 
 <br>
+
 # 📚  About
 Canvas+ is a free chrome extension that improves the experience of students using Canvas, with support for the following toggleable features:
 
@@ -36,7 +37,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 <br>
 
-(Once version 0.2.2 has been released)**, there are currently no  issues.**
+#14 The search bar loading indicator is slightly too long when finished.
 
 <br>
 
@@ -50,6 +51,9 @@ Be sure to report it in the <a href="https://github.com/adrWasTaken/CanvasPlus/i
 Here's a list of some planned features for the extension, in order of when they're coming:
 
 - Bug Fixes
+- "Dim" Mode
+- Email Peeker
+- Quick Navigator
 - Customize link & accent color
 - Pin/bookmark pages
 - Access zoom links from extension popup
