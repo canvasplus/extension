@@ -10,8 +10,8 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/imported/moment.js"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
@@ -22,6 +22,10 @@
     {
       "matches": [ "*://*.instructure.com/*"],
       "js": ["src/inject/colors/color-controller-on-load.js"]
+    },
+    {
+      "matches": [ "*://*.instructure.com/conversations?*"],
+      "js": ["src/inject/convopeeker/conversation-param-utils.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],

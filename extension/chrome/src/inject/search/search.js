@@ -213,7 +213,6 @@ const searchCourses = (courses) => {
             allItems = allItems.concat(pages)
 
             searchModules(id).then(modules => {
-                console.log("Done for " + id)
                 allItems = allItems.concat(modules)
                 i++
 
@@ -331,9 +330,6 @@ const searchModules = (courseId, checkStorage) => {
     let storageName = ('canvasplus-searchcache-v3-modules-' + courseId)
 
     return new Promise((resolve, reject) => {
-        console.log("getting " + courseId + " ...")
-        searchLog.push("getting " + courseId + " ...")
-
         const getModulesPage = (pageIndex, existing) => {
             fetch('/api/v1/courses/' + courseId + '/modules?include=items&per_page=100&page=' + pageIndex).then(output => {
                 output.json().then(json => {
