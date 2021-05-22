@@ -9,8 +9,8 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/imported/moment.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
