@@ -6,10 +6,15 @@
 <p align="center">Canvas+ is a free chrome extension that improves the experience of students using Canvas</p>
 <br>
 <p align="center">
-<img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=chrome%20users&color=important">
+<img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Users&color=important">
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/adrWasTaken/CanvasPlus">
 <img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/rating/kdkadcnebmokaadholinmnpjelphnghh">
   
+<br>
+  
+<img alt="Mozzila Addons" src="https://img.shields.io/amo/users/canvas-for-firefox?color=orange&label=Firefox%20Users">
+<img alt="Mozzila Addons" src="https://img.shields.io/amo/rating/canvas-for-firefox">
+
 <br>
   <h5>Helpful Links</h5>
   <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
