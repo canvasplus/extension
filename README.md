@@ -8,12 +8,12 @@
 <p align="center">
 <img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Users&color=important">
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/adrWasTaken/CanvasPlus">
-<img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/rating/kdkadcnebmokaadholinmnpjelphnghh">
+<img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/rating/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Rating">
   
 <br>
   
 <img alt="Mozzila Addons" src="https://img.shields.io/amo/users/canvas-for-firefox?color=orange&label=Firefox%20Users">
-<img alt="Mozzila Addons" src="https://img.shields.io/amo/rating/canvas-for-firefox">
+<img alt="Mozzila Addons" src="https://img.shields.io/amo/rating/canvas-for-firefox?label=Firefox%20Rating">
 
 <br>
   <h5>Helpful Links</h5>
