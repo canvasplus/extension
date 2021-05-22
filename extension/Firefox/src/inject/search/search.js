@@ -1,5 +1,8 @@
 const courseNames = {}
 const searchLog = []
+var currentUrl = window.location.host 
+var protocol = window.location.protocol
+var url = protocol.concat(currentUrl)
 
 const runSearch = () => {
     const search = injectSearchBox()
@@ -72,7 +75,7 @@ const injectSearchResults = (results) => {
         searchResults.style.right = "40px";
     }
 
-    fetch('https://aisdblend.instructure.com/api/v1/users/self/colors', {
+    fetch(url+'/api/v1/users/self/colors', {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     }).then(colors => {
         colors.json().then(colors => {
@@ -177,7 +180,7 @@ const injectSearchResults = (results) => {
 }
 
 const getCoursesToSearch = async () => {
-    let courses = await fetch('https://aisdblend.instructure.com/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
+    let courses = await fetch(url+'/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     });
     courses = await courses.json();
@@ -264,7 +267,7 @@ const searchPages = async (courseId, checkStorage) => {
 
     while(true) {
         // Get JSON from API
-        data = await fetch('https://aisdblend.instructure.com/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex)
+        data = await fetch(url+'/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex)
         data = await data.json()
 
         if(data.message === 'That page has been disabled for this course') {
@@ -306,7 +309,7 @@ const searchModules = (courseId, checkStorage) => {
 
     return new Promise((resolve, reject) => {
         const getModulesPage = (pageIndex, existing) => {
-            fetch('https://aisdblend.instructure.com/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
+            fetch(url+'/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
                 output.json().then(json => {
                     if(json.length < 100) {
                         done(existing.concat(json))
