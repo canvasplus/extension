@@ -1,0 +1,15 @@
+:root:root {
+  --header-bgd-color: #39506e;
+  --tabs-bgd-color: #fff;
+  --tabs-border-color: #ccc;
+  --tabs-bgd-hover-color: #eee;
+  --tabs-bgd-active-color: #eee;
+  --tabs-text-color: #888;
+  --setting-border-color: #ccc;
+  --setting-name-text-color: #000;
+  --setting-text-color: #888;
+  --toggle-background-color: #ccc;
+  --bgd-color: #fff;
+  --important-text-color: #000;
+  --text-color: #888;
+}

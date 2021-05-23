@@ -1,0 +1,49 @@
+{
+  "name": "Canvas+ For Firefox",
+  "version": "0.2.2.3",
+  "manifest_version": 2,
+  "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
+  "web_accessible_resources": [
+         "src/inject/colors/canvas-dark.css"
+     ],
+  "content_scripts": [
+    {
+      "matches": [ "*://*.instructure.com/*" ],
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/imported/moment.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css"]
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/colors/color-controller.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/colors/color-controller-on-load.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/modules"],
+      "js": ["src/inject/scroll/modules.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
+      "js": ["src/inject/scroll/discussion.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/assignments"],
+      "js": ["src/inject/scroll/assignments.js"]
+    },
+    {
+      "matches": ["*://*.instructure.com/courses/*/pages/*"],
+      "js": ["src/inject/scroll/page.js"]
+    }
+  ],
+  "browser_action": {
+   "default_popup": "popup/popup.html"
+ },
+ "permissions": ["storage"],
+  "icons": { "16": "assets/icons/Canvas-16.png",
+           "48": "assets/icons/Canvas-48.png",
+          "128": "assets/icons/Canvas-128.png" }
+}
