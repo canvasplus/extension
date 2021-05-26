@@ -36,7 +36,7 @@ Thanks!
 <br><br>
 
 # 📚  About
-Canvas+ is a free chrome extension that improves the experience of students using Canvas, with support for the following toggleable features:
+Canvas+ is a free chrome and firefox extension that improves the experience of students using Canvas, with support for the following toggleable features:
 
 - Smart Scrolling
 - Search Bar
