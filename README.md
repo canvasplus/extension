@@ -79,6 +79,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - Quick Navigator
 - Customize link & accent color
 - Pin/bookmark pages/discussion posts
+- Email signatures
 - Add filters to search (Overdue/late assignments, certain classes, etc)
 - Show own discussion posts at the top of a discussion.
 - Sort discussions by likes and/or interaction
