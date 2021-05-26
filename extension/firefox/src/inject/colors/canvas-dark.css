@@ -7,7 +7,7 @@
   --ic-brand-global-nav-menu-item__text-color--active: #fff;
   --ic-brand-global-nav-ic-icon-svg-fill--active: #fff;
   --ic-link-color: #2477bd;
-  --ic-brand-header-image: URL("https://raw.githubusercontent.com/J-Coding-Dev/CanvasPlus-For-Firefox/main/extension/Firefox/assets/icons/blend-logo.png");
+  --ic-brand-header-image: URL("moz-extension://d3feee67-68c8-4fb9-aa50-4096d230e8bb/assets/icons/canvas-logo.png");
 
   --cpt-dark-background-color: #36393f;
   --cpt-dark-nav-tray-color: #16161a;
@@ -333,4 +333,7 @@ svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
 
 .tox .tox-edit-area {
   border: none;
-} 
+}
+.standalone-icon::before {
+  color: #fff;
+}
