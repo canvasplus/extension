@@ -26,6 +26,15 @@
 
 <br>
 
+<br><br>
+# ⚠️ Important Notice About Summer Updates - 5/26
+The extension is always being maintained, but during the summer, updates\* will NOT be released on chrome, firefox, etc. For people doing summer school and/or really interested in the project, updates WILL be released on GitHub. All updates made over the summer will be released in one large update around the end of August. I've decided to not update major web browsers because updating the extension would generally involve a popup letting people know the extension has been updated. I don't imagine people want to think about school during the summer, and I wouldn't want to risk losing any users when we could just not bother anyone by releasing all the summer changes at the end of August. \*The one exception to this is if someone ports the extension to a new browser, I'll publish it to its web store over the summer, since there's no active users who could be annoyed by an update notification.
+
+Also, you can expect less updates over the summer in general, because its harder to develop when you don't have courses that are actively being updated.
+Thanks!
+
+<br><br>
+
 # 📚  About
 Canvas+ is a free chrome extension that improves the experience of students using Canvas, with support for the following toggleable features:
 
@@ -37,12 +46,17 @@ Canvas+ is a free chrome extension that improves the experience of students usin
 These can be toggled by clicking the extension popup.
 
 <br><br>
+#### ⚠️ If you're interested in porting this to another browser, do NOT publish it! Why?
+It's really inconvenient for me, the maintainer of this project, to go to you whenever I want to push out an update. I can't garuantee that you'll be active on GitHub and/or willing to maintain the extension, so its much better if I own the extension. If you wan't to port to another browser, fork this repo, make the port, pull request, and I'll do the work of publishing it.
+
+<br><br>
 # 📌  Known Issues
 All code has errors, and Canvas+ is no exception. Here's all the known issues and their statuses:
 
 <br>
 
-#14 The search bar loading indicator is slightly too long when finished.
+#14 FIREFOX - The search bar loading indicator is slightly too long when finished.
+
 #15 Search bar appears in wrong place in conversations page
 
 <br>
@@ -64,7 +78,10 @@ Here's a list of some planned features for the extension, in order of when they'
 - Change sidebar: Hide branding, change size, etc
 - Quick Navigator
 - Customize link & accent color
-- Pin/bookmark pages
+- Pin/bookmark pages/discussion posts
+- Add filters to search (Overdue/late assignments, certain classes, etc)
+- Show own discussion posts at the top of a discussion.
+- Sort discussions by likes and/or interaction
 - Access zoom links from extension popup
 - (Potential) Discussion signature
 - (Potential) Automatically export course content for offline viewing
