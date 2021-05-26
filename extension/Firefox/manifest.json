@@ -1,16 +1,17 @@
 {
   "name": "Canvas+ For Firefox",
-  "version": "0.2.2.3",
+  "version": "0.2.3.2",
   "manifest_version": 2,
   "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
   "web_accessible_resources": [
          "src/inject/colors/canvas-dark.css"
+         "assets/icons/canvas-logo.png"
      ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/imported/moment.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
@@ -43,7 +44,5 @@
    "default_popup": "popup/popup.html"
  },
  "permissions": ["storage"],
-  "icons": { "16": "assets/icons/Canvas-16.png",
-           "48": "assets/icons/Canvas-48.png",
-          "128": "assets/icons/Canvas-128.png" }
+  "icons": { "16": "assets/icons/Canvas-16.png", "48": "assets/icons/Canvas-48.png", "128": "assets/icons/Canvas-128.png" }
 }
