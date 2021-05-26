@@ -1,11 +1,10 @@
 {
-  "name": "Canvas+ For Firefox",
-  "version": "0.2.3.2",
+  "name": "Canvas+ for Firefox",
+  "version": "0.2.3",
   "manifest_version": 2,
   "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
   "web_accessible_resources": [
-         "src/inject/colors/canvas-dark.css",
-         "assets/icons/canvas-logo.png"
+         "src/inject/colors/canvas-dark.css"
      ],
   "content_scripts": [
     {
