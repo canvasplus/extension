@@ -1,0 +1,45 @@
+.canvasplus-centertext {
+  text-align: center;
+}
+
+.canvasplus-block {
+  display: block;
+}
+
+#canvasplus-alert {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 103;
+  position: fixed;
+  transition: visibility 0.15s, opacity 0.15s linear;
+}
+
+#canvasplus-alert-settings-update {
+  height: min-content;
+  max-width: fit-content;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: auto;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+  text-align: center;
+  padding: 8px 0px 16px 0px;
+}
+
+#canvasplus-alert-settings-update h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+#canvasplus-alert-settings-update p {
+  color: #888;
+  width: 70%;
+  margin: auto;
+}
+
+#canvasplus-alert-settings-update button {
+  font-size: 0.875rem;
+}
