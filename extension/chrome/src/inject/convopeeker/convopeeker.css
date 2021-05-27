@@ -142,3 +142,21 @@
 .canvasplus-convo-peeker-convo-top-search-form {
     float: right;
 }
+
+.convo-peeker-read-indicator {
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--ic-brand-button--primary-bgd);
+    border-radius: 50%;
+    display: flex;
+    float: left;
+    margin-top: 11px;
+    margin-right: 10px;
+}
+
+.convo-peeker-read-indicator.unread {
+    width: 14px;
+    height: 14px;
+    border: none;
+    background-color: var(--ic-brand-button--primary-bgd);
+}

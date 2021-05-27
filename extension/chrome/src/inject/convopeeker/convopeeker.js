@@ -60,6 +60,13 @@ const insertConversation = (data) => {
     const convoMetaContainer = document.createElement('div')
     convoMetaContainer.classList = 'convo-peeker-convo-meta-container'
 
+    const readIndicator = document.createElement('span')
+    readIndicator.className = 'convo-peeker-read-indicator'
+
+    if(data.workflow_state === "unread") {
+        readIndicator.classList.add('unread')
+    }
+
     const dateLine = document.createElement('p')
     dateLine.classList = 'convo-peeker-convo-date'
     dateLine.innerHTML = formatDate(new Date(data.last_message_at))
@@ -88,6 +95,7 @@ const insertConversation = (data) => {
     conversationElement.appendChild(subjectLine)
     conversationElement.appendChild(previewLine)
 
+    convoMetaContainer.appendChild(readIndicator)
     convoMetaContainer.appendChild(dateLine)
     convoMetaContainer.appendChild(participants)
     convoMetaContainer.appendChild(authorLine)
