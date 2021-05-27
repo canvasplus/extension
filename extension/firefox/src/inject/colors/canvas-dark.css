@@ -2,24 +2,19 @@
   --ic-brand-font-color-dark: #ccc;
   --ic-brand-font-color-dark-lightened: #e5e5e5;
   --ic-brand-font-color-dark-darkened: #777;
-  --ic-brand-global-nav-avatar-border: #c1c1c1;
-  --ic-brand-global-nav-bgd: #202225;
-  --ic-brand-global-nav-menu-item__text-color--active: #fff;
-  --ic-brand-global-nav-ic-icon-svg-fill--active: #fff;
-  --ic-link-color: #2477bd;
 
-  --cpt-dark-background-color: #36393f;
+  --cpt-dark-background-color: #1d1d21;
   --cpt-dark-nav-tray-color: #16161a;
-  --cpt-dark-line-color: #6c89d0;
+  --cpt-dark-line-color: #383a42;
 
-  --cpt-dark-dashboard-header-color: rgba(47,49,54,0.95);
+  --cpt-dark-dashboard-header-color: rgba(29, 29, 33, 0.95);
 
   --cpt-dark-odd-tr-background-color: #2a2a30;
   --cpt-dark-hovered-email-background-color: #1f2930;
 
-  --cpt-dark-interactable-color: #2f3136;
+  --cpt-dark-interactable-color: #2D3B45;
   --cpt-dark-interactable-text-color: #fff;
-  --cpt-dark-interactable-border-color: #6c89d0;
+  --cpt-dark-interactable-border-color: #0b0f12;
 
   --cpt-dark-interactable-hover-color: #1f2930;
   --cpt-dark-interactable-hover-text-color: #ededed;
@@ -82,7 +77,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
 
 .btn, .Button:not(.reply-btn):not(.al-trigger.Button.Button--icon-action), .ui-button, #immersive_reader_mount_point div button span, select, input[name="announcements_search"], .ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover, .ui-tabs .ui-tabs-nav li.ui-tabs-active:hover, .ui-tabs .ui-tabs-nav li.ui-state-hover, .ui-tabs .ui-tabs-nav li:hover, #planner-today-btn:not(:hover), div.message-left-column div.select-checkbox div label span span:first-child, .ac-input-box, .dropdown-menu, .dropdown-menu li, #record_media_tab, select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input, #discussion_settings span, input[id^=ColorPickerCustomInput], #undated-events .event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event, .tox .tox-tbtn:hover, .tox .tox-split-button:hover, .tox .tox-tbtn.tox-tbtn--enabled:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron:hover, .ColorPicker__Container label span span span:nth-child(2) span input {
   color: var(--cpt-dark-interactable-text-color) !important;
-  background-color: #202225 !important;
+  background-color: var(--cpt-dark-interactable-color) !important;
   border-color: var(--cpt-dark-interactable-border-color) !important;
 }
 
@@ -98,8 +93,8 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
 }
 
 .btn:hover, .Button:hover, .ui-button:hover, #immersive_reader_mount_point div button:hover span, #planner-today-btn:hover, #undated-events .event:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron{
-  color: #fff !important;
-  background-color: #2f3136 !important;
+  color: var(--cpt-dark-interactable-hover-text-color) !important;
+  background-color: var(--cpt-dark-interactable-hover-color) !important;
   border-color: var(--cpt-dark-interactable-hover-border-color) !important;
 }
 
@@ -216,7 +211,7 @@ label[for="course_select_menu"] span span span span, label[for="grading_period_s
 
 .pinned-discussions-v2__wrapper, .unpinned-discussions-v2__wrapper, .closed-for-comments-discussions-v2__wrapper {
   background: var(--cpt-dark-background-color);
-  border: none !important;
+  border: none !important
 }
 
 .ic-Table.ic-Table--hover-row tbody tr:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-neutral:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-success:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-alert:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-danger:hover {
@@ -308,31 +303,15 @@ svg:not([aria-labelledby="LoadingSpinner"]) g circle:first-child {
 svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
   stroke: none;
 }
-.ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-app-header__menu-list-link {
-  background: #8e9297;
-}
-.quiz_score .score_value {
-  color: #ffdd58;
-}
-.btn, .Button, .ui-button {
-  background: #75777c;
-}
-.list-view a.active {
-  color: #FFF;
-}
-.ic-app-header__logomark-container {
-  background-color: #202225;
-}
+
 .equation_image {
-  filter: invert(100%)
+  filter: invert(1)
 }
+
 .tox .tox-split-button:hover {
   box-shadow: none;
 }
 
 .tox .tox-edit-area {
   border: none;
-}
-.standalone-icon::before {
-  color: #fff;
 }
