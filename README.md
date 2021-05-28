@@ -3,7 +3,7 @@
 </p>
 <h3 align="center">Boost your productivity right now.</h3>
 
-<p align="center">Canvas+ is a free chrome extension that improves the experience of students using Canvas</p>
+<p align="center">Canvas+ is a free chrome and firefox extension that improves the experience of students using Canvas</p>
 <br>
 <p align="center">
 <img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Users&color=important">
@@ -18,7 +18,8 @@
 <br>
   <h5>Helpful Links</h5>
   <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
-  <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install the Extension</a><br>
+  <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install the Extension Chrome</a><br>
+  <a href="Insert Link">Install the Extension Firefox (Coming Soon)</a><br>
   <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
   <a href="https://developer.chrome.com/docs/extensions/">Chrome Extension Documentation</a><br>
   <a href="https://jekyllrb.com/docs/">Jekyll (Used in website) Documentation</a>
@@ -94,7 +95,7 @@ If you have an idea of your own, I'll probably also merge it, but you might want
 <br><br>
 # 🖥️  Develop
 
-I'm happy to collaborate on this and any pull request will be accepted if they improve the extension. *All chrome extensions are coded in JavaScript* and google has some great resources to learn more about developing chrome extensions. For now, here's a rundown of what everything does and some useful functions:
+I'm happy to collaborate on this and any pull request will be accepted if they improve the extension. *All extensions are coded in JavaScript* and google has some great resources to learn more about developing chrome extensions. For now, here's a rundown of what everything does and some useful functions:
 
 <br><br>
 **manifest.json**
