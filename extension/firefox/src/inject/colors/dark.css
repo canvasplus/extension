@@ -1,0 +1,317 @@
+:root:root {
+  --ic-brand-font-color-dark: #ccc;
+  --ic-brand-font-color-dark-lightened: #e5e5e5;
+  --ic-brand-font-color-dark-darkened: #777;
+
+  --cpt-dark-background-color: #1d1d21;
+  --cpt-dark-nav-tray-color: #16161a;
+  --cpt-dark-line-color: #383a42;
+
+  --cpt-dark-dashboard-header-color: rgba(29, 29, 33, 0.95);
+
+  --cpt-dark-odd-tr-background-color: #2a2a30;
+  --cpt-dark-hovered-email-background-color: #1f2930;
+
+  --cpt-dark-interactable-color: #2D3B45;
+  --cpt-dark-interactable-text-color: #fff;
+  --cpt-dark-interactable-border-color: #0b0f12;
+
+  --cpt-dark-interactable-hover-color: #1f2930;
+  --cpt-dark-interactable-hover-text-color: #ededed;
+  --cpt-dark-interactable-hover-border-color: #090d0f;
+
+  --cpt-dark-module-item-color: #191f24;
+
+  --cpt-dark-important-text-color: #fff;
+}
+
+body, .header-bar, #breadcrumbs, .item-group-container, .ui-tabs:not(#record_media_tab) .ui-tabs-panel:not(#record_media_tab), #context-list-holder, #undated-events, #minical, #calendar-app .fc-month-view .fc-body, #calendar-drag-and-drop-container .fc-month-view .fc-body, .message-list .messages>li, .module-sequence-footer .module-sequence-footer-content, .discussion-reply-box, .discussion_entry, #content, .ic-Layout-contentMain, .planner-day, .EmptyDays-styles__nothingPlannedContent, .planner-empty-days h2, .PlannerHeader, table[style="margin: 1.5rem 0px;"] thead tr th, table[style="margin: 1.5rem 0px;"] tbody tr th, table[style="margin: 1.5rem 0px;"] tbody tr td, .reply-btn, .ui-datepicker .ui-datepicker-time, .ui-dialog .ui-dialog-buttonpane, .ui-dialog .ui-datepicker .ui-datepicker-time, .ui-datepicker .ui-dialog .ui-datepicker-time, .discussions-v2__container-image, .ic-Table td, .recent_activity>li, .recent-activity-header, #grades_summary th.title, span[dir="ltr"]  span:not([style="border-width: 0px; top: 0px; left: 0px; position: absolute; transform: translateX(216px) translateY(144px) translateZ(0px);"]):not(#ColorPicker__Apply span), .submission-details-header__heading-and-grades, .planner-day h2, .ic-Table td, .mini-cal-header, .mini_calendar, .ColorPicker__Container.with-border, #calendar-app .fc-agendaWeek-view .fc-body, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-body, .event-details, .agenda-wrapper, .tox .tox-menubar, .tox .tox-toolbar, .tox .tox-toolbar__overflow, .tox .tox-toolbar__primary, .canvas-rce__skins--root, .tox:not(.tox-tinymce-inline) .tox-editor-header, #tinymce, .ic-flash-info, .ic-flash-success, .ic-flash-warning, .ic-flash-error, .ui-dialog.ui-widget-content, .ic-DashboardCard__header_content, .ic-DashboardCard__header_content, .ic-DashboardCard, .DashboardCardMenu__ColorPicker, div[role="tabpanel"] div ul[aria-label="Dashboard Card Movement Menu"], #unfavorite, ul[role="menu"], .quiz-submission, .question .text, #questions.assessing, #canvasplus-alert-settings-update, #ic-app-class-search-results, .unpublished_courses_redesign .ic-DashboardCard__box__header {
+  background: var(--cpt-dark-background-color) !important;
+}
+
+.ic-DashboardCard {
+  box-shadow: 0 2px 5px rgb(0 0 0 / 40%);
+}
+
+.ui-menu-carat, .ui-menu-carat span {
+  border-color: var(--cpt-dark-line-color) transparent !important;
+}
+
+.tox-tbtn:active, .tox-tbtn:focus, .tox .tox-split-button:focus, .tox .tox-tbtn:focus, .tox .tox-split-button:focus {
+  background-color: unset !important;
+}
+
+table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span span svg[name="IconMuted"], table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span span svg[name="IconNo"], .tray-with-space-for-global-nav > div > ul > li > div, .tox .tox-tbtn {
+  color: var(--ic-brand-font-color-dark-darkened) !important;
+}
+
+.module-sequence-footer .module-sequence-footer-content {
+  border-top: 1px solid var(--cpt-dark-line-color) !important;
+}
+
+.pages.show .page-title, .course-title, .message-list .author, .ui-tabs .ui-tabs-nav li.ui-tabs-active a, th:not([scope="row"]), .accessible-toggler, .mini-cal-header, #minical .fc-toolbar h2, #minical .fc-toolbar .h2, .tox-menubar button, .question .header .question_name {
+  color: var(--cpt-dark-important-text-color) !important;
+}
+
+
+
+.ic-app-nav-toggle-and-crumbs, .header-bar, #right-side h2, #right-side .h2, .ic-Dashboard-header__layout, .ui-tabs .ui-tabs-nav, .ic-Table td, .ic-Table th {
+  border-bottom: 1px solid var(--cpt-dark-line-color);
+}
+
+.ic-Table.ic-Table--striped tbody tr:nth-child(odd) {
+  background-color: var(--cpt-dark-odd-tr-background-color) !important;
+}
+
+.message-list .messages>li.active, .ef-item-row:hover, #context-list .context_list_context:hover {
+  background-color: var(--cpt-dark-hovered-email-background-color) !important;
+}
+
+.ic-Dashboard-header__layout {
+  background: var(--cpt-dark-dashboard-header-color);
+}
+
+.navigation-tray-container {
+  background-color: var(--cpt-dark-nav-tray-color);
+}
+
+.btn, .Button:not(.reply-btn):not(.al-trigger.Button.Button--icon-action), .ui-button, #immersive_reader_mount_point div button span, select, input[name="announcements_search"], .ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover, .ui-tabs .ui-tabs-nav li.ui-tabs-active:hover, .ui-tabs .ui-tabs-nav li.ui-state-hover, .ui-tabs .ui-tabs-nav li:hover, #planner-today-btn:not(:hover), div.message-left-column div.select-checkbox div label span span:first-child, .ac-input-box, .dropdown-menu, .dropdown-menu li, #record_media_tab, select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input, #discussion_settings span, input[id^=ColorPickerCustomInput], #undated-events .event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event, .tox .tox-tbtn:hover, .tox .tox-split-button:hover, .tox .tox-tbtn.tox-tbtn--enabled:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron:hover, .ColorPicker__Container label span span span:nth-child(2) span input {
+  color: var(--cpt-dark-interactable-text-color) !important;
+  background-color: var(--cpt-dark-interactable-color) !important;
+  border-color: var(--cpt-dark-interactable-border-color) !important;
+}
+
+#minical .event::after {
+  background-color: #ff2949;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  top: 2px;
+  right: 2px;
+  left: unset;
+  border: none;
+}
+
+.btn:hover, .Button:hover, .ui-button:hover, #immersive_reader_mount_point div button:hover span, #planner-today-btn:hover, #undated-events .event:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron{
+  color: var(--cpt-dark-interactable-hover-text-color) !important;
+  background-color: var(--cpt-dark-interactable-hover-color) !important;
+  border-color: var(--cpt-dark-interactable-hover-border-color) !important;
+}
+
+.al-options, .ColorPicker__Container {
+  background-color: var(--cpt-dark-background-color);
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"]:not(#compose-message-recipients), input[type="tel"], input[type="color"], .uneditable-input, .ui-dialog-content.ui-widget-content {
+  border: 1px solid var(--cpt-dark-interactable-border-color) !important;
+  background-color: var(--cpt-dark-interactable-color) !important;
+}
+
+.ic-item-row {
+  box-shadow: 0 -1px var(--cpt-dark-line-color), inset 0 -1px var(--cpt-dark-line-color) !important;
+}
+
+.ui-dialog-content .form-actions {
+  box-shadow: none !important;
+}
+
+.tox .tox-tbtn svg path {
+  fill: var(--ic-brand-font-color-dark-darkened) !important;
+}
+
+[dir="ltr"] .tox .tox-split-button .tox-tbtn.tox-split-button__chevron svg path {
+  fill: white !important;
+}
+
+.ToDoSidebarItem svg, .ToDoSidebarItem__Info ul li, .message-list .summary, .ig-list .ig-row, .ig-details, .discussion-pubdate, .discussion-tododate, .discussion-reply-box:hover, .discussion-reply-box:focus, .EmptyDays-styles__nothingPlanned span, .PlannerHeader button:not(:hover):not(:first-child), .PlannerHeader span:not(:hover):last-child span button, #DashboardOptionsMenu_Container span button, .question_points_holder {
+  color: var(--ic-brand-font-color-dark-darkened) !important;
+}
+
+#right-side .events_list .event-details:after, #right-side .events_list .todo-details:after, #right-side .to-do-list .event-details:after, #right-side .to-do-list .todo-details:after {
+  background: none !important;
+}
+
+.ui-dialog .ui-dialog-titlebar.ui-widget-header, .ui-dialog .ui-datepicker .ui-widget-header.ui-datepicker-header, .ui-datepicker .ui-dialog .ui-widget-header.ui-datepicker-header, .compose_form .message-header, .compose_form .message-body, .context_messages ul.collectionViewItems li {
+  background-color: var(--cpt-dark-interactable-hover-color);
+  border-color: var(--cpt-dark-line-color);
+}
+.toolbarView .headerBar {
+  background-color: var(--cpt-dark-nav-tray-color);
+  border: 1px solid var(--cpt-dark-line-color);
+}
+
+.entry-content, .discussion_entry>.discussion-entry-reply-area, .discussion-reply-box, .discussion-entries .entry, #assignment_show .student-assignment-overview, .planner-empty-days h2, table[style="margin: 1.5rem 0px;"] thead tr, table[style="margin: 1.5rem 0px;"] tbody tr th, table[style="margin: 1.5rem 0px;"] tbody tr, .message-list .messages>li, .message-detail.span8 .message-header, .message-detail.conversations__message-detail .message-header, .message-detail.span8 .message-content>li, .message-detail.conversations__message-detail .message-content>li, .conversations .panel, .al-options, #compose-new-message .context_messages .collectionViewItems>li, #submission-comment-reply .context_messages .collectionViewItems>li, .ui-datepicker .ui-datepicker-time, .ui-dialog .ui-dialog-buttonpane, .ui-dialog .ui-datepicker .ui-datepicker-time, .ui-datepicker .ui-dialog .ui-datepicker-time, hr, .ui-tabs .ui-tabs-panel, .ef-header, .ef-main .ef-folder-content, .ef-directory-header, .ef-footer, .discussions-v2__container-image, .tox .tox-edit-area:not(.active), .tox .tox-edit-area:not(.active) iframe, table.summary td, table.summary tbody th, table.summary thead th, table.summary caption, .ic-Table tbody th, .form-actions {
+  border-color: var(--cpt-dark-line-color) !important;
+}
+
+table.summary td, table.summary tbody th {
+  background: none !important;
+}
+
+.ac-token {
+  background: #5677a3;
+  border: 2px solid #274061;
+}
+
+@media only screen and (min-width: 577px) {
+  body.responsive_awareness .message-list-scroller {
+    border-color: var(--cpt-dark-line-color) !important;
+  }
+}
+
+.announcements-v2__wrapper span:not(:first-child):not(:last-child) span:first-child span span:not(:first-child):not(:last-child) label {
+  color: white;
+}
+
+.item-group-condensed .ig-header, .stream_header:hover, .stream-details tr:hover, .tox .tox-mbtn:hover:not(:disabled):not(.tox-mbtn--active), .tox .tox-mbtn--active, .tox .tox-mbtn:hover:not(:disabled) {
+  background-color: var(--cpt-dark-interactable-hover-color);
+  border-color: var(--cpt-dark-line-color);
+}
+
+label[for="course_select_menu"] span span span span span span span, label[for="grading_period_select_menu"] span span span span span span span, label[for="assignment_sort_order_select_menu"] span span span span span span span, .conversations .panel, .question .header {
+  background-color: var(--cpt-dark-interactable-hover-color) !important;
+}
+
+
+label[for="course_select_menu"] span span span span span span span span input, label[for="grading_period_select_menu"] span span span span span span span span input, label[for="assignment_sort_order_select_menu"] span span span span span span span span input, .dropdown-menu li a span, .dropdown-menu li a, .mini_calendar .day, #minical .fc-widget-content, .feature-flag-wrapper div table tbody tr td div button, .ic-DashboardCard__action:not(:hover), .DashboardCardMenu__MovementItem:not(:hover), span[dir="ltr"] span:not([style="border-width: 0px; top: 0px; left: 0px; position: absolute; transform: translateX(216px) translateY(144px) translateZ(0px);"]):not(#ColorPicker__Apply span) {
+  color: var(--ic-brand-font-color-dark) !important;
+}
+
+.mini_calendar .day.today, .fc-unthemed .fc-today {
+  background-color: var(--ic-brand-primary) !important;
+  color: var(--cpt-dark-important-text-color) !important;
+}
+
+.dropdown-menu .divider {
+  background-color: var(--cpt-dark-line-color);
+}
+
+label[for="course_select_menu"] span span span span, label[for="grading_period_select_menu"] span span span span, label[for="assignment_sort_order_select_menu"] span span span span, .dropdown-menu .divider {
+  border-color: var(--cpt-dark-interactable-border-color) !important;
+}
+
+.ig-header .name {
+  color: var(--cpt-dark-important-text-color);
+  text-shadow: none;
+}
+
+.ig-list .ig-row, .ic-discussion-row {
+  background-color: var(--cpt-dark-module-item-color) !important;
+  border-color: var(--cpt-dark-line-color);
+}
+
+.message-list .subject, .module-item-title, th[scope="row"], .ic-item-row__content-col, .discussions-v2__container-image span div, .discussions-container__wrapper > span > div > button, label[for="NicknameInput"] span span span:first-child {
+  color: var(--ic-brand-font-color-dark) !important;
+}
+
+#courseMenuToggle {
+  border: none !important;
+  background: none !important;
+}
+
+.pinned-discussions-v2__wrapper, .unpinned-discussions-v2__wrapper, .closed-for-comments-discussions-v2__wrapper {
+  background: var(--cpt-dark-background-color);
+  border: none !important
+}
+
+.ic-Table.ic-Table--hover-row tbody tr:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-neutral:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-success:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-alert:hover, .ic-Table.ic-Table--hover-row tbody tr.ic-Table__row--bg-danger:hover {
+  background: none;
+}
+
+select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input {
+  background: none;
+  border-color: none;
+}
+
+.stream-details tr {
+  border-top: 1px solid var(--cpt-dark-line-color) !important;
+}
+
+.recent_activity>li, .recent-activity-header, #grades_summary th.title, span[dir="ltr"] span, .submission-details-header__heading-and-grades, .planner-day h2, .ic-Table td, .mini-cal-header, .mini_calendar, .ColorPicker__Container.with-border, .fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover, .fc-toolbar, #minical, .event-details, .event-details-header, .event-details-content, .event-details-footer , .agenda-day, .ic-app-footer, [dir="ltr"] .tox-toolbar .tox-toolbar__group::after, [dir="ltr"] .tox-toolbar-overlord .tox-toolbar__group::after, [dir="ltr"] .tox-toolbar__overflow .tox-toolbar__group::after, [dir="ltr"] .tox-tinymce-aux .tox-toolbar .tox-toolbar__group::after, div[role="tablist"]::before, div[role="tablist"] + div:nth-child(2) div, div[role="tabpanel"][id^="panel-"] div, .question, .question .header, span[role="toolbar"] div, .quiz-header, #canvasplus-alert-settings-update, #ic-app-class-search-results, .unpublished_courses_redesign .ic-DashboardCard__box__header {
+  border-color: var(--cpt-dark-line-color) !important;
+}
+
+span[style="border-radius: 0.25rem; border-width: 0.0625rem; width: auto; height: auto;"] > span:first-child {
+  border: none;
+}
+
+.close, .fc button span {
+  color: var(--ic-brand-font-color-dark-darkened);
+  text-shadow: none;
+}
+
+.content_summary:hover, .content_summary:focus, .planner-day h2, .planner-empty-days h2 {
+  color: var(--ic-brand-font-color-dark-lightened);
+}
+
+.submission-late-pill span, .submission-missing-pill span {
+  background: none !important;
+}
+
+label[for="course_select_menu"] span span span span, label[for="grading_period_select_menu"] span span span span, label[for="assignment_sort_order_select_menu"] span span span span, #right-side .details .header, th[scope="row"] span[style="margin: 0.5rem 0px 0px 0.75rem;"]:nth-child(2) div label span span:nth-child(2), input[data-testid="enable-notifications-toggle"] + label span span:nth-child(2), .mini_calendar .day.other_month, #minical .fc-other-month, .feature-flag-wrapper div table tbody tr td div div {
+  color: var(--ic-brand-font-color-dark-darkened) !important;
+}
+
+ul[role="listbox"] li span {
+  color: var(--ic-brand-font-color-dark);
+  background-color: var(--cpt-dark-interactable-color);
+
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+  filter: invert(1);
+  opacity: .8;
+}
+
+.fc-event .fc-bg, #calendar-app .fc-agendaWeek-view .fc-event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event {
+  background-color: var(--cpt-dark-interactable-color);
+  opacity: 1;
+}
+
+.ColorPicker__Container label span span span:nth-child(2) span span {
+  opacity: 0 !important;
+}
+
+#calendar-app .fc-event, #calendar-drag-and-drop-container .fc-event {
+  background-color: var(--cpt-dark-interactable-hover-color);
+}
+
+ul[role="listbox"] li span:hover, div[role="tablist"] div[role="tab"][aria-selected] {
+  color: var(--cpt-dark-important-text-color);
+  background-color: var(--cpt-dark-interactable-hover-color);
+  border-color: var(--cpt-dark-line-color);
+}
+
+div[role="tablist"] div[role="tab"]:not([aria-selected]):not([aria-disabled]):hover {
+  background: unset !important;
+  color: var(--ic-brand-font-color-dark-darkened) !important;
+  border-color: var(--cpt-dark-line-color);
+}
+
+ul[role="listbox"] li span[aria-selected="true"], .PlannerItem-styles__completed div label span span, .BadgeList-styles__item span span {
+  background-color: var(--cpt-dark-background-color);
+}
+
+.PlannerItem-styles__root, .CompletedItemsFacade-styles__root {
+  border-bottom: 1px solid var(--cpt-dark-line-color);
+}
+
+svg:not([aria-labelledby="LoadingSpinner"]) g circle:first-child {
+  stroke: none;
+}
+
+svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
+  stroke: none;
+}
+
+.equation_image {
+  filter: invert(1)
+}
+
+.tox .tox-split-button:hover {
+  box-shadow: none;
+}
+
+.tox .tox-edit-area {
+  border: none;
+}
