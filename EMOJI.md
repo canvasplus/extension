@@ -14,7 +14,7 @@ Based on [gitmoji](https://gitmoji.carloscuesta.me/), tailored for Canvas+
 |Documentation|:books: `:books:`|
 |Edit popup|:gear: `:gear:`|
 |Edit color modes|:lipstick: `:lipstick:`|
-|Add website content|:pencil2 `:pencil2`|
+|Add website content|:pencil2: `:pencil2`|
 |Change backend jekyll|:test_tube: `:test_tube:`|
 |Release|:ribbon: `:ribbon`|
 |Something else|Be creative!|
