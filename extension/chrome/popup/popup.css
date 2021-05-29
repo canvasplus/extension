@@ -255,6 +255,12 @@ input:checked + .defl-toggle:before {
   color: #fff;
 }
 
+
+#appearance-label-dim {
+  background-color: #45484e;
+  color: #fff;
+}
+
 #canvasplus-tab-wrapper > div, body {
   background-color: var(--bgd-color);
 }
