@@ -4,8 +4,7 @@
   "manifest_version": 2,
   "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
   "web_accessible_resources": [
-         "src/inject/colors/dark.css",
-         "src/inject/colors/dim.css"
+         "src/inject/colors/canvas-dark.css"
      ],
   "content_scripts": [
     {
