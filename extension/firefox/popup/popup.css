@@ -10,8 +10,9 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
-  width: 260px;
+  width: 240px;
   margin: 0;
+  font-size: 12px;
 }
 
 a {
@@ -56,7 +57,6 @@ b {
   background-color: var(--tabs-bgd-color);
   border-top: 1px solid var(--tabs-border-color);
   border-bottom: 1px solid var(--tabs-border-color);
-
 }
 
 #canvasplus-tab-control li:hover {
@@ -68,7 +68,7 @@ b {
   display: block;
   color: var(--tabs-text-color);
   width: 60px;
-  padding: 8px 13.3px;
+  padding: 8px 10px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -159,8 +159,8 @@ input:checked + .defl-toggle:before {
 }
 
 #canvasplus-changes {
-  width: 260px;
-  height: 260px;
+  width: 240px;
+  height: 240px;
   background: url(https://expertphotography.com/wp-content/uploads/2020/07/cloud-photography-6.jpg);
   background-size: 170%;
   text-align: center;

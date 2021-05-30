@@ -1,4 +1,4 @@
-document.getElementById("version").innerHTML = "Version " + browser.runtime.getManifest().version;
+document.getElementById("version").innerHTML = "Version " + chrome.runtime.getManifest().version;
 
 window.addEventListener('click',function(e){
   if(e.target.href!==undefined){
