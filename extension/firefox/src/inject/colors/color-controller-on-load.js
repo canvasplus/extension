@@ -1,7 +1,7 @@
 
 chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
     var link = document.createElement("link");
-    link.href = chrome.extension.getURL("src/inject/colors/canvas-dark.css");
+    link.href = chrome.extension.getURL("src/inject/colors/dark.css");
     link.type = "text/css";
     link.rel = "stylesheet";
     link.setAttribute("class", "cpt-iframe-style")
