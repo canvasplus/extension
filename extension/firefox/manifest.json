@@ -5,6 +5,7 @@
   "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
+         "src/inject/colors/apply-variables.css",
          "src/inject/colors/dark.css",
          "src/inject/colors/dim.css"
      ],
