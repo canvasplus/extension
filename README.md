@@ -80,7 +80,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🟡 Bug Fixes
 - 🟡 "Dim" Mode
 - 🟡 Email Peeker
-- 🔴 Drap and drop to upload
+- 🔴 Drag and drop to upload
 - 🔴 Upload from clipboard
 - 🟡 Change sidebar: Hide branding, change size, etc
 - 🟡 Quick Navigator
