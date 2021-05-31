@@ -71,23 +71,29 @@ Be sure to report it in the <a href="https://github.com/adrWasTaken/CanvasPlus/i
 
 Here's a list of some planned features for the extension, in order of when they're coming:
 
-- Bug Fixes
-- "Dim" Mode
-- Email Peeker
-- Drap and drop to upload
-- Upload from clipboard
-- Change sidebar: Hide branding, change size, etc
-- Quick Navigator
-- Customize link & accent color
-- Pin/bookmark pages/discussion posts
-- Email signatures
-- Add filters to search (Overdue/late assignments, certain classes, etc)
-- Show own discussion posts at the top of a discussion.
-- Sort discussions by likes and/or interaction
-- Access zoom links from extension popup
-- (Potential) Discussion signature
-- (Potential) Automatically export course content for offline viewing
-- Dashboard Overhaul
+🟢 = Ready
+
+🟡 = In Progress
+
+🔴 = To Do
+
+- 🟡 Bug Fixes
+- 🟡 "Dim" Mode
+- 🟡 Email Peeker
+- 🔴 Drap and drop to upload
+- 🔴 Upload from clipboard
+- 🟡 Change sidebar: Hide branding, change size, etc
+- 🟡 Quick Navigator
+- 🟡 Customize link & accent color
+- 🔴 Pin/bookmark pages/discussion posts
+- 🔴 Email signatures
+- 🔴 Add filters to search (Overdue/late assignments, certain classes, etc)
+- 🔴 Show own discussion posts at the top of a discussion.
+- 🔴 Sort discussions by likes and/or interaction
+- 🔴 Access zoom links from extension popup
+- 🔴 (Potential) Discussion signature
+- 🔴 (Potential) Automatically export course content for offline viewing
+- 🔴 Dashboard Overhaul
 
 If you want to add any of these, I'll accept your pull request!
 If you have an idea of your own, I'll probably also merge it, but you might want to check with me. You can contact me (<a href="https://github.com/adrWasTaken">more details on my github profile</a>), or make an issue in this repo, and I'll let you know what I think!
