@@ -35,10 +35,12 @@ const runConvoKeeper = () => {
         peekerBack.style.visibility = "visible"
         peekerBack.style.opacity = "1"
 
-        let convos = await getConversations()
-        convos.forEach(item => {
-            insertConversation(item)
-        })
+        if(!document.getElementById('canvasplus-convo-peeker-convo-list')) {
+            let convos = await getConversations()
+            convos.forEach(item => {
+                insertConversation(item)
+            })
+        }
     })
 
     document.body.insertBefore(peekerElement, document.body.firstElementChild);
@@ -181,12 +183,15 @@ const getConversations = () => {
         if(convosCache === undefined) {
             fetch('/api/v1/conversations?include=participant_avatars').then(data => {
                 data.json().then(json => {
-                    insertConversationTop()
-
-                    peekerElement.appendChild(peekerConvoList)
-
-                    convosCache = json
-                    resolve(json)
+                    setTimeout(() => {
+                        
+                        insertConversationTop()
+    
+                        peekerElement.appendChild(peekerConvoList)
+    
+                        convosCache = json
+                        resolve(json)
+                    }, 5000)
                 })
             })
         } else {
