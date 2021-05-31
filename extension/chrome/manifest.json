@@ -12,7 +12,7 @@
     {
       "matches": [ "*://*.instructure.com/*" ],
       "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/imported/moment.js", "src/inject/scroll/scroll.css"]
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
