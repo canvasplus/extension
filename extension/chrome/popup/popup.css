@@ -209,15 +209,22 @@ input:checked + .defl-toggle:before {
   padding-top: 20px;
 }
 
-#canvasplus-display label:not(:last-child) {
-  margin-right: 10px;
-}
-
-#canvasplus-display label {
+.appearance-label {
   position: relative;
+  display: block;
+  width: 100px;
+  margin: auto;
   border-radius: 5px;
   padding: 10px 35px;
   font-family: 'Open Sans Bold', sans-serif;
+}
+
+.appearance-label:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.appearance-setting {
+  margin-left: 10px;
 }
 
 #canvasplus-display label.selected input::after {
