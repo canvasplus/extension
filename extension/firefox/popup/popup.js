@@ -102,7 +102,7 @@ chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
   if(appearance != null)
   {
     document.getElementById("css-vars").href = "vars-" + appearance + ".css"
-    document.getElementById("appearance-setting-" + appearance).parentElement.classList = "container selected";
+    document.getElementById("appearance-setting-" + appearance).parentElement.classList.add( "selected");
     document.getElementById("appearance-setting-" + appearance).checked = true;
   }
 });
@@ -111,9 +111,9 @@ for(element of document.getElementsByClassName("appearance-setting")){
   element.addEventListener('click', function () {
     document.getElementById("css-vars").href = "vars-" + this.id.substring(19) + ".css"
     for(element of document.getElementsByClassName("appearance-setting")){
-      element.parentElement.classList = "container";
+      element.parentElement.classList.remove("selected");
     }
-    this.parentElement.classList = "container selected";
+    this.parentElement.classList.add("selected");
     chrome.storage.local.set({"canvasplus-display-appearance": this.id.substring(19)});
   })
 }
