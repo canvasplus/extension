@@ -288,3 +288,12 @@ svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
 .tox .tox-edit-area {
   border: none;
 }
+
+.list-view a.active {
+  color: var(--cpt-dark-important-link-color);
+  border-left: var(--cpt-dark-important-link-color);
+}
+
+.ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-app-header__menu-list-link {
+  background: var(--cpt-dark-current-page);
+}
