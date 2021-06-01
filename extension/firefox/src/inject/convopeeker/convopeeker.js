@@ -38,10 +38,12 @@ const runConvoKeeper = () => {
         peekerBack.style.visibility = "visible"
         peekerBack.style.opacity = "1"
 
-        let convos = await getConversations()
-        convos.forEach(item => {
-            insertConversation(item)
-        })
+        if(!document.getElementById('canvasplus-convo-peeker-convo-list')) {
+            let convos = await getConversations()
+            convos.forEach(item => {
+                insertConversation(item)
+            })
+        }
     })
 
     document.body.insertBefore(peekerElement, document.body.firstElementChild);
@@ -51,7 +53,7 @@ const runConvoKeeper = () => {
 const insertConversation = (data) => {
     const conversationElement = document.createElement('div')
     conversationElement.classList = 'convo-peeker-convo'
-    
+
     const subjectLine = document.createElement('b')
     subjectLine.classList = 'convo-peeker-convo-subject-line'
     subjectLine.innerHTML = data.subject
@@ -139,7 +141,7 @@ const insertConversationTop = () => {
     searchFormButton.classList = 'canvasplus-convo-peeker-convo-top-search-form-button'
 
     top.appendChild(header)
-    
+
     searchFormWrapper.appendChild(expandLink)
     searchFormWrapper.appendChild(searchForm)
     searchForm.appendChild(searchFormInput)
@@ -165,7 +167,7 @@ const formatDate = (date) => {
             if(hour === 0) return '12:' + (mins < 10 ? '0' : '') + mins + 'am'
             else return hour + ':' + (mins < 10 ? '0' : '') + mins + 'am'
         } else {
-            if(hour === 12) return '12:' + (mins < 10 ? '0' : '') + mins + 'am' 
+            if(hour === 12) return '12:' + (mins < 10 ? '0' : '') + mins + 'am'
             else return (hour - 12) + ':' + (mins < 10 ? '0' : '') + mins + 'am'
         }
     } else if(date.getTime() + 86400000 > day.getTime()) {
@@ -184,12 +186,15 @@ const getConversations = () => {
         if(convosCache === undefined) {
             fetch(url+'/api/v1/conversations?include=participant_avatars').then(data => {
                 data.json().then(json => {
-                    insertConversationTop()
+                  setTimeout(() => {
 
-                    peekerElement.appendChild(peekerConvoList)
+                      insertConversationTop()
 
-                    convosCache = json
-                    resolve(json)
+                      peekerElement.appendChild(peekerConvoList)
+
+                      convosCache = json
+                      resolve(json)
+                  }, 5000)
                 })
             })
         } else {

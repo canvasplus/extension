@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/imported/moment.js"],
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
     },
     {
