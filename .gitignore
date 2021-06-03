@@ -1,2 +1,4 @@
 
 *.DS_Store
+extension/chrome/node_modules
+extension/chrome/dist
