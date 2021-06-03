@@ -78,6 +78,7 @@ Here's a list of some planned features for the extension, in order of when they'
 🔴 = To Do
 
 - 🟡 Bug Fixes
+- 🔴 Remake popup using react
 - 🟡 "Dim" Mode
 - 🟡 Email Peeker
 - 🔴 Drag and drop to upload
