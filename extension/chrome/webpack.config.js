@@ -9,7 +9,7 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        popup: path.resolve(__dirname, "./popup/index.js"),
+        popup: path.resolve(__dirname, "./popup/Popup.js"),
     },
     output: {
         filename: '[name].bundle.js',
@@ -37,7 +37,11 @@ module.exports = {
             {
                 test: /\.html$/,
                 use: ['html-loader']
-            }
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
         ]
     },
     plugins: [

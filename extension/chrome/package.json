@@ -2,7 +2,7 @@
   "name": "canvasplus",
   "version": "0.3.0",
   "description": "Canvas+ chrome extension",
-  "main": "popup/index.js",
+  "main": "popup/Popup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack-dev-server",
@@ -24,8 +24,10 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.1.1",
+    "css-loader": "^5.2.6",
     "html-loader": "^1.3.0",
     "html-webpack-plugin": "^4.4.1",
+    "style-loader": "^2.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
