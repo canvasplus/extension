@@ -9,7 +9,7 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        popup: path.resolve(__dirname, "./popup/Popup.js"),
+        popup: path.resolve(__dirname, "./popup/App.js"),
     },
     output: {
         filename: '[name].bundle.js',

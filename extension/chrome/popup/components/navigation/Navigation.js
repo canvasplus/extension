@@ -3,20 +3,23 @@ import Banner from './Banner';
 import Tab from './Tab';
 import TabContainer from './TabContainer';
 
-function Navigation() {
+function Navigation(props) {
   return (
     <div>
       <Banner />
-      <TabContainer tabs={
+      <TabContainer onTabChange={props.onTabChange} tabs={
         [
           {
-            "name": "Changes"
+            "name": "Changes",
+            "id": "changes"
           },
           {
-            "name": "Settings"
+            "name": "Settings",
+            "id": "settings"
           },
           {
-            "name": "Display"
+            "name": "Display",
+            "id": "display"
           }
         ]
       }/>
