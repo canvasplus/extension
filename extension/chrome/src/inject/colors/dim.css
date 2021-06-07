@@ -3,16 +3,16 @@
   --ic-brand-font-color-dark-lightened: #e5e5e5;
   --ic-brand-font-color-dark-darkened: #777;
   --ic-brand-global-nav-avatar-border: #c1c1c1;
-  --ic-brand-global-nav-bgd: #202225;
+  --ic-brand-global-nav-bgd: #1d1e21;
   --ic-brand-global-nav-menu-item__text-color--active: #fff;
   --ic-brand-global-nav-ic-icon-svg-fill--active: #fff;
   --ic-link-color: #2477bd;
 
-  --cpt-dark-background-color: #36393f;
+  --cpt-dark-background-color: #26292d;
   --cpt-dark-nav-tray-color: #16161a;
   --cpt-dark-line-color: #6c89d0;
 
-  --cpt-dark-dashboard-header-color: rgba(47,49,54,0.95);
+  --cpt-dark-dashboard-header-color: rgba(42,43,47,0.95);
 
   --cpt-dark-odd-tr-background-color: #2a2a30;
   --cpt-dark-hovered-email-background-color: #1f2930;
@@ -31,5 +31,5 @@
 
   --cpt-dark-important-link-color: #fff;
 
-  --cpt-dark-current-page: #36393f;
+  --cpt-dark-current-page: #26292d;
 }
