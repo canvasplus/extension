@@ -1,4 +1,4 @@
-const placeholder = 0; /* default 14, Max 22(Without activating scroll bar) if seeting off then set to 0*/
+const placeholder = 0; /* default 14, Max 22(Without activating scroll bar) if seting off then set to 0*/
 const text = document.getElementsByClassName("menu-item__text");
 const icon = document.getElementsByClassName("ic-icon-svg");
 if (placeholder != 0) {
@@ -17,7 +17,7 @@ const placeholder2 = false; /* default false */
 if (placeholder2 == true) {
   document.getElementsByClassName("ic-app-header__logomark-container")[0].remove();
 };
-const placeholder3 = ;
+const placeholder3 = undefined;
 if (placeholder3 != undefined) {
   document.getElementsByClassName("ic-app-header")[0].style.backgroundColor = "#" + placeholder3;
 };
