@@ -7,7 +7,7 @@ function Navigation(props) {
   return (
     <div>
       <Banner />
-      <TabContainer onTabChange={props.onTabChange} tabs={
+      <TabContainer onTabChange={props.onTabChange} currentTab={props.currentTab} tabs={
         [
           {
             "name": "Changes",

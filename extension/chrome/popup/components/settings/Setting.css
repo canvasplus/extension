@@ -1,0 +1,12 @@
+.Setting {
+  border: 1px solid var(--setting-line-color);
+  border-radius: 3px;
+  
+  margin: 0 12px;
+  padding: 7px;
+}
+
+.Setting__description {
+  width: 150px;
+  margin: 10px 0 0 0;
+}

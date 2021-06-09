@@ -1,3 +1,14 @@
+:root:root {
+  --banner-background-color: #A82020;
+
+  --tab-background-color-active: #21262F;
+  --tab-background-color: #303643;
+  --tab-text-color: #fff;
+
+  --setting-line-color: #ccc;
+}
+
 body {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   margin: 0;
 }
