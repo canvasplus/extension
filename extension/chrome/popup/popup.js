@@ -25,10 +25,10 @@ const frames = {
     "element": (
       <span>
         <h1>Settings</h1>
-        <Setting name="Smart Scrolling" description="Adds scroll to bottom and back to top buttons." />
+        <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
         <SettingGroup name="Miscellaneous">
-          <Setting name="Speed Boost" description="Improve loading speeds by preloading links." />
-          <Setting name="Speed Boost" description="Improve loading speeds by preloading links." />
+          <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
+          <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
         </SettingGroup>
       </span>
     )
