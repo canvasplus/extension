@@ -1,0 +1,32 @@
+.SettingGroup__Name {
+  width: calc(100% - 14px);
+  padding: 7px;
+
+  background-color: var(--setting-group-label-background-color);
+  color: var(--setting-group-label-text-color);
+
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  display: block;
+}
+
+.SettingGroup__SettingsContainer .Setting {
+  padding: 7px;
+}
+
+.SettingGroup__SettingsContainer .Setting:not(:last-child) {
+  border-bottom: 1px solid var(--setting-line-color);;
+}
+
+
+.SettingGroup__SettingsContainer.closed {
+  transform: translateY(-40px);
+}
+
+.SettingGroup__SettingsContainer {
+}
+
+.SettingGroup__SettingsContainerWrapper {
+  overflow: hidden;
+}

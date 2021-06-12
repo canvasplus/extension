@@ -1,9 +1,18 @@
-.Setting {
+.Setting:not(.SettingGroup .Setting), .SettingGroup {
   border: 1px solid var(--setting-line-color);
-  border-radius: 3px;
-  
-  margin: 0 12px;
+  border-radius: 3px;  
+}
+
+.Setting:not(.SettingGroup .Setting) {
   padding: 7px;
+}
+
+.Setting:last-child:not(.SettingGroup .Setting), .SettingGroup:last-child {
+  margin: 0 12px;
+}
+
+.Setting:not(:last-child):not(.SettingGroup .Setting), .SettingGroup:not(:last-child) {
+  margin: 0 12px 12px 12px;
 }
 
 .Setting__description {
