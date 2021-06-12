@@ -9,6 +9,7 @@
   border-top-right-radius: 3px;
 
   display: block;
+  transition: background-color 0.3s;
 }
 
 .SettingGroup__SettingsContainer .Setting {
@@ -16,17 +17,32 @@
 }
 
 .SettingGroup__SettingsContainer .Setting:not(:last-child) {
-  border-bottom: 1px solid var(--setting-line-color);;
+  border-bottom: 1px solid var(--setting-line-color);
 }
 
-
-.SettingGroup__SettingsContainer.closed {
-  transform: translateY(-40px);
+.SettingGroup__Name:hover:not(.closed .SettingGroup__Name){
+  background-color: #444;
 }
 
-.SettingGroup__SettingsContainer {
+.closed .SettingGroup__Name {
+  animation-name: groupLabelFlash;
+  animation-duration: 0.3s;
+  border-radius: 3px;
+}
+
+.closed .SettingGroup__SettingsContainer {
+  display: none;
 }
 
 .SettingGroup__SettingsContainerWrapper {
   overflow: hidden;
+}
+
+@keyframes groupLabelFlash {
+  0% {
+    background-color: #444;
+  }
+  100% {
+    background-color: #000;
+  }
 }

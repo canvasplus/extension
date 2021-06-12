@@ -9,12 +9,12 @@ const SettingGroup = (props) => {
     setOpen(!open)
   }
 
-  const containerClassName = open ? "SettingGroup__SettingsContainer" : "SettingGroup__SettingsContainer closed"
+  const className = open ? "SettingGroup" : "SettingGroup closed"
 
   return (
-    <div className="SettingGroup">
+    <div className={className}>
       <b className="SettingGroup__Name" onClick={ labelClickHandler }>{ props.name }</b>
-      <div className={containerClassName}>
+      <div className="SettingGroup__SettingsContainer">
         { props.children }
       </div>
     </div>

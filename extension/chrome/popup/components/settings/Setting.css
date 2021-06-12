@@ -19,3 +19,13 @@
   width: 150px;
   margin: 10px 0 0 0;
 }
+
+.Setting__info {
+  width: calc(100% - 38px);
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.Setting .ToggleSwitch {
+  display: inline-block;
+}

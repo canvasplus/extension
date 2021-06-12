@@ -1,0 +1,31 @@
+.ToggleSwitch {
+  width: 28px;
+  height: 18px;
+  border-radius: 64px;
+  
+  background-color: gray;
+  position: relative;
+}
+
+.ToggleSwitch__Handle {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 4px;
+  transition: left 0.3s;
+
+  background-color: white;
+
+  position: absolute;
+}
+
+.ToggleSwitch.on {
+  background-color: blue;
+}
+
+.ToggleSwitch.on .ToggleSwitch__Handle {
+  left: 14px;
+}
