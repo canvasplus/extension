@@ -4,24 +4,18 @@ import Tab from './Tab';
 import TabContainer from './TabContainer';
 
 function Navigation(props) {
+  const tabs = []
+  Object.keys(props.sections).forEach(item => {
+    tabs.push({
+      "name": props.sections[item].name,
+      "id": item
+    })
+  })
   return (
     <div>
       <Banner />
       <TabContainer onTabChange={props.onTabChange} currentTab={props.currentTab} tabs={
-        [
-          {
-            "name": "Changes",
-            "id": "changes"
-          },
-          {
-            "name": "Settings",
-            "id": "settings"
-          },
-          {
-            "name": "Display",
-            "id": "display"
-          }
-        ]
+        tabs
       }/>
     </div>
   )
