@@ -54,6 +54,18 @@ const frames = {
             appearance: "light",
             background: "#eee",
             foreground: "#444"
+          },
+          {
+            name: "Dim",
+            appearance: "dim",
+            background: "#45484e",
+            foreground: "#fff"
+          },
+          {
+            name: "Lights Out",
+            appearance: "dark",
+            background: "#050d26",
+            foreground: "#fff"
           }
         ]}></AppearanceSelector>
       </span>

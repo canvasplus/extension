@@ -9,6 +9,8 @@
 
   --setting-group-label-background-color: #000;
   --setting-group-label-text-color: #fff;
+
+  --large-option-selected-indicator-color: #0392ff;
 }
 
 body {
