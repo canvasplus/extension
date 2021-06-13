@@ -7,6 +7,7 @@ import Navigation from './components/navigation/Navigation';
 import FrameContainer from './components/frames/FrameContainer';
 import Setting from './components/settings/Setting';
 import SettingGroup from './components/settings/SettingGroup';
+import AppearanceSelector from './components/display/AppearanceSelector';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
@@ -40,6 +41,21 @@ const frames = {
           <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
           <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
         </SettingGroup>
+      </span>
+    )
+  }, "display": {
+    "name": "Display",
+    "element": (
+      <span>
+        <h1>Display</h1>
+        <AppearanceSelector appearances={[
+          {
+            name: "Default",
+            appearance: "light",
+            background: "#eee",
+            foreground: "#444"
+          }
+        ]}></AppearanceSelector>
       </span>
     )
   }

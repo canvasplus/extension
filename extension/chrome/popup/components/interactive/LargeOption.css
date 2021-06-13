@@ -1,0 +1,13 @@
+.LargeOptionForm__Option {
+  position: relative;
+  border-radius: 5px;
+  padding: 12px 0;
+  width: 60%;
+  margin: auto;
+}
+
+.LargeOptionForm__Option p {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+}
