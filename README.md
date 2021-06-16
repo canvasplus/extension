@@ -96,6 +96,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🔴 (Potential) Automatically export course content for offline viewing
 - 🔴 Dashboard Overhaul
 - 🔴 (Potential) Automatically or semiautomatically sync assignments with Notion, Trello, Clickup, Asana, etc.
+- 🔴 Client-side links and link previews
 
 If you want to add any of these, I'll accept your pull request!
 If you have an idea of your own, I'll probably also merge it, but you might want to check with me. You can contact me (<a href="https://github.com/adrWasTaken">more details on my github profile</a>), or make an issue in this repo, and I'll let you know what I think!
