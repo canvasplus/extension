@@ -47,27 +47,30 @@ const frames = {
     "name": "Display",
     "element": (
       <span>
-        <h1>Display</h1>
-        <AppearanceSelector appearances={[
-          {
-            name: "Default",
-            appearance: "light",
-            background: "#eee",
-            foreground: "#444"
-          },
-          {
-            name: "Dim",
-            appearance: "dim",
-            background: "#45484e",
-            foreground: "#fff"
-          },
-          {
-            name: "Lights Out",
-            appearance: "dark",
-            background: "#050d26",
-            foreground: "#fff"
-          }
-        ]}></AppearanceSelector>
+        <div className="center">
+          <b>Appearance</b>
+          <p>Change the color scheme of Canvas.</p>
+          <AppearanceSelector appearances={[
+            {
+              name: "Default",
+              appearance: "light",
+              background: "#eee",
+              foreground: "#444"
+            },
+            {
+              name: "Dim",
+              appearance: "dim",
+              background: "#45484e",
+              foreground: "#fff"
+            },
+            {
+              name: "Lights Out",
+              appearance: "dark",
+              background: "#050d26",
+              foreground: "#fff"
+            }
+          ]}></AppearanceSelector>
+        </div>
       </span>
     )
   }
