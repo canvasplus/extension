@@ -21,13 +21,12 @@ const frames = {
   "changes": {
     "name": "Changes",
     "element": (
-      <h1>hello world</h1>
+      <h1>Changes</h1>
     )
   }, "settings": {
     "name": "Settings",
     "element": (
       <span>
-        <h1>Settings</h1>
         <SettingGroup name="Navigation">
           <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
           <Setting name="Navigator" setting="navigator" description="Go to any page or list using a popout menu." />
@@ -48,8 +47,11 @@ const frames = {
     "element": (
       <span>
         <div className="center">
-          <b>Appearance</b>
-          <p>Change the color scheme of Canvas.</p>
+          <div className="margin">
+            <b>Appearance</b>
+            <p className="color-gray small-margin">Change the color scheme of Canvas.</p>
+            <p className="color-gray small-margin">Note: Dark and dim mode may have issues. You can report bugs <a href="https://github.com/adrWasTaken/CanvasPlus/issues">here</a>.</p>
+          </div>
           <AppearanceSelector appearances={[
             {
               name: "Default",
