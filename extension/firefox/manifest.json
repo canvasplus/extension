@@ -23,6 +23,11 @@
     },
     {
       "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/textcolor/textcolor.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
       "js": ["src/inject/colors/color-controller-on-load.js"]
     },
     {
