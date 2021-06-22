@@ -86,6 +86,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🟡 Change sidebar: Hide branding, change size, etc
 - 🟡 Quick Navigator
 - 🟡 Customize link & accent color
+- 🟡 (Potential) Auto Login with end to end encryption
 - 🔴 Pin/bookmark pages/discussion posts
 - 🔴 Email signatures
 - 🔴 Add filters to search (Overdue/late assignments, certain classes, etc)
