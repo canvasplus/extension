@@ -79,7 +79,7 @@ Here's a list of some planned features for the extension, in order of when they'
 
 - 🟡 Bug Fixes
 - 🟡 Remake popup using react
-- 🟡 "Dim" Mode
+- 🟢 "Dim" Mode
 - 🟡 Email Peeker
 - 🔴 Drag and drop to upload
 - 🔴 Upload from clipboard
