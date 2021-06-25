@@ -77,15 +77,11 @@ Here's a list of some planned features for the extension, in order of when they'
 
 🔴 = To Do
 
+### 📋 Planned for after version 0.3
 - 🟡 Bug Fixes
-- 🟡 Remake popup using react
-- 🟢 "Dim" Mode
-- 🟡 Email Peeker
 - 🔴 Drag and drop to upload
 - 🔴 Upload from clipboard
-- 🟡 Change sidebar: Hide branding, change size, etc
 - 🟡 Quick Navigator
-- 🟡 Customize link & accent color
 - 🟡 (Potential) Auto Login with end to end encryption
 - 🔴 Pin/bookmark pages/discussion posts
 - 🔴 Email signatures
@@ -98,6 +94,14 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🔴 Dashboard Overhaul
 - 🔴 (Potential) Automatically or semiautomatically sync assignments with Notion, Trello, Clickup, Asana, etc.
 - 🔴 Client-side links and link previews
+
+### 📋 Planned for version 0.3
+- 🟡 Remake popup using react
+- 🟢 "Dim" Mode
+- 🟡 Email Peeker
+- 🟡 Change sidebar: Hide branding, change size, etc
+- 🟡 Customize link & accent color
+
 
 If you want to add any of these, I'll accept your pull request!
 If you have an idea of your own, I'll probably also merge it, but you might want to check with me. You can contact me (<a href="https://github.com/adrWasTaken">more details on my github profile</a>), or make an issue in this repo, and I'll let you know what I think!
