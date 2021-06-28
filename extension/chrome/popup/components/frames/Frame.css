@@ -1,3 +1,14 @@
 .Frame:not(.active) {
   display: none;
 }
+
+.Frame::-webkit-scrollbar {
+  display: none;
+}
+
+.Frame {
+  height: 320px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

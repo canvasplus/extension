@@ -30,11 +30,9 @@ const frames = {
         <SettingGroup name="Navigation">
           <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
           <Setting name="Navigator" setting="navigator" description="Go to any page or list using a popout menu." />
-          <Setting name="Bookmark Button" setting="bookmark_button" description="Add a page to your bookmarks with a button." />
         </SettingGroup>
         <SettingGroup name="Conversations">
           <Setting name="Conversation Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
-          <Setting name="Markdown Editor" setting="convomd" description="Use bold, italics, and more in your emails." />
         </SettingGroup>
         <SettingGroup name="Other">
           <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />

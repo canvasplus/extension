@@ -8,11 +8,11 @@
 }
 
 .Setting:last-child:not(.SettingGroup .Setting), .SettingGroup:last-child {
-  margin: 0 12px;
+  margin: 12px 12px 0 12px;
 }
 
 .Setting:not(:last-child):not(.SettingGroup .Setting), .SettingGroup:not(:last-child) {
-  margin: 0 12px 12px 12px;
+  margin: 12px 12px 0 12px;
 }
 
 .Setting__description {

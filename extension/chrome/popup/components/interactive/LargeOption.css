@@ -6,6 +6,7 @@
   margin: auto;
   background-color: var(--background-color);
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
 .LargeOptionForm__Option p {
