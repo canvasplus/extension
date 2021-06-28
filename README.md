@@ -101,6 +101,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🟡 Email Peeker
 - 🟡 Change sidebar: Hide branding, change size, etc
 - 🟡 Customize link & accent color
+- 🟡 Easter Eggs
 
 
 If you want to add any of these, I'll accept your pull request!
