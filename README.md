@@ -95,24 +95,16 @@ If you have an idea of your own, I'll probably also merge it, but you might want
 <br><br>
 # 🖥️  Develop
 
-I'm happy to collaborate on this and any pull request will be accepted if they improve the extension. *All extensions are coded in JavaScript* and google has some great resources to learn more about developing chrome extensions. For now, here's a rundown of what everything does and some useful functions:
+I'm happy to collaborate on this and any pull request will be accepted if they improve the extension. *All extensions are coded in JavaScript* and google has some great resources to learn more about developing chrome extensions. Here's a quick guide on compiling the extension:
 
-<br><br>
-**manifest.json**
+1️⃣ **Running NodeJS**
 
-> The manifest file contains everything necessary for chrome to start the extension. Most should be pretty self-explanatory. If you want to add any sort of color modes and you're getting an error, you want to put a link to any programatically loaded css files in the `web_accessible_resources` array.
+The chrome extension needs NodeJS to be compiled. I'm using version 14.5.3, but similar versions should work. You can see your node JS version by running `node -v` and if node isn't installed, head over to https://nodejs.org/
 
-<br><br>
-**popup files**
+2️⃣ **Installing dependencies**
 
-> Popup files are the HTML/CSS/JS for the popup shown when you click the extension button.
+Every browser version (aka `extension/chrome`, `extension/firefox`, etc) is its own Node project. To install the dependencies, run `npm install` in your desired browser directory.
 
-<br><br>
-**quicklink.js**
+3️⃣ **Compilation**
 
-> This is NOT my code. I barely know how it works, so DO NOT modify it.
-
-<br><br>
-**background.js**
-
-> Unsurprisingly, this code is run in the background. Right now its only use is the 'Thank you for installing!' and update popups
+To compile the extension, run `npm run build:prod` in your desired browser directory. This will create or replace the contents of a directory called `dist`. This contains the code runnable by your browser. I won't specify how to load the extension onto your browser because its different for every browser, but the folder you want to load is the `dist` directory.

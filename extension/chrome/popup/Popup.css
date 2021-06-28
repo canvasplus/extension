@@ -1,0 +1,51 @@
+:root:root {
+  --banner-background-color: #A82020;
+
+  --tab-background-color-active: #21262F;
+  --tab-background-color: #303643;
+  --tab-text-color: #fff;
+
+  --setting-line-color: #ccc;
+
+  --setting-group-label-background-color: #000;
+  --setting-group-label-text-color: #fff;
+
+  --large-option-selected-indicator-color: #0392ff;
+}
+
+body {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+body, p {
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, b {
+  font-weight: 600;
+}
+
+.center {
+  text-align: center;
+}
+
+.small-margin {
+  margin: 15px 0;
+}
+
+.margin {
+  margin: 25px 0;
+}
+
+.color-gray {
+  color: #888;
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

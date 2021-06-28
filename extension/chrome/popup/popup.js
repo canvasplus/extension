@@ -1,119 +1,88 @@
-document.getElementById("version").innerHTML = "Version " + chrome.app.getDetails().version;
+import React, {useState} from 'react';
 
-window.addEventListener('click',function(e){
-  if(e.target.href!==undefined){
-    chrome.tabs.create({url:e.target.href})
-  }
-})
+import './Popup.css'
 
-const settings = ["quicklink", "search", "smartscroll"];
+import Panel from './components/structure/Panel';
+import Navigation from './components/navigation/Navigation';
+import FrameContainer from './components/frames/FrameContainer';
+import Setting from './components/settings/Setting';
+import SettingGroup from './components/settings/SettingGroup';
+import AppearanceSelector from './components/display/AppearanceSelector';
 
-for(let setting of settings)
-{
-  document.getElementById("setting-" + setting + "-checkbox").addEventListener('click', function () {
-    let toChange = {};
-    toChange['canvasplus-setting-' + setting] = this.checked;
-    chrome.storage.local.set(toChange);
-  });
+const popup = () => {
+  const [currentTab, setCurrentTab] = useState("changes")
 
-  chrome.storage.local.get(['canvasplus-setting-' + setting], function(data) {
-    if(data['canvasplus-setting-' + setting])
-    {
-      document.getElementById("setting-" + setting + "-checkbox").checked = true;
-    }
-  });
+const tabChangeHandler = (newTabId) => {
+  console.log('(highest) switching to tab ' + newTabId)
+  setCurrentTab(newTabId)
 }
 
-document.getElementById("cpc-hover").addEventListener('click', function () {
-  window.open("https://canvasplus.adrwas.dev/update/patch-0-2-2")
-});
-
-document.getElementById("canvasplus-tab-changes").addEventListener('click', function () {
-  for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-  {
-    tabItem.hidden = true;
+const frames = {
+  "changes": {
+    "name": "Changes",
+    "element": (
+      <h1>Changes</h1>
+    )
+  }, "settings": {
+    "name": "Settings",
+    "element": (
+      <span>
+        <SettingGroup name="Navigation">
+          <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
+          <Setting name="Navigator" setting="navigator" description="Go to any page or list using a popout menu." />
+        </SettingGroup>
+        <SettingGroup name="Conversations">
+          <Setting name="Conversation Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
+        </SettingGroup>
+        <SettingGroup name="Other">
+          <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
+          <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
+        </SettingGroup>
+      </span>
+    )
+  }, "display": {
+    "name": "Display",
+    "element": (
+      <span>
+        <div className="center">
+          <div className="margin">
+            <b>Appearance</b>
+            <p className="color-gray small-margin">Change the color scheme of Canvas.</p>
+            <p className="color-gray small-margin">Note: Dark and dim mode may have issues. You can report bugs <a href="https://github.com/adrWasTaken/CanvasPlus/issues">here</a>.</p>
+          </div>
+          <AppearanceSelector appearances={[
+            {
+              name: "Default",
+              appearance: "light",
+              background: "#eee",
+              foreground: "#444"
+            },
+            {
+              name: "Dim",
+              appearance: "dim",
+              background: "#45484e",
+              foreground: "#fff"
+            },
+            {
+              name: "Lights Out",
+              appearance: "dark",
+              background: "#050d26",
+              foreground: "#fff"
+            }
+          ]}></AppearanceSelector>
+        </div>
+      </span>
+    )
   }
-  for(tab of document.getElementById("canvasplus-tab-control").children)
-  {
-    tab.classList = "";
-  }
-
-  let newTab = document.getElementById("canvasplus-changes");
-  newTab.hidden = false;
-  this.classList = "active-tab";
-
-  chrome.storage.local.set({"canvasplus-popup-active-tab": "changes"});
-})
-
-document.getElementById("canvasplus-tab-settings").addEventListener('click', function () {
-  for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-  {
-    tabItem.hidden = true;
-  }
-  for(tab of document.getElementById("canvasplus-tab-control").children)
-  {
-    tab.classList = "";
-  }
-
-  let newTab = document.getElementById("canvasplus-settings");
-  newTab.hidden = false;
-  this.classList = "active-tab";
-
-  chrome.storage.local.set({"canvasplus-popup-active-tab": "settings"});
-})
-
-document.getElementById("canvasplus-tab-display").addEventListener('click', function () {
-  for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-  {
-    tabItem.hidden = true;
-  }
-  for(tab of document.getElementById("canvasplus-tab-control").children)
-  {
-    tab.classList = "";
-  }
-
-  let newTab = document.getElementById("canvasplus-display");
-  newTab.hidden = false;
-  this.classList = "active-tab";
-
-  chrome.storage.local.set({"canvasplus-popup-active-tab": "display"});
-})
-
-chrome.storage.local.get(['canvasplus-popup-active-tab'], function(data) {
-  let activeTab = data['canvasplus-popup-active-tab'];
-  if(activeTab != null)
-  {
-    for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-    {
-      tabItem.hidden = true;
-    }
-    for(tab of document.getElementById("canvasplus-tab-control").children)
-    {
-      tab.classList = "";
-    }
-
-    document.getElementById("canvasplus-" + activeTab).hidden = false;
-    document.getElementById("canvasplus-tab-" + activeTab).classList = "active-tab";
-  }
-});
-
-chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
-  let appearance = data['canvasplus-display-appearance'];
-  if(appearance != null)
-  {
-    document.getElementById("css-vars").href = "vars-" + appearance + ".css"
-    document.getElementById("appearance-setting-" + appearance).parentElement.classList.add( "selected");
-    document.getElementById("appearance-setting-" + appearance).checked = true;
-  }
-});
-
-for(element of document.getElementsByClassName("appearance-setting")){
-  element.addEventListener('click', function () {
-    document.getElementById("css-vars").href = "vars-" + this.id.substring(19) + ".css"
-    for(element of document.getElementsByClassName("appearance-setting")){
-      element.parentElement.classList.remove("selected");
-    }
-    this.parentElement.classList.add("selected");
-    chrome.storage.local.set({"canvasplus-display-appearance": this.id.substring(19)});
-  })
 }
+
+  return (
+    <div><Panel size='1'>
+    <Navigation onTabChange={tabChangeHandler} currentTab={currentTab} sections={frames}/>
+    <FrameContainer currentTab={currentTab} frames={frames}/>
+  </Panel></div>
+    
+  );
+}
+
+export default popup;

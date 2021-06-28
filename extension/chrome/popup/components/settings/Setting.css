@@ -1,0 +1,31 @@
+.Setting:not(.SettingGroup .Setting), .SettingGroup {
+  border: 1px solid var(--setting-line-color);
+  border-radius: 3px;  
+}
+
+.Setting:not(.SettingGroup .Setting) {
+  padding: 7px;
+}
+
+.Setting:last-child:not(.SettingGroup .Setting), .SettingGroup:last-child {
+  margin: 12px 12px 0 12px;
+}
+
+.Setting:not(:last-child):not(.SettingGroup .Setting), .SettingGroup:not(:last-child) {
+  margin: 12px 12px 0 12px;
+}
+
+.Setting__description {
+  width: 150px;
+  margin: 10px 0 0 0;
+}
+
+.Setting__info {
+  width: calc(100% - 38px);
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.Setting .ToggleSwitch {
+  display: inline-block;
+}

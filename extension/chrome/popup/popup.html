@@ -1,91 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Canvas+ Popup</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="popup.css">
-<link id="css-vars" rel="stylesheet" href="vars-light.css">
+    <title>Canvas+ Popup</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="canvasplus-popup-header">
-    <img id="cpc-logo" src="../assets/icons/canvas-wide-white.png" alt="" width="108px" height="36px"></img>
-    <p id="version">Unkown Version</p>
-  </div>
-
-  <ul id="canvasplus-tab-control">
-    <li id="canvasplus-tab-changes" class="active-tab">Changes</li>
-    <li id="canvasplus-tab-settings">Settings</li>
-    <li id="canvasplus-tab-display">Display</li>
-  </ul>
-  <div id="canvasplus-tab-wrapper">
-
-    <div id="canvasplus-changes">
-      <div id="cpc-hover">
-        <p id="cpc-hover-text">Click to view Changelog</p>
-      </div>
-      <div id="cpc-triangle"></div>
-      <div id="cpc-header">
-        <img id="cpc-logo" src="../assets/icons/canvas-wide-white.png" alt="" width="108px" height="36px"></img>
-        <p id="cpc-version">Patch 0.2.3</p>
-      </div>
-      <div id="cpc-change-list">
-        <p style="font-size: 12px;">Search Bar Fix</p>
-        <p style="font-size: 12px;">Dark Mode Improvements</p>
-      </div>
-    </div>
-
-    <div id="canvasplus-settings" hidden>
-      <div class="setting" id="setting-search">
-        <b>Search Box</b>
-        <p>Search through your courses anywhere on Canvas.</p>
-        <label class="defl-toggle-container">
-          <input type="checkbox" id="setting-search-checkbox">
-          <span class="defl-toggle"></span>
-        </label>
-      </div>
-      <div class="setting" id="setting-smartscroll">
-        <b>Smart Scroll</b>
-        <p>Speed up navigation with helpful scrolling buttons</p>
-        <label class="defl-toggle-container">
-          <input type="checkbox" id="setting-smartscroll-checkbox">
-          <span class="defl-toggle"></span>
-        </label>
-      </div>
-      <div class="setting" id="setting-quicklink">
-        <b>Speed Boost</b>
-        <p>Improve loading speeds by pre-loading Canvas links.</p>
-        <label class="defl-toggle-container">
-          <input type="checkbox" id="setting-quicklink-checkbox">
-          <span class="defl-toggle"></span>
-        </label>
-      </div>
-    </div>
-
-    <div id="canvasplus-display" hidden>
-        <b>Appearance</b>
-        <br><br>
-        <p>Change the color scheme of Canvas.</p>
-        <br>
-        <p style="display:inline">Note: Dark and dim mode may have issues. You can report bugs </p> <a href="https://github.com/adrWasTaken/CanvasPlus/issues">here.</a>
-        <form style="margin-top: 15px">
-
-          <br>
-          <label class="container appearance-label" id="appearance-label-light">Default
-          <input type="radio" name="radio" class="appearance-setting" id="appearance-setting-light">
-          </label>
-
-          <label class="container appearance-label" id="appearance-label-dim">Dim
-          <input type="radio" name="radio" class="appearance-setting" id="appearance-setting-dim">
-          </label>
-
-          <label class="container appearance-label" id="appearance-label-dark">Lights Out
-          <input type="radio" name="radio" class="appearance-setting" id="appearance-setting-dark">
-          </label>
-        </form>
-    </div>
-  </div>
-  <script src="popup.js" charset="utf-8"></script> <!-- Must be loaded after paragraphs -->
+    <div id="popup"></div>
 </body>
 </html>
