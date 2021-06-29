@@ -56,7 +56,7 @@ const insertConversation = (data) => {
 
     const subjectLine = document.createElement('b')
     subjectLine.classList = 'convo-peeker-convo-subject-line'
-    subjectLine.innerHTML = data.subject
+    subjectLine.innerText = data.subject
 
     const previewLine = document.createElement('p')
     previewLine.classList = 'convo-peeker-convo-preview-line'
@@ -74,11 +74,11 @@ const insertConversation = (data) => {
 
     const dateLine = document.createElement('p')
     dateLine.classList = 'convo-peeker-convo-date'
-    dateLine.innerHTML = formatDate(new Date(data.last_message_at))
+    dateLine.innerText = formatDate(new Date(data.last_message_at))
 
     const authorLine = document.createElement('b')
     authorLine.classList = 'convo-peeker-convo-author'
-    authorLine.innerHTML = data.participants[0].name
+    authorLine.innerText = data.participants[0].name
 
     const participants = document.createElement('div')
     participants.classList = 'convo-peeker-convo-participants'
@@ -118,7 +118,7 @@ const insertConversationTop = () => {
     top.classList = 'canvasplus-convo-peeker-convo-top'
 
     const header = document.createElement('b')
-    header.innerHTML = 'Conversations'
+    header.innerText = 'Conversations'
 
     const searchFormWrapper = document.createElement('div')
     searchFormWrapper.classList = 'canvasplus-convo-peeker-convo-top-interaction-wrapper'
@@ -126,7 +126,7 @@ const insertConversationTop = () => {
     const expandLink = document.createElement('a')
     expandLink.classList = 'canvasplus-convo-peeker-convo-top-expand-link'
     expandLink.href = '/conversations'
-    expandLink.innerHTML = 'Expand'
+    expandLink.innerText = 'Expand'
 
     const searchForm = document.createElement('form')
     searchForm.classList = 'canvasplus-convo-peeker-convo-top-search-form'
