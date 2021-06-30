@@ -1,280 +1,51 @@
-@font-face {
-  font-family: Open Sans;
-  src: url(../assets/font/OpenSans-Regular.ttf);
-}
+:root:root {
+  --banner-background-color: #A82020;
 
-@font-face {
-  font-family: Open Sans Bold;
-  src: url(../assets/font/OpenSans-Bold.ttf);
+  --tab-background-color-active: #21262F;
+  --tab-background-color: #303643;
+  --tab-text-color: #fff;
+
+  --setting-line-color: #ccc;
+
+  --setting-group-label-background-color: #000;
+  --setting-group-label-text-color: #fff;
+
+  --large-option-selected-indicator-color: #0392ff;
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  width: 240px;
-  margin: 0;
-  font-size: 12px;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
-a {
-  text-decoration: none;
-}
-
-p {
-  color: var(--text-color);
+body, p {
   margin: 0;
 }
 
-b {
-  color: var(--important-text-color);
+h1, h2, h3, h4, h5, h6, b {
+  font-weight: 600;
 }
 
-.links {
+.center {
   text-align: center;
 }
 
-.links a::after {
-  content: " \00b7";
+.small-margin {
+  margin: 15px 0;
 }
 
-.links a:last-child::after {
-  content: none;
+.margin {
+  margin: 25px 0;
 }
 
-#canvasplus-popup-header {
-  background-color: var(--header-bgd-color);
-  text-align: center;
-  padding: 20px;
-  height: 60px;
-  color: white;
-  font-family: 'Montserrat', sans-serif;
+.color-gray {
+  color: #888;
 }
 
-#canvasplus-tab-control {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: var(--tabs-bgd-color);
-  border-top: 1px solid var(--tabs-border-color);
-  border-bottom: 1px solid var(--tabs-border-color);
-}
-
-#canvasplus-tab-control li:hover {
-  background-color: var(--tabs-bgd-hover-color);
-}
-
-#canvasplus-tab-control li {
-  float: left;
-  display: block;
-  color: var(--tabs-text-color);
-  width: 60px;
-  padding: 8px 10px;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-}
-
-#canvasplus-tab-control li.active-tab {
-  background-color: var(--tabs-bgd-active-color);
-}
-
-#canvasplus-settings {
-  margin: 8px;
-}
-
-.setting {
-  position: relative;
-  padding: 8px;
-  border: 1px solid var(--setting-border-color);
-  border-radius: 3px;
-  margin-bottom: 8px;
-}
-
-.setting b {
-  color: var(--setting-name-text-color);
-}
-
-.setting p {
-  color: var(--setting-text-color);
-  max-width: 170px;
-  margin-top: 10px;
-}
-/* Default Toggle, From https://www.w3schools.com/howto/howto_css_switch.asp */
-.defl-toggle-container {
-  position: absolute;
-  display: inline-block;
-  width: 32px;
-  height: 18px;
-  margin: 16px 0px 0px 8px;
-  bottom: 8px;
-  right: 8px;
-}
-
-.defl-toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.defl-toggle {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--toggle-background-color);
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 34px;
-}
-
-.defl-toggle:before {
-  position: absolute;
-  content: "";
-  height: 10px;
-  width: 10px;
-  left: 5px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-input:checked + .defl-toggle {
-  background-color: #0a53d1;
-}
-
-input:focus + .defl-toggle {
-  box-shadow: 0 0 1px #0a53d1;
-}
-
-input:checked + .defl-toggle:before {
-  transform: translateX(12px);
-}
-
-#canvasplus-display {
-  text-align: center;
-  margin: 20px 10px;
-}
-
-#canvasplus-changes {
-  width: 240px;
-  height: 240px;
-  background: url(https://expertphotography.com/wp-content/uploads/2020/07/cloud-photography-6.jpg);
-  background-size: 170%;
-  text-align: center;
-  position: relative;
-}
-
-#cpc-hover {
-  z-index: 4;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  transition: visibility 0.2s, opacity 0.2s linear;
-  cursor: pointer;
-}
-
-#canvasplus-changes:hover #cpc-hover {
-  opacity: 1;
-  visibility: visible;
-}
-
-#cpc-hover-text {
-  top: 50%;
-  transform: translateY(-50%);
-  position: relative;
-  font-style: italic;
-}
-
-#canvasplus-changes p {
-  font-family: 'Montserrat', sans-serif;
-  color: white;
-}
-
-#cpc-change-list {
-  position: absolute;
-  z-index: 2;
-  line-height: 2rem;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-}
-
-#cpc-header {
-  padding-top: 20px;
-}
-
-.appearance-label {
-  position: relative;
-  display: block;
-  width: 100px;
-  margin: auto;
-  border-radius: 5px;
-  padding: 10px 35px;
-  font-family: 'Open Sans Bold', sans-serif;
-}
-
-#canvasplus-display label {
-  position: relative;
-  border-radius: 5px;
-  padding: 10px 35px;
-  font-family: 'Open Sans Bold', sans-serif;
-}
-
-.appearance-label:not(:last-child) {
-  margin-bottom: 5px;
-}
-
-.appearance-setting {
-  margin-left: 10px;
-}
-
-#canvasplus-display label.selected input::after {
-  position: absolute;
-  content: '';
-  width: 7px;
-  z-index: 100;
-  height: 7px;
-  background: #0392ff;
-  border-radius: 50%;
-  top: 2px;
-}
-
-#canvasplus-display label#appearance-label-light input::after {
-  left: 0px;
-}
-
-#canvasplus-display label#appearance-label-dark input::after {
-  left: 5px;
-}
-
-#canvasplus-display label input {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-#appearance-label-light {
-  background-color: #eee;
-  color: #444;
-}
-
-#appearance-label-dark {
-  background-color: #050d26;
-  color: #fff;
-}
-
-#appearance-label-dim {
-  background-color: #45484e;
-  color: #fff;
-}
-
-#canvasplus-tab-wrapper > div, body {
-  background-color: var(--bgd-color);
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
