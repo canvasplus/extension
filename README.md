@@ -94,6 +94,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🔴 Dashboard Overhaul
 - 🔴 (Potential) Automatically or semiautomatically sync assignments with Notion, Trello, Clickup, Asana, etc.
 - 🔴 Client-side links and link previews
+- 🔴 Easter Eggs
 
 ### 📋 Planned for version 0.3
 - 🟡 Remake popup using react
@@ -101,7 +102,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🟡 Email Peeker
 - 🟡 Change sidebar: Hide branding, change size, etc
 - 🟡 Customize link & accent color
-- 🟡 Easter Eggs
+- 🟢 Easter Eggs
 
 
 If you want to add any of these, I'll accept your pull request!
