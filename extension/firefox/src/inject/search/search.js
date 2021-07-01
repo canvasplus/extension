@@ -140,6 +140,74 @@ const injectSearchResults = (results) => {
 
             search.onkeyup = () => {
                 let query = search.value.toLowerCase()
+                if (query == "stranger things") {
+                  /* from https://github.com/DavidLozzi/Stranger-Things-Easter-Egg */
+                  window.upsideDown = (function () {
+                  let music = {};
+                  let body = {};
+                  let originalBody = {};
+                  let status = '';
+
+                  const start = () => {
+                    music = new Audio('https://raw.githubusercontent.com/DavidLozzi/Stranger-Things-Easter-Egg/master/music.mp3');
+                    music.play();
+                    status = 'started';
+
+                    body = document.querySelectorAll("html")[0];
+                    originalBody = { ...body };
+
+                    body.style.background = 'radial-gradient(transparent, black), #C11B1F';
+                    body.style.backgroundRepeat = 'no-repeat';
+                    body.style.backgroundSize = 'cover';
+                    body.style.overflow = 'hidden';
+
+                    const fadeMusic = () => {
+                      setTimeout(() => {
+                        music.volume = Math.round(music.volume) > 0 ? music.volume - 0.1 : 0;
+                        if (music.volume > 0) {
+                          fadeMusic();
+                        } else {
+                          status = 'done';
+                          stop()
+                        }
+                      }, 400);
+                    };
+
+                    window.setTimeout(() => {
+                      status = 'running';
+                      body.style.transition = 'all 10s ease 0s, transform 12s';
+                      body.style.transform = 'rotate(180deg) scale(.9)';
+                      body.style.filter = 'invert(1)';
+
+                      window.setTimeout(() => {
+                        fadeMusic();
+                      }, 10500);
+                    }, 1000);
+                  };
+
+                  const stop = () => {
+                    music.pause();
+                    music = null;
+                    body.style = originalBody.style;
+                    status = '';
+                  };
+
+                  const getStatus = () => {
+                    return status;
+                  };
+
+                  return {
+                    start,
+                    stop,
+                    getStatus
+                  };
+                }());
+                window.upsideDown.start();
+              };
+                if (query == "rick") {
+                  window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                  search.value = "";
+                };
                 if(query.length == 0) {
                     searchResults.style.visibility = "hidden";
                     searchResults.style.opacity = "0";
