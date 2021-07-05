@@ -71,6 +71,10 @@ const frames = {
             }
           ]}></AppearanceSelector>
         </div>
+        <SettingGroup name="Customizability">
+          <Setting name="Sidebar" setting="sidebar" description="Customize the sidebar text/image size, background color and hide the sidebar logo." />
+          <Setting name="Link Color" setting="linkcolor" description="Change the color of links on Canvas." />
+        </SettingGroup>
       </span>
     )
   }
@@ -81,7 +85,7 @@ const frames = {
     <Navigation onTabChange={tabChangeHandler} currentTab={currentTab} sections={frames}/>
     <FrameContainer currentTab={currentTab} frames={frames}/>
   </Panel></div>
-    
+
   );
 }
 

@@ -23,7 +23,7 @@
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "js": ["src/inject/textcolor/textcolor.js"],
+      "js": ["src/inject/linkcolor/linkcolor.js"],
       "run_at": "document_end"
     },
     {
