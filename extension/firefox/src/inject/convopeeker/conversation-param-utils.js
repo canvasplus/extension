@@ -1,6 +1,6 @@
 var currentUrl = window.location.host 
 var protocol = window.location.protocol
-var url = protocol.concat(currentUrl)
+var realurl = protocol.concat(currentUrl)
 const url = new URLSearchParams(window.location.search);
 const findParam = url.get('find-select-conversation')
 
@@ -10,7 +10,7 @@ let found = false
 
 if(findParam) {
 
-    fetch(url+'/api/v1/conversations/' + findParam).then(response => {
+    fetch(realurl+'/api/v1/conversations/' + findParam).then(response => {
         response.json().then(json => {
             data = json
             checkMeQueue.every(item => {

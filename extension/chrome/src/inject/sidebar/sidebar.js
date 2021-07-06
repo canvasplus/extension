@@ -14,8 +14,7 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-size-toggle"], function(to
         document.getElementsByClassName("fs-exclude ic-avatar")[0].style.height = sidebarwidth * "2.57142857143" + "px";
         document.getElementsByClassName("fs-exclude ic-avatar")[0].style.width = sidebarwidth * "2.57142857143" + "px";
         document.getElementsByClassName("menu-item-icon-container")[0].style.width = sidebarwidth * "2.57142857143" + "px";
-      };
-    };
+    });
   };
 });
 

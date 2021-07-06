@@ -1,6 +1,6 @@
 var currentUrl = window.location.host
 var protocol = window.location.protocol
-var url = protocol.concat(currentUrl)
+var realurl = protocol.concat(currentUrl)
 let convosCache;
 
 const peekerBack = document.createElement('div')
@@ -184,7 +184,7 @@ const formatDate = (date) => {
 const getConversations = () => {
     return new Promise((resolve, reject) => {
         if(convosCache === undefined) {
-            fetch(url+'/api/v1/conversations?include=participant_avatars').then(data => {
+            fetch(realurl+'/api/v1/conversations?include=participant_avatars').then(data => {
                 data.json().then(json => {
                   setTimeout(() => {
 
