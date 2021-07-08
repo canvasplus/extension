@@ -40,7 +40,21 @@ const injectSearchBox = () => {
     }
     else
     {
-        topNav.appendChild(searchWrapper);
+        if (window.location.pathname.split('/')[1] == "conversations") {
+          document.getElementsByClassName("panel__secondary")[0].appendChild(searchWrapper);
+        } else if (window.location.pathname.split('/')[1] == "calendar") {
+          document.getElementById("right-side-wrapper").insertBefore(searchWrapper, document.getElementById("right-side-wrapper").firstChild);
+          document.getElementById("right-side").style.marginTop = "24px";
+        } else if (window.location.pathname == "/courses") {
+          document.getElementsByClassName("header-bar")[0].children[0].style.display = "inline-block";
+          document.getElementsByClassName("header-bar")[0].appendChild(searchWrapper);
+          searchWrapper.style.display = "inline-block";
+          searchWrapper.style.float = "right";
+        } else if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "files") {
+          document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
+        } else {
+          topNav.appendChild(searchWrapper);
+        }
     }
 
     setTimeout(() => {

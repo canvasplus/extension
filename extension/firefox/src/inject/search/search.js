@@ -1,6 +1,6 @@
 const courseNames = {}
 const searchLog = []
-var currentUrl = window.location.host 
+var currentUrl = window.location.host
 var protocol = window.location.protocol
 var realurl = protocol.concat(currentUrl)
 
@@ -43,7 +43,23 @@ const injectSearchBox = () => {
     }
     else
     {
-        topNav.appendChild(searchWrapper);
+        if (window.location.pathname.split('/')[1] == "conversations") {
+          document.getElementsByClassName("panel__secondary")[0].appendChild(searchWrapper);
+        } else if (window.location.pathname.split('/')[1] == "calendar") {
+          document.getElementById("right-side-wrapper").insertBefore(searchWrapper, document.getElementById("right-side-wrapper").firstChild);
+          document.getElementById("right-side").style.marginTop = "24px";
+        } else if (window.location.pathname == "/courses") {
+          document.getElementsByClassName("header-bar")[0].children[0].style.display = "inline-block";
+          document.getElementsByClassName("header-bar")[0].appendChild(searchWrapper);
+          searchWrapper.style.display = "inline-block";
+          searchWrapper.style.float = "right";
+        } else if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "files") {
+          window.addEventListener('load', function() {
+            document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
+          });
+        } else {
+          topNav.appendChild(searchWrapper);
+        }
     }
 
     setTimeout(() => {
@@ -97,23 +113,23 @@ const injectSearchResults = (results) => {
             results.forEach(item => {
                 const row = document.createElement('div')
                 row.classList = 'canvasplus-search-results-list-item'
-        
+
                 const courseIndicator = document.createElement("p");
                 courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
                 courseIndicator.style.color = colors.custom_colors['course_' + item.course];
                 courseIndicator.innerHTML = courseNames[item.course];
-        
+
                 let link = document.createElement("a")
                 link.classList = "ig-title title item_link";
                 link.target = "_blank";
                 link.rel = "noreferrer noopener";
                 link.innerHTML = item.title;
                 link.href = item.url;
-        
+
                 row.setAttribute("link-name", link.innerHTML);
                 row.appendChild(courseIndicator);
                 row.appendChild(link);
-                
+
                 item.element = row
 
                 searchResults.appendChild(row)
@@ -129,7 +145,7 @@ const injectSearchResults = (results) => {
                 searchResults.style.visibility = "hidden";
                 searchResults.style.opacity = "0";
             }
-      
+
             search.onfocus = () => {
                 if(search.value.length > 0)
                 {
@@ -275,7 +291,7 @@ const searchCourses = (courses) => {
     const searchStages = 1 // number of places that are search per course
 
     let items = []
-    
+
     let i = 0
     let allItems = []
 
@@ -319,7 +335,7 @@ const searchPages = async (courseId, checkStorage) => {
                 resolve(output)
             })
         })
-        
+
         let storageList = await getStorage
         let storageItem = storageList[storageName]
 
@@ -360,7 +376,7 @@ const searchPages = async (courseId, checkStorage) => {
 
         pageIndex += 1 // "Turn" the page
     }
-    
+
     sessionStorage.setItem(storageName, JSON.stringify(pages))
     let storageChanges = {}
     storageChanges[storageName] = pages
@@ -387,21 +403,21 @@ const searchModules = (courseId, checkStorage) => {
                 })
             })
         }
-    
+
         const done = (modules) => {
             let i = 0
             let items = []
-    
+
             const interval = setInterval(async() => {
                 let item = modules[i]
                 i++
-                
+
                 if(modules.length <= i) {
                     clearInterval(interval)
                     if(item === undefined) {
                         searchLog.push('Done getting modules from course ' + courseId + ' ...')
                         resolve(items)
-                        return    
+                        return
                     }
 
                     data = await fetch(item.items_url)
@@ -414,12 +430,12 @@ const searchModules = (courseId, checkStorage) => {
                         }
                         items.push(obj)
                     })
-                    
+
                     sessionStorage.setItem(storageName, JSON.stringify(items))
                     let storageChanges = {}
                     storageChanges[storageName] = items
                     chrome.storage.local.set(storageChanges)
-                    
+
                     searchLog.push('Done getting modules from course ' + courseId + ' ...')
                     resolve(items)
                 } else {
@@ -449,13 +465,13 @@ const searchModules = (courseId, checkStorage) => {
                 })
             }).then(storageList => {
                 let storageItem = storageList[storageName]
-        
+
                 if(storageItem) {
                     searchLog.push('Refreshing modules index of course ' + courseId + ' ...')
                     searchPages(courseId, false)
                     resolve(storageItem)
                 }
-        
+
                 getModulesPage(1, [])
             })
         } else {
