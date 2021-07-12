@@ -10,7 +10,12 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-size-toggle"], function(to
         for (i = 0; i < icon.length; i++) {
           icon[i].style.width = sidebarwidth * "1.85714285714" + "px";
         };
-        document.getElementsByClassName("ic-app-header__logomark")[0].style.height = sidebarwidth * "6.07142857143" + "px";
+
+        chrome.storage.local.get(["canvasplus-setting-sidebar-hidelogo"], function(data) {
+          if(data["canvasplus-setting-sidebar-hidelogo"] != true) {
+            document.getElementsByClassName("ic-app-header__logomark")[0].style.height = sidebarwidth * "6.07142857143" + "px";
+          };
+        });
         document.getElementsByClassName("fs-exclude ic-avatar")[0].style.height = sidebarwidth * "2.57142857143" + "px";
         document.getElementsByClassName("fs-exclude ic-avatar")[0].style.width = sidebarwidth * "2.57142857143" + "px";
         document.getElementsByClassName("menu-item-icon-container")[0].style.width = sidebarwidth * "2.57142857143" + "px";
