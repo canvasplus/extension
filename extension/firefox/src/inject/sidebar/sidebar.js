@@ -1,6 +1,6 @@
 chrome.storage.local.get(["canvasplus-setting-sidebar-size-toggle"], function(toggle) {
   if(toggle["canvasplus-setting-sidebar-size-toggle"]) {
-    chrome.storage.local.get(["canvasplus-setting-sidebar-size-toggle"], function(data) {
+    chrome.storage.local.get(["canvasplus-setting-sidebar-size"], function(data) {
         const sidebarwidth = data;
         const text = document.getElementsByClassName("menu-item__text");
         const icon = document.getElementsByClassName("ic-icon-svg");
@@ -24,8 +24,10 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-hidelogo"], function(data)
   };
 });
 
-chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
-  if (data != null) {
-    document.getElementsByClassName("ic-app-header")[0].style.backgroundColor = "#" + data;
+chrome.storage.local.get(["canvasplus-setting-sidebar-color-toggle"], function(toggle) {
+  if(toggle["canvasplus-setting-sidebar-color-toggle"]) {
+    chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
+      document.getElementsByClassName("ic-app-header")[0].style.backgroundColor = "#" + data;
+    });
   };
 });
