@@ -71,9 +71,13 @@ const frames = {
             }
           ]}></AppearanceSelector>
         </div>
-        <SettingGroup name="Customizability">
-          <Setting name="Sidebar" setting="sidebar" description="Customize the sidebar text/image size, background color and hide the sidebar logo." />
-          <Setting name="Link Color" setting="linkcolor" description="Change the color of links on Canvas." />
+        <SettingGroup name="Sidebar">
+          <Setting name="Hide Logo" setting="sidebar-hidelogo" description="Hide the logo on the top of the sidebar." />
+          <Setting name="Sidebar Color" setting="sidebar-color" description="Change the background color of the sidebar." />
+          <Setting name="Sidebar Size" setting="sidebar-size-toggle" description="Change the size of the text and images on the sidebar." />
+        </SettingGroup>
+        <SettingGroup name="Other">
+          <Setting name="Link Color" setting="linkcolor-toggle" description="Change the color of links on Canvas." />
         </SettingGroup>
       </span>
     )
