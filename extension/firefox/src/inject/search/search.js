@@ -57,6 +57,9 @@ const injectSearchBox = () => {
           window.addEventListener('load', function() {
             document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
           });
+        } else if (window.location.pathname == "/grades") {
+          topNav.appendChild(searchWrapper);
+          searchWrapper.style.marginInlineStart = "auto"
         } else {
           topNav.appendChild(searchWrapper);
         }

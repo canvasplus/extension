@@ -52,6 +52,9 @@ const injectSearchBox = () => {
           searchWrapper.style.float = "right";
         } else if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "files") {
           document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
+        } else if (window.location.pathname == "/grades") {
+          topNav.appendChild(searchWrapper);
+          searchWrapper.style.marginInlineStart = "auto"
         } else {
           topNav.appendChild(searchWrapper);
         }
