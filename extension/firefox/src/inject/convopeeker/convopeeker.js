@@ -118,7 +118,7 @@ const insertConversationTop = () => {
     top.classList = 'canvasplus-convo-peeker-convo-top'
 
     const header = document.createElement('b')
-    header.innerText = 'Conversations'
+    header.innerText = 'Emails'
 
     const searchFormWrapper = document.createElement('div')
     searchFormWrapper.classList = 'canvasplus-convo-peeker-convo-top-interaction-wrapper'
@@ -132,7 +132,7 @@ const insertConversationTop = () => {
     searchForm.classList = 'canvasplus-convo-peeker-convo-top-search-form'
 
     const searchFormInput = document.createElement('input')
-    searchFormInput.placeholder = 'Find a conversation...'
+    searchFormInput.placeholder = 'Find a email...'
     searchFormInput.classList = 'canvasplus-convo-peeker-convo-top-search-form-input'
 
     const searchFormButton = document.createElement('input')
