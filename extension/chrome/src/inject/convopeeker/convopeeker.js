@@ -50,7 +50,7 @@ const runConvoKeeper = () => {
 const insertConversation = (data) => {
     const conversationElement = document.createElement('div')
     conversationElement.classList = 'convo-peeker-convo'
-    
+
     const subjectLine = document.createElement('b')
     subjectLine.classList = 'convo-peeker-convo-subject-line'
     subjectLine.innerText = data.subject
@@ -138,7 +138,7 @@ const insertConversationTop = () => {
     searchFormButton.classList = 'canvasplus-convo-peeker-convo-top-search-form-button'
 
     top.appendChild(header)
-    
+
     searchFormWrapper.appendChild(expandLink)
     searchFormWrapper.appendChild(searchForm)
     searchForm.appendChild(searchFormInput)
@@ -164,7 +164,7 @@ const formatDate = (date) => {
             if(hour === 0) return '12:' + (mins < 10 ? '0' : '') + mins + 'am'
             else return hour + ':' + (mins < 10 ? '0' : '') + mins + 'am'
         } else {
-            if(hour === 12) return '12:' + (mins < 10 ? '0' : '') + mins + 'am' 
+            if(hour === 12) return '12:' + (mins < 10 ? '0' : '') + mins + 'am'
             else return (hour - 12) + ':' + (mins < 10 ? '0' : '') + mins + 'am'
         }
     } else if(date.getTime() + 86400000 > day.getTime()) {
@@ -184,11 +184,11 @@ const getConversations = () => {
             fetch('/api/v1/conversations?include=participant_avatars').then(data => {
                 data.json().then(json => {
                     setTimeout(() => {
-                        
+
                         insertConversationTop()
-    
+
                         peekerElement.appendChild(peekerConvoList)
-    
+
                         convosCache = json
                         resolve(json)
                     }, 5000)
@@ -201,9 +201,9 @@ const getConversations = () => {
 }
 
 chrome.storage.local.get(["canvasplus-setting-convopeeker"], function(data) {
-    if(data["canvasplus-setting-convopeeker"] || true)
+    if(data["canvasplus-setting-convopeeker"])
     {
-        console.log('[Canvas+] Injecting conversation peeker ...')
+        console.log('[Canvas+] Injecting email peeker ...')
         runConvoKeeper()
     }
 })

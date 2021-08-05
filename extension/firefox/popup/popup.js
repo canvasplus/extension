@@ -46,7 +46,7 @@ const frames = {
           <Setting name="Navigator" setting="navigator" description="Go to any page or list using a popout menu." />
         </SettingGroup>
         <SettingGroup name="Email">
-          <Setting name="Email Peeker" setting="emailpeeker" description="View your emails without opening a new page, just click the inbox button." />
+          <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
         </SettingGroup>
         <SettingGroup name="Other">
           <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />

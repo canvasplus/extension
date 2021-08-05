@@ -204,9 +204,9 @@ const getConversations = () => {
 }
 
 chrome.storage.local.get(["canvasplus-setting-convopeeker"], function(data) {
-    if(data["canvasplus-setting-convopeeker"] || true)
+    if(data["canvasplus-setting-convopeeker"])
     {
-        console.log('[Canvas+] Injecting conversation peeker ...')
+        console.log('[Canvas+] Injecting email peeker ...')
         runConvoKeeper()
     }
 })
