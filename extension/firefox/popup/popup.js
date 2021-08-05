@@ -8,6 +8,7 @@ import FrameContainer from './components/frames/FrameContainer';
 import Setting from './components/settings/Setting';
 import SettingGroup from './components/settings/SettingGroup';
 import AppearanceSelector from './components/display/AppearanceSelector';
+import Hover from './components/interactive/Hover'
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
@@ -21,7 +22,20 @@ const frames = {
   "changes": {
     "name": "Changes",
     "element": (
-      <h1>Changes</h1>
+      <div className="canvasplus-changes">
+        <Hover />
+        <div className="cpc-header">
+          <img src="../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
+          <h2>Release 0.3</h2>
+        </div>
+        <div className="changes-list">
+          <p className="changes-items">Customizable Sidebar</p>
+          <p className="changes-items">Email Peeker</p>
+          <p className="changes-items">Custom Link Colors</p>
+          <p className="changes-items">New Popup</p>
+          <p className="changes-items">Bug Fixes</p>
+        </div>
+      </div>
     )
   }, "settings": {
     "name": "Settings",

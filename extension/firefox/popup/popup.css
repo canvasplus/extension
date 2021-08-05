@@ -50,3 +50,33 @@ h1, h2, h3, h4, h5, h6, b {
   -ms-user-select: none;
   user-select: none;
 }
+
+.canvasplus-changes {
+  background: URL(https://images.unsplash.com/photo-1560803262-95a9de00a057?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80);
+  text-align: center;
+  height: 320px;
+  width: 240px;
+  color: #fff;
+}
+
+.cpc-header {
+  margin: 0px;
+}
+
+h2 {
+  margin: 0px;
+  font-weight: 500;
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.changes-list {
+  color: #f8f8f8;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.changes-items {
+  margin-top: 10px;
+  font-family: 'Montserrat', sans-serif;
+}

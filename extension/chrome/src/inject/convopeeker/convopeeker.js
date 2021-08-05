@@ -129,7 +129,7 @@ const insertConversationTop = () => {
     searchForm.classList = 'canvasplus-convo-peeker-convo-top-search-form'
 
     const searchFormInput = document.createElement('input')
-    searchFormInput.placeholder = 'Find a email...'
+    searchFormInput.placeholder = 'Find an email...'
     searchFormInput.classList = 'canvasplus-convo-peeker-convo-top-search-form-input'
 
     const searchFormButton = document.createElement('input')

@@ -1,8 +1,8 @@
 {
   "name": "Canvas+ For Firefox",
-  "version": "0.2.3",
+  "version": "0.3",
   "manifest_version": 2,
-  "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
+  "description": "CanvasPlus: Dark and dim mode, faster links, smart scrolling, search bar, sidebar customizability, email peeker, custom link color.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
          "src/inject/colors/apply-variables.css",
