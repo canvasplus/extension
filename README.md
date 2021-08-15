@@ -56,9 +56,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 <br>
 
-#14 The search bar loading indicator is slightly too long when finished. Mosty effects firefox, but still effects chrome a little.
-
-#15 Search bar appears in wrong place in conversations page
+None Currently 🎉
 
 <br>
 
