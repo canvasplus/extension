@@ -26,6 +26,6 @@
   display: inline-block;
 }
 
-.Setting .ToggleSwitch {
+.Setting > .SettingInput {
   display: inline-block;
 }
