@@ -92,7 +92,7 @@ const frames = {
           <Setting name="Sidebar Size" setting="sidebar-size-toggle" description="Change the size of the text and images on the sidebar." />
         </SettingGroup>
         <SettingGroup name="Other">
-          <Setting name="Link Color" setting="linkcolor-toggle" description="Change the color of links on Canvas." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          {/* <Setting name="Link Color" setting="linkcolor-toggle" description="Change the color of links on Canvas." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/> */}
         </SettingGroup>
       </span>
     )
