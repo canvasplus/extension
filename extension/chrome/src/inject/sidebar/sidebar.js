@@ -31,5 +31,7 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-hidelogo"], function(data)
 
 chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
   const color = data["canvasplus-setting-sidebar-color"];
-  document.querySelector('#header').style = `--ic-brand-global-nav-bgd: ${ color }; --ic-brand-global-nav-ic-icon-svg-fill--active: ${ color }; --ic-brand-global-nav-avatar-border: ${ color };`
+  if(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {
+    document.querySelector('#header').style = `--ic-brand-global-nav-bgd: ${ color }; --ic-brand-global-nav-ic-icon-svg-fill--active: ${ color }; --ic-brand-global-nav-avatar-border: ${ color };`
+  }
 });
