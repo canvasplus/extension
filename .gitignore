@@ -3,7 +3,6 @@
 *.DS_Store
 extension/chrome/node_modules
 extension/chrome/dist
-extension/chrome/testing
 extension/firefox/node_modules
 extension/firefox/dist
 extension/firefox/testing.zip
