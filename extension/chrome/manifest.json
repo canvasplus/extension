@@ -7,7 +7,8 @@
   "web_accessible_resources": [
          "src/inject/colors/apply-variables.css",
          "src/inject/colors/dark.css",
-         "src/inject/colors/dim.css"
+         "src/inject/colors/dim.css",
+         "src/inject/linkcolor/linkcolor.css"
      ],
   "content_scripts": [
     {
@@ -24,7 +25,8 @@
     {
       "matches": [ "*://*.instructure.com/*"],
       "js": ["src/inject/linkcolor/linkcolor.js"],
-      "run_at": "document_end"
+      "run_at": "document_start",
+      "all_frames": true
     },
     {
       "matches": [ "*://*.instructure.com/*"],

@@ -24,7 +24,8 @@
     {
       "matches": [ "*://*.instructure.com/*"],
       "js": ["src/inject/linkcolor/linkcolor.js"],
-      "run_at": "document_end"
+      "run_at": "document_start",
+      "all_frames": true
     },
     {
       "matches": [ "*://*.instructure.com/*"],
