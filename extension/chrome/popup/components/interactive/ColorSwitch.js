@@ -25,9 +25,7 @@ export default function ColorSwitch({ state, setState }) {
             <ColorSwitchOption color="#fc74e1" gridArea="color-1-6" onClicked={onClicked} />
             <ColorSwitchOption color="#515975" gridArea="color-1-7" onClicked={onClicked} />
             <ColorSwitchOption color="#222a42" gridArea="color-1-8" onClicked={onClicked} />
-            <div className="ColorSwitch_Popup__ColorOption" style={{ '--color': '#FFFFFF', gridArea: 'color-1-9'}} onClick={() => { onClicked('') }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" style={{fill:'#f35108',marginLeft:4,marginTop:4}}><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg>
-            </div>
+            <div className="ColorSwitch_Popup__ColorOption cs_p_co_unset" style={{ '--color': '#E8E8E8', gridArea: 'color-1-9'}} onClick={() => { onClicked('') }} />
             <ColorSwitchOption color="#b5043a" gridArea="color-2-1" onClicked={onClicked} />
             <ColorSwitchOption color="#f45d22" gridArea="color-2-2" onClicked={onClicked} />
             <ColorSwitchOption color="#17bf63" gridArea="color-2-3" onClicked={onClicked} />
@@ -39,11 +37,11 @@ export default function ColorSwitch({ state, setState }) {
 
     return (<>
         { showPopup ? <div className="overlay" onClick={ () => { setShowPopup(false) } }/> : <></> }
-        <div className="SettingInput ColorSwitch_Shortcut" style={{ '--color': color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? color : '#FFFFFF', zIndex: showPopup ? 101 : 'unset' }}>
-            <div className="SettingInput ColorSwitch_Shortcut__Hover" onClick={ () => {
+        <div className="SettingInput ColorSwitch_Shortcut" style={{ '--color': color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? color : '#FFF', zIndex: showPopup ? 101 : 'unset' }}>
+            <div className='SettingInput ColorSwitch_Shortcut__Hover' onClick={ () => {
                 setShowPopup(true)
             } }>
-                { color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? <></> : <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" style={{fill:'#f35108',top:8,right:8,position:'absolute'}}><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg> }
+                { color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? <></> : <div className='cs_s_h_unset' /> }
             </div>
 
             { showPopup ? popupElement : <></> }

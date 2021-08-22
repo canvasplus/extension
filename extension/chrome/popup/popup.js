@@ -10,6 +10,7 @@ import SettingGroup from './components/settings/SettingGroup';
 import AppearanceSelector from './components/display/AppearanceSelector';
 import Hover from './components/interactive/Hover'
 import ColorSwitch from './components/interactive/ColorSwitch';
+import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
@@ -88,7 +89,8 @@ const frames = {
         </div>
         <SettingGroup name="Sidebar">
           <Setting name="Hide Logo" setting="sidebar-hidelogo" description="Hide the logo on the top of the sidebar." />
-          <Setting name="Sidebar Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          <Setting name="Sidebar Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          <Setting name="Sidebar Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="unset" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} />}}/>
           <Setting name="Sidebar Size" setting="sidebar-size-toggle" description="Change the size of the text and images on the sidebar." />
         </SettingGroup>
         <SettingGroup name="Other">
