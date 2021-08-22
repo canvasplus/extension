@@ -1,0 +1,13 @@
+:root:root {
+    --custom-padding: .4375rem;
+}
+
+@media only screen and (min-height: 400px) {
+
+    .ic-app-header__menu-list-link:not(.ic-app-header__menu-list-link--nav-toggle) {
+        
+        padding: var(--custom-padding) 0 !important;
+
+    }
+
+}

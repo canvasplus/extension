@@ -92,6 +92,7 @@ const frames = {
           <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
           <Setting name="Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="unset" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} />}}/>
           <Setting name="Smaller Icons" setting="sidebar-smaller-icons" description="Decrease the size of sidebar icons." />
+          <Setting name="More Spacing" setting="sidebar-more-spacing" description="Increase the spacing between sidebar icons." />
         </SettingGroup>
         <SettingGroup name="Other">
           <Setting name="Link Color" setting="linkcolor" description="Change the color of links on Canvas." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>

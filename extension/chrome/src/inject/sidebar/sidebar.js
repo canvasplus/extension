@@ -1,7 +1,12 @@
-chrome.storage.local.get(["canvasplus-setting-sidebar-smaller-icons"], function(toggle) {
+chrome.storage.local.get(["canvasplus-setting-sidebar-smaller-icons", "canvasplus-setting-sidebar-more-spacing"], function(toggle) {
   if(toggle["canvasplus-setting-sidebar-smaller-icons"]) {
     for(let el of document.querySelectorAll(".menu-item-icon-container svg")) {
       el.style = "width:22px";
+    }
+  }
+  if(toggle["canvasplus-setting-sidebar-more-spacing"]) {
+    for(let el of document.querySelectorAll(".menu-item.ic-app-header__menu-list-item .ic-app-header__menu-list-link")) {
+      el.style = "--custom-padding:.75rem;";
     }
   }
 });
