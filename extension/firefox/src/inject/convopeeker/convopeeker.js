@@ -186,15 +186,13 @@ const getConversations = () => {
         if(convosCache === undefined) {
             fetch(realurl+'/api/v1/conversations?include=participant_avatars').then(data => {
                 data.json().then(json => {
-                  setTimeout(() => {
 
-                      insertConversationTop()
+                    insertConversationTop()
 
-                      peekerElement.appendChild(peekerConvoList)
+                    peekerElement.appendChild(peekerConvoList)
 
-                      convosCache = json
-                      resolve(json)
-                  }, 5000)
+                    convosCache = json
+                    resolve(json)
                 })
             })
         } else {
