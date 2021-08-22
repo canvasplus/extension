@@ -41,15 +41,7 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
 
 chrome.storage.local.get(["canvasplus-setting-sidebar-icon-color"], function(data) {
   const color = data["canvasplus-setting-sidebar-icon-color"];
-  if(color === "invert") {
-    console.log("COLOR IS INVERT");
-    sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill:var(--ic-brand-global-nav-bgd);`;
-    document.querySelector('#header').style = sidebarStyle;
-    for(let el of document.querySelectorAll(".menu-item-icon-container svg")) {
-      el.style = "filter:invert(1);";
-    }
-  }
-  else if(color !== "unset") {
+  if(color !== "unset") {
     sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill: ${ color };`;
     document.querySelector('#header').style = sidebarStyle;
   }
