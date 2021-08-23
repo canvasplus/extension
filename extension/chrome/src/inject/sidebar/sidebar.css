@@ -1,5 +1,6 @@
 :root:root {
     --custom-padding: .4375rem;
+    --custom-active-background: #FFFFFF;
 }
 
 @media only screen and (min-height: 400px) {
@@ -7,7 +8,19 @@
     .ic-app-header__menu-list-link:not(.ic-app-header__menu-list-link--nav-toggle) {
         
         padding: var(--custom-padding) 0 !important;
-
+        
     }
+
+}
+
+.ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-app-header__menu-list-link {
+
+    background: var(--custom-active-background) !important;
+
+}
+
+.ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-icon-svg, body.primary-nav-expanded .ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .menu-item__text {
+    color: var(--ic-brand-global-nav-ic-icon-only-svg-fill--active) !important;
+    fill: var(--ic-brand-global-nav-ic-icon-only-svg-fill--active) !important;
 
 }
