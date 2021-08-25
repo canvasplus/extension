@@ -56,7 +56,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 <br>
 
-None Currently 🎉
+1. Popup and sidebar customization (these issues are related) is currently broken on firefox (fixes coming soon)
 
 <br>
 
