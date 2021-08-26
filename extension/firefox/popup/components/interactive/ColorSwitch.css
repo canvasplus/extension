@@ -22,6 +22,7 @@
         'color-2-1 color-2-2 color-2-3 color-2-4 color-2-5 color-2-6 color-custom-input color-custom-input color-custom-input';
     grid-gap: 6px;
     padding: 6px;
+    cursor: default;
 }
 
 .ColorSwitch_Popup__ColorOption {

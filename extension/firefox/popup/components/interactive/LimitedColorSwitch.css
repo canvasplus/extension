@@ -17,6 +17,7 @@
     left: -159px;
     padding: 11px 6px 15px 6px;
     width: 169px;
+    cursor: default;
 }
 
 .LimitedColorSwitch_Popup__Text {
@@ -135,6 +136,10 @@
 
 .LimitedColorSwitch_Popup__ColorOption.lcs_p_co_custom_set {
     background: var(--color);
+}
+
+.LimitedColorSwitch_Popup__ColorOption.lcs_p_co_custom input, .LimitedColorSwitch_Popup__ColorOption.lcs_p_co_custom_set input {
+    cursor: pointer;
 }
 
 .LimitedColorSwitch_Popup__ColorOption.lcs_p_co_unset {
