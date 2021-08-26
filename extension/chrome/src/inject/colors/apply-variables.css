@@ -29,7 +29,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
 
 
 .ic-app-nav-toggle-and-crumbs, .header-bar, #right-side h2, #right-side .h2, .ic-Dashboard-header__layout, .ui-tabs .ui-tabs-nav, .ic-Table td, .ic-Table th {
-  border-bottom: 1px solid var(--cpt-dark-line-color);
+  border-bottom: 1px solid var(--cpt-dark-line-color) !important;
 }
 
 .ic-Table.ic-Table--striped tbody tr:nth-child(odd) {
