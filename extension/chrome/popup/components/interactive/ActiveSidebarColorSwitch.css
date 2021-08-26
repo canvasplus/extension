@@ -17,6 +17,7 @@
     left: -179px;
     padding: 11px 6px 15px 6px;
     width: 190px;
+    cursor: default;
 }
 
 .ActiveSidebarColorSwitch_Popup__Text {
@@ -75,6 +76,10 @@
 .ActiveSidebarColorSwitch_Popup__ColorOption.ascs_p_co_custom_set {
     background: var(--color)
 }
+
+.ActiveSidebarColorSwitch_Popup__ColorOption.ascs_p_co_custom input, .ActiveSidebarColorSwitch_Popup__ColorOption.ascs_p_co_custom_set input {
+    cursor: pointer;
+}    
 
 
 .SettingInput.ActiveSidebarColorSwitch_Shortcut__Hover {
