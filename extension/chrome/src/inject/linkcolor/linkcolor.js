@@ -1,6 +1,5 @@
 chrome.storage.local.get(["canvasplus-setting-linkcolor"], function(data) {
   const color = data["canvasplus-setting-linkcolor"];
-  console.log(color);
   if(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {
     var link = document.createElement("link");
     link.href = chrome.extension.getURL("src/inject/linkcolor/linkcolor.css");

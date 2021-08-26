@@ -147,7 +147,7 @@ label[for="course_select_menu"] span span span span span span span, label[for="g
 
 
 label[for="course_select_menu"] span span span span span span span span input, label[for="grading_period_select_menu"] span span span span span span span span input, label[for="assignment_sort_order_select_menu"] span span span span span span span span input, .dropdown-menu li a span, .dropdown-menu li a, .mini_calendar .day, #minical .fc-widget-content, .feature-flag-wrapper div table tbody tr td div button, .ic-DashboardCard__action:not(:hover), .DashboardCardMenu__MovementItem:not(:hover), span[dir="ltr"] span:not([style="border-width: 0px; top: 0px; left: 0px; position: absolute; transform: translateX(216px) translateY(144px) translateZ(0px);"]):not(#ColorPicker__Apply span) {
-  color: var(--ic-brand-font-color-dark) !important;
+  color: var(--ic-brand-font-color-dark);
 }
 
 .mini_calendar .day.today, .fc-unthemed .fc-today {
