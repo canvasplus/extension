@@ -6,8 +6,7 @@ const oldDefaults = {
 }
 
 const newDefaults = {
-  "canvasplus-setting-navigator": false,
-  "canvasplus-setting-convopeeker": true,
+  "canvasplus-setting-convopeeker": true
   "canvasplus-setting-sidebar-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},

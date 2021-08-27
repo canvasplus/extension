@@ -45,14 +45,11 @@ const frames = {
       <span>
         <SettingGroup name="Navigation">
           <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
-          <Setting name="Navigator" setting="navigator" description="Go to any page or list using a popout menu." />
-        </SettingGroup>
-        <SettingGroup name="Email">
-          <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
-        </SettingGroup>
-        <SettingGroup name="Other">
           <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
           <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
+        </SettingGroup>
+        <SettingGroup name="Other">
+          <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
         </SettingGroup>
       </span>
     )
