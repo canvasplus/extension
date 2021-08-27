@@ -125,24 +125,9 @@ const insertConversationTop = () => {
     expandLink.href = '/conversations'
     expandLink.innerText = 'Expand'
 
-    const searchForm = document.createElement('form')
-    searchForm.classList = 'canvasplus-convo-peeker-convo-top-search-form'
-
-    const searchFormInput = document.createElement('input')
-    searchFormInput.placeholder = 'Find an email...'
-    searchFormInput.classList = 'canvasplus-convo-peeker-convo-top-search-form-input'
-
-    const searchFormButton = document.createElement('input')
-    searchFormButton.type = 'submit'
-    searchFormButton.value = 'Search'
-    searchFormButton.classList = 'canvasplus-convo-peeker-convo-top-search-form-button'
-
     top.appendChild(header)
 
     searchFormWrapper.appendChild(expandLink)
-    searchFormWrapper.appendChild(searchForm)
-    searchForm.appendChild(searchFormInput)
-    searchForm.appendChild(searchFormButton)
 
     top.appendChild(searchFormWrapper)
 

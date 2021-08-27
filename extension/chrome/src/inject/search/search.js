@@ -154,7 +154,7 @@ const injectSearchResults = (results) => {
 
             search.onkeyup = () => {
                 let query = search.value.toLowerCase()
-                if (query == "stranger things") {
+                if (query === "hawkins") {
                   /* from https://github.com/DavidLozzi/Stranger-Things-Easter-Egg */
                   window.upsideDown = (function () {
                   let music = {};
