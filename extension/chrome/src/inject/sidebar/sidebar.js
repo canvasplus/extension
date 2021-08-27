@@ -22,7 +22,7 @@ var sidebarStyle = '';
 chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
   const color = data["canvasplus-setting-sidebar-color"];
   if(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {
-    sidebarStyle += `--ic-brand-global-nav-bgd: ${ color };--ic-brand-global-nav-avatar-border: ${ color };`;
+    sidebarStyle += `--ic-brand-global-nav-bgd: ${ color };--ic-brand-global-nav-avatar-border: ${ color };--ic-brand-global-nav-ic-icon-svg-fill--active: ${ color };`;
     document.querySelector('#header').style = sidebarStyle;
   }
 });
@@ -30,7 +30,7 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
 chrome.storage.local.get(["canvasplus-setting-sidebar-icon-color"], function(data) {
   const color = data["canvasplus-setting-sidebar-icon-color"];
   if(color !== "unset") {
-    sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill: ${ color };`;
+    sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill: ${ color };--cp-custom-sidebar-tooltip-test-color: ${ color };`;
     document.querySelector('#header').style = sidebarStyle;
   }
 });

@@ -1,6 +1,7 @@
 :root:root {
     --custom-padding: .4375rem;
     --custom-active-background: #FFFFFF;
+    --cp-custom-sidebar-tooltip-test-color: #FFFFFF;
 }
 
 @media only screen and (min-height: 400px) {
@@ -23,4 +24,8 @@
     color: var(--ic-brand-global-nav-ic-icon-only-svg-fill--active) !important;
     fill: var(--ic-brand-global-nav-ic-icon-only-svg-fill--active) !important;
 
+}
+
+.menu-item__text {
+    color: var(--cp-custom-sidebar-tooltip-test-color) !important;
 }

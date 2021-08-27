@@ -1,4 +1,19 @@
-const settingsList = ["canvasplus-setting-quicklink", "canvasplus-setting-search", "canvasplus-setting-smartscroll", "canvasplus-display-appearance", "canvasplus-setting-navigator", "canvasplus-setting-convopeeker", "canvasplus-setting-sidebar-hidelogo", "canvasplus-setting-sidebar-color", "canvasplus-setting-sidebar-size-toggle", "canvasplus-setting-linkcolor-toggle"];
+const defaults = {
+  "canvasplus-setting-quicklink": true,
+  "canvasplus-setting-search": true,
+  "canvasplus-setting-smartscroll": true,
+  "canvasplus-display-appearance": "light",
+  "canvasplus-setting-navigator": false,
+  "canvasplus-setting-convopeeker": true,
+  "canvasplus-setting-sidebar-hidelogo": true,
+  "canvasplus-setting-sidebar-color": '#1b7ecf',
+  "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
+  "canvasplus-setting-sidebar-icon-color": "white",
+  "canvasplus-setting-sidebar-smaller-icons": true,
+  "canvasplus-setting-sidebar-more-spacing": true
+}
+
+const settingsList = Object.keys(defaults);
 let settings = {};
 
 chrome.storage.local.get(settingsList, function(data) {
@@ -6,7 +21,7 @@ chrome.storage.local.get(settingsList, function(data) {
   if(Object.entries(data).length < settingsList.length)
   {
     console.log(Object.entries(data).length, settingsList.length, data);
-    chrome.storage.local.set({"canvasplus-setting-quicklink": true, "canvasplus-setting-search": true, "canvasplus-setting-smartscroll": true, "canvasplus-display-appearance": "light", "canvasplus-setting-navigator": false, "canvasplus-setting-convopeeker": true, "canvasplus-setting-sidebar-hidelogo": false, "canvasplus-setting-sidebar-color": '', "canvasplus-setting-sidebar-size-toggle": false, "canvasplus-setting-linkcolor-toggle": false});
+    chrome.storage.local.set(defaults);
   }
 });
 
