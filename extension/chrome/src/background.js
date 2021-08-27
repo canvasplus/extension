@@ -6,13 +6,14 @@ const oldDefaults = {
 }
 
 const newDefaults = {
-  "canvasplus-setting-convopeeker": true
+  "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-sidebar-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",
   "canvasplus-setting-sidebar-smaller-icons": true,
-  "canvasplus-setting-sidebar-more-spacing": true
+  "canvasplus-setting-sidebar-more-spacing": true,
+  "canvasplus-setting-roundermodules": true
 }
 
 chrome.runtime.onInstalled.addListener((details) => {

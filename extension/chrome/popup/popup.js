@@ -49,6 +49,7 @@ const frames = {
           <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
         </SettingGroup>
         <SettingGroup name="Other">
+          <Setting name="Rounder Modules" setting="roundermodules" description="Give the modules page a rounder appearance." />
           <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
         </SettingGroup>
       </span>

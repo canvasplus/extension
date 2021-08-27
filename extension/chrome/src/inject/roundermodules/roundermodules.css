@@ -1,0 +1,19 @@
+.item-group-condensed .ig-header, .item-group-condensed .content .context_module_items li:last-child .ig-row {
+    transition: border-radius 0.3s linear;
+}
+
+.item-group-condensed:not(.collapsed_module) .ig-header {
+    border-radius: 8px 8px 0 0;
+}
+
+.collapsed_module.item-group-condensed .ig-header {
+    border-radius: 8px 8px 8px 8px;
+}
+
+.item-group-condensed:not(.collapsed_module) .content .context_module_items li:last-child .ig-row {
+    border-radius: 0 0 8px 8px;
+}
+
+.context_module { 
+    margin: 0;
+}

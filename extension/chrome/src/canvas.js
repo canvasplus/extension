@@ -2,14 +2,15 @@ const defaults = {
   "canvasplus-setting-quicklink": true,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
-  "canvasplus-display-appearance": "light"
+  "canvasplus-display-appearance": "light",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-sidebar-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",
   "canvasplus-setting-sidebar-smaller-icons": true,
-  "canvasplus-setting-sidebar-more-spacing": true
+  "canvasplus-setting-sidebar-more-spacing": true,
+  "canvasplus-setting-roundermodules": true
 }
 
 const settingsList = Object.keys(defaults);
