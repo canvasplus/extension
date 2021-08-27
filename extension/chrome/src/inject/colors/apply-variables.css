@@ -297,3 +297,7 @@ svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
 .ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-app-header__menu-list-link {
   background: var(--cpt-dark-current-page);
 }
+
+.ic-Dashboard-header__layout { 
+  background: none;
+}
