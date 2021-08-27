@@ -1,5 +1,5 @@
 :root:root {
-  --header-bgd-color: #223145;
+  --header-bgd-color: rgba(34, 49, 69, .95);
   --tabs-bgd-color: #2D3B45;
   --tabs-border-color: #383a42;;
   --tabs-bgd-hover-color: #1f2930;
