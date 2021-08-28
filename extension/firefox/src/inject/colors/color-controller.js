@@ -15,7 +15,6 @@ html.appendChild(varSheet);
 const applyVarsURL = chrome.extension.getURL("src/inject/colors/apply-variables.css");;
 
 const update = (appearance) => {
-  console.log("updating to " + appearance);
   if(appearance && appearance !== 'light') {
     linkApplyVars.href = applyVarsURL;
     varSheet.href = chrome.extension.getURL('src/inject/colors/' + appearance + '.css')

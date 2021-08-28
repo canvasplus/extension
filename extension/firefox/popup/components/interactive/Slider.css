@@ -5,7 +5,6 @@
 	border-radius: 6px;
 	display: inline-block;
 	margin: 0.75px 0px 0.75px 5px;
-	display: inline-block;
 }
 
 .range {
@@ -18,26 +17,13 @@
 	opacity: 0.7;
 	animation-duration: 0.2s;
 	transition: opacity .2s;
-	width: 75%;
 }
 
-.range::-moz-range-thumb {
-	height: 15px;
-	border-radius: 20%;
+.range::-moz-range-thumb  {
 	background: #414141;
+	border-radius: 20%;
 	cursor: pointer;
-	width: 15px;
-	border: none;
 }
-
-input[type=range]::-webkit-slider-thumb {
-	height: 15px;
-	border-radius: 20%;
-	background: #414141;
-	cursor: pointer;
-	-webkit-appearance: none;
-	width: 15px;
-  }
 
 .slider-parent {
 	display: inline-block;
@@ -45,5 +31,4 @@ input[type=range]::-webkit-slider-thumb {
 	position: relative;
 	margin: 0;
 	align-self: center;
-	width: 100%;
 }

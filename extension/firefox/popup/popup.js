@@ -12,6 +12,7 @@ import Hover from './components/interactive/Hover'
 import ColorSwitch from './components/interactive/ColorSwitch';
 import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
+import Slider from './components/interactive/Slider';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
@@ -45,14 +46,12 @@ const frames = {
       <span>
         <SettingGroup name="Navigation">
           <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
-          <Setting name="Navigator" setting="navigator" description="Go to any page or list using a popout menu." />
-        </SettingGroup>
-        <SettingGroup name="Email">
-          <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
-        </SettingGroup>
-        <SettingGroup name="Other">
           <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
           <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
+        </SettingGroup>
+        <SettingGroup name="Other">
+          <Setting name="Rounder Modules" setting="roundermodules" description="Give the modules page a rounder appearance." />
+          <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
         </SettingGroup>
       </span>
     )
@@ -89,14 +88,13 @@ const frames = {
         </div>
         <SettingGroup name="Sidebar">
           <Setting name="Hide Logo" setting="sidebar-hidelogo" description="Hide the logo on the top of the sidebar." />
-          <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
-          <Setting name="Active Background Color" setting="active-sidebar-color" description="Change the background color of the active sidebar button."  defaultValue={{'background': 'darker', 'icon': 'inherit'}} customInput={(state, setState) => { return <ActiveSidebarColorSwitch state={state} setState={setState}/> }} />
-          <Setting name="Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="unset" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} generateTooltip={(color) => {if(color === "unset") {return <><b>Default Icons</b><p>Sidebar icons will inherit the default colors of your school.</p></>;} else if(["black","white"].includes(color)) {return <><b>{ color.charAt(0).toUpperCase() + color.slice(1) } Icons</b><p>Sidebar icons will always appear in { color }.</p></>} else {return <><b>Custom Icons</b><p>Click to open a color wheel and chose a custom icon color.</p></>;}}}/> }} />
-          <Setting name="Smaller Icons" setting="sidebar-smaller-icons" description="Decrease the size of sidebar icons." />
-          <Setting name="More Spacing" setting="sidebar-more-spacing" description="Increase the spacing between sidebar icons." />
+          <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#1b7ecf" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          <Setting name="Active Background Color" setting="active-sidebar-color" description="Change the background color of the active sidebar button."  defaultValue={{'background': 'darker', 'icon': 'white'}} customInput={(state, setState) => { return <ActiveSidebarColorSwitch state={state} setState={setState}/> }} />
+          <Setting name="Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="white" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} generateTooltip={(color) => {if(color === "unset") {return <><b>Default Icons</b><p>Sidebar icons will inherit the default colors of your school.</p></>;} else if(["black","white"].includes(color)) {return <><b>{ color.charAt(0).toUpperCase() + color.slice(1) } Icons</b><p>Sidebar icons will always appear in { color }.</p></>} else {return <><b>Custom Icons</b><p>Click to open a color wheel and chose a custom icon color.</p></>;}}}/> }} />
+          <Setting name="Icons Size" setting="sidebar-icon-size" description="Change the size of the sidebar icons" customInput={() => {return <Slider />}} />
         </SettingGroup>
         <SettingGroup name="Other">
-          <Setting name="Link Color" setting="linkcolor" description="Change the color of links on Canvas." defaultValue="#C00" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          <Setting name="Link Color" setting="linkcolor" description="Change the color of links on Canvas." defaultValue="" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
         </SettingGroup>
       </span>
     )

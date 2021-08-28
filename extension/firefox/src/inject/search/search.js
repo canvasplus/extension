@@ -486,7 +486,7 @@ const searchModules = (courseId, checkStorage) => {
 chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
     if(data["canvasplus-setting-search"])
     {
-        console.warn('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
+        console.log('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
         runSearch()
     }
 })

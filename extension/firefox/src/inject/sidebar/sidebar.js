@@ -1,10 +1,10 @@
-chrome.storage.local.get(["canvasplus-setting-sidebar-smaller-icons", "canvasplus-setting-sidebar-more-spacing"], function(toggle) {
-  if(toggle["canvasplus-setting-sidebar-smaller-icons"]) {
+chrome.storage.local.get(["canvasplus-setting-sidebar-icon-size", "canvasplus-setting-sidebar-more-spacing"], function(data) {
+  if(data["canvasplus-setting-sidebar-icon-size"]) {
     for(let el of document.querySelectorAll(".menu-item-icon-container svg")) {
-      el.style = "width:22px";
+      el.style = "width:" + data["canvasplus-setting-sidebar-icon-size"] + "px";
     }
   }
-  if(toggle["canvasplus-setting-sidebar-more-spacing"]) {
+  if(data["canvasplus-setting-sidebar-more-spacing"]) {
     for(let el of document.querySelectorAll(".menu-item.ic-app-header__menu-list-item .ic-app-header__menu-list-link")) {
       el.style = "--custom-padding:.75rem;";
     }
@@ -22,7 +22,7 @@ var sidebarStyle = '';
 chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
   const color = data["canvasplus-setting-sidebar-color"];
   if(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {
-    sidebarStyle += `--ic-brand-global-nav-bgd: ${ color };--ic-brand-global-nav-avatar-border: ${ color };`;
+    sidebarStyle += `--ic-brand-global-nav-bgd: ${ color };--ic-brand-global-nav-avatar-border: ${ color };--ic-brand-global-nav-ic-icon-svg-fill--active: ${ color };`;
     document.querySelector('#header').style = sidebarStyle;
   }
 });
@@ -30,7 +30,7 @@ chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
 chrome.storage.local.get(["canvasplus-setting-sidebar-icon-color"], function(data) {
   const color = data["canvasplus-setting-sidebar-icon-color"];
   if(color !== "unset") {
-    sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill: ${ color };`;
+    sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill: ${ color };--cp-custom-sidebar-tooltip-test-color: ${ color };`;
     document.querySelector('#header').style = sidebarStyle;
   }
 });

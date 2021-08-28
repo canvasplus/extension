@@ -8,7 +8,8 @@
          "src/inject/colors/apply-variables.css",
          "src/inject/colors/dark.css",
          "src/inject/colors/dim.css",
-         "src/inject/linkcolor/linkcolor.css"
+         "src/inject/linkcolor/linkcolor.css",
+         "src/inject/roundermodules/roundermodules.css"
      ],
   "content_scripts": [
     {
@@ -38,7 +39,7 @@
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/inject/scroll/modules.js"]
+      "js": ["src/inject/scroll/modules.js", "src/inject/roundermodules/roundermodules.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
