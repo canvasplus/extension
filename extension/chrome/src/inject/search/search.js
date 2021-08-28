@@ -54,7 +54,9 @@ const injectSearchBox = () => {
           document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
         } else if (window.location.pathname == "/grades") {
           topNav.appendChild(searchWrapper);
-          searchWrapper.style.marginInlineStart = "auto"
+          searchWrapper.style.marginInlineStart = "auto";
+        } else if (document.getElementById("unauthorized_message") != null) {
+            console.log("[Canvas+] Not Injecting Search Due to 404 page");
         } else {
           topNav.appendChild(searchWrapper);
         }
