@@ -1,0 +1,34 @@
+.bubble {
+	background: rgb(99, 99, 99);
+	color: white;
+	padding: 1px 10px;
+	border-radius: 6px;
+	display: inline-block;
+	margin: 0.75px 0px 0.75px 5px;
+}
+
+.range {
+	vertical-align: middle;
+	-webkit-appearance: none;
+	appearance: none;
+	height: 2px;
+	background: #009bb6;
+	outline: none;
+	opacity: 0.7;
+	animation-duration: 0.2s;
+	transition: opacity .2s;
+}
+
+.range::-moz-range-thumb  {
+	background: #414141;
+	border-radius: 20%;
+	cursor: pointer;
+}
+
+.slider-parent {
+	display: inline-block;
+	height: auto;
+	position: relative;
+	margin: 0;
+	align-self: center;
+}
