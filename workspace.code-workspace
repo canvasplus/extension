@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "extension/chrome"
+		},
+		{
+			"path": "extension/firefox"
+		},
+		{
+			"path": "docs"
+		}
+	],
+	"settings": {}
+}
