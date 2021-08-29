@@ -52,7 +52,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 <br>
 
-#1 Linkcolor changes sidebar active color (Solution is being looked into)
+🎉 No issuse Currently Yay!
 
 <br>
 
