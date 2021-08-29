@@ -13,10 +13,10 @@ import ColorSwitch from './components/interactive/ColorSwitch';
 import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
 import Slider from './components/interactive/Slider';
+import CustomColorPicker from './components/interactive/CustomColorPicker';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
-
 const tabChangeHandler = (newTabId) => {
   setCurrentTab(newTabId)
 }
