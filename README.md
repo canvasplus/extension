@@ -22,6 +22,7 @@
   <a href="Insert Link">Install The Firefox Extension (Coming Soon)</a><br>
   <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
   <a href="https://developer.chrome.com/docs/extensions/">Chrome Extension Documentation</a><br>
+  <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/">Firefox Extension Documentation</a><br>
   <a href="https://jekyllrb.com/docs/">Jekyll (Used in website) Documentation</a>
 </p>
 
