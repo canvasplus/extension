@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { SketchPicker } from 'react-color'
 import './ActiveSidebarColorSwitch.css'
+import CustomColorPicker from './CustomColorPicker'
 import { LimitedColorSwitchContent } from './LimitedColorSwitch.js'
 
 export default function ActiveSidebarColorSwitch({ state, setState }) {
@@ -8,7 +10,8 @@ export default function ActiveSidebarColorSwitch({ state, setState }) {
 
     const [color, setColor] = useState(state.background)
     const [icon, setIcon] = useState(state.icon)
-    
+    const [customPickerShowing, setCustomPickerShowing] = useState(false)
+
     const [showPopup, setShowPopup] = useState(false)
     
     const generateTooltip = (color) => {if(color === "white") {return <><b>White Active Background</b><p>The active sidebar button will have a white background.</p></>;} else if(color === "blend") {return <><b>Blended Active Background</b><p>The active button color will match your Canvas appearance.</p></>;} else if(color === "darker") {return <><b>Darker Active Background</b><p>The active button will be slightly darker than the rest of the sidebar.</p></>;} else {return <><b>Custom Active Background</b><p>Click to open a color wheel and chose a custom active background color.</p></>;}}
@@ -37,8 +40,9 @@ export default function ActiveSidebarColorSwitch({ state, setState }) {
                 <ActiveSidebarColorSwitchOption color="white" onClicked={onClicked} onMouseOver={onMouseOver} />
                 <ActiveSidebarColorSwitchOption color="blend" onClicked={onClicked} onMouseOver={onMouseOver} />
                 <ActiveSidebarColorSwitchOption color="darker" onClicked={onClicked} onMouseOver={onMouseOver} />
-                <div className={`ActiveSidebarColorSwitch_Popup__ColorOption ascs_p_co_custom${['white','blend','darker'].includes(color) ? '' : '_set'}`} onMouseEnter={() => { onMouseOver('custom') }} style={{cursor:'pointer','--color':color}}>
-                    <input type="color" style={{opacity:'0'}} ref={customInput} onChange={() => { const newColor = customInput.current.value; setColor(newColor); setState({ background: newColor, icon: icon}); setToolTip(generateTooltip(newColor)) }}/>
+                <div className={`ActiveSidebarColorSwitch_Popup__ColorOption ascs_p_co_custom${['white','blend','darker'].includes(color) ? '' : '_set'}`} onMouseEnter={() => { onMouseOver('custom') }} style={{cursor:'pointer','--color':color,overflow:'unset',zIndex:1,position:'relative'}}>
+                    <div style={{width:'100%',height:'100%',position:'absolute',top:'0',left:'0'}} onClick={() => { setCustomPickerShowing(true) } }></div>
+                    <CustomColorPicker color={color} onChange={onClicked} showing={customPickerShowing} setShowing={setCustomPickerShowing}/>
                 </div>
             </div>
             <div style={{borderTop:'1px solid #e3e3e3',margin:'20px auto',width:160}} />

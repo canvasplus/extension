@@ -34,6 +34,7 @@
     margin: auto;
     display: flex;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .ActiveSidebarColorSwitch_Popup__ColorOption {

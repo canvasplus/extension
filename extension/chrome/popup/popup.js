@@ -13,10 +13,10 @@ import ColorSwitch from './components/interactive/ColorSwitch';
 import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
 import Slider from './components/interactive/Slider';
+import CustomColorPicker from './components/interactive/CustomColorPicker';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
-
 const tabChangeHandler = (newTabId) => {
   setCurrentTab(newTabId)
 }
@@ -35,7 +35,9 @@ const frames = {
           <p className="changes-items">Customizable Sidebar</p>
           <p className="changes-items">Email Peeker</p>
           <p className="changes-items">Custom Link Colors</p>
+          <p className="changes-items">Rounder Modules</p>
           <p className="changes-items">New Popup</p>
+          <p className="changes-items">Dim Mode</p>
           <p className="changes-items">Bug Fixes</p>
         </div>
       </div>
