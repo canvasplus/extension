@@ -52,7 +52,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 <br>
 
-#1 Popup and sidebar customization (these issues are related) is currently broken on firefox (fixes coming soon)
+#1 Linkcolor changes sidebar active color (Solution is being looked into)
 
 <br>
 

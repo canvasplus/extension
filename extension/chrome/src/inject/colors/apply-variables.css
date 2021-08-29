@@ -72,7 +72,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
 }
 
 .al-options, .ColorPicker__Container {
-  background-color: var(--cpt-dark-background-color);
+  background-color: var(--cpt-dark-background-color) !important;;
 }
 
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"]:not(#compose-message-recipients), input[type="tel"], input[type="color"], .uneditable-input, .ui-dialog-content.ui-widget-content {
