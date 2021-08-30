@@ -1,0 +1,73 @@
+---
+layout: update
+title:  "Customize your Sidebar"
+date:   2021-05-17
+categories: update
+version: "Canvas+ Patch 0.3"
+---
+<span>Hey Canvas+ Users! Over the summer we've been working hard to deliver a back to school update, so here it is!</span>
+
+<br>
+
+<strong>Customize your Sidebar</strong>
+
+<span>A common criticism of dark mode was that it didn't fit the sidebar color. Patch 0.3 adresses this with a full suite of sidebar settings. It's not just custom colors, you can hide your school's branding, shrink icons, and increase spacing.</span>
+<br>
+
+![Customize your sidebar](/assets/img/feature-sidebar.png)
+
+<br>
+
+<strong>Dim Mode</strong>
+
+<span>If you're looking to do homework at night, but something less harsh than dark mode, dim mode is the perfect solution. Try it out and see if you like it! Additionally, we're adding <strong class="no-extra inline">instant appearance switching</strong>, meaning your appearance will updated without reloading. Sleep easy knowing dark mode won't interfere with any of your quizzes. We'll be rolling this out to more features soon. </span>
+<br>
+
+![Dim Mode](/assets/img/feature-dim.png)
+
+<br>
+
+<strong>Quick Inbox</strong>
+
+<span>Here's a small feature for your convenience. Quick inbox lets you take a peak at your emails, without opening a new tab. Just click the normal inbox button, and you'll see a small popup instead of a new page. Click the expand button if you want the full page. That's it!</span>
+<br>
+
+![Quick Inbox](/assets/img/feature-quick-inbox.png)
+
+<br>
+
+<strong>Improved Popup and More Features</strong>
+
+<span>We've overhauled the design of our popup to accomodate the new features. This lets us make new types of settings, like color selectors. We hope you prefer it! We also threw in another small feature, just for fun. Enable "rounder modules" for just that!</span>
+
+<br>
+
+<strong>Firefox Support</strong>
+
+<span>As Canvas+ developers, we actually prefer using non-chrome browsers like Firefox and Edge. We don't think you should change your browser just to use this extension, so we'll be gradually adding official support for more browsers. As of today, these are the statuses of all the major browsers:</span>
+
+<strong class="no-extra">Officially Supported</strong>
+- Google Chrome
+- Firefox
+
+<strong class="no-extra">Compatible but Unsupported</strong>
+- Brave
+- Vivaldi
+- Microsoft Edge
+- Opera
+- Opera GX (several critical issues)
+
+<strong class="no-extra">Fully Incompatible</strong>
+- Safari
+
+<span>Our goal is to officially support all of these browsers sooner rather than later, with Edge, Opera, and Safari as a priority.</span>
+
+<br>
+
+<strong>A Word About Updates</strong>
+
+We've had the entire summer to work on this update, and it turned out to be biggest yet! This is something that has shown results, and we'd like to continue with longer update cycles. Our goal is to get major updates out <strong class="no-extra inline">every 6 weeks</strong>, with 2-3 minor updates in between. You can expect surveys, browser compatibility, and of course, bugfixes before the next major update, 0.4.0.
+
+<br>
+
+We're so excited for you to try this update, thank you for your continued support!

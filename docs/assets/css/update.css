@@ -5,7 +5,8 @@
 .update-version {
   margin: 0 0 25px 0;
   font-size: 18px;
-  color: var(--accent-color)
+  color: var(--accent-color);
+  font-family: 'proxima-bold';
 }
 
 .divider {
@@ -15,10 +16,15 @@
 }
 
 .update-paragraph {
-  font-size: 18px;
-  line-height: 45px;
-  max-width: 80%;
+  font-size: 16px;
+  line-height: 2.25;
   color: var(--text-color);
+}
+
+.update-paragraph span, .update-paragraph strong:not(.no-extra) {
+  max-width: 80%;
+  width: fit-content;
+  display: block;
 }
 
 .update-title {
@@ -31,4 +37,10 @@
 
 .update-content {
   padding: 0 35px 25px 35px;
+}
+
+.update-content img {
+  width: 85%;
+  display: block;
+  margin: auto;
 }

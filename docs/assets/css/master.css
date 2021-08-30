@@ -1,4 +1,9 @@
 @font-face {
+  font-family: proxima-regular;
+  src: url(../font/ProximaNova-Regular.otf);
+}
+
+@font-face {
   font-family: proxima-bold;
   src: url(../font/ProximaNova-Bold.otf);
 }
@@ -25,26 +30,32 @@
 }
 
 #content-bottom {
-  height: 50px;
-  width: 100%;
+  height: 55px;
+  width: calc(100% - 15px);
 }
 
 body {
-  font-family: 'proxima-bold', arial, sans-serif;
+  font-family: 'proxima-regular', arial, sans-serif;
   margin: 0;
 }
 
 #content-bottom-nav {
   float: right;
+  display: flex;
   font-size: 16px;
 }
 
 #contribute-button {
   text-decoration: none;
-  color: var(--title-color);
+  color: #6f6f6f;
+  background: #dddddd;
+  padding: 10px 30px;
+  font-family: 'proxima-bold';
+  border-radius: 30px;
 }
+
 #install-button {
-  margin: 0 20px;
+  margin: 0 10px 0 10px;
   text-decoration: none;
   color: white;
   font-family: 'proxima-bold', arial, sans-serif;
@@ -55,13 +66,45 @@ body {
   font-size: 16px;
 }
 
+#alt-install-button {
+  height: 40px;
+  width: 40px;
+  background: #ddd;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+}
+
+#alt-install-button::before {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: url(/assets/img/menu.svg);
+  background-size: cover;
+  opacity: .5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+strong:not(.no-extra) {
+  background-color: rgba(172, 215, 230, 0.5);
+  padding: 8px 12px;
+}
+
 strong {
-  background-color: lightblue;
-  padding: 5px;
+  font-family: 'proxima-bold';
+  font-weight: unset;
 }
 
 br {
   margin-bottom: 20px;
+}
+
+.inline {
+  display: inline;
 }
 
 .content-alert {
@@ -69,4 +112,8 @@ br {
   padding: 8px;
   text-align: center;
   color: white;
+}
+
+html {
+  scroll-behavior: smooth;
 }
