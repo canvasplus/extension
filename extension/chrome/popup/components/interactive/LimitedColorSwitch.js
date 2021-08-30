@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import './LimitedColorSwitch.css'
+import CustomColorPicker from './CustomColorPicker.js'
 
 export default function LimitedColorSwitch({ state, setState, generateTooltip }) {
     const popup = React.createRef()
     const [showPopup, setShowPopup] = useState(false)
     const [colorTop, setColorTop] = useState(state)
-    
+
     const content = <LimitedColorSwitchContent generateTooltip={generateTooltip} state={colorTop} setState={(s) => { setColorTop(s); setState(s); }} setShowPopup={setShowPopup}></LimitedColorSwitchContent>;
     const popupElement = <><div className="LimitedColorSwitch_Popup" ref={popup}>
         {content}
@@ -29,6 +30,7 @@ export function LimitedColorSwitchOption({ color, onClicked, onMouseOver }) {
 export function LimitedColorSwitchContent({ state, setState, setShowPopup, generateTooltip }) {
     const customInput = React.createRef()
     const [color, setColor] = useState(state)
+    const [customPickerShowing, setCustomPickerShowing] = useState(false);
 
     const onClicked = (col) => {
         setColor(col);
@@ -53,7 +55,8 @@ export function LimitedColorSwitchContent({ state, setState, setShowPopup, gener
         <LimitedColorSwitchOption color="black" onClicked={onClicked} onMouseOver={onMouseOver} />
         <LimitedColorSwitchOption color="unset" onClicked={onClicked} onMouseOver={onMouseOver} />
         <div className={`LimitedColorSwitch_Popup__ColorOption lcs_p_co_custom${['white','black','unset'].includes(color) ? '' : '_set'}`} onMouseEnter={() => { onMouseOver('custom') }} style={{cursor:'pointer','--color':color}}>
-            <input type="color" style={{opacity:'0'}} ref={customInput} onChange={() => { const newColor = customInput.current.value; setColor(newColor); setState(newColor); setToolTip(generateTooltip(newColor)) }}/>
+            <div style={{width:'100%',height:'100%',position:'absolute',top:'0',left:'0'}} onClick={() => { setCustomPickerShowing(true) } }></div>
+            <CustomColorPicker color={color} onChange={(col) => {setColor(col); setState(col); setToolTip(generateTooltip(col))}} showing={customPickerShowing} setShowing={setCustomPickerShowing}/>
         </div>
     </div></>
 }

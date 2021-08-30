@@ -32,7 +32,7 @@ export default function ColorSwitch({ state, setState }) {
             <ColorSwitchOption color="#1059e3" gridArea="color-2-4" onClicked={onClicked} />
             <ColorSwitchOption color="#794bc4" gridArea="color-2-5" onClicked={onClicked} />
             <ColorSwitchOption color="#c840e3" gridArea="color-2-6" onClicked={onClicked} />
-            <input type='text' className="ColorSwitch_Popup__ColorCustomInput" ref={textInput} defaultValue={color === '' ? 'use default' : color} style={{ gridArea: 'color-custom-input', '--color-custom-input-result-outline': color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? 'blue' : 'red' }} onChange={() => { setColor(textInput.current.value.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? textInput.current.value : ''); setState(textInput.current.value.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? textInput.current.value : '')}}/>
+            <input type='text' className="ColorSwitch_Popup__ColorCustomInput" ref={textInput} defaultValue={color === '' ? 'use default' : color} style={{ gridArea: 'color-custom-input', '--color-custom-input-result-outline': color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? '1px solid blue' : '1px solid red' }} onChange={() => { setColor(textInput.current.value.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? textInput.current.value : ''); setState(textInput.current.value.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? textInput.current.value : '')}}/>
         </div></>
 
     return (<>

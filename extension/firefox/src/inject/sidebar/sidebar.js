@@ -39,7 +39,7 @@ chrome.storage.local.get(["canvasplus-setting-active-sidebar-color"], (data) => 
   const json = data["canvasplus-setting-active-sidebar-color"];
   if(json) {
     if(json.background === "blend") {
-      sidebarStyle += '--custom-active-background: var(--cpt-dark-background-color);';
+      sidebarStyle += '--custom-active-background: var(--ic-brand-global-nav-ic-icon-svg-fill);';
     } else if(json.background === "darker") {
       sidebarStyle += '--custom-active-background: rgba(0,0,0,0.2);';
     } else if(json.background !== "white") {

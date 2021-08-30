@@ -33,6 +33,7 @@
 .LimitedColorSwitch_Popup__Options {
     margin: auto;
     display: flex;
+    width: fit-content;
     width: -moz-fit-content;
 }
 
