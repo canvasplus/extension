@@ -1,10 +1,10 @@
-chrome.storage.local.get(["canvasplus-setting-sidebar-icon-size", "canvasplus-setting-sidebar-more-spacing"], function(data) {
-  if(data["canvasplus-setting-sidebar-icon-size"]) {
+chrome.storage.local.get(["canvasplus-setting-sidebar-smaller-icons", "canvasplus-setting-sidebar-more-spacing"], function(toggle) {
+  if(toggle["canvasplus-setting-sidebar-smaller-icons"]) {
     for(let el of document.querySelectorAll(".menu-item-icon-container svg")) {
-      el.style = "width:" + data["canvasplus-setting-sidebar-icon-size"] + "px";
+      el.style = "width:22px";
     }
   }
-  if(data["canvasplus-setting-sidebar-more-spacing"]) {
+  if(toggle["canvasplus-setting-sidebar-more-spacing"]) {
     for(let el of document.querySelectorAll(".menu-item.ic-app-header__menu-list-item .ic-app-header__menu-list-link")) {
       el.style = "--custom-padding:.75rem;";
     }
