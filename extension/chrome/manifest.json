@@ -2,7 +2,7 @@
   "name": "Canvas+",
   "version": "0.3",
   "manifest_version": 2,
-  "description": "CanvasPlus: Dark and dim mode, faster links, smart scrolling, search bar, sidebar customizability, email peeker, custom link color.",
+  "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
          "src/inject/colors/apply-variables.css",

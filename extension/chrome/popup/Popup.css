@@ -52,11 +52,14 @@ h1, h2, h3, h4, h5, h6, b {
 }
 
 .canvasplus-changes {
-  background: URL(https://images.unsplash.com/photo-1529832393073-e362750f78b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80);
+  background: URL(https://images.unsplash.com/photo-1536250695484-36ed15d06abf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80);
   text-align: center;
   height: 320px;
   width: 240px;
   color: #fff;
+  background-size: 200%;
+  background-position-y: -350px;
+  background-position-x: -100px;
 }
 
 .cpc-header {

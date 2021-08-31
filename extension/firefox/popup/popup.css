@@ -52,11 +52,14 @@ h1, h2, h3, h4, h5, h6, b {
 }
 
 .canvasplus-changes {
-  background: URL(https://images.unsplash.com/photo-1560803262-95a9de00a057?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80);
+  background: URL(https://images.unsplash.com/photo-1536250695484-36ed15d06abf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80);
   text-align: center;
   height: 320px;
   width: 240px;
   color: #fff;
+  background-size: 200%;
+  background-position-y: -350px;
+  background-position-x: -100px;
 }
 
 .cpc-header {
@@ -69,7 +72,7 @@ h1, h2, h3, h4, h5, h6, b {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 100px;
   margin: auto;
-  width: fit-content;
+  width: -moz-fit-content;
 }
 
 .cpc-header img {
@@ -99,7 +102,7 @@ h2 {
   border-radius: 16px;
   background: rgba(0,0,0,0.5);
   padding: 8px 16px;
-  width: fit-content;
+  width: -moz-fit-content;
   margin: auto;
   margin-bottom: 5px;
 }
