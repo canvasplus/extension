@@ -94,7 +94,7 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🟢 Remake popup using react (done besides implementation of some new features below)
 - 🟢 "Dim" Mode
 - 🟢 Email Peeker
-- 🟡 Change sidebar: Hide branding, change size, etc
+- 🟢 Change sidebar: Hide branding, change size, etc
 - 🟢 Customize link & accent color
 - 🟢 Easter Eggs
 
