@@ -32,7 +32,7 @@ const frames = {
           <p>Release 0.3</p>
         </div>
         <div className="changes-list">
-        <p className="changes-items">Custom Sidebar</p>
+          <p className="changes-items">Custom Sidebar</p>
           <p className="changes-items">Email Peeker</p>
           <p className="changes-items">Dim Mode</p>
         </div>
@@ -49,7 +49,7 @@ const frames = {
         </SettingGroup>
         <SettingGroup name="Other">
           <Setting name="Rounder Modules" setting="roundermodules" description="Give the modules page a rounder appearance." />
-          <Setting name="Email Peeker" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
+          <Setting name="Quick Inbox" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
         </SettingGroup>
       </span>
     )

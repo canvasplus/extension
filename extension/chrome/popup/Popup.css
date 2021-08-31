@@ -72,6 +72,7 @@ h1, h2, h3, h4, h5, h6, b {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 100px;
   margin: auto;
+  width: -moz-fit-content;
   width: fit-content;
 }
 
@@ -103,6 +104,7 @@ h2 {
   background: rgba(0,0,0,0.5);
   padding: 8px 16px;
   width: fit-content;
+  width: -moz-fit-content;
   margin: auto;
   margin-bottom: 5px;
 }
