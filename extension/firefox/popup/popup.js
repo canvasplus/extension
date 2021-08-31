@@ -29,16 +29,12 @@ const frames = {
         <Hover />
         <div className="cpc-header">
           <img src="../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
-          <h2>Release 0.3</h2>
+          <p>Release 0.3</p>
         </div>
         <div className="changes-list">
-          <p className="changes-items">Customizable Sidebar</p>
+        <p className="changes-items">Custom Sidebar</p>
           <p className="changes-items">Email Peeker</p>
-          <p className="changes-items">Custom Link Colors</p>
-          <p className="changes-items">Rounder Modules</p>
-          <p className="changes-items">New Popup</p>
           <p className="changes-items">Dim Mode</p>
-          <p className="changes-items">Bug Fixes</p>
         </div>
       </div>
     )

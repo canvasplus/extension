@@ -61,6 +61,23 @@ h1, h2, h3, h4, h5, h6, b {
 
 .cpc-header {
   margin: 0px;
+  padding-top: 15px;
+  padding-bottom: 20px;
+}
+
+.cpc-header img, .cpc-header p {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 100px;
+  margin: auto;
+  width: fit-content;
+}
+
+.cpc-header img {
+  padding: 5px;
+}
+
+.cpc-header p {
+  padding: 5px 10px;
 }
 
 h2 {
@@ -79,6 +96,12 @@ h2 {
 .changes-items {
   margin-top: 10px;
   font-family: 'Montserrat', sans-serif;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 16px;
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 5px;
 }
 
 .overlay {

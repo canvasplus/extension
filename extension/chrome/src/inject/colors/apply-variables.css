@@ -48,7 +48,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
   background-color: var(--cpt-dark-nav-tray-color);
 }
 
-.btn, .Button:not(.reply-btn):not(.al-trigger.Button.Button--icon-action), .ui-button, #immersive_reader_mount_point div button span, select, input[name="announcements_search"], .ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover, .ui-tabs .ui-tabs-nav li.ui-tabs-active:hover, .ui-tabs .ui-tabs-nav li.ui-state-hover, .ui-tabs .ui-tabs-nav li:hover, #planner-today-btn:not(:hover), div.message-left-column div.select-checkbox div label span span:first-child, .ac-input-box, .dropdown-menu, .dropdown-menu li, #record_media_tab, select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input, #discussion_settings span, input[id^=ColorPickerCustomInput], #undated-events .event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event, .tox .tox-tbtn:hover, .tox .tox-split-button:hover, .tox .tox-tbtn.tox-tbtn--enabled:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron:hover, .ColorPicker__Container label span span span:nth-child(2) span input {
+.btn, .Button:not(.reply-btn):not(.al-trigger.Button.Button--icon-action):not(.Button.Button--icon-action-rev.Button--large.mobile-header-hamburger):not(Button.Button--icon-action-rev.Button--large.mobile-header-arrow), .ui-button, #immersive_reader_mount_point div button span, select, input[name="announcements_search"], .ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover, .ui-tabs .ui-tabs-nav li.ui-tabs-active:hover, .ui-tabs .ui-tabs-nav li.ui-state-hover, .ui-tabs .ui-tabs-nav li:hover, #planner-today-btn:not(:hover), div.message-left-column div.select-checkbox div label span span:first-child, .ac-input-box, .dropdown-menu, .dropdown-menu li, #record_media_tab, select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input, #discussion_settings span, input[id^=ColorPickerCustomInput], #undated-events .event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event, .tox .tox-tbtn:hover, .tox .tox-split-button:hover, .tox .tox-tbtn.tox-tbtn--enabled:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron:hover, .ColorPicker__Container label span span span:nth-child(2) span input {
   color: var(--cpt-dark-interactable-text-color) !important;
   background-color: var(--cpt-dark-interactable-color) !important;
   border-color: var(--cpt-dark-interactable-border-color) !important;
@@ -65,7 +65,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
   border: none;
 }
 
-.btn:hover, .Button:hover, .ui-button:hover, #immersive_reader_mount_point div button:hover span, #planner-today-btn:hover, #undated-events .event:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron{
+.btn:hover, .Button:hover:not(.Button.Button--icon-action-rev.Button--large.mobile-header-hamburger):not(Button.Button--icon-action-rev.Button--large.mobile-header-arrow), .ui-button:hover, #immersive_reader_mount_point div button:hover span, #planner-today-btn:hover, #undated-events .event:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron{
   color: var(--cpt-dark-interactable-hover-text-color) !important;
   background-color: var(--cpt-dark-interactable-hover-color) !important;
   border-color: var(--cpt-dark-interactable-hover-border-color) !important;
@@ -109,8 +109,8 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   border-color: var(--cpt-dark-line-color);
 }
 .toolbarView .headerBar {
-  background-color: var(--cpt-dark-nav-tray-color);
-  border: 1px solid var(--cpt-dark-line-color);
+  background-color: var(--cpt-dark-nav-tray-color) !important;
+  border: 1px solid var(--cpt-dark-line-color) !important;
 }
 
 .entry-content, .discussion_entry>.discussion-entry-reply-area, .discussion-reply-box, .discussion-entries .entry, #assignment_show .student-assignment-overview, .planner-empty-days h2, table[style="margin: 1.5rem 0px;"] thead tr, table[style="margin: 1.5rem 0px;"] tbody tr th, table[style="margin: 1.5rem 0px;"] tbody tr, .message-list .messages>li, .message-detail.span8 .message-header, .message-detail.conversations__message-detail .message-header, .message-detail.span8 .message-content>li, .message-detail.conversations__message-detail .message-content>li, .conversations .panel, .al-options, #compose-new-message .context_messages .collectionViewItems>li, #submission-comment-reply .context_messages .collectionViewItems>li, .ui-datepicker .ui-datepicker-time, .ui-dialog .ui-dialog-buttonpane, .ui-dialog .ui-datepicker .ui-datepicker-time, .ui-datepicker .ui-dialog .ui-datepicker-time, hr, .ui-tabs .ui-tabs-panel, .ef-header, .ef-main .ef-folder-content, .ef-directory-header, .ef-footer, .discussions-v2__container-image, .tox .tox-edit-area:not(.active), .tox .tox-edit-area:not(.active) iframe, table.summary td, table.summary tbody th, table.summary thead th, table.summary caption, .ic-Table tbody th, .form-actions {
@@ -137,8 +137,8 @@ table.summary td, table.summary tbody th {
 }
 
 .item-group-condensed .ig-header, .stream_header:hover, .stream-details tr:hover, .tox .tox-mbtn:hover:not(:disabled):not(.tox-mbtn--active), .tox .tox-mbtn--active, .tox .tox-mbtn:hover:not(:disabled) {
-  background-color: var(--cpt-dark-interactable-hover-color);
-  border-color: var(--cpt-dark-line-color);
+  background-color: var(--cpt-dark-interactable-hover-color) !important;
+  border-color: var(--cpt-dark-line-color) !important;
 }
 
 label[for="course_select_menu"] span span span span span span span, label[for="grading_period_select_menu"] span span span span span span span, label[for="assignment_sort_order_select_menu"] span span span span span span span, .conversations .panel, .question .header {
@@ -164,13 +164,13 @@ label[for="course_select_menu"] span span span span, label[for="grading_period_s
 }
 
 .ig-header .name {
-  color: var(--cpt-dark-important-text-color);
-  text-shadow: none;
+  color: var(--cpt-dark-important-text-color) !important;
+  text-shadow: none !important;
 }
 
 .ig-list .ig-row, .ic-discussion-row {
   background-color: var(--cpt-dark-module-item-color) !important;
-  border-color: var(--cpt-dark-line-color);
+  border-color: var(--cpt-dark-line-color) !important;
 }
 
 .message-list .subject, .module-item-title, th[scope="row"], .ic-item-row__content-col, .discussions-v2__container-image span div, .discussions-container__wrapper > span > div > button, label[for="NicknameInput"] span span span:first-child {
