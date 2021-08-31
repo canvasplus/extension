@@ -12,7 +12,8 @@
       <div id="content-bottom">
         <div id="content-bottom-nav">
           <a href="https://github.com/adrWasTaken/CanvasPlus" id="contribute-button">Contribute</a>
-          <a id="install-button" href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install</a>
+          <a id="install-button" href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install for Chrome</a>
+          <a id="alt-install-button" href="/browsers"></a>
         </div>
       </div>
     </div>
@@ -26,6 +27,35 @@
       alert.innerHTML = "We couldn't find the page you were looking for. Sorry about that.";
       let content = document.getElementById("content");
       content.insertBefore(alert, content.firstChild);
+    }
+
+    //from https://jsfiddle.net/6spj1059/
+
+    // Opera 8.0+
+    var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+    // Firefox 1.0+
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+
+    // Safari 3.0+ "[object HTMLElementConstructor]" 
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
+    // Internet Explorer 6-11
+    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+    // Edge 20+
+    var isEdge = !isIE && !!window.StyleMedia;
+
+    // Chrome 1 - 71
+    var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+    // Blink engine detection
+    var isBlink = (isChrome || isOpera) && !!window.CSS;
+    console.log(isChrome);
+
+    if(isFirefox) {
+      document.querySelector("#install-button").innerText = "Install for Firefox"
+      document.querySelector("#install-button").href = ''
     }
   </script>
 </html>

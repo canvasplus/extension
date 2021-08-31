@@ -1,8 +1,8 @@
 const courseNames = {}
 const searchLog = []
-var currentUrl = window.location.host 
+var currentUrl = window.location.host
 var protocol = window.location.protocol
-var url = protocol.concat(currentUrl)
+var realurl = protocol.concat(currentUrl)
 
 const runSearch = () => {
     const search = injectSearchBox()
@@ -43,7 +43,29 @@ const injectSearchBox = () => {
     }
     else
     {
-        topNav.appendChild(searchWrapper);
+        if (window.location.pathname.split('/')[1] == "conversations") {
+          document.getElementsByClassName("panel__secondary")[0].appendChild(searchWrapper);
+        } else if (window.location.pathname.split('/')[1] == "calendar") {
+          document.getElementById("right-side-wrapper").insertBefore(searchWrapper, document.getElementById("right-side-wrapper").firstChild);
+          document.getElementById("right-side").style.marginTop = "24px";
+        } else if (window.location.pathname == "/courses") {
+          document.getElementsByClassName("header-bar")[0].children[0].style.display = "inline-block";
+          document.getElementsByClassName("header-bar")[0].appendChild(searchWrapper);
+          searchWrapper.style.display = "inline-block";
+          searchWrapper.style.float = "right";
+        } else if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "files") {
+          window.addEventListener('load', function() {
+            document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
+          });
+        } else if (window.location.pathname == "/grades") {
+          topNav.appendChild(searchWrapper);
+          searchWrapper.style.marginInlineStart = "auto";
+        } else if (typeof document.getElementsByClassName("not_found_page_artwork")[0] !== 'undefined' || typeof document.getElementsByClassName("ic-Error-page")[0] !== 'undefined') {
+            console.log("[Canvas+] Not Injecting Search Due to 404 page");
+            process.exit(1);
+        } else {
+          topNav.appendChild(searchWrapper);
+        }
     }
 
     setTimeout(() => {
@@ -75,7 +97,7 @@ const injectSearchResults = (results) => {
         searchResults.style.right = "40px";
     }
 
-    fetch(url+'/api/v1/users/self/colors', {
+    fetch(realurl+'/api/v1/users/self/colors', {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     }).then(colors => {
         colors.json().then(colors => {
@@ -97,23 +119,23 @@ const injectSearchResults = (results) => {
             results.forEach(item => {
                 const row = document.createElement('div')
                 row.classList = 'canvasplus-search-results-list-item'
-        
+
                 const courseIndicator = document.createElement("p");
                 courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
                 courseIndicator.style.color = colors.custom_colors['course_' + item.course];
                 courseIndicator.innerHTML = courseNames[item.course];
-        
+
                 let link = document.createElement("a")
                 link.classList = "ig-title title item_link";
                 link.target = "_blank";
                 link.rel = "noreferrer noopener";
                 link.innerHTML = item.title;
                 link.href = item.url;
-        
+
                 row.setAttribute("link-name", link.innerHTML);
                 row.appendChild(courseIndicator);
                 row.appendChild(link);
-                
+
                 item.element = row
 
                 searchResults.appendChild(row)
@@ -129,7 +151,7 @@ const injectSearchResults = (results) => {
                 searchResults.style.visibility = "hidden";
                 searchResults.style.opacity = "0";
             }
-      
+
             search.onfocus = () => {
                 if(search.value.length > 0)
                 {
@@ -140,6 +162,74 @@ const injectSearchResults = (results) => {
 
             search.onkeyup = () => {
                 let query = search.value.toLowerCase()
+                if (query == "stranger things") {
+                  /* from https://github.com/DavidLozzi/Stranger-Things-Easter-Egg */
+                  window.upsideDown = (function () {
+                  let music = {};
+                  let body = {};
+                  let originalBody = {};
+                  let status = '';
+
+                  const start = () => {
+                    music = new Audio('https://raw.githubusercontent.com/DavidLozzi/Stranger-Things-Easter-Egg/master/music.mp3');
+                    music.play();
+                    status = 'started';
+
+                    body = document.querySelectorAll("html")[0];
+                    originalBody = { ...body };
+
+                    body.style.background = 'radial-gradient(transparent, black), #C11B1F';
+                    body.style.backgroundRepeat = 'no-repeat';
+                    body.style.backgroundSize = 'cover';
+                    body.style.overflow = 'hidden';
+
+                    const fadeMusic = () => {
+                      setTimeout(() => {
+                        music.volume = Math.round(music.volume) > 0 ? music.volume - 0.1 : 0;
+                        if (music.volume > 0) {
+                          fadeMusic();
+                        } else {
+                          status = 'done';
+                          stop()
+                        }
+                      }, 400);
+                    };
+
+                    window.setTimeout(() => {
+                      status = 'running';
+                      body.style.transition = 'all 10s ease 0s, transform 12s';
+                      body.style.transform = 'rotate(180deg) scale(.9)';
+                      body.style.filter = 'invert(1)';
+
+                      window.setTimeout(() => {
+                        fadeMusic();
+                      }, 10500);
+                    }, 1000);
+                  };
+
+                  const stop = () => {
+                    music.pause();
+                    music = null;
+                    body.style = originalBody.style;
+                    status = '';
+                  };
+
+                  const getStatus = () => {
+                    return status;
+                  };
+
+                  return {
+                    start,
+                    stop,
+                    getStatus
+                  };
+                }());
+                window.upsideDown.start();
+              };
+                if (query == "rick") {
+                  window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                  search.value = "";
+                };
                 if(query.length == 0) {
                     searchResults.style.visibility = "hidden";
                     searchResults.style.opacity = "0";
@@ -180,7 +270,7 @@ const injectSearchResults = (results) => {
 }
 
 const getCoursesToSearch = async () => {
-    let courses = await fetch(url+'/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
+    let courses = await fetch(realurl+'/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     });
     courses = await courses.json();
@@ -207,7 +297,7 @@ const searchCourses = (courses) => {
     const searchStages = 1 // number of places that are search per course
 
     let items = []
-    
+
     let i = 0
     let allItems = []
 
@@ -251,7 +341,7 @@ const searchPages = async (courseId, checkStorage) => {
                 resolve(output)
             })
         })
-        
+
         let storageList = await getStorage
         let storageItem = storageList[storageName]
 
@@ -267,7 +357,7 @@ const searchPages = async (courseId, checkStorage) => {
 
     while(true) {
         // Get JSON from API
-        data = await fetch(url+'/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex)
+        data = await fetch(realurl+'/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex)
         data = await data.json()
 
         if(data.message === 'That page has been disabled for this course') {
@@ -292,7 +382,7 @@ const searchPages = async (courseId, checkStorage) => {
 
         pageIndex += 1 // "Turn" the page
     }
-    
+
     sessionStorage.setItem(storageName, JSON.stringify(pages))
     let storageChanges = {}
     storageChanges[storageName] = pages
@@ -309,7 +399,7 @@ const searchModules = (courseId, checkStorage) => {
 
     return new Promise((resolve, reject) => {
         const getModulesPage = (pageIndex, existing) => {
-            fetch(url+'/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
+            fetch(realurl+'/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
                 output.json().then(json => {
                     if(json.length < 100) {
                         done(existing.concat(json))
@@ -319,21 +409,21 @@ const searchModules = (courseId, checkStorage) => {
                 })
             })
         }
-    
+
         const done = (modules) => {
             let i = 0
             let items = []
-    
+
             const interval = setInterval(async() => {
                 let item = modules[i]
                 i++
-                
+
                 if(modules.length <= i) {
                     clearInterval(interval)
                     if(item === undefined) {
                         searchLog.push('Done getting modules from course ' + courseId + ' ...')
                         resolve(items)
-                        return    
+                        return
                     }
 
                     data = await fetch(item.items_url)
@@ -346,12 +436,12 @@ const searchModules = (courseId, checkStorage) => {
                         }
                         items.push(obj)
                     })
-                    
+
                     sessionStorage.setItem(storageName, JSON.stringify(items))
                     let storageChanges = {}
                     storageChanges[storageName] = items
                     chrome.storage.local.set(storageChanges)
-                    
+
                     searchLog.push('Done getting modules from course ' + courseId + ' ...')
                     resolve(items)
                 } else {
@@ -381,13 +471,13 @@ const searchModules = (courseId, checkStorage) => {
                 })
             }).then(storageList => {
                 let storageItem = storageList[storageName]
-        
+
                 if(storageItem) {
                     searchLog.push('Refreshing modules index of course ' + courseId + ' ...')
                     searchPages(courseId, false)
                     resolve(storageItem)
                 }
-        
+
                 getModulesPage(1, [])
             })
         } else {
@@ -399,7 +489,7 @@ const searchModules = (courseId, checkStorage) => {
 chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
     if(data["canvasplus-setting-search"])
     {
-        console.warn('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
+        console.log('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
         runSearch()
     }
 })

@@ -1,0 +1,97 @@
+---
+layout: master
+style: browsers
+---
+<link rel="stylesheet" href="{{ 'assets/css/browsers.css' | relative_url }}">
+<div class="browsers-content">
+  <div class="browsers-meta">
+    <h1 class="browsers-title">Other Browsers</h1>
+  </div>
+  <div class="divider"></div>
+  <div class="browsers-paragraph">
+    <p>Canvas+ is made to natively support Google Chrome and Firefox. However, many other browsers are compatible with Canvas+, though not official supported.</p>
+    <br>
+    <strong>Chose your Browser:</strong>
+    <br>
+    <br>
+  <div>
+    <a href="#google-chrome" onclick="select('google-chrome')"><img class="svg" src="/assets/img/browsers/chrome.svg"></a>
+    <a href="#firefox" onclick="select('firefox')"><img class="svg" src="/assets/img/browsers/firefox.svg"></a>
+    <a href="#microsoft-edge" onclick="select('microsoft-edge')"><img class="svg" src="/assets/img/browsers/edge.svg"></a>
+    <a href="#opera" onclick="select('opera')"><img class="svg" src="/assets/img/browsers/opera.svg"></a>
+    <a href="#opera-gx" onclick="select('opera-gx')"><img class="svg" src="/assets/img/browsers/operagx.svg"></a>
+    <a href="#vivaldi" onclick="select('vivaldi')"><img class="svg" src="/assets/img/browsers/vivaldi.svg"></a>
+    <a href="#brave-browser" onclick="select('brave-browser')"><img class="svg" src="/assets/img/browsers/brave.svg"></a>
+    <a href="#safari" onclick="select('safari')"><img class="svg" src="/assets/img/browsers/safari.svg"></a>
+  </div>
+
+  <br>
+  <br>
+
+  <div id="google-chrome" class="browser">
+    <strong>Google Chrome</strong>
+    <p>We officially support Google Chrome. You can download Canvas+ for Google Chrome from the <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Chrome Web Store.</a></p>
+  </div>
+
+  <br>
+
+  <div id="firefox" class="browser">
+    <strong>Firefox</strong>
+    <p>We officially support Firefox. You can download Canvas+ for Firefox from <a href="">Mozilla Addons.</a></p>
+  </div>
+
+  <br>
+
+  <div id="microsoft-edge" class="browser">
+    <strong>Microsoft Edge</strong>
+    <p>We <u>do not</u> officially support Microsoft Edge, but Canvas+ is compatible with it. Bugs specific to this browser will not be adressed for the time being. You can download Canvas+ for Microsoft Edge from the <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Chrome Web Store.</a></p>
+  </div>
+
+  <br>
+
+  <div id="opera" class="browser">
+    <strong>Opera</strong>
+    <p>We <u>do not</u> officially support Opera, but Canvas+ is compatible with it. Bugs specific to this browser will not be adressed for the time being. You can download Canvas+ for Opera from the <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Chrome Web Store,</a> but you'll need <a href="https://addons.opera.com/en/extensions/details/install-chrome-extensions/">this extension</a> first.</p>
+  </div>
+
+  <br>
+
+  <div id="opera-gx" class="browser">
+    <strong>Opera GX</strong>
+    <p>We <u>do not</u> officially support Opera GX, but Canvas+ is compatible with it. Bugs specific to this browser will not be adressed for the time being, and be warned, this browser has many. You can download Canvas+ for Opera GX from the <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Chrome Web Store,</a> but you'll need <a href="https://addons.opera.com/en/extensions/details/install-chrome-extensions/">this extension</a> first.</p>
+  </div>
+
+  <br>
+
+  <div id="vivaldi" class="browser">
+    <strong>Vivaldi</strong>
+    <p>We <u>do not</u> officially support Vivaldi, but Canvas+ is compatible with it. Bugs specific to this browser will not be adressed for the time being. You can download Canvas+ for Vivaldi from the <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Chrome Web Store.</a></p>
+  </div>
+
+  <br>
+
+  <div id="brave-browser" class="browser">
+    <strong>Brave Browser</strong>
+    <p>We <u>do not</u> officially support Brave, but Canvas+ is compatible with it. Bugs specific to this browser will not be adressed for the time being. You can download Canvas+ for Brave from the <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Chrome Web Store.</a></p>
+  </div>
+
+  <br>
+
+  <div id="safari" class="browser">
+    <strong>Safari</strong>
+    <p>Canvas+ <u>is not</u> compatible with Safari. Unfortunately, this browser only uses the App Store to load extensions. We're planning to address this soon.</p>
+  </div>
+
+</div>
+
+<script>
+  const select = (id) => {
+    for(let browser of document.querySelectorAll(".browser")) {
+      browser.classList = "browser"
+    }
+
+    document.querySelector("#" + id).classList.add("highlighted")
+  }
+</script>
+
+</div>

@@ -1,119 +1,112 @@
-document.getElementById("version").innerHTML = "Version " + chrome.app.getDetails().version;
+import React, {useState} from 'react';
 
-window.addEventListener('click',function(e){
-  if(e.target.href!==undefined){
-    chrome.tabs.create({url:e.target.href})
-  }
-})
+import './Popup.css'
 
-const settings = ["quicklink", "search", "smartscroll"];
+import Panel from './components/structure/Panel';
+import Navigation from './components/navigation/Navigation';
+import FrameContainer from './components/frames/FrameContainer';
+import Setting from './components/settings/Setting';
+import SettingGroup from './components/settings/SettingGroup';
+import AppearanceSelector from './components/display/AppearanceSelector';
+import Hover from './components/interactive/Hover'
+import ColorSwitch from './components/interactive/ColorSwitch';
+import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
+import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
+import Slider from './components/interactive/Slider';
+import CustomColorPicker from './components/interactive/CustomColorPicker';
 
-for(let setting of settings)
-{
-  document.getElementById("setting-" + setting + "-checkbox").addEventListener('click', function () {
-    let toChange = {};
-    toChange['canvasplus-setting-' + setting] = this.checked;
-    chrome.storage.local.set(toChange);
-  });
-
-  chrome.storage.local.get(['canvasplus-setting-' + setting], function(data) {
-    if(data['canvasplus-setting-' + setting])
-    {
-      document.getElementById("setting-" + setting + "-checkbox").checked = true;
-    }
-  });
+const popup = () => {
+  const [currentTab, setCurrentTab] = useState("changes")
+const tabChangeHandler = (newTabId) => {
+  setCurrentTab(newTabId)
 }
 
-document.getElementById("cpc-hover").addEventListener('click', function () {
-  window.open("https://canvasplus.adrwas.dev/update/patch-0-2-2")
-});
-
-document.getElementById("canvasplus-tab-changes").addEventListener('click', function () {
-  for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-  {
-    tabItem.hidden = true;
+const frames = {
+  "changes": {
+    "name": "Changes",
+    "element": (
+      <div className="canvasplus-changes">
+        <Hover />
+        <div className="cpc-header">
+          <img src="../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
+          <p>Release 0.3</p>
+        </div>
+        <div className="changes-list">
+          <p className="changes-items">Custom Sidebar</p>
+          <p className="changes-items">Email Peeker</p>
+          <p className="changes-items">Dim Mode</p>
+        </div>
+      </div>
+    )
+  }, "settings": {
+    "name": "Settings",
+    "element": (
+      <span>
+        <SettingGroup name="Navigation">
+          <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
+          <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
+          <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
+        </SettingGroup>
+        <SettingGroup name="Other">
+          <Setting name="Rounder Modules" setting="roundermodules" description="Give the modules page a rounder appearance." />
+          <Setting name="Quick Inbox" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
+        </SettingGroup>
+      </span>
+    )
+  }, "display": {
+    "name": "Display",
+    "element": (
+      <span>
+        <div className="center">
+          <div className="margin">
+            <b>Appearance</b>
+            <p className="color-gray small-margin">Change the color scheme of Canvas.</p>
+            <p className="color-gray small-margin">Note: Dark and dim mode may have issues. You can report bugs <a href="https://github.com/adrWasTaken/CanvasPlus/issues">here</a>.</p>
+          </div>
+          <AppearanceSelector appearances={[
+            {
+              name: "Default",
+              appearance: "light",
+              background: "#eee",
+              foreground: "#444"
+            },
+            {
+              name: "Dim",
+              appearance: "dim",
+              background: "#45484e",
+              foreground: "#fff"
+            },
+            {
+              name: "Lights Out",
+              appearance: "dark",
+              background: "#050d26",
+              foreground: "#fff"
+            }
+          ]}></AppearanceSelector>
+        </div>
+        <SettingGroup name="Sidebar">
+          <Setting name="Hide Logo" setting="sidebar-hidelogo" description="Hide the logo on the top of the sidebar." />
+          <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#1b7ecf" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          <Setting name="Active Background Color" setting="active-sidebar-color" description="Change the background color of the active sidebar button."  defaultValue={{'background': 'darker', 'icon': 'white'}} customInput={(state, setState) => { return <ActiveSidebarColorSwitch state={state} setState={setState}/> }} />
+          <Setting name="Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="white" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} generateTooltip={(color) => {if(color === "unset") {return <><b>Default Icons</b><p>Sidebar icons will inherit the default colors of your school.</p></>;} else if(["black","white"].includes(color)) {return <><b>{ color.charAt(0).toUpperCase() + color.slice(1) } Icons</b><p>Sidebar icons will always appear in { color }.</p></>} else {return <><b>Custom Icons</b><p>Click to open a color wheel and chose a custom icon color.</p></>;}}}/> }} />
+          <Setting name="Smaller Icons" setting="sidebar-smaller-icons" description="Decrease the size of sidebar icons." />
+          <Setting name="More Spacing" setting="sidebar-more-spacing" description="Increase the spacing between sidebar icons." />
+        </SettingGroup>
+        <SettingGroup name="Other">
+          <Setting name="Link Color" setting="linkcolor" description="Change the color of links on Canvas." defaultValue="" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+        </SettingGroup>
+      </span>
+    )
   }
-  for(tab of document.getElementById("canvasplus-tab-control").children)
-  {
-    tab.classList = "";
-  }
-
-  let newTab = document.getElementById("canvasplus-changes");
-  newTab.hidden = false;
-  this.classList = "active-tab";
-
-  chrome.storage.local.set({"canvasplus-popup-active-tab": "changes"});
-})
-
-document.getElementById("canvasplus-tab-settings").addEventListener('click', function () {
-  for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-  {
-    tabItem.hidden = true;
-  }
-  for(tab of document.getElementById("canvasplus-tab-control").children)
-  {
-    tab.classList = "";
-  }
-
-  let newTab = document.getElementById("canvasplus-settings");
-  newTab.hidden = false;
-  this.classList = "active-tab";
-
-  chrome.storage.local.set({"canvasplus-popup-active-tab": "settings"});
-})
-
-document.getElementById("canvasplus-tab-display").addEventListener('click', function () {
-  for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-  {
-    tabItem.hidden = true;
-  }
-  for(tab of document.getElementById("canvasplus-tab-control").children)
-  {
-    tab.classList = "";
-  }
-
-  let newTab = document.getElementById("canvasplus-display");
-  newTab.hidden = false;
-  this.classList = "active-tab";
-
-  chrome.storage.local.set({"canvasplus-popup-active-tab": "display"});
-})
-
-chrome.storage.local.get(['canvasplus-popup-active-tab'], function(data) {
-  let activeTab = data['canvasplus-popup-active-tab'];
-  if(activeTab != null)
-  {
-    for(tabItem of document.getElementById("canvasplus-tab-wrapper").children)
-    {
-      tabItem.hidden = true;
-    }
-    for(tab of document.getElementById("canvasplus-tab-control").children)
-    {
-      tab.classList = "";
-    }
-
-    document.getElementById("canvasplus-" + activeTab).hidden = false;
-    document.getElementById("canvasplus-tab-" + activeTab).classList = "active-tab";
-  }
-});
-
-chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
-  let appearance = data['canvasplus-display-appearance'];
-  if(appearance != null)
-  {
-    document.getElementById("css-vars").href = "vars-" + appearance + ".css"
-    document.getElementById("appearance-setting-" + appearance).parentElement.classList = "container selected";
-    document.getElementById("appearance-setting-" + appearance).checked = true;
-  }
-});
-
-for(element of document.getElementsByClassName("appearance-setting")){
-  element.addEventListener('click', function () {
-    document.getElementById("css-vars").href = "vars-" + this.id.substring(19) + ".css"
-    for(element of document.getElementsByClassName("appearance-setting")){
-      element.parentElement.classList = "container";
-    }
-    this.parentElement.classList = "container selected";
-    chrome.storage.local.set({"canvasplus-display-appearance": this.id.substring(19)});
-  })
 }
+
+  return (
+    <div><Panel size='1'>
+    <Navigation onTabChange={tabChangeHandler} currentTab={currentTab} sections={frames}/>
+    <FrameContainer currentTab={currentTab} frames={frames}/>
+  </Panel></div>
+
+  );
+}
+
+export default popup;

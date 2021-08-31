@@ -1,17 +1,21 @@
 {
   "name": "Canvas+",
-  "version": "0.2.3",
+  "version": "0.3",
   "manifest_version": 2,
-  "description": "CanvasPlus: Dark mode, faster links, smart scrolling, search bar.",
+  "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
-         "src/inject/colors/dark.css"
+         "src/inject/colors/apply-variables.css",
+         "src/inject/colors/dark.css",
+         "src/inject/colors/dim.css",
+         "src/inject/linkcolor/linkcolor.css",
+         "src/inject/roundermodules/roundermodules.css"
      ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
@@ -21,11 +25,21 @@
     },
     {
       "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/linkcolor/linkcolor.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
       "js": ["src/inject/colors/color-controller-on-load.js"]
     },
     {
+      "matches": [ "*://*.instructure.com/conversations?*"],
+      "js": ["src/inject/convopeeker/conversation-param-utils.js"]
+    },
+    {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/inject/scroll/modules.js"]
+      "js": ["src/inject/scroll/modules.js", "src/inject/roundermodules/roundermodules.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],

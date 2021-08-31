@@ -40,7 +40,27 @@ const injectSearchBox = () => {
     }
     else
     {
-        topNav.appendChild(searchWrapper);
+        if (window.location.pathname.split('/')[1] == "conversations") {
+          document.getElementsByClassName("panel__secondary")[0].appendChild(searchWrapper);
+        } else if (window.location.pathname.split('/')[1] == "calendar") {
+          document.getElementById("right-side-wrapper").insertBefore(searchWrapper, document.getElementById("right-side-wrapper").firstChild);
+          document.getElementById("right-side").style.marginTop = "24px";
+        } else if (window.location.pathname == "/courses") {
+          document.getElementsByClassName("header-bar")[0].children[0].style.display = "inline-block";
+          document.getElementsByClassName("header-bar")[0].appendChild(searchWrapper);
+          searchWrapper.style.display = "inline-block";
+          searchWrapper.style.float = "right";
+        } else if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "files") {
+          document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
+        } else if (window.location.pathname == "/grades") {
+          topNav.appendChild(searchWrapper);
+          searchWrapper.style.marginInlineStart = "auto";
+        } else if (typeof document.getElementsByClassName("not_found_page_artwork")[0] !== 'undefined' || typeof document.getElementsByClassName("ic-Error-page")[0] !== 'undefined') {
+            console.log("[Canvas+] Not Injecting Search Due to 404 page");
+            process.exit(1);
+        } else {
+          topNav.appendChild(searchWrapper);
+        }
     }
 
     setTimeout(() => {
@@ -94,23 +114,23 @@ const injectSearchResults = (results) => {
             results.forEach(item => {
                 const row = document.createElement('div')
                 row.classList = 'canvasplus-search-results-list-item'
-        
+
                 const courseIndicator = document.createElement("p");
                 courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
                 courseIndicator.style.color = colors.custom_colors['course_' + item.course];
                 courseIndicator.innerHTML = courseNames[item.course];
-        
+
                 let link = document.createElement("a")
                 link.classList = "ig-title title item_link";
                 link.target = "_blank";
                 link.rel = "noreferrer noopener";
                 link.innerHTML = item.title;
                 link.href = item.url;
-        
+
                 row.setAttribute("link-name", link.innerHTML);
                 row.appendChild(courseIndicator);
                 row.appendChild(link);
-                
+
                 item.element = row
 
                 searchResults.appendChild(row)
@@ -126,7 +146,7 @@ const injectSearchResults = (results) => {
                 searchResults.style.visibility = "hidden";
                 searchResults.style.opacity = "0";
             }
-      
+
             search.onfocus = () => {
                 if(search.value.length > 0)
                 {
@@ -137,6 +157,74 @@ const injectSearchResults = (results) => {
 
             search.onkeyup = () => {
                 let query = search.value.toLowerCase()
+                if (query === "hawkins") {
+                  /* from https://github.com/DavidLozzi/Stranger-Things-Easter-Egg */
+                  window.upsideDown = (function () {
+                  let music = {};
+                  let body = {};
+                  let originalBody = {};
+                  let status = '';
+
+                  const start = () => {
+                    music = new Audio('https://raw.githubusercontent.com/DavidLozzi/Stranger-Things-Easter-Egg/master/music.mp3');
+                    music.play();
+                    status = 'started';
+
+                    body = document.querySelectorAll("html")[0];
+                    originalBody = { ...body };
+
+                    body.style.background = 'radial-gradient(transparent, black), #C11B1F';
+                    body.style.backgroundRepeat = 'no-repeat';
+                    body.style.backgroundSize = 'cover';
+                    body.style.overflow = 'hidden';
+
+                    const fadeMusic = () => {
+                      setTimeout(() => {
+                        music.volume = Math.round(music.volume) > 0 ? music.volume - 0.1 : 0;
+                        if (music.volume > 0) {
+                          fadeMusic();
+                        } else {
+                          status = 'done';
+                          stop()
+                        }
+                      }, 400);
+                    };
+
+                    window.setTimeout(() => {
+                      status = 'running';
+                      body.style.transition = 'all 10s ease 0s, transform 12s';
+                      body.style.transform = 'rotate(180deg) scale(.9)';
+                      body.style.filter = 'invert(1)';
+
+                      window.setTimeout(() => {
+                        fadeMusic();
+                      }, 10500);
+                    }, 1000);
+                  };
+
+                  const stop = () => {
+                    music.pause();
+                    music = null;
+                    body.style = originalBody.style;
+                    status = '';
+                  };
+
+                  const getStatus = () => {
+                    return status;
+                  };
+
+                  return {
+                    start,
+                    stop,
+                    getStatus
+                  };
+                }());
+                window.upsideDown.start();
+              };
+                if (query == "rick") {
+                  window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                  search.value = "";
+                };
                 if(query.length == 0) {
                     searchResults.style.visibility = "hidden";
                     searchResults.style.opacity = "0";
@@ -204,17 +292,18 @@ const searchCourses = (courses) => {
     const searchStages = 1 // number of places that are search per course
 
     let items = []
-    
+
     let i = 0
     let allItems = []
 
-    Object.values(courses).forEach(item => {
-        searchPages(item.id).then(pages => {
+    const searchCourseContinue = (id) => {
+        searchPages(id).then(pages => {
             allItems = allItems.concat(pages)
 
-            searchModules(item.id).then(modules => {
+            searchModules(id).then(modules => {
                 allItems = allItems.concat(modules)
                 i++
+
 
                 document.getElementById('ic-app-class-search-progress').classList.remove('dont-round-borders')
                 document.getElementById('ic-app-class-search-progress').style.width = (i / Object.values(courses).length * 100) + '%'
@@ -223,6 +312,29 @@ const searchCourses = (courses) => {
                 if(i >= Object.values(courses).length) {
                     injectSearchResults(allItems)
                 }
+            })
+        })
+    }
+
+    let j = 0
+    Object.values(courses).forEach(item => {
+        chrome.storage.local.get('canvasplus-searchcache-v3-pages-' + item.id, pagesStorageObj => {
+            let pagesStorage = pagesStorageObj['canvasplus-searchcache-v3-pages-' + item.id]
+
+            chrome.storage.local.get('canvasplus-searchcache-v3-modules-' + item.id, modulesStorageObj => {
+                let modulesStorage = modulesStorageObj['canvasplus-searchcache-v3-modules-' + item.id]
+
+                let pagesSession = sessionStorage.getItem('canvasplus-searchcache-v3-pages-' + item.id)
+                let modulesSession = sessionStorage.getItem('canvasplus-searchcache-v3-modules-' + item.id)
+
+                if((pagesStorage || pagesSession) && (modulesStorage || modulesSession)) {
+                    searchCourseContinue(item.id)
+                } else {
+                    setTimeout(() => {
+                        searchCourseContinue(item.id)
+                    }, j * 1000)
+                }
+                j++
             })
         })
     })
@@ -248,7 +360,7 @@ const searchPages = async (courseId, checkStorage) => {
                 resolve(output)
             })
         })
-        
+
         let storageList = await getStorage
         let storageItem = storageList[storageName]
 
@@ -258,6 +370,7 @@ const searchPages = async (courseId, checkStorage) => {
             return storageItem
         }
     }
+
 
     let pages = []
     let pageIndex = 1
@@ -289,7 +402,7 @@ const searchPages = async (courseId, checkStorage) => {
 
         pageIndex += 1 // "Turn" the page
     }
-    
+
     sessionStorage.setItem(storageName, JSON.stringify(pages))
     let storageChanges = {}
     storageChanges[storageName] = pages
@@ -306,64 +419,34 @@ const searchModules = (courseId, checkStorage) => {
 
     return new Promise((resolve, reject) => {
         const getModulesPage = (pageIndex, existing) => {
-            fetch('/api/v1/courses/' + courseId + '/modules?per_page=100&page=' + pageIndex).then(output => {
+            fetch('/api/v1/courses/' + courseId + '/modules?include=items&per_page=100&page=' + pageIndex).then(output => {
                 output.json().then(json => {
                     if(json.length < 100) {
-                        done(existing.concat(json))
+                        existing = existing.concat(json)
+                        let items = []
+                        existing.forEach(module => {
+                            module.items.forEach(item => {
+                                let obj = {
+                                    title: item.title,
+                                    url: item.html_url,
+                                    course: courseId
+                                }
+                                items.push(obj)
+                            })
+                        })
+
+                        sessionStorage.setItem(storageName, JSON.stringify(items))
+                        let storageChanges = {}
+                        storageChanges[storageName] = items
+                        chrome.storage.local.set(storageChanges)
+
+                        searchLog.push('Done getting modules from course ' + courseId + ' ...')
+                        resolve(items);
                     } else {
                         getModulesPage(pageIndex + 1, existing.concat(json))
                     }
                 })
             })
-        }
-    
-        const done = (modules) => {
-            let i = 0
-            let items = []
-    
-            const interval = setInterval(async() => {
-                let item = modules[i]
-                i++
-                
-                if(modules.length <= i) {
-                    clearInterval(interval)
-                    if(item === undefined) {
-                        searchLog.push('Done getting modules from course ' + courseId + ' ...')
-                        resolve(items)
-                        return    
-                    }
-
-                    data = await fetch(item.items_url)
-                    data = await data.json()
-                    data.forEach(page => {
-                        let obj = {
-                            title: page.title,
-                            url: page.html_url,
-                            course: courseId
-                        }
-                        items.push(obj)
-                    })
-                    
-                    sessionStorage.setItem(storageName, JSON.stringify(items))
-                    let storageChanges = {}
-                    storageChanges[storageName] = items
-                    chrome.storage.local.set(storageChanges)
-                    
-                    searchLog.push('Done getting modules from course ' + courseId + ' ...')
-                    resolve(items)
-                } else {
-                    data = await fetch(item.items_url)
-                    data = await data.json()
-                    data.forEach(page => {
-                        let obj = {
-                            title: page.title,
-                            url: page.html_url,
-                            course: courseId
-                        }
-                        items.push(obj)
-                    })
-                }
-            }, 100)
         }
 
         if(checkStorage) {
@@ -378,13 +461,13 @@ const searchModules = (courseId, checkStorage) => {
                 })
             }).then(storageList => {
                 let storageItem = storageList[storageName]
-        
+
                 if(storageItem) {
                     searchLog.push('Refreshing modules index of course ' + courseId + ' ...')
                     searchPages(courseId, false)
                     resolve(storageItem)
                 }
-        
+
                 getModulesPage(1, [])
             })
         } else {
@@ -396,7 +479,7 @@ const searchModules = (courseId, checkStorage) => {
 chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
     if(data["canvasplus-setting-search"])
     {
-        console.warn('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
+        console.log('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
         runSearch()
     }
 })

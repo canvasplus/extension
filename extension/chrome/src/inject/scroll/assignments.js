@@ -3,18 +3,14 @@ chrome.storage.local.get(["canvasplus-setting-smartscroll"], function(data) {
   {
     console.log("[Canvas+] Injecting Smart Scroll Buttons...");
 
-    const html = document.getElementsByTagName("html")[0];
-    const body = document.body;
-    html.style.scrollBehavior = "smooth"; // For smoothness in scrollToBottom()
-
     const moduleList = document.getElementById("context_modules");
     const app = document.getElementById("application");
 
     const headerBar = document.getElementsByClassName("header-bar")[0];
 
     const scrollDownButton = document.createElement("button");
-    scrollDownButton.classList = ["btn"];
-    scrollDownButton.id = "canvas_plus_scroll_down";
+    scrollDownButton.classList = ["btn", "cpx-scroll-down-button"];
+    scrollDownButton.id = "cpx-scroll-down-button";
     scrollDownButton.innerHTML = '<i class="icon-arrow-down" role="presentation"></i> Scroll to Bottom';
     scrollDownButton.style.marginRight = "5px";
     headerBar.appendChild(scrollDownButton);

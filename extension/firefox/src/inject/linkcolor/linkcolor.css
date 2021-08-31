@@ -1,0 +1,4 @@
+:root:root {
+    --ic-brand-primary: var(--ic-link-color);
+    --ic-link-color: var(--ic-link-color);
+}
