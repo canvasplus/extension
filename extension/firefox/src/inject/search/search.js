@@ -60,8 +60,9 @@ const injectSearchBox = () => {
         } else if (window.location.pathname == "/grades") {
           topNav.appendChild(searchWrapper);
           searchWrapper.style.marginInlineStart = "auto";
-        } else if (document.getElementById("unauthorized_message") != null) {
+        } else if (typeof document.getElementsByClassName("not_found_page_artwork")[0] !== 'undefined' || typeof document.getElementsByClassName("ic-Error-page")[0] !== 'undefined') {
             console.log("[Canvas+] Not Injecting Search Due to 404 page");
+            process.exit(1);
         } else {
           topNav.appendChild(searchWrapper);
         }
