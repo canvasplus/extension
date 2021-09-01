@@ -19,7 +19,7 @@
   <h5>Helpful Links</h5>
   <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
   <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install The Chrome Extension</a><br>
-  <a href="Insert Link">Install The Firefox Extension (Coming Soon)</a><br>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasplus/">Install The Firefox Extension (Coming Soon)</a><br>
   <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
   <a href="https://developer.chrome.com/docs/extensions/">Chrome Extension Documentation</a><br>
   <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/">Firefox Extension Documentation</a><br>
