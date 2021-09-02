@@ -29,7 +29,7 @@ version: "Canvas+ Patch 0.3"
 
 <strong>Quick Inbox</strong>
 
-<span>Here's a small feature for your convenience. Quick inbox lets you take a peak at your emails, without opening a new tab. Just click the normal inbox button, and you'll see a small popup instead of a new page. Click the expand button if you want the full page. That's it!</span>
+<span>Here's a small feature for your convenience. Quick inbox lets you take a peek at your emails, without opening a new tab. Just click the normal inbox button, and you'll see a small popup instead of a new page. Click the expand button if you want the full page. That's it!</span>
 <br>
 
 ![Quick Inbox](/assets/img/feature-quick-inbox.png)
