@@ -13,6 +13,7 @@
 <br>
   
 <img alt="Mozzila Addons" src="https://img.shields.io/amo/users/canvasplus?color=orange&label=Firefox%20Users">
+<img alt="Lines Of Code" src="https://img.shields.io/tokei/lines/github/adrWasTaken/CanvasPlus">
 <img alt="Mozzila Addons" src="https://img.shields.io/amo/rating/canvasplus?label=Firefox%20Rating">
 
 <br>
