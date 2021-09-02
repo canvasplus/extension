@@ -90,14 +90,6 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🔴 Client-side links and link previews
 - 🔴 Easter Eggs
 
-### 📋 Planned for version 0.3
-- 🟢 Remake popup using react (done besides implementation of some new features below)
-- 🟢 "Dim" Mode
-- 🟢 Email Peeker
-- 🟢 Change sidebar: Hide branding, change size, etc
-- 🟢 Customize link & accent color
-- 🟢 Easter Eggs
-
 
 If you want to add any of these, I'll accept your pull request!
 If you have an idea of your own, I'll probably also merge it, but you might want to check with me. You can contact me (<a href="https://github.com/adrWasTaken">more details on my github profile</a>), or make an issue in this repo, and I'll let you know what I think!
