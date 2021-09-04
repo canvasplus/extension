@@ -1,8 +1,0 @@
----
-layout: update
-title:  "Search Bar Fix"
-date:   2021-05-03
-categories: update
-version: "Canvas+ Patch 0.2.1"
----
-After Canvas+ version 0.2 was released, Canvas updated their API, causing the search feature on the extension to stop working. Canvas+ has been updated to version 0.2.1, which fixes this issue. The search feature will also now cache your search data indefinitely.
