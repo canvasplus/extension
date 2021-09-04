@@ -1,0 +1,32 @@
+:root:root {
+  --ic-brand-font-color-dark: #ccc;
+  --ic-brand-font-color-dark-lightened: #e5e5e5;
+  --ic-brand-font-color-dark-darkened: #777;
+
+  --cpt-dark-background-color: #1d1d21;
+  --cpt-dark-nav-tray-color: #16161a;
+  --cpt-dark-line-color: #383a42;
+
+  --cpt-dark-dashboard-header-color: rgba(29, 29, 33, 0.95);
+
+  --cpt-dark-odd-tr-background-color: #2a2a30;
+  --cpt-dark-hovered-email-background-color: #1f2930;
+
+  --cpt-dark-interactable-color: #2D3B45;
+  --cpt-dark-interactable-text-color: #fff;
+  --cpt-dark-interactable-border-color: #0b0f12;
+
+  --cpt-dark-interactable-hover-color: #1f2930;
+  --cpt-dark-interactable-hover-text-color: #ededed;
+  --cpt-dark-interactable-hover-border-color: #090d0f;
+
+  --cpt-dark-module-item-color: #191f24;
+
+  --cpt-dark-important-text-color: #fff;
+
+  --cpt-dark-important-link-color: #2D3B45;
+
+  --cpt-dark-current-page: #fff;
+
+  --cpt-dark-dashboard-header: rgba(29, 29, 33, 0.95);
+}
