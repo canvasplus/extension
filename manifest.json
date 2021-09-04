@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js"],
+      "js": ["src/util.js", "src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
     },
     {
@@ -58,8 +58,7 @@
    "default_popup": "src/popup/popup.html"
  },
  "background": {
-    "scripts": ["src/background.js"],
-    "persistent": false
+    "scripts": ["src/background.js"]
   },
  "permissions": ["storage"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
