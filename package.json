@@ -2,7 +2,7 @@
   "name": "canvasplus",
   "version": "0.3.0",
   "description": "Canvas+ chrome extension",
-  "main": "popup/App.js",
+  "main": "src/popup/App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack-dev-server",

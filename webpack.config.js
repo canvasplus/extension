@@ -9,7 +9,7 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        popup: path.resolve(__dirname, "./popup/App.js"),
+        popup: path.resolve(__dirname, "./src/popup/App.js"),
     },
     output: {
         filename: '[name].bundle.js',
@@ -46,15 +46,19 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            filename: 'popup/popup.html',
-            template: 'popup/popup.html',
+            filename: 'src/popup/popup.html',
+            template: 'src/popup/popup.html',
             chunks: ['popup']
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'manifest.json', to: '[name].[ext]'},
-                { from: 'src', to: 'src' },
-                { from: 'assets', to: 'assets' }
+                { from: 'src/canvas.js', to: 'src/canvas.js'},
+                { from: 'src/background.js', to: 'src/background.js'},
+                { from: 'src/canvas.css', to: 'src/canvas.css'},
+                { from: 'manifest.json', to: 'manifest.json'},
+                { from: 'assets', to: 'assets'},
+                { from: 'src/imported', to: 'src/imported'},
+                { from: 'src/inject', to: 'src/inject'},
             ]
         }),
         new CleanWebpackPlugin()
