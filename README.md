@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="288" src="https://raw.githubusercontent.com/canvasplus/extension/feature/src/assets/icons/canvas-wide-red.png">
+  <img width="288" src="https://raw.githubusercontent.com/canvasplus/extension/feature/assets/icons/canvas-wide-red.png">
 </p>
 <h3 align="center">Boost your productivity right now.</h3>
 
