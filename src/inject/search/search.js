@@ -92,7 +92,7 @@ const injectSearchResults = (results) => {
         searchResults.style.right = "40px";
     }
 
-    fetch('/api/v1/users/self/colors', {
+    fetch(getPathAPI('/api/v1/users/self/colors'), {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     }).then(colors => {
         colors.json().then(colors => {
@@ -265,7 +265,7 @@ const injectSearchResults = (results) => {
 }
 
 const getCoursesToSearch = async () => {
-    let courses = await fetch('/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment', {
+    let courses = await fetch(getPathAPI('/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment'), {
         headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
     });
     courses = await courses.json();
@@ -377,7 +377,7 @@ const searchPages = async (courseId, checkStorage) => {
 
     while(true) {
         // Get JSON from API
-        data = await fetch('/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex)
+        data = await fetch(getPathAPI('/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex))
         data = await data.json()
 
         if(data.message === 'That page has been disabled for this course') {
@@ -419,7 +419,7 @@ const searchModules = (courseId, checkStorage) => {
 
     return new Promise((resolve, reject) => {
         const getModulesPage = (pageIndex, existing) => {
-            fetch('/api/v1/courses/' + courseId + '/modules?include=items&per_page=100&page=' + pageIndex).then(output => {
+            fetch(getPathAPI('/api/v1/courses/' + courseId + '/modules?include=items&per_page=100&page=' + pageIndex)).then(output => {
                 output.json().then(json => {
                     if(json.length < 100) {
                         existing = existing.concat(json)

@@ -52,6 +52,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [
+                { from: 'src/util.js', to: 'src/util.js'},
                 { from: 'src/canvas.js', to: 'src/canvas.js'},
                 { from: 'src/background.js', to: 'src/background.js'},
                 { from: 'src/canvas.css', to: 'src/canvas.css'},

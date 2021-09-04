@@ -5,61 +5,60 @@
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
-         "inject/colors/apply-variables.css",
-         "inject/colors/dark.css",
-         "inject/colors/dim.css",
-         "inject/linkcolor/linkcolor.css",
-         "inject/roundermodules/roundermodules.css"
+         "src/inject/colors/apply-variables.css",
+         "src/inject/colors/dark.css",
+         "src/inject/colors/dim.css",
+         "src/inject/linkcolor/linkcolor.css",
+         "src/inject/roundermodules/roundermodules.css"
      ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["canvas.js", "inject/search/search.js", "imported/quicklink.js", "inject/convopeeker/convopeeker.js", "inject/sidebar/sidebar.js"],
-      "css": ["canvas.css", "inject/search/search.css", "inject/convopeeker/convopeeker.css", "inject/scroll/scroll.css", "inject/sidebar/sidebar.css"]
+      "js": ["src/util.js", "src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "js": ["inject/colors/color-controller.js"],
+      "js": ["src/inject/colors/color-controller.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "js": ["inject/linkcolor/linkcolor.js"],
+      "js": ["src/inject/linkcolor/linkcolor.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "js": ["inject/colors/color-controller-on-load.js"]
+      "js": ["src/inject/colors/color-controller-on-load.js"]
     },
     {
       "matches": [ "*://*.instructure.com/conversations?*"],
-      "js": ["inject/convopeeker/conversation-param-utils.js"]
+      "js": ["src/inject/convopeeker/conversation-param-utils.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["inject/scroll/modules.js", "inject/roundermodules/roundermodules.js"]
+      "js": ["src/inject/scroll/modules.js", "src/inject/roundermodules/roundermodules.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
-      "js": ["inject/scroll/discussion.js"]
+      "js": ["src/inject/scroll/discussion.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/assignments"],
-      "js": ["inject/scroll/assignments.js"]
+      "js": ["src/inject/scroll/assignments.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/pages/*"],
-      "js": ["inject/scroll/page.js"]
+      "js": ["src/inject/scroll/page.js"]
     }
   ],
   "browser_action": {
    "default_popup": "src/popup/popup.html"
  },
  "background": {
-    "scripts": ["src/background.js"],
-    "persistent": false
+    "scripts": ["src/background.js"]
   },
  "permissions": ["storage"],
   "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
