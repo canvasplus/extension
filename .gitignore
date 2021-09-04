@@ -1,8 +1,5 @@
 
 *.TMP
 *.DS_Store
-extension/chrome/node_modules
-extension/chrome/dist
-extension/firefox/node_modules
-extension/firefox/dist
-extension/firefox/testing.zip
+node_modules
+dist

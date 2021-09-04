@@ -12,8 +12,6 @@ import Hover from './components/interactive/Hover'
 import ColorSwitch from './components/interactive/ColorSwitch';
 import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
-import Slider from './components/interactive/Slider';
-import CustomColorPicker from './components/interactive/CustomColorPicker';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
@@ -28,7 +26,7 @@ const frames = {
       <div className="canvasplus-changes">
         <Hover />
         <div className="cpc-header">
-          <img src="../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
+          <img src="../../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
           <p>Release 0.3</p>
         </div>
         <div className="changes-list">
