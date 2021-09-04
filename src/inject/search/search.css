@@ -1,5 +1,6 @@
 #ic-app-class-search-wrapper {
   width: fit-content;
+  width: -moz-fit-content;
   position: relative;
 }
 
