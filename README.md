@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="288" src="https://raw.githubusercontent.com/adrWasTaken/CanvasPlus/master/extension/chrome/assets/icons/canvas-wide-red.png">
+  <img width="288" src="https://github.com/canvasplus/extension/blob/master/extension/chrome/assets/icons/canvas-wide-red.png">
 </p>
 <h3 align="center">Boost your productivity right now.</h3>
 
@@ -7,13 +7,13 @@
 <br>
 <p align="center">
 <img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Users&color=important">
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/adrWasTaken/CanvasPlus">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/canvasplus/extension">
 <img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/rating/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Rating">
   
 <br>
   
 <img alt="Mozzila Addons" src="https://img.shields.io/amo/users/canvasplus?color=orange&label=Firefox%20Users">
-<img alt="Lines Of Code" src="https://img.shields.io/tokei/lines/github/adrWasTaken/CanvasPlus">
+<img alt="Lines Of Code" src="https://img.shields.io/tokei/lines/github/canvasplus/extension">
 <img alt="Mozzila Addons" src="https://img.shields.io/amo/rating/canvasplus?label=Firefox%20Rating">
 
 <br>
@@ -59,7 +59,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 **Have a different issue?**
 
-Be sure to report it in the <a href="https://github.com/adrWasTaken/CanvasPlus/issues">issues tab</a> and I'll do my best to fix it!
+Be sure to report it in the <a href="https://github.com/canvasplus/extension/issues">issues tab</a> and I'll do my best to fix it!
 
 <br><br>
 # 📅  Planned Features
