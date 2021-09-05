@@ -5,8 +5,8 @@ const link = document.createElement('link');
 
 chrome.storage.local.get(['canvasplus-setting-roundermodules'], (data) => {
     if(data['canvasplus-setting-roundermodules']) {
-        if (document.getElementsByClassName("ellipsible")[0].textContent === 'Modules') {
-            ocument.querySelector('html').appendChild(link);
+        if (document.getElementById("context_modules_sortable_container") !== "null") {
+            document.querySelector('html').appendChild(link);
         }
     }
 })

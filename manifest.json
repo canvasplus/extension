@@ -1,4 +1,4 @@
-{
+ {
   "name": "Canvas+",
   "version": "0.3",
   "manifest_version": 2,
@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/util.js", "src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js"],
+      "js": ["src/util.js", "src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js", "src/inject/roundermodules/roundermodules.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/inject/scroll/modules.js", "src/inject/roundermodules/roundermodules.js"]
+      "js": ["src/inject/scroll/modules.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
