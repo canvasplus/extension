@@ -14,22 +14,12 @@ html.appendChild(varSheet);
 
 const applyVarsURL = chrome.extension.getURL("src/inject/colors/apply-variables.css");;
 
-const update = (appearance) => {
+useReactiveFeature('canvasplus-display-appearance', (appearance) => {
   if(appearance && appearance !== 'light') {
     linkApplyVars.href = applyVarsURL;
     varSheet.href = chrome.extension.getURL('src/inject/colors/' + appearance + '.css')
   } else {
     linkApplyVars.href = '';
     varSheet.href = '';
-  }
-}
-
-chrome.storage.local.get(['canvasplus-display-appearance'], (data) => {
-  update(data['canvasplus-display-appearance']);
-})
-
-chrome.storage.onChanged.addListener((changes, namespace) => {
-  if(changes['canvasplus-display-appearance']) {
-    update(changes['canvasplus-display-appearance'].newValue)
   }
 })

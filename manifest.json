@@ -14,12 +14,12 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/util.js", "src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js", "src/inject/roundermodules/roundermodules.js"],
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js", "src/inject/roundermodules/roundermodules.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "js": ["src/inject/colors/color-controller.js"],
+      "js": ["src/util.js", "src/inject/colors/color-controller.js"],
       "run_at": "document_start",
       "all_frames": true
     },
