@@ -14,8 +14,8 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js", "src/inject/roundermodules/roundermodules.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
