@@ -1,3 +1,9 @@
+const stylingRule = addStylingRule('')
+
+useReactiveFeature("canvasplus-setting-sidebar-color", (value) => {
+  stylingRule.setRule('--sidebar-background-color: ' + value)
+})
+
 //"src/inject/sidebar/sidebar.css"
 
 // chrome.storage.local.get(["canvasplus-setting-sidebar-smaller-icons", "canvasplus-setting-sidebar-more-spacing"], function(toggle) {

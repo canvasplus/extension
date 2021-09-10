@@ -69,3 +69,44 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
         }
     });
 })
+
+const stylingRules = []
+
+class StylingRule {
+    constructor(rule) {
+        this.rule = rule
+    }
+    
+    setRule(rule) {
+        this.rule = rule;
+        
+        if(rule === undefined) {
+            stylingRules.splice(stylingRules.indexOf(this), 1)    
+        }
+
+        else {
+            let allRules = ''
+            stylingRules.forEach(sr => {
+                let r = sr.rule.trim()
+                if(!r.endsWith(';')) r += ';'
+                allRules += r
+            })
+            document.querySelector('html').style = allRules
+        }
+    }
+}
+
+const addStylingRule = (rule) => {
+    const stylingRule = new StylingRule(rule)
+    stylingRules.push(stylingRule)
+
+    let allRules = ''
+    stylingRules.forEach(sr => {
+        let r = sr.rule.trim()
+        if(!r.endsWith(';')) r += ';'
+        allRules += r
+    })
+    document.querySelector('html').style = allRules
+
+    return stylingRule
+}

@@ -1,4 +1,10 @@
-:root:root {
+/*linear-gradient(45deg, #ff8d56, #1388dc)*/
+
+.ic-app-header {
+    background: var(--sidebar-background-color) !important;
+}
+
+/* :root:root {
     --custom-padding: .4375rem;
     --custom-active-background: #FFFFFF;
     --cp-custom-sidebar-tooltip-test-color: #FFFFFF;
@@ -28,4 +34,4 @@
 
 .menu-item__text {
     color: var(--cp-custom-sidebar-tooltip-test-color) !important;
-}
+} */
