@@ -4,6 +4,10 @@
     background: var(--sidebar-background-color) !important;
 }
 
+.menu-item-icon-container svg {
+    width: var(--sidebar-icon-width, 26px) !important;
+}
+
 /* :root:root {
     --custom-padding: .4375rem;
     --custom-active-background: #FFFFFF;

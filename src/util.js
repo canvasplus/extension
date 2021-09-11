@@ -5,7 +5,27 @@ const getPathAPI = (rel) => {
 
 const reactiveToggledFeatures = {}
 
-const useReactiveToggledFeature = (settingName, onEnabled, onDisabled) => {
+const useReactiveToggledFeatures = (features) => {
+    const settingNames = {}
+    features.forEach(feature => {
+        useReactiveToggledFeature(feature.settingName, feature.onEnabled, feature.onDisabled, false)
+        settingNames[feature.settingName] = feature
+    })
+    chrome.storage.local.get( Object.keys(settingNames).filter(settingName => {
+        const session = sessionStorage.getItem('storage-cache-' + settingName)
+        if(session !== undefined) {
+            settingNames[settingName].onChanged(session)
+            return false;
+        }
+        return true;
+    }), (data) => {
+        Object.keys(data).forEach(key => {
+            settingNames[key].onEnabled()
+        })
+    })
+}
+
+const useReactiveToggledFeature = (settingName, onEnabled, onDisabled, readInitially=true) => {
     const setting = reactiveToggledFeatures[settingName];
  
     if(setting) {
@@ -14,21 +34,43 @@ const useReactiveToggledFeature = (settingName, onEnabled, onDisabled) => {
         reactiveToggledFeatures[settingName] = [{ onEnabled, onDisabled }];
     }
 
-    const session = sessionStorage.getItem('storage-cache-' + settingName);
-    if(session !== undefined) {
-        onChanged(session)
-    } else {
-        chrome.storage.local.get([settingName], (data) => {
-            if(data[settingName] === true) {
-                onEnabled();
-            }
-        })
+    if(readInitially) {
+        const session = sessionStorage.getItem('storage-cache-' + settingName);
+        if(session !== undefined) {
+            onChanged(session)
+        } else {
+            chrome.storage.local.get([settingName], (data) => {
+                if(data[settingName] === true) {
+                    onEnabled();
+                }
+            })
+        }
     }
 }
 
 const reactiveFeatures = {}
 
-const useReactiveFeature = (settingName, onChanged) => {
+const useReactiveFeatures = (features) => {
+    const settingNames = {}
+    features.forEach(feature => {
+        useReactiveFeature(feature.settingName, feature.onChanged, false)
+        settingNames[feature.settingName] = feature
+    })
+    chrome.storage.local.get( Object.keys(settingNames).filter(settingName => {
+        const session = sessionStorage.getItem('storage-cache-' + settingName)
+        if(session) {
+            settingNames[settingName].onChanged(session)
+            return false;
+        }
+        return true;
+    }), (data) => {
+        Object.keys(data).forEach(key => {
+            settingNames[key].onChanged(data[key])
+        })
+    })
+}
+
+const useReactiveFeature = (settingName, onChanged, readInitially=true) => {
     const setting = reactiveFeatures[settingName]
  
     if(setting) {
@@ -37,13 +79,15 @@ const useReactiveFeature = (settingName, onChanged) => {
         reactiveFeatures[settingName] = [onChanged]
     }
 
-    const session = sessionStorage.getItem('storage-cache-' + settingName);
-    if(session) {
-        onChanged(session)
-    } else {
-        chrome.storage.local.get([settingName], (data) => {
-            onChanged(data[settingName])
-        })
+    if(readInitially) {
+        const session = sessionStorage.getItem('storage-cache-' + settingName);
+        if(session) {
+            onChanged(session)
+        } else {
+            chrome.storage.local.get([settingName], (data) => {
+                onChanged(data[settingName])
+            })
+        }
     }
 }
 

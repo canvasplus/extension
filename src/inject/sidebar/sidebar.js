@@ -1,8 +1,11 @@
 const stylingRule = addStylingRule('')
 
-useReactiveFeature("canvasplus-setting-sidebar-color", (value) => {
-  stylingRule.setRule('--sidebar-background-color: ' + value)
-})
+useReactiveFeatures([{
+  settingName: 'canvasplus-setting-sidebar-color',
+  onChanged: (value) => {
+    stylingRule.setRule('--sidebar-background-color: ' + value)
+  }
+}])
 
 //"src/inject/sidebar/sidebar.css"
 
