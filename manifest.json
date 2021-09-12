@@ -19,8 +19,8 @@
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js"],
       "css": ["src/inject/sidebar/sidebar.css"],
+      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js"],
       "run_at": "document_start",
       "all_frames": true
     },

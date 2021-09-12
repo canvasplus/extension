@@ -1,13 +1,36 @@
-/*linear-gradient(45deg, #ff8d56, #1388dc)*/
-
-.ic-app-header {
+.ic-app-header, body:not(.primary-nav-expanded) .menu-item__text {
     background: var(--sidebar-background-color) !important;
+}
+
+body:not(.primary-nav-expanded) .menu-item__text::after {
+    border-right-color: var(--sidebar-background-color) !important;
+}
+
+body:not(.primary-nav-expanded) .menu-item__text {
+    color: var(--ic-brand-global-nav-ic-icon-svg-fill, #FFF) !important;
+}
+
+.ic-avatar {
+    border-color: transparent !important;
 }
 
 .menu-item-icon-container svg {
     width: var(--sidebar-icon-width, 26px) !important;
 }
 
+.ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-app-header__menu-list-link, #mobile-header {
+    background: var(--sidebar-active-background-color) !important;
+}
+
+.ic-app-header__logomark-container {
+    display: var(--sidebar-logo-display, block);
+}
+
+@media only screen and (min-height: 400px) {
+    .ic-app-header__menu-list-link:not(.ic-app-header__menu-list-link--nav-toggle) {
+        padding: var(--sidebar-icon-height, .4375rem) 0 !important;
+    }
+}
 /* :root:root {
     --custom-padding: .4375rem;
     --custom-active-background: #FFFFFF;

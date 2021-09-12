@@ -59,8 +59,12 @@ const useReactiveFeatures = (features) => {
     chrome.storage.local.get( Object.keys(settingNames).filter(settingName => {
         const session = sessionStorage.getItem('storage-cache-' + settingName)
         if(session) {
-            settingNames[settingName].onChanged(session)
-            return false;
+            try {
+                const json = JSON.parse(session)
+                settingNames[settingName].onChanged(json)
+            } catch {
+                settingNames[settingName].onChanged(session)
+            }
         }
         return true;
     }), (data) => {
@@ -82,7 +86,12 @@ const useReactiveFeature = (settingName, onChanged, readInitially=true) => {
     if(readInitially) {
         const session = sessionStorage.getItem('storage-cache-' + settingName);
         if(session) {
-            onChanged(session)
+            try {
+                const json = JSON.parse(session)
+                onChanged(json)
+            } catch {
+                onChanged(session)
+            }
         } else {
             chrome.storage.local.get([settingName], (data) => {
                 onChanged(data[settingName])
@@ -94,8 +103,13 @@ const useReactiveFeature = (settingName, onChanged, readInitially=true) => {
 chrome.storage.onChanged.addListener((changes, namespace) => {
     Object.keys(changes).forEach(key => {
         const value = changes[key].newValue
-
-        sessionStorage.setItem('storage-cache-' + key, value);
+        
+        if(typeof value === 'object') {
+            sessionStorage.setItem('storage-cache-' + key, JSON.stringify(value));
+        } else {
+            sessionStorage.setItem('storage-cache-' + key, value);
+        }
+    
 
         if(reactiveToggledFeatures[key]) {
             reactiveToggledFeatures[key].forEach(feature => {
