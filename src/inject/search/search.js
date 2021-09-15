@@ -60,6 +60,7 @@ const injectSearchBox = () => {
             process.exit(1);
         } else {
           topNav.appendChild(searchWrapper);
+          searchWrapper.style.marginLeft = '5px';
         }
     }
 
