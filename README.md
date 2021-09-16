@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="288" src="https://raw.githubusercontent.com/canvasplus/extension/feature/assets/icons/canvas-wide-red.png">
+  <img width="288" src="https://raw.githubusercontent.com/canvasplus/extension/master/assets/icons/canvas-wide-red.png">
 </p>
 <h3 align="center">Boost your productivity right now.</h3>
 
@@ -24,6 +24,7 @@
   <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
   <a href="https://developer.chrome.com/docs/extensions/">Chrome Extension Documentation</a><br>
   <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/">Firefox Extension Documentation</a><br>
+  <a href="https://reactjs.org/docs/getting-started.html/">ReactJS Documentation</a><br>
   <a href="https://jekyllrb.com/docs/">Jekyll (Used in website) Documentation</a>
 </p>
 
@@ -36,7 +37,7 @@ Canvas+ is a free chrome and firefox extension that improves the experience of s
 - Search Bar
 - Faster Links
 - Dark And Dim Mode
-- Email Peeker
+- Quick Inbox
 - Sidebar Customization
 - Rounder Modules
 - Custom Link Color
@@ -53,7 +54,7 @@ All code has errors, and Canvas+ is no exception. Here's all the known issues an
 
 <br>
 
-🎉 No issuse Currently Yay!
+#1- 🟡 Some Minor Dark/Dim mode bugs
 
 <br>
 
@@ -98,7 +99,7 @@ If you have an idea of your own, I'll probably also merge it, but you might want
 <br><br>
 # 🖥️  Develop
 
-I'm happy to collaborate on this and any pull request will be accepted if they improve the extension. *All extensions are coded in JavaScript* and google has some great resources to learn more about developing chrome extensions. 
+I'm happy to collaborate on this and any pull request will be accepted if they improve the extension. *All extensions are coded in JavaScript* and google and mozzila have some great resources to learn more about developing chrome/firefox extensions. 
 
 ### Here's a rundown of what everything does and some useful functions:
 
@@ -112,7 +113,7 @@ I'm happy to collaborate on this and any pull request will be accepted if they i
 
 **popup files**
 
-> Popup files are the HTML/CSS/JS for the popup shown when you click the extension button.
+> The popup is coded using react js, to modify this you will need NodeJS. You can find more information and installation instructions below.
 
 <br>
 
@@ -134,14 +135,14 @@ I'm happy to collaborate on this and any pull request will be accepted if they i
 
 1️⃣ **Running NodeJS**
 
-> The chrome extension needs NodeJS to be compiled. I'm using version 14.5.3, but similar versions should work. You can see your node JS version by running `node -v` and if node isn't installed, head over to https://nodejs.org/
+> The extension needs NodeJS to be compiled. I'm using version 14.5.3, but similar versions should work. You can see your node JS version by running `node -v` and if node isn't installed, head over to https://nodejs.org/
 
 <br>
 
 2️⃣ **Installing dependencies**
 
-> Every browser version (aka `extension/chrome`, `extension/firefox`, etc) is its own Node project. To install the dependencies, run `npm install` in your desired browser directory.
+> To install the dependencies, run `npm install` in the extension directory.
 
 3️⃣ **Compilation**
 
-> To compile the extension, run `npm run build:prod` in your desired browser directory. This will create or replace the contents of a directory called `dist`. This contains the code runnable by your browser. I won't specify how to load the extension onto your browser because its different for every browser, but the folder you want to load is the `dist` directory.
+> To compile the extension, run `npm run build:prod` in the extension directory. This will create or replace the contents of a directory called `dist`. This contains the code runnable by your browser. I won't specify how to load the extension onto your browser because its different for every browser, but the folder you want to load is the `dist` directory.
