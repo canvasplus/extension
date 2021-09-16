@@ -14,25 +14,15 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js"],
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
       "css": ["src/inject/sidebar/sidebar.css"],
-      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js"],
+      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js" ,"src/inject/linkcolor/linkcolor.js"],
       "run_at": "document_start",
       "all_frames": true
-    },
-    {
-      "matches": [ "*://*.instructure.com/*"],
-      "js": ["src/inject/linkcolor/linkcolor.js"],
-      "run_at": "document_start",
-      "all_frames": true
-    },
-    {
-      "matches": [ "*://*.instructure.com/*"],
-      "js": ["src/inject/colors/color-controller-on-load.js"]
     },
     {
       "matches": [ "*://*.instructure.com/conversations?*"],
