@@ -2,10 +2,7 @@ const oldDefaults = {
   "canvasplus-setting-quicklink": true,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
-  "canvasplus-display-appearance": "light"
-}
-
-const newDefaults = {
+  "canvasplus-display-appearance": "light",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-sidebar-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
@@ -16,15 +13,31 @@ const newDefaults = {
   "canvasplus-setting-roundermodules": true
 }
 
+const newDefaults = {
+}
+
 chrome.runtime.onInstalled.addListener((details) => {
-  console.log(details);
     if(details.reason === "install"){
       window.open("https://canvasplus.adrwas.dev/welcome");
       chrome.storage.local.set(newDefaults);
       chrome.storage.local.set(oldDefaults);
+      chrome.storage.local.set({
+        "installDate": {
+          "timestamp": Date.now(),
+          "from": "install"
+        }
+      })
     }
-    else if (details.reason === "update" && details.previousVersion !== "0.3") {
-      chrome.storage.local.set(newDefaults);
-      window.open("https://canvasplus.adrwas.dev/update/patch-0-3");
+    else if (details.reason === "update" && details.previousVersion !== "0.3.1") {
+      //reminder to remove the install date stuff in 0.3.2 chrome.storage.local.set(newDefaults);
+
+
+      // REMOVE ME IN 0.3.2
+      chrome.storage.local.set({
+        "installDate": {
+          "timestamp": Date.now(),
+          "from": "update"
+        }
+      })
     }
 });
