@@ -18,7 +18,9 @@ const newDefaults = {
 
 chrome.runtime.onInstalled.addListener((details) => {
     if(details.reason === "install"){
-      window.open("https://canvasplus.adrwas.dev/welcome");
+      chrome.tabs.create({
+        url:"https://canvasplus.adrwas.dev/welcome"
+      });
       chrome.storage.local.set(newDefaults);
       chrome.storage.local.set(oldDefaults);
       chrome.storage.local.set({
