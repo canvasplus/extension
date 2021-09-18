@@ -1,6 +1,29 @@
+const smartAPIFetch = async (url) => {
+    const response = await fetch(url)
+    
+    //const headers = response.headers.entries()
+    // let currentHeaderIt = headers.next()
+    // let remain = undefined
+    // let cost = undefined
+    // while(!currentHeaderIt.done) {
+    //     if(currentHeaderIt.value[0] === "x-rate-limit-remaining") {
+    //         remain = currentHeaderIt.value[1]
+    //     }
+    //     if(currentHeaderIt.value[0] === "x-request-cost") {
+    //         cost = currentHeaderIt.value[1]
+    //     }
+    //     if(remain && cost) {
+    //         break;
+    //     }
+    //     currentHeaderIt = headers.next()
+    // }
+
+    return response
+}
+
 const getPathAPI = (rel) => {
     const url = new URL(window.location);
-    return url.protocol + url.hostname + rel;
+    return url.protocol + '//' + url.hostname + rel;
 }
 
 const reactiveToggledFeatures = {}
