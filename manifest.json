@@ -1,6 +1,6 @@
- {
+{
   "name": "Canvas+",
-  "version": "0.3",
+  "version": "0.3.1",
   "manifest_version": 2,
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
@@ -14,15 +14,24 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
+      "js": ["src/util.js", "src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/sidebar/sidebar.js"],
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css", "src/inject/sidebar/sidebar.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "css": ["src/inject/sidebar/sidebar.css"],
-      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js" ,"src/inject/linkcolor/linkcolor.js"],
+      "js": ["src/inject/colors/color-controller.js"],
       "run_at": "document_start",
       "all_frames": true
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/linkcolor/linkcolor.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [ "*://*.instructure.com/*"],
+      "js": ["src/inject/colors/color-controller-on-load.js"]
     },
     {
       "matches": [ "*://*.instructure.com/conversations?*"],
@@ -30,7 +39,7 @@
     },
     {
       "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/inject/scroll/modules.js"]
+      "js": ["src/inject/scroll/modules.js", "src/inject/roundermodules/roundermodules.js"]
     },
     {
       "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
