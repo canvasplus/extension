@@ -1,0 +1,72 @@
+.notification-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    width: 400px;
+    height: inherit;
+    animation-duration: 2s;
+    animation-name: slidein;
+}
+
+.notification {
+    width: 400px;
+    height: 175px;
+    background-color: var(--notification-fill);
+    border: 2px solid var(--notification-border);
+    display: inline-block;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.text-container {
+    width: min-content;
+    float: right;
+    height: inherit;
+    display: block;
+}
+
+.notification-text {
+    width: 280px;
+    right: 10px;
+    color: black;
+    display: inline-block;
+    height: max-content;
+}
+
+.notificationButton {
+    border-radius: 10px;
+    background-color: #e6f8ff;
+    border: 2px solid #1791c0;
+    height: 35px;
+}
+
+.notificationButton:not(:last-child) {
+    margin-right: 5px;
+}
+
+.buttoncontainer {
+    width: max-content;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+.notification-image {
+    width: 50px;
+    height: 50px;
+    transform: TRANSLATEX(-50%);
+    margin-left: 62px;
+    margin-top: 64px;
+}
+
+
+@keyframes slidein {
+    from {
+        top: -170px;
+    }
+    to {
+        top: 10px;
+    }
+}

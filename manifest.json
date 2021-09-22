@@ -9,12 +9,13 @@
          "src/inject/colors/dark.css",
          "src/inject/colors/dim.css",
          "src/inject/linkcolor/linkcolor.css",
-         "src/inject/roundermodules/roundermodules.css"
+         "src/inject/roundermodules/roundermodules.css",
+         "src/inject/notification/notification.css"
      ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js"],
+      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/notification/notification.js"],
       "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
     },
     {
