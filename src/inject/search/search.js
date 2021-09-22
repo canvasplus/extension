@@ -46,7 +46,6 @@ const getFromCache = async (path, getFromStorageIndividually = true) => {
 
     if(getFromStorageIndividually) {
         const storage = await getLocalStoragePromise([path])
-        console.log(storage[path]);
         return storage[path];
     }
 }
@@ -70,6 +69,49 @@ const getFetchableBasic = async( searchDataKey, cachePath, fetchPath, fetchRespo
     const response = await smartAPIFetch(getPathAPI(fetchPath))
     const json = await response.json()
     const returnable = await fetchResponseHandler(json)
+
+    const toChangeStorage = {}
+    toChangeStorage[STORAGE_PREFIX + cachePath] = {
+        lastUpdated: Date.now(),
+        data: returnable
+    }
+
+    sessionStorage.setItem(STORAGE_PREFIX + cachePath, JSON.stringify(toChangeStorage[STORAGE_PREFIX + cachePath]))
+
+    chrome.storage.local.set(toChangeStorage)
+
+    return returnable;
+}
+
+const getFetchablePaginated = async( searchDataKey, cachePath, fetchPath, fetchResponseHandler = (data) => {return data}, forceReload = false, validCachePeriod = 604800000, recacheGrace = 259200000 ) => {
+    if(!forceReload) {
+        const fromSearchData = searchData[searchDataKey]
+        if(fromSearchData !== undefined) {
+            return fromSearchData
+        }
+
+        const cached = await getFromCache(cachePath)
+        if(cached !== undefined && cached !== null && Date.now() - cached.lastUpdated <= validCachePeriod) {
+            if(Date.now() - cached.lastUpdated > recacheGrace) {
+                getFetchableBasic( searchDataKey, cachePath, fetchPath, true )
+            }
+            return cached.data
+        }
+    }
+
+    let response = []
+    let i = 1;
+    const url = getPathAPI(fetchPath);
+    const urlParamsStarter = (new URL(url).searchParams.keys().next().done ? "?" : "&")
+    while(true) {
+        const fetchResponse = await smartAPIFetch(url + urlParamsStarter + "per_page=100&page=" + i)
+        const fetchResponseJson = await fetchResponse.json()
+        response = response.concat(fetchResponseJson)
+        if(fetchResponseJson.length < 100) break;
+    }
+
+
+    const returnable = await fetchResponseHandler(response)
 
     const toChangeStorage = {}
     toChangeStorage[STORAGE_PREFIX + cachePath] = {
@@ -137,14 +179,51 @@ const getCourseList = async (forceReload = false) => {
 }
 
 const getCourseContent = async ( courseId, forceReload = false ) => {
-    return getFetchableBasic("courses/" + courseId + "/tabs", "courses/" + courseId + "/tabs", "/api/v1/courses/" + courseId + "/tabs", async (data) => {
+    const tabs = await getFetchableBasic("courses/" + courseId + "/tabs", "courses/" + courseId + "/tabs", "/api/v1/courses/" + courseId + "/tabs", async (data) => {
         const returnable = {}
         for(let tab of data) {
             returnable[tab.id] = tab
         }
         return returnable;
     }, forceReload)
+    
+    const courseContent = {tabs:tabs}
+
+    const courseContentPromises = []
+    
+    if(tabs.pages) {
+        const pages = getCoursePages(courseId, forceReload);
+        pages.then((data) => {
+
+            data.forEach(page => {
+                courseContent['pages/' + page.id] = page
+            })
+        })
+        courseContentPromises.push(pages)
+    }
+
+    const promiseResults = await Promise.allSettled(courseContentPromises)
+    console.log(promiseResults);
+    
+    return { courseId: courseId, content: courseContent };
 }
+
+const getCoursePages = async ( courseId, forceReload = false ) => {
+    return getFetchablePaginated("courses/" + courseId + "/pages", "courses/" + courseId + "/pages", "/api/v1/courses/" + courseId + "/pages", async (data) => {
+        const returnable = []
+        for(let page of data) {
+            returnable.push({
+                title: page.title,
+                url: page.html_url,
+                updated: new Date(page.updated_at).getTime(),
+                id: page.page_id
+            })
+        }
+        return returnable;
+    }, forceReload)
+}
+
+const searchContent = {done: false, courses: {}};
 
 const main = async () => {
     const courses =  await getCourseList()
@@ -152,11 +231,25 @@ const main = async () => {
     const courseContentPromises = []
 
     for(let course of Object.values(courses))  {
-        courseContentPromises.push(getCourseContent(course.id))
+        courseContentPromises.push(getCourseContent(course.id, true))
     }
 
-    Promise.allSettled(courseContentPromises).then((results) => results.forEach((result) => console.log(result)))
-    console.log(courses);
+    Promise.allSettled(courseContentPromises)
+    .then((results) => {
+        results.forEach((course) => {
+            course = course.value
+            searchContent.courses[course.courseId] = {
+                meta: courses[course.courseId],
+                content: course
+            }
+        })
+
+        searchContent.done = true;
+    })
+}
+
+const search = async () => {
+    
 }
 
 main()
