@@ -18,17 +18,20 @@
 </p>
 
 <br><br>
+  <h4>Install The Extension<h4>
+- <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install The Chrome Extension</a><br>
+- <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasplus/">Install The Firefox Extension</a><br>
   
   <h4>Helpful Links</h4>
-  <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
-  <a href="https://www.github.com/canvasplus/web">Website Repo</a><br>
-  <a href="https://jekyllrb.com/docs/">Jekyll Documentation</a><br>
-  <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install The Chrome Extension</a><br>
-  <a href="https://developer.chrome.com/docs/extensions/">Chrome Extension Documentation</a><br>
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasplus/">Install The Firefox Extension</a><br>
-  <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/">Firefox Extension Documentation</a><br>
-  <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
-  <a href="https://reactjs.org/docs/getting-started.html/">ReactJS Documentation</a>
+- <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
+- <a href="https://www.github.com/canvasplus/web">Website Repo</a><br>
+- <a href="https://jekyllrb.com/docs/">Jekyll Documentation</a><br>
+- <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install The Chrome Extension</a><br>
+- <a href="https://developer.chrome.com/docs/extensions/">Chrome Extension Documentation</a><br>
+- <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasplus/">Install The Firefox Extension</a><br>
+- <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/">Firefox Extension Documentation</a><br>
+- <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
+- <a href="https://reactjs.org/docs/getting-started.html/">ReactJS Documentation</a>
 
 
 </p>
