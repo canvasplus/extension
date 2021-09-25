@@ -21,6 +21,30 @@ const smartAPIFetch = async (url) => {
     return response
 }
 
+const smartSplit = (toSplit) => {
+    const blocks = []
+    let currentBlock = ""
+    for(let char of toSplit) {
+        if(char.match(/^[a-zA-Z0-9]*$/)) {
+            currentBlock += char
+        } else {
+            if(currentBlock !== "") {
+                blocks.push(currentBlock.toLowerCase())
+                currentBlock = ""
+            }
+        }
+    }
+    if(currentBlock !== "") {
+        blocks.push(currentBlock.toLowerCase())
+        currentBlock = ""
+    }
+    return blocks
+}
+
+const filterAlphanumeric = (toFilter) => {
+    return toFilter.replace(/[^0-9a-z]/gi, '')
+}
+
 const getPathAPI = (rel) => {
     const url = new URL(window.location);
     return url.protocol + '//' + url.hostname + rel;

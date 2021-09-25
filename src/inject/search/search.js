@@ -141,41 +141,6 @@ const getCourseList = async (forceReload = false) => {
         
         return returnable
     }, forceReload)
-
-    // if(!forceReload) {
-    //     if()
-    //     const cached = await getFromCache('courses')
-    //     console.log(cached);
-    //     if(cached !== undefined && cached !== null && Date.now() - cached.lastUpdated <= 604800000) {
-    //         if(Date.now() - cached.lastUpdated > 259200000) {
-    //             getCourseList(true)
-    //         }
-    //         return cached.data;
-    //     }
-    // }
-
-    // const response = await fetch(getPathAPI('/api/v1/users/self/favorites/courses'))
-    // const json = await response.json()
-    // const returnable = {}
-
-    // for(let course of json) {
-    //     returnable[course.id] = {
-    //         id: course.id,
-    //         name: course.name,
-    //         color: course.course_color
-    //     }
-    // }
-    
-    // const toChange = {}
-    // toChange[STORAGE_PREFIX + 'courses'] = {
-    //     lastUpdated: Date.now(),
-    //     data: returnable
-    // }
-    // console.log(toChange);
-
-    // sessionStorage.setItem(STORAGE_PREFIX + 'courses', JSON.stringify(toChange[STORAGE_PREFIX + 'courses']))
-    // chrome.storage.local.set(toChange)
-    // return returnable;
 }
 
 const getCourseContent = async ( courseId, forceReload = false ) => {
@@ -202,6 +167,13 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
         courseContentPromises.push(pages)
     }
 
+    if(tabs.modules) {
+        const modules = getCourseModules(courseId, forceReload);
+        modules.then((data) => {
+            
+        })
+    }
+
     const promiseResults = await Promise.allSettled(courseContentPromises)
     console.log(promiseResults);
     
@@ -223,7 +195,40 @@ const getCoursePages = async ( courseId, forceReload = false ) => {
     }, forceReload)
 }
 
-const searchContent = {done: false, courses: {}};
+const getCourseModules = async ( courseId, forceReload = false ) => {
+    return getFetchablePaginated("courses/" + courseId + "/modules", "courses/" + courseId + "/modules", "/api/v1/courses/" + courseId + "/modules?include=items", async (data) => {
+        const modules = []
+        const items = []
+        for(let module of data) {
+            const url = new URL(module["items_url"])
+            modules.push({
+                id: module.id,
+                url: url.protocol + '//' + url.hostname + '/courses/' + courseId + '/modules?cpx-jump-to=' + module.id,
+                title: module.name
+            })
+            module.items.forEach(moduleItem => {
+                let itemUrl;
+
+                if(moduleItem.type === "Page") {
+                    itemUrl = url.protocol + '//' + url.hostname + '/courses/' + courseId + '/pages/' + moduleItem['page_url']     
+                }
+
+                if(itemUrl) {
+                    items.push({
+                        id: moduleItem.id,
+                        title: moduleItem.title,
+                        url: itemUrl
+                    })
+                }
+            })
+        }
+        console.log(modules, items);
+        const returnable = []
+        return returnable;
+    }, forceReload)
+}
+
+const searchContent = {done: false, courses: {}, searchIndexByWord: {}};
 
 const main = async () => {
     const courses =  await getCourseList()
@@ -237,19 +242,48 @@ const main = async () => {
     Promise.allSettled(courseContentPromises)
     .then((results) => {
         results.forEach((course) => {
-            course = course.value
-            searchContent.courses[course.courseId] = {
+            course = course.value      
+            console.log(course);
+            searchContent['courses'][course['courseId']] = {
                 meta: courses[course.courseId],
                 content: course
             }
+
+            Object.keys(course.content).forEach(key => {
+                if(key !== "tabs") {
+                    const page = course["content"][key];
+                    const words = smartSplit(page.title);
+                    words.forEach(word => {
+                        if(searchContent["searchIndexByWord"][word]) {
+                            searchContent["searchIndexByWord"][word].push(page)
+                        } else {
+                            searchContent["searchIndexByWord"][word] = [page]
+                        }
+                    })
+                }
+            })
         })
 
         searchContent.done = true;
     })
 }
 
-const search = async () => {
-    
+const search = async (query) => {
+    const simpleQuery = filterAlphanumeric(query).toLowerCase();
+    const results = {}
+
+    Object.keys(searchContent["searchIndexByWord"]).forEach(key => {
+        if(simpleQuery.includes(key)) {
+            searchContent["searchIndexByWord"][key].forEach(item => {
+                if(results[item.url]) {
+                    results[item.url].relevance += 1.0
+                } else {
+                    results[item.url] = {relevance: 1.0, item: item}
+                }
+            })
+        }
+    })
+    return Object.values(results);
 }
 
 main()
