@@ -5,7 +5,6 @@ chrome.storage.local.get(["installDate"], (data) => {
 
 const notification = async(storagevar, time, text, imageurl, fill, border, button1script, button1text, button2script, button2text, installDate, container) => {
     chrome.storage.local.get([storagevar], (data) => {
-         console.log(data[storagevar])
         if (data[storagevar] != 'true' && ((Date.now() - installDate) >= time || time == 0)) {
 
             document.documentElement.style.setProperty('--notification-border', border)
