@@ -167,15 +167,42 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
         courseContentPromises.push(pages)
     }
 
-    if(tabs.modules) {
-        const modules = getCourseModules(courseId, forceReload);
-        modules.then((data) => {
-            
+    if(tabs.assignments) {
+        const assignments = getCourseAssignments(courseId, forceReload);
+        assignments.then((data) => {
+            data.forEach((assignment) => {
+                courseContent['assignments/' + assignment.id] = assignment;
+            })
         })
     }
 
-    const promiseResults = await Promise.allSettled(courseContentPromises)
-    console.log(promiseResults);
+    if(tabs.modules) {
+        const modules = getCourseModules(courseId, forceReload);
+        modules.then((data) => {
+            data.modules.forEach(module => {
+                courseContent['modules/' + module.id] = module
+            })
+            data.items.forEach(item => {
+                let courseContentPath;
+                if(item.type === 'Page') {
+                    courseContentPath = 'pages/' + item.id;
+                } else if(item.type === 'Assignment') {
+                    courseContentPath = 'assignments/' + item.id;
+                } else {
+                    courseContentPath = 'module-item/' + item.id;
+                }
+                
+                if(courseContentPath) {
+                    if(courseContent[courseContentPath]) {
+                        courseContent[courseContentPath].locations = courseContent[courseContentPath].locations.concat(item.locations)
+                    };
+                }
+            })
+        })
+        courseContentPromises.push(modules)
+    }
+
+    await Promise.allSettled(courseContentPromises)
     
     return { courseId: courseId, content: courseContent };
 }
@@ -188,7 +215,24 @@ const getCoursePages = async ( courseId, forceReload = false ) => {
                 title: page.title,
                 url: page.html_url,
                 updated: new Date(page.updated_at).getTime(),
-                id: page.page_id
+                id: page.url,
+                locations: [{'type': 'tab', 'name': 'Pages', 'id': 'pages'}]
+            })
+        }
+        return returnable;
+    }, forceReload)
+}
+
+const getCourseAssignments = async ( courseId, forceReload = false ) => {
+    return getFetchablePaginated("courses/" + courseId + "/assignments", "courses/" + courseId + "/assignments", "/api/v1/courses/" + courseId + "/assignments", async (data) => {
+        const returnable = []
+        for(let assignment of data) {
+            returnable.push({
+                title: assignment.name,
+                url: assignment.html_url,
+                updated: new Date(assignment.updated_at).getTime(),
+                id: assignment.id,
+                locations: [{'type': 'tab', 'name': 'Assignments', 'id': 'assignments'}]
             })
         }
         return returnable;
@@ -204,26 +248,37 @@ const getCourseModules = async ( courseId, forceReload = false ) => {
             modules.push({
                 id: module.id,
                 url: url.protocol + '//' + url.hostname + '/courses/' + courseId + '/modules?cpx-jump-to=' + module.id,
-                title: module.name
+                title: module.name,
+                locations: [{'type': 'tab', 'name': 'Modules', 'id': 'modules'}]
             })
             module.items.forEach(moduleItem => {
                 let itemUrl;
+                let itemId;
 
                 if(moduleItem.type === "Page") {
-                    itemUrl = url.protocol + '//' + url.hostname + '/courses/' + courseId + '/pages/' + moduleItem['page_url']     
+                    itemUrl = url.protocol + '//' + url.hostname + '/courses/' + courseId + '/pages/' + moduleItem['page_url'];
+                    itemId = moduleItem['page_url'];
+                }
+                else if(moduleItem.type === "Assignment") {
+                    itemUrl = url.protocol + '//' + url.hostname + '/courses/' + courseId + '/assignments/' + moduleItem['content_id']
+                    itemId = moduleItem['content_id']
+                }
+                else if(moduleItem.type !== "Header" && moduleItem.type !== "SubHeader") {
+                    itemUrl = moduleItem['html_url'];
                 }
 
                 if(itemUrl) {
                     items.push({
-                        id: moduleItem.id,
+                        id: itemId || moduleItem.id,
                         title: moduleItem.title,
-                        url: itemUrl
+                        url: itemUrl,
+                        type: moduleItem.type,
+                        locations: [{'type': 'module', 'name': module.name, 'id': module.id}]
                     })
                 }
             })
         }
-        console.log(modules, items);
-        const returnable = []
+        const returnable = { modules, items };
         return returnable;
     }, forceReload)
 }
@@ -242,6 +297,7 @@ const main = async () => {
     Promise.allSettled(courseContentPromises)
     .then((results) => {
         results.forEach((course) => {
+            console.log(course);
             course = course.value      
             console.log(course);
             searchContent['courses'][course['courseId']] = {
@@ -276,14 +332,16 @@ const search = async (query) => {
         if(simpleQuery.includes(key)) {
             searchContent["searchIndexByWord"][key].forEach(item => {
                 if(results[item.url]) {
-                    results[item.url].relevance += 1.0
+                    results[item.url].relevance += (filterAlphanumeric(item.title).toLowerCase().includes(simpleQuery) ? 1.0 : 0.1 * key.length * 2)
                 } else {
-                    results[item.url] = {relevance: 1.0, item: item}
+                    results[item.url] = {relevance: (filterAlphanumeric(item.title).toLowerCase().includes(simpleQuery) ? 1.0 :  0.1 * key.length * 2), item: item}
                 }
             })
         }
     })
-    return Object.values(results);
+    return Object.values(results).sort((a, b) => {
+        return b.relevance - a.relevance
+    });
 }
 
 main()
