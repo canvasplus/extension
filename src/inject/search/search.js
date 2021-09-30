@@ -195,7 +195,9 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
                 if(courseContentPath) {
                     if(courseContent[courseContentPath]) {
                         courseContent[courseContentPath].locations = courseContent[courseContentPath].locations.concat(item.locations)
-                    };
+                    } else {
+                        courseContent[courseContentPath] = item
+                    }
                 }
             })
         })
@@ -331,10 +333,15 @@ const search = async (query) => {
     Object.keys(searchContent["searchIndexByWord"]).forEach(key => {
         if(simpleQuery.includes(key)) {
             searchContent["searchIndexByWord"][key].forEach(item => {
+                const indices = [... simpleQuery.matchAll(new RegExp(key, 'g')) ].map(i => { return i.index } );
                 if(results[item.url]) {
-                    results[item.url].relevance += (filterAlphanumeric(item.title).toLowerCase().includes(simpleQuery) ? 1.0 : 0.1 * key.length * 2)
+                    const newIndices = indices.filter(i => {
+                        return !results[item.url].indices.includes(i)
+                    })
+                    results[item.url].relevance += (0.1 * key.length * 2) + (newIndices.length * 1.5)
+                    results[item.url].indices = results[item.url].indices.concat(newIndices)
                 } else {
-                    results[item.url] = {relevance: (filterAlphanumeric(item.title).toLowerCase().includes(simpleQuery) ? 1.0 :  0.1 * key.length * 2), item: item}
+                    results[item.url] = {relevance: (0.1 * key.length * 2) + (indices.length * 2), indices: indices, item: item}
                 }
             })
         }
