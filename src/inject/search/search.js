@@ -351,4 +351,67 @@ const search = async (query) => {
     });
 }
 
+class SearchUI {
+    constructor() {
+        this.mode = 'search'
+
+        this.queryCompontents = []
+        this.results = []
+        this.controls = []
+    }
+
+    createEntireElement() {
+        this.wrapperElement = document.createElement('div')
+        this.wrapperElement.id = 'canvasplus-search-ui-wrapper'
+        this.wrapperElement.className = 'canvasplus-search-ui-wrapper'
+
+        this.element = document.createElement('div')
+        this.element.className = 'canvasplus-search-ui'
+
+        {
+            this.headerElement = document.createElement('div')
+            this.headerElement.className = 'canvasplus-search-ui-header'
+
+            this.headerElementIcon = document.createElement('div')
+            this.headerElementIcon.className = 'canvasplus-search-ui-header-icon'
+
+            this.headerElementQueryWrapper = document.createElement('div')
+            this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
+            this.headerElementQueryWrapper.innerText = 'Search Query'
+
+            this.headerElement.appendChild(this.headerElementIcon)
+            this.headerElement.appendChild(this.headerElementQueryWrapper)
+            this.element.appendChild(this.headerElement)
+        }
+
+        {
+            this.resultsElement = document.createElement('div')
+            this.resultsElement.className = 'canvasplus-search-ui-results'
+            this.resultsElement.contentEditable = 'true'
+            this.element.appendChild(this.resultsElement)
+        }
+
+        {
+            this.controlsElement = document.createElement('div')
+            this.controlsElement.className = 'canvasplus-search-ui-controls'
+            this.element.appendChild(this.controlsElement)
+        }
+
+        this.wrapperElement.appendChild(this.element)
+    }
+
+    insert(where) {
+        this.createEntireElement()
+        this.where = where;
+        where.appendChild(this.wrapperElement)
+    }
+
+    remove() {
+        this.where.removeChild(this.element)
+    }
+}
+
 main()
+
+const searchUI = new SearchUI()
+    searchUI.insert(document.body)
