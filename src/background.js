@@ -4,7 +4,7 @@ const oldDefaults = {
   "canvasplus-setting-smartscroll": true,
   "canvasplus-display-appearance": "light",
   "canvasplus-setting-convopeeker": true,
-  "canvasplus-setting-sidebar-hidelogo": true,
+  "canvasplus-setting-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",

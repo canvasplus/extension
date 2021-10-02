@@ -2,9 +2,14 @@ const sidebarColor = addStylingRule('')
 const sidebarIconColor = addStylingRule('')
 const sidebarActiveColor = addStylingRule('')
 const sidebarActiveIconColor = addStylingRule('')
-const sidebarLogoDisplay = addStylingRule('')
 const sidebarIconWidth = addStylingRule('')
 const sidebarIconHeight = addStylingRule('')
+
+let sidebarlink = document.createElement("link");
+  sidebarlink.href = chrome.extension.getURL("src/inject/sidebar/sidebar.css");
+  sidebarlink.type = "text/css";
+  sidebarlink.rel = "stylesheet";
+  document.documentElement.appendChild(sidebarlink);
 
 useReactiveFeatures([{
   settingName: 'canvasplus-setting-sidebar-color',
@@ -44,11 +49,6 @@ useReactiveFeatures([{
     } else {
       sidebarActiveIconColor.setRule('--ic-brand-global-nav-ic-icon-svg-fill--active: ' + value.icon + ';  --ic-brand-global-nav-menu-item__text-color--active: ' + value.icon)
     }
-  }
-}, {
-  settingName: 'canvasplus-setting-sidebar-hidelogo',
-  onChanged: (value) => {
-    sidebarLogoDisplay.setRule(value ? '--sidebar-logo-display: none' : '')
   }
 }, {
   settingName: 'canvasplus-setting-sidebar-smaller-icons',

@@ -1,7 +1,5 @@
 :root:root {
-    --ic-brand-primary: var(--cp-link-color) !important;
     --ic-link-color: var(--cp-link-color) !important;
-    --ic-link-color-lightened-10: var(--cp-link-color-lightened-10) !important;
     --ic-link-color-darkened-10: var(--cp-link-color-darkened-10) !important;
 }
 
@@ -24,5 +22,5 @@
 }
 
 .StickyButton-styles__root:hover {
-    background: var(--cp-link-color-darkened-10);
+    background: var(--cp-link-color-darkened-10) !important;
 }

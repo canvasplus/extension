@@ -4,7 +4,7 @@ const defaults = {
   "canvasplus-setting-smartscroll": true,
   "canvasplus-display-appearance": "light",
   "canvasplus-setting-convopeeker": true,
-  "canvasplus-setting-sidebar-hidelogo": true,
+  "canvasplus-setting-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",
@@ -25,16 +25,6 @@ chrome.storage.local.get(settingsList, function(data) {
   }
 });
 
-function checkSettingsChange() {
-  chrome.storage.local.get(settingsList, function(data) {
-    if(JSON.stringify(settings) != JSON.stringify(data)){
-      alert.style.opacity = "1";
-      alert.style.visibility = "visible";
-      settings = data;
-    }
-  })
-}
-
 let alert = document.createElement("div");
 alert.id = "canvasplus-alert";
 alert.style.opacity = "0";
@@ -54,6 +44,35 @@ settingsUpdateBox.innerHTML = "<h2>Canvas+ Settings were Changed</h2><p>Your cha
 alert.appendChild(settingsUpdateBox);
 document.body.insertBefore(alert, document.body.firstElementChild);
 
-chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
-  if(data["canvasplus-setting-search"]) run();
-});
+let settingprev = [];
+
+const getprevsetting = async (settingname) => {
+  await chrome.storage.local.get([settingname], function (data) {
+    settingprev[settingname] = data;
+  })
+}
+
+getprevsetting("canvasplus-setting-quicklink")
+getprevsetting("canvasplus-setting-search")
+
+const settingchanged = (val, settingname) => {
+  if (settingprev[settingname]) {
+
+    if (val != settingprev[settingname][settingname]) {
+      alert.style.opacity = "1";
+      alert.style.visibility = "visible";
+    }
+  }
+}
+
+useReactiveFeatures([{
+  settingName: "canvasplus-setting-quicklink",
+  onChanged: (val) => {
+    settingchanged(val, "canvasplus-setting-quicklink")
+  }
+}, {
+  settingName: "canvasplus-setting-search",
+  onChanged: (val) => {
+    settingchanged(val, "canvasplus-setting-search")
+  }
+}])

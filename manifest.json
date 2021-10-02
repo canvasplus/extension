@@ -8,8 +8,10 @@
          "src/inject/colors/apply-variables.css",
          "src/inject/colors/dark.css",
          "src/inject/colors/dim.css",
+         "src/inject/sidebar/sidebar.css",
          "src/inject/linkcolor/linkcolor.css",
          "src/inject/roundermodules/roundermodules.css",
+         "src/inject/hidelogo/hidelogo.css",
          "src/inject/notification/notification.css"
      ],
   "content_scripts": [
@@ -20,8 +22,7 @@
     },
     {
       "matches": [ "*://*.instructure.com/*"],
-      "css": ["src/inject/sidebar/sidebar.css"],
-      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js", "src/inject/linkcolor/linkcolor.js"],
+      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js", "src/inject/linkcolor/linkcolor.js", "src/inject/hidelogo/hidelogo.js"],
       "run_at": "document_start",
       "all_frames": true
     },
