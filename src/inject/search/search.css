@@ -44,3 +44,19 @@
   font-size: 18px;
   line-height: 35px;
 }
+
+.canvasplus-search-ui-results-single-result {
+  width: 100%;
+  background: #F0F7FF;
+  height: 72px;
+  position: relative;
+  border-top: 1px solid #CCCCCC;
+}
+
+.canvasplus-search-ui-results-single-result-left {
+  float: left;
+}
+
+.canvasplus-search-ui-results-single-result-right {
+  float: right;
+}

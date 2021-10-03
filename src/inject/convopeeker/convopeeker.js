@@ -168,7 +168,6 @@ const getConversations = () => {
         if(convosCache === undefined) {
             fetch(getPathAPI('/api/v1/conversations?include=participant_avatars')).then(data => {
                 data.json().then(json => {
-
                     insertConversationTop()
 
                     peekerElement.appendChild(peekerConvoList)

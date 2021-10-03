@@ -356,6 +356,23 @@ class SearchUI {
         this.mode = 'search'
 
         this.queryCompontents = []
+        /*
+        interface SearchResult {
+            course: Course,
+            name: String,
+            topMeta: String,
+            locations: Array[SearchResultLocation]
+        }
+        interface SearchResultLocation {
+            selected: boolean,
+            name: String,
+            modifyUrl: function
+        }
+        interface Course {
+            color: String,
+            name: String
+        }
+        */
         this.results = []
         this.controls = []
     }
@@ -387,7 +404,6 @@ class SearchUI {
         {
             this.resultsElement = document.createElement('div')
             this.resultsElement.className = 'canvasplus-search-ui-results'
-            this.resultsElement.contentEditable = 'true'
             this.element.appendChild(this.resultsElement)
         }
 
@@ -397,7 +413,74 @@ class SearchUI {
             this.element.appendChild(this.controlsElement)
         }
 
+        this.buildResults()
+        
         this.wrapperElement.appendChild(this.element)
+    }
+
+    buildResults() {
+        this.resultsElement.innerHTML = ''
+        this.resultsElement.appendChild(this.buildResult({
+            course: {
+                name: "Advanced Biology",
+                color: "#f43daa"
+            },
+            name: 'Ecology Lesson 1.1',
+            topMeta: 'Top Result',
+            locations: [{
+                name: 'Modules'
+            }]
+        }))
+    }
+
+    buildResult(result) {
+        const resultElement = document.createElement('div')
+        resultElement.className = 'canvasplus-search-ui-results-single-result'
+
+        const resultLeft = document.createElement('div')
+        resultLeft.className = 'canvasplus-search-ui-results-single-result-left'
+
+        const resultInner = document.createElement('div')
+        resultInner.className = 'canvasplus-search-ui-results-single-result-left-inner'
+        resultInner.innerText = result.name
+        
+        if(result.topMeta) {
+            resultElement.classList.add('includes-top-meta')
+            
+            const resultTopMeta = document.createElement('div')
+            resultTopMeta.className = 'canvasplus-search-ui-results-single-result-topmeta'
+            resultTopMeta.innerText = result.topMeta
+            
+            resultLeft.appendChild(resultTopMeta)
+        }
+        resultLeft.appendChild(resultInner)
+        resultElement.appendChild(resultLeft)
+
+        if(result.course) {
+            resultElement.classList.add('includes-course-card')
+
+            const resultRight = document.createElement('div')
+            resultRight.className = 'canvasplus-search-ui-results-single-result-right'
+            
+            const resultRightCourse = document.createElement('div')
+            resultRightCourse.className = 'canvasplus-search-ui-results-single-result-right-course'
+            resultRightCourse.innerText = result.course.name
+            resultRightCourse.style = `--course-card-color:${result.course.color}`
+            
+            const resultRightBreadcrumb = document.createElement('div')
+            resultRightBreadcrumb.className = 'canvasplus-search-ui-results-single-result-right-breadcrumb'
+            resultRightBreadcrumb.innerText = result.locations[0].name
+
+            resultRight.appendChild(resultRightCourse)
+
+            if(result.locations.length >= 2) {
+                resultElement.classList.add('includes-multiple-locations')
+            }
+
+            resultElement.appendChild(resultRight)
+        }
+
+        return resultElement;
     }
 
     insert(where) {
