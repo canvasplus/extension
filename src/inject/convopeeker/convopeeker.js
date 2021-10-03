@@ -190,8 +190,8 @@ useReactiveFeatures([{
             console.log('[Canvas+] Injecting email peeker ...')
             runConvoKeeper()
         } else {
-            peekerBack.remove();
-            peekerElement.remove();
+            try {peekerBack.remove();} catch {}
+            try {peekerElement.remove();} catch {}
         }
     }
 }])

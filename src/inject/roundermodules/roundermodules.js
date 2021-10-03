@@ -53,7 +53,7 @@ useReactiveFeatures([{
         } else {
             for (let el of document.querySelectorAll(".element_toggler")) {mutationObserver(el).disconnect()}
             for (let el2 of document.querySelectorAll('[aria-expanded="true"].ig-header-title.collapse_module_link.ellipsis')) {mutationObserver(el2).disconnect()}
-            link.remove();
+            try {link.remove();} catch {}
         }
     }
 }])

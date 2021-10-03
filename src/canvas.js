@@ -53,7 +53,6 @@ const getprevsetting = async (settingname) => {
 }
 
 getprevsetting("canvasplus-setting-quicklink")
-getprevsetting("canvasplus-setting-search")
 
 const settingchanged = (val, settingname) => {
   if (settingprev[settingname]) {
@@ -69,10 +68,5 @@ useReactiveFeatures([{
   settingName: "canvasplus-setting-quicklink",
   onChanged: (val) => {
     settingchanged(val, "canvasplus-setting-quicklink")
-  }
-}, {
-  settingName: "canvasplus-setting-search",
-  onChanged: (val) => {
-    settingchanged(val, "canvasplus-setting-search")
   }
 }])

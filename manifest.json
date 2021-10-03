@@ -18,7 +18,7 @@
     {
       "matches": [ "*://*.instructure.com/*" ],
       "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/notification/notification.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/scroll/scroll.css"]
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],
@@ -27,28 +27,13 @@
       "all_frames": true
     },
     {
-      "matches": [ "*://*.instructure.com/*"],
-      "js": ["src/inject/colors/color-controller-on-load.js"]
+      "matches": [ "*://*.instructure.com/courses/*" ],
+      "js": ["src/inject/scroll/scroll.js"],
+      "css": ["src/inject/scroll/scroll.css"]
     },
     {
       "matches": [ "*://*.instructure.com/conversations?*"],
       "js": ["src/inject/convopeeker/conversation-param-utils.js"]
-    },
-    {
-      "matches": ["*://*.instructure.com/courses/*/modules"],
-      "js": ["src/inject/scroll/modules.js"]
-    },
-    {
-      "matches": ["*://*.instructure.com/courses/*/discussion_topics/*"],
-      "js": ["src/inject/scroll/discussion.js"]
-    },
-    {
-      "matches": ["*://*.instructure.com/courses/*/assignments"],
-      "js": ["src/inject/scroll/assignments.js"]
-    },
-    {
-      "matches": ["*://*.instructure.com/courses/*/pages/*"],
-      "js": ["src/inject/scroll/page.js"]
     }
   ],
   "browser_action": {
