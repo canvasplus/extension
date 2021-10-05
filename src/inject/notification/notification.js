@@ -1,3 +1,60 @@
+//for surevy
+const surveysettings = {
+    "canvasplus-setting-quicklink": "Speed+Boost",
+    "canvasplus-setting-search": "Search",
+    "canvasplus-setting-smartscroll": "Smart+Scrolling",
+    "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out'},
+    "canvasplus-setting-convopeeker": "Quick+Inbox",
+    "canvasplus-setting-hidelogo": "Hide+Logo",
+    "canvasplus-setting-sidebar-color": 'use default',
+    "canvasplus-setting-roundermodules": "Rounder+Modules",
+    "canvasplus-setting-linkcolor": 'use default'
+}
+
+var url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_url'
+
+var rotation = 0
+
+const checksettings = async () => {
+    chrome.storage.local.get(Object.entries(surveysettings)[rotation][0], (data) => {
+        if (data[Object.entries(surveysettings)[rotation][0]] == true) {
+            url += '&entry.1198748745=' + Object.entries(surveysettings)[rotation][1];
+        } else if (data[Object.entries(surveysettings)[rotation][0]] != false) {
+            //Apperance Setting
+            if (Object.entries(surveysettings)[rotation][0] == "canvasplus-display-appearance") {
+                for (value of Object.entries(Object.entries(surveysettings)[rotation][1])) {
+                    if (value[0] == data[Object.entries(surveysettings)[rotation][0]]) {
+                        url += '&entry.1404289257=' + value[1];
+                    }
+                }
+            //Hex Value Settings
+            } else {
+                if (Object.entries(surveysettings)[rotation][0] == "canvasplus-setting-sidebar-color") {
+                    hexurl = '&entry.1808318442';
+                }
+                if (Object.entries(surveysettings)[rotation][0] == "canvasplus-setting-linkcolor") {
+                    hexurl = '&entry.1599750073';
+                }
+                if (data[Object.entries(surveysettings)[rotation][0]] == Object.entries(surveysettings)[rotation][1]) {
+                    url += hexurl + '=' + 'Unset';
+                } else {
+                    url += hexurl + '=__other_option__' + hexurl + '.other_option_response=%23' + (data[Object.entries(surveysettings)[rotation][0]]).split('#')[1];
+                }
+            }
+        }
+        rotation += 1;
+        if (rotation < Object.entries(surveysettings).length) {
+            checksettings()
+    }})
+}
+checksettings()
+
+if (navigator.userAgent.indexOf('Firefox') > -1) {
+    url += '&entry.1159662235=Firefox'
+} else {
+    url += '&entry.1159662235=Chrome/Chromium'
+}
+
 chrome.storage.local.get(["installDate"], (data) => {
     var time = (Math.round(data.installDate.timestamp) / 86400000)
     injectnoification(time)
@@ -5,13 +62,12 @@ chrome.storage.local.get(["installDate"], (data) => {
 
 const notification = async(storagevar, time, text, imageurl, fill, border, button1script, button1text, button2script, button2text, installDate, container) => {
     chrome.storage.local.get([storagevar], (data) => {
-        if (data[storagevar] != 'true' && ((Date.now() - installDate) >= time || time == 0)) {
-
-            document.documentElement.style.setProperty('--notification-border', border)
-            document.documentElement.style.setProperty('--notification-fill', fill)
+        if (data[storagevar] != 'temp' && ((Date.now() - installDate) >= time || time == 0)) {
 
             var notification = document.createElement('div')
                 notification.className = 'notification'
+                notification.style.border = '2px solid' +  border
+                notification.style.backgroundColor = fill
                 container.appendChild(notification)
 
             var image = document.createElement('img')
@@ -34,12 +90,16 @@ const notification = async(storagevar, time, text, imageurl, fill, border, butto
 
             var notificationButton = document.createElement('button')
                 notificationButton.className = 'notificationButton'
+                notificationButton.style.border = '2px solid' +  border
+                notificationButton.style.backgroundColor = fill
                 notificationButton.innerText = button1text
                 notificationButton.onclick = () => eval(button1script)
                 buttonContainer.appendChild(notificationButton)
 
             var notificationButton2 = document.createElement('button')
                 notificationButton2.className = 'notificationButton'
+                notificationButton2.style.border = '2px solid' +  border
+                notificationButton2.style.backgroundColor = fill
                 notificationButton2.innerText = button2text
                 notificationButton2.onclick = () => eval(button2script)
                 buttonContainer.appendChild(notificationButton2)
@@ -60,6 +120,6 @@ const injectnoification = async(time) => {
     document.body.appendChild(notificationContainer)
     //images from https://twemoji.twitter.com/ and https://emojipedia.org/
     //localvarname, daysinstalled, Text,: image, fill, border, button1script, button1text, button2script, button2 text
-    await notification("notification-survey", 14, "Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/282/scroll_1f4dc.png", "#fff1e6", "#e5a573", "let survey = document.createElement('div'); survey.className = 'survey'; document.documentElement.appendChild(survey); let surveyiframe = document.createElement('iframe'); surveyiframe.src='https://docs.google.com/forms/d/e/1FAIpQLSdsrF9tcTrBLH2q1D8z1ECyws0YEKXv-sovbkBztJ6w49yeoA/viewform?embedded=true'; surveyiframe.className = 'surveyiframe'; surveyiframe.innerText = 'Loading...'; survey.appendChild(surveyiframe); const toChange = {}; toChange[storagevar] = 'true'; chrome.storage.local.set(toChange); let surveyBackground = document.createElement('div'); surveyBackground.className = 'surveyBackground'; document.documentElement.appendChild(surveyBackground); document.addEventListener('click', function (event) {if (event.target === surveyBackground) {surveyBackground.remove(); survey.remove();}}); notification.remove();", "Survey", "const toChange = {}; toChange[storagevar] = 'true'; chrome.storage.local.set(toChange); notification.remove();", "Maybe Later", time, notificationContainer)
+    await notification("notification-survey", 14, "Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/282/scroll_1f4dc.png", "#fff1e6", "#e5a573", "let survey = document.createElement('div'); survey.className = 'survey'; document.documentElement.appendChild(survey); let surveyiframe = document.createElement('iframe'); surveyiframe.src=url + '/viewform?embedded=true'; surveyiframe.className = 'surveyiframe'; surveyiframe.innerText = 'Loading...'; survey.appendChild(surveyiframe); const toChange = {}; toChange[storagevar] = 'true'; chrome.storage.local.set(toChange); let surveyBackground = document.createElement('div'); surveyBackground.className = 'surveyBackground'; document.documentElement.appendChild(surveyBackground); document.addEventListener('click', function (event) {if (event.target === surveyBackground) {surveyBackground.remove(); survey.remove();}}); notification.remove();", "Survey", "const toChange = {}; toChange[storagevar] = 'true'; chrome.storage.local.set(toChange); notification.remove();", "Maybe Later", time, notificationContainer)
     await notification("notification-rating", 20, "Seems like you've been using Canvas+ for a whlie now. Please consider rating it, it helps us grow.", "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/282/star_2b50.png", "#e6f8ff", "#1791c0", "if (navigator.userAgent.indexOf('Firefox') > -1) {window.open('https://addons.mozilla.org/en-US/firefox/addon/canvasplus/reviews/?utm_source=firefox-browser&utm_medium=firefox-browser&utm_content=addons-manager-reviews-link')} else {window.open('https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh/reviews')}; const toChange = {}; toChange[storagevar] = 'true'; chrome.storage.local.set(toChange); notification.remove();", "Rate", "const toChange = {}; toChange[storagevar] = 'true'; chrome.storage.local.set(toChange); notification.remove();", "Maybe Later", time, notificationContainer)
 }

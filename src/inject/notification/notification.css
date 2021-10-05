@@ -12,8 +12,6 @@
 .notification {
     width: 400px;
     height: 175px;
-    background-color: var(--notification-fill);
-    border: 2px solid var(--notification-border);
     display: inline-block;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -37,8 +35,6 @@
 
 .notificationButton {
     border-radius: 10px;
-    background-color: #e6f8ff;
-    border: 2px solid #1791c0;
     height: 35px;
 }
 

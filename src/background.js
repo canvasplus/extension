@@ -10,7 +10,8 @@ const oldDefaults = {
   "canvasplus-setting-sidebar-icon-color": "white",
   "canvasplus-setting-sidebar-smaller-icons": true,
   "canvasplus-setting-sidebar-more-spacing": true,
-  "canvasplus-setting-roundermodules": true
+  "canvasplus-setting-roundermodules": true,
+  "canvasplus-setting-linkcolor": 'use default'
 }
 
 const newDefaults = {
