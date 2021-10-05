@@ -65,7 +65,7 @@ const notification = async(storagevar, time, text, imageurl, fill, border, butto
         if (data[storagevar] != 'temp' && ((Date.now() - installDate) >= time || time == 0)) {
 
             var notification = document.createElement('div')
-                notification.className = 'notification'
+                notification.className = 'canvasplus-notification'
                 notification.style.border = '2px solid' +  border
                 notification.style.backgroundColor = fill
                 container.appendChild(notification)

@@ -9,7 +9,7 @@
     animation-name: slidein;
 }
 
-.notification {
+.canvasplus-notification {
     width: 400px;
     height: 175px;
     display: inline-block;
