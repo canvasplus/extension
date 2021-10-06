@@ -18,7 +18,7 @@
 
 <br>
   <h5>Helpful Links</h5>
-  <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
+  <a href="https://canvasplus.org">Canvas+ Website</a><br>
   <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install The Chrome Extension</a><br>
   <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasplus/">Install The Firefox Extension</a><br>
   <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
