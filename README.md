@@ -23,7 +23,7 @@
 - <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasplus/">Install The Firefox Extension</a><br>
   
   <h4>Helpful Links</h4>
-- <a href="https://canvasplus.adrwas.dev">Canvas+ Website</a><br>
+- <a href="https://canvasplus.org">Canvas+ Website</a><br>
 - <a href="https://www.github.com/canvasplus/web">Website Repo</a><br>
 - <a href="https://jekyllrb.com/docs/">Jekyll Documentation</a><br>
 - <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh">Install The Chrome Extension</a><br>
