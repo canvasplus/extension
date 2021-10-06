@@ -351,6 +351,23 @@ const search = async (query) => {
     });
 }
 
+const searchUpdateUI = async(query) => {
+    const results = await search(query);
+    searchUI.results = []
+    results.forEach(result => {
+        searchUI.results.push({
+            course: {
+                name: "Course",
+                color: "#f43daa"
+            },
+            name: result.item.title,
+            locations: result.item.locations
+        })
+    })
+    searchUI.buildResults()
+    return results;
+}
+
 class SearchUI {
     constructor() {
         this.mode = 'search'
@@ -420,17 +437,9 @@ class SearchUI {
 
     buildResults() {
         this.resultsElement.innerHTML = ''
-        this.resultsElement.appendChild(this.buildResult({
-            course: {
-                name: "Advanced Biology",
-                color: "#f43daa"
-            },
-            name: 'Ecology Lesson 1.1',
-            topMeta: 'Top Result',
-            locations: [{
-                name: 'Modules'
-            }]
-        }))
+        this.results.forEach((result) => {
+            this.resultsElement.appendChild(this.buildResult(result))
+        })
     }
 
     buildResult(result) {
@@ -448,7 +457,7 @@ class SearchUI {
             resultElement.classList.add('includes-top-meta')
             
             const resultTopMeta = document.createElement('div')
-            resultTopMeta.className = 'canvasplus-search-ui-results-single-result-topmeta'
+            resultTopMeta.className = 'canvasplus-search-ui-results-single-result-left-topmeta'
             resultTopMeta.innerText = result.topMeta
             
             resultLeft.appendChild(resultTopMeta)
@@ -469,8 +478,10 @@ class SearchUI {
             
             const resultRightBreadcrumb = document.createElement('div')
             resultRightBreadcrumb.className = 'canvasplus-search-ui-results-single-result-right-breadcrumb'
+            console.log(result);
             resultRightBreadcrumb.innerText = result.locations[0].name
 
+            resultRight.appendChild(resultRightBreadcrumb)
             resultRight.appendChild(resultRightCourse)
 
             if(result.locations.length >= 2) {
@@ -494,7 +505,7 @@ class SearchUI {
     }
 }
 
-main()
-
 const searchUI = new SearchUI()
     searchUI.insert(document.body)
+    
+main()

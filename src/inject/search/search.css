@@ -51,12 +51,73 @@
   height: 72px;
   position: relative;
   border-top: 1px solid #CCCCCC;
+  font-size: 15px;
 }
 
 .canvasplus-search-ui-results-single-result-left {
   float: left;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 20px;
+  max-width: 55%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.canvasplus-search-ui-results-single-result-left-topmeta {
+  color: #808080;
+  padding-bottom: 3px;
+}
+
+.canvasplus-search-ui-results-single-result:not(.includes-top-meta) .canvasplus-search-ui-results-single-result-left-inner {
+  font-size: 18px;
+}
+
+.canvasplus-search-ui-results-single-result-left-inner {
+  padding-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .canvasplus-search-ui-results-single-result-right {
+  position: relative;
+  padding: 10px 20px 0 0;
+  width: fit-content;
+  margin-left: auto;
+  max-width: 30%;
+}
+
+.canvasplus-search-ui-results-single-result-right-breadcrumb {
+  color: #808080;
+  text-align: right;
+}
+
+.canvasplus-search-ui-results-single-result-right-course {
+  color: var(--course-card-color);
+  position: relative;
+  padding: 3px 0 0 16px;
+  width: fit-content;
   float: right;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.canvasplus-search-ui-results-single-result-right-breadcrumb {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.canvasplus-search-ui-results-single-result-right-course::before {
+  background: var(--course-card-color);
+  content: '';
+  position: absolute;
+  display: block;
+  left: 5px;
+  top: calc(50% + 3px);
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
 }
