@@ -43,6 +43,7 @@
   height: 35px;
   font-size: 18px;
   line-height: 35px;
+  position: relative;
 }
 
 .canvasplus-search-ui-results-single-result {
@@ -120,4 +121,16 @@
   width: 10px;
   height: 10px;
   border-radius: 3px;
+}
+
+.canvasplus-search-ui-query-wrapper::before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: var(--data-caret-position);
+  width: 1px;
+  height: 75%;
+  background: #888;
+  content: '';
+  transition: 0.1s left linear;
 }

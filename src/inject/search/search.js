@@ -392,6 +392,33 @@ class SearchUI {
         */
         this.results = []
         this.controls = []
+
+        this.lastUISearch = ''
+        setInterval(() => {
+            if(this.lastUISearch !== this.headerElementQueryWrapper.textContent) {
+                searchUpdateUI(this.headerElementQueryWrapper.textContent);
+                this.lastUISearch = this.headerElementQueryWrapper.textContent;
+            }
+        }, 1000)
+    }
+
+    addListeners() {
+        document.addEventListener("keydown", (event) => {
+            event = event || window.event;
+
+            if(event.key === "Backspace") {
+                if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
+                this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+            } else if(event.key.length === 1) {
+                this.headerElementQueryWrapper.textContent += event.key;
+                this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+            }
+
+            if(event.key === ' ') {
+                searchUpdateUI(this.headerElementQueryWrapper.textContent)
+                this.lastUISearch = this.headerElementQueryWrapper.textContent;
+            }
+        })
     }
 
     createEntireElement() {
@@ -412,6 +439,7 @@ class SearchUI {
             this.headerElementQueryWrapper = document.createElement('div')
             this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
             this.headerElementQueryWrapper.innerText = 'Search Query'
+            this.headerElementQueryWrapper.setAttribute('data-caret-position', '20px')
 
             this.headerElement.appendChild(this.headerElementIcon)
             this.headerElement.appendChild(this.headerElementQueryWrapper)
@@ -507,5 +535,6 @@ class SearchUI {
 
 const searchUI = new SearchUI()
     searchUI.insert(document.body)
+    searchUI.addListeners()
     
 main()
