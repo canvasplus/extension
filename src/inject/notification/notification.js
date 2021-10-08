@@ -62,7 +62,7 @@ chrome.storage.local.get(["installDate"], (data) => {
 
 const notification = async(storagevar, time, text, imageurl, fill, border, button1script, button1text, button2script, button2text, installDate, container) => {
     chrome.storage.local.get([storagevar], (data) => {
-        if (data[storagevar] != 'temp' && ((Date.now() - installDate) >= time || time == 0)) {
+        if (data[storagevar] != 'true' && ((Date.now() - installDate) >= time || time == 0)) {
 
             var notification = document.createElement('div')
                 notification.className = 'canvasplus-notification'
