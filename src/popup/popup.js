@@ -28,7 +28,7 @@ const frames = {
         <Hover />
         <div className="cpc-header">
           <img src="../../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
-          <p>Release 0.3</p>
+          <p>Release 0.3.2</p>
         </div>
         <div className="changes-list">
           <p className="changes-items">Custom Sidebar</p>

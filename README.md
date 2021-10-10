@@ -73,7 +73,14 @@ Here's a list of some planned features for the extension, in order of when they'
 
 🔴 = To Do
 
-### 📋 Planned for after version 0.3
+### 📋 Planned for version 0.3.3
+- 🔴 More Supported Browsers
+- 🟡 Survey and Notifications
+- 🟡 Canvas+ Icon in discussions
+- 🔴 Better "Smaller Icons"
+- 🔴 Easter Eggs
+
+### 📋 Planned for after version 0.3.3
 - 🟡 Bug Fixes
 - 🔴 Drag and drop to upload
 - 🔴 Upload from clipboard
@@ -81,7 +88,6 @@ Here's a list of some planned features for the extension, in order of when they'
 - 🟡 (Potential) Auto Login with end to end encryption
 - 🔴 Pin/bookmark pages/discussion posts
 - 🔴 Email signatures
-- 🔴 Add filters to search (Overdue/late assignments, certain classes, etc)
 - 🔴 Show own discussion posts at the top of a discussion.
 - 🔴 Sort discussions by likes and/or interaction
 - 🔴 Access zoom links from extension popup
