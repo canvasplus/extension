@@ -12,6 +12,7 @@ import Hover from './components/interactive/Hover'
 import ColorSwitch from './components/interactive/ColorSwitch';
 import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
+import SidebarBackgroundColorPicker from './components/interactive/color/SidebarBackgroundColorPicker';
 
 const popup = () => {
   const [currentTab, setCurrentTab] = useState("changes")
@@ -83,7 +84,7 @@ const frames = {
           ]}></AppearanceSelector>
         </div>
         <SettingGroup name="Sidebar">
-          <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#1b7ecf" customInput={(state, setState) => { return <ColorSwitch state={state} setState={setState} />}}/>
+          <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#1b7ecf" customInput={(state, setState) => { return <SidebarBackgroundColorPicker state={state} setState={setState} />}}/>
           <Setting name="Active Background Color" setting="active-sidebar-color" description="Change the background color of the active sidebar button."  defaultValue={{'background': 'darker', 'icon': 'white'}} customInput={(state, setState) => { return <ActiveSidebarColorSwitch state={state} setState={setState}/> }} />
           <Setting name="Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="white" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} generateTooltip={(color) => {if(color === "unset") {return <><b>Default Icons</b><p>Sidebar icons will inherit the default colors of your school.</p></>;} else if(["black","white"].includes(color)) {return <><b>{ color.charAt(0).toUpperCase() + color.slice(1) } Icons</b><p>Sidebar icons will always appear in { color }.</p></>} else {return <><b>Custom Icons</b><p>Click to open a color wheel and chose a custom icon color.</p></>;}}}/> }} />
           <Setting name="Smaller Icons" setting="sidebar-smaller-icons" description="Decrease the size of sidebar icons." />

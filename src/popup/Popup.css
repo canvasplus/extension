@@ -119,3 +119,37 @@ h2 {
   left: 0;
   z-index: 100;
 }
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker {
+
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:first-child {
+  border-radius: 6px;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:nth-child(2) > div:first-child > div:first-child, .SidebarBackgroundColorSwitch__ColorPicker .sketch-picker > div:nth-child(2) > div:nth-child(2) {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) {
+  box-shadow: none !important;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker input[id^=rc-editable-input] {
+  border-radius: 20px;
+  text-align: center;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker label {
+  display: none !important;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:last-child {
+  border: none !important;
+}
+
+.SidebarBackgroundColorSwitch__ColorPicker .sketch-picker > div:last-child > div > span > div {
+  border-radius: 50% !important;
+}

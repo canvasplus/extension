@@ -14,7 +14,7 @@ let sidebarlink = document.createElement("link");
 useReactiveFeatures([{
   settingName: 'canvasplus-setting-sidebar-color',
   onChanged: (value) => {
-    sidebarColor.setRule('--sidebar-background-color: ' + (value.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? value : 'var(--ic-brand-global-nav-bgd)'))
+    sidebarColor.setRule('--sidebar-background-color: ' + ((value !== '') ? value : 'var(--ic-brand-global-nav-bgd)'))
   }
 }, {
   settingName: 'canvasplus-setting-sidebar-icon-color',
