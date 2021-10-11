@@ -12,7 +12,11 @@
          "src/inject/linkcolor/linkcolor.css",
          "src/inject/roundermodules/roundermodules.css",
          "src/inject/hidelogo/hidelogo.css",
-         "src/inject/notification/notification.css"
+         "src/inject/notification/notification.css",
+         "assets/img/light.png",
+         "assets/img/dim.png",
+         "assets/img/dark.png",
+         "assets/img/extension-menu.png"
      ],
   "content_scripts": [
     {

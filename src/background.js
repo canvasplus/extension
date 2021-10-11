@@ -11,10 +11,12 @@ const oldDefaults = {
   "canvasplus-setting-sidebar-smaller-icons": true,
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
-  "canvasplus-setting-linkcolor": 'use default'
+  "canvasplus-setting-linkcolor": 'use default',
+  "canvasplus-setup-stage": 0
 }
 
 const newDefaults = {
+  "canvasplus-setup-stage": -1
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -36,11 +38,5 @@ chrome.runtime.onInstalled.addListener((details) => {
 
 
       // REMOVE ME IN 0.3.2
-      chrome.storage.local.set({
-        "installDate": {
-          "timestamp": Date.now(),
-          "from": "update"
-        }
-      })
     }
 });
