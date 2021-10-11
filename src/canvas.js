@@ -20,12 +20,8 @@ let settings = {};
 
 chrome.storage.local.get(settingsList, function(data) {
   settings = data;
-  if(Object.entries(data).length < settingsList.length)
-  {
-    chrome.storage.local.set(defaults);
-  }
 
-  const setupStage = settings["canvasplus-setup-stage"] ?? 0;
+  let setupStage = settings["canvasplus-setup-stage"] ?? 0;
 
   if(setupStage === -1) {
     if(settings["canvasplus-setting-sidebar-color"] !== '#1b7ecf') {

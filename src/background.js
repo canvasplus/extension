@@ -22,7 +22,7 @@ const newDefaults = {
 chrome.runtime.onInstalled.addListener((details) => {
     if(details.reason === "install"){
       chrome.tabs.create({
-        url:"https://canvasplus.adrwas.dev/welcome"
+        url:"https://canvasplus.org/welcome"
       });
       chrome.storage.local.set(newDefaults);
       chrome.storage.local.set(oldDefaults);
@@ -33,10 +33,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         }
       })
     }
-    else if (details.reason === "update" && details.previousVersion !== "0.3.1") {
-      //reminder to remove the install date stuff in 0.3.2 chrome.storage.local.set(newDefaults);
-
-
-      // REMOVE ME IN 0.3.2
+    else if (details.reason === "update" && details.previousVersion !== "0.3.2") {
+      chrome.storage.local.set(newDefaults);
     }
 });
