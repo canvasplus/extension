@@ -35,8 +35,8 @@ let linkcolor = document.createElement("link");
 useReactiveFeatures([{
   settingName: "canvasplus-setting-linkcolor",
   onChanged: (color) => {
-    basecolor.setRule(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? "--cp-link-color: " + color : "");
-    colordark.setRule(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? "--cp-link-color-darkened-10: " + shadeColor(color,-10) : "");
+    basecolor.setRule(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? "--ic-link-color: " + color + " !important": "");
+    colordark.setRule(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? "--ic-link-color-darkened-10: " + shadeColor(color,-10) + " !important": "");
     if (color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {console.log('[Canvas+] Injecting Linkcolor...')}
   }
 }])
