@@ -1,0 +1,105 @@
+.notification-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    width: 400px;
+    height: inherit;
+    animation-duration: 2s;
+    animation-name: slidein;
+}
+
+.canvasplus-notification {
+    width: 400px;
+    height: 175px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.text-container {
+    width: min-content;
+    float: right;
+    height: inherit;
+    display: block;
+}
+
+.notification-text {
+    width: 280px;
+    right: 10px;
+    color: black;
+    display: inline-block;
+    height: max-content;
+}
+
+.notificationButton {
+    border-radius: 10px;
+    height: 35px;
+}
+
+.notificationButton:not(:last-child) {
+    margin-right: 5px;
+}
+
+.buttoncontainer {
+    width: max-content;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+.notification-image {
+    width: 50px;
+    height: 50px;
+    transform: TRANSLATEX(-50%);
+    margin-left: 62px;
+    margin-top: 64px;
+}
+
+
+@keyframes slidein {
+    from {
+        top: -170px;
+    }
+    to {
+        top: 10px;
+    }
+}
+
+.survey {
+    width: 550px;
+    height: 600px;
+    border-radius: 10px;
+    background-color: #cccccca6;
+    border: 3px solid #bebebe;
+    position: fixed;
+    z-index: 101;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.surveyiframe {
+    width: 500px;
+    height: 540px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: none;
+    display: block;
+    border: none;
+    left: 50%;
+    top: 50%;
+}
+
+.surveyBackground {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: visibility 0.3s ease 0s, opacity 0.3s linear 0s;
+}

@@ -1,62 +1,63 @@
-chrome.storage.local.get(["canvasplus-setting-sidebar-smaller-icons", "canvasplus-setting-sidebar-more-spacing"], function(toggle) {
-  if(toggle["canvasplus-setting-sidebar-smaller-icons"]) {
-    for(let el of document.querySelectorAll(".menu-item-icon-container svg")) {
-      el.style = "width:22px";
-    }
+const sidebarColor = addStylingRule('')
+const sidebarIconColor = addStylingRule('')
+const sidebarActiveColor = addStylingRule('')
+const sidebarActiveIconColor = addStylingRule('')
+const sidebarIconWidth = addStylingRule('')
+const sidebarIconHeight = addStylingRule('')
+
+let sidebarlink = document.createElement("link");
+  sidebarlink.href = chrome.extension.getURL("src/inject/sidebar/sidebar.css");
+  sidebarlink.type = "text/css";
+  sidebarlink.rel = "stylesheet";
+  document.documentElement.appendChild(sidebarlink);
+
+useReactiveFeatures([{
+  settingName: 'canvasplus-setting-sidebar-color',
+  onChanged: (value) => {
+    sidebarColor.setRule('--sidebar-background-color: ' + ((value !== '') ? value : 'var(--ic-brand-global-nav-bgd)'))
   }
-  if(toggle["canvasplus-setting-sidebar-more-spacing"]) {
-    for(let el of document.querySelectorAll(".menu-item.ic-app-header__menu-list-item .ic-app-header__menu-list-link")) {
-      el.style = "--custom-padding:.75rem;";
-    }
-  }
-});
-
-chrome.storage.local.get(["canvasplus-setting-sidebar-hidelogo"], function(data) {
-  if(data["canvasplus-setting-sidebar-hidelogo"]) {
-    document.getElementsByClassName("ic-app-header__logomark-container")[0].remove();
-  };
-});
-
-var sidebarStyle = '';
-
-chrome.storage.local.get(["canvasplus-setting-sidebar-color"], function(data) {
-  const color = data["canvasplus-setting-sidebar-color"];
-  if(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {
-    sidebarStyle += `--ic-brand-global-nav-bgd: ${ color };--ic-brand-global-nav-avatar-border: ${ color };--ic-brand-global-nav-ic-icon-svg-fill--active: ${ color };`;
-    document.querySelector('#header').style = sidebarStyle;
-    document.querySelector('#mobile-header').style = sidebarStyle;
-  }
-});
-
-chrome.storage.local.get(["canvasplus-setting-sidebar-icon-color"], function(data) {
-  const color = data["canvasplus-setting-sidebar-icon-color"];
-  if(color !== "unset") {
-    sidebarStyle += `--ic-brand-global-nav-ic-icon-svg-fill: ${ color };--cp-custom-sidebar-tooltip-test-color: ${ color };--ic-brand-global-nav-menu-item__text-color: ${color};`;
-    document.querySelector('#header').style = sidebarStyle;
-    document.querySelector('#mobile-header').style = sidebarStyle;
-  }
-});
-
-chrome.storage.local.get(["canvasplus-setting-active-sidebar-color"], (data) => {
-  const json = data["canvasplus-setting-active-sidebar-color"];
-  if(json) {
-    if(json.background === "blend") {
-      sidebarStyle += '--custom-active-background: var(--ic-brand-global-nav-ic-icon-svg-fill);';
-    } else if(json.background === "darker") {
-      sidebarStyle += '--custom-active-background: rgba(0,0,0,0.2);';
-    } else if(json.background !== "white") {
-      sidebarStyle += `--custom-active-background: ${json.background};`;
-    }
-
-    if (json.icon === "white") {
-      sidebarStyle += '--ic-brand-global-nav-ic-icon-only-svg-fill--active: #FFFFFF;';
-    } else if (json.icon === "black") {
-      sidebarStyle += '--ic-brand-global-nav-ic-icon-only-svg-fill--active: #1d1d21;';
-    } else if (json.icon === "unset") {
-      sidebarStyle += '--ic-brand-global-nav-ic-icon-only-svg-fill--active: var(--ic-brand-global-nav-ic-icon-svg-fill--active);';
+}, {
+  settingName: 'canvasplus-setting-sidebar-icon-color',
+  onChanged: (value) => {
+    if(value !== 'unset') {
+      sidebarIconColor.setRule('--ic-brand-global-nav-ic-icon-svg-fill: ' + value + '; --ic-brand-global-nav-menu-item__text-color: ' + value)
     } else {
-      sidebarStyle += `--ic-brand-global-nav-ic-icon-only-svg-fill--active: ${json.icon};`;
+      sidebarIconColor.setRule('')
     }
-    document.querySelector('#header').style = sidebarStyle;
   }
-});
+}, {
+  settingName: 'canvasplus-setting-active-sidebar-color',
+  onChanged: (value) => {
+    if(value.background === "blend") {
+      sidebarActiveColor.setRule('--sidebar-active-background-color: var(--cpt-dark-background-color, #FFFFFF)')
+    } else if(value.background === "darker") {
+      sidebarActiveColor.setRule('--sidebar-active-background-color: rgba(0,0,0,0.2)')
+    } else if(value.background === "white") {
+      sidebarActiveColor.setRule('--sidebar-active-background-color: #FFFFFF')
+    } else {
+      sidebarActiveColor.setRule('--sidebar-active-background-color: ' + value.background)
+    }
+
+    if(value.icon === 'white') {
+      sidebarActiveIconColor.setRule('--ic-brand-global-nav-ic-icon-svg-fill--active: #FFFFFF; --ic-brand-global-nav-menu-item__text-color--active: #FFFFFF')
+    }
+    else if(value.icon === 'black') {
+      sidebarActiveIconColor.setRule('--ic-brand-global-nav-ic-icon-svg-fill--active: #1D1D21;  --ic-brand-global-nav-menu-item__text-color--active: #1D1D21')
+    }
+    else if(value.icon === 'unset') {
+      sidebarActiveIconColor.setRule('')
+    } else {
+      sidebarActiveIconColor.setRule('--ic-brand-global-nav-ic-icon-svg-fill--active: ' + value.icon + ';  --ic-brand-global-nav-menu-item__text-color--active: ' + value.icon)
+    }
+  }
+}, {
+  settingName: 'canvasplus-setting-sidebar-smaller-icons',
+  onChanged: (value) => {
+    sidebarIconWidth.setRule(value ? '--sidebar-icon-width: 22px' : '')
+  }
+}, {
+  settingName: 'canvasplus-setting-sidebar-more-spacing',
+  onChanged: (value) => {
+    sidebarIconHeight.setRule(value ? '--sidebar-icon-height: 0.75rem' : '')
+  }
+}])

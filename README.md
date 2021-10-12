@@ -7,6 +7,7 @@
 <p align="center">Everything you could need, from color themes, to navigation shortcuts, to improved performance.</p>
 
 <br>
+=======
 <p align="center">
 <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh"><img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Users&color=important"></a>
 <a href="https://www.github.com/canvasplus/extension"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/canvasplus/extension"></a>
@@ -33,7 +34,6 @@
 - <a href="https://canvas.instructure.com/doc/api/">Canvas API Documentation</a><br>
 - <a href="https://reactjs.org/docs/getting-started.html/">ReactJS Documentation</a>
 
-
 </p>
 
 <br><br>
@@ -45,6 +45,7 @@ Hey curious Canvas+ user! We believe transparency is key to a great product, so 
 <br>
 
 As the Canvas team is redesigning many important pages in the user interface, it becomes increasingly difficult to find a good place to put the search bar. To solve this, we're moving the search bar on top of the UI, something more convenient for everyone. All the links and buttons will be bigger, and optimized for speedy keyboard navigation. Lastly, the search algorithm is getting smart. It'll use advanced features to get what you're looking for, like spellcheck, special character awareness, and context clues.
+
 <br>
 
 For that page that search just isn't designed for, navigator is the perfect way to find it, and it's built right into the new search. Just press `SLASH` to open the navigator. Let's say you want to find something in a certain module, and you're on your dashboard. Without navigator, you'd have to go the course, then go the its modules, and finally look for the item. The time you spend waiting for pages to load adds up, and navigator aims to fix this. Instead of loading all the unnecessary content of each page like images and scripts, navigator caches API requests to make your search truly feel like a file explorer.

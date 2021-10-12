@@ -1,17 +1,6 @@
-chrome.storage.local.get(["canvasplus-setting-linkcolor"], (data) => {
-  const color = data["canvasplus-setting-linkcolor"];
-
-  if(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {
-    var link = document.createElement("link");
-    link.href = chrome.extension.getURL("src/inject/linkcolor/linkcolor.css");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    document.getElementsByTagName('html')[0].appendChild(link);
-    document.documentElement.style.setProperty('--cp-link-color', color);
-    document.documentElement.style.setProperty('--cp-link-color-lightened-10', shadeColor(color,10));
-    document.documentElement.style.setProperty('--cp-link-color-darkened-10', shadeColor(color,-10));
-  };
-});
+const basecolor = addStylingRule('')
+const colorlight = addStylingRule('')
+const colordark = addStylingRule('')
 
 const shadeColor = (color, inc) => {// from https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
   if( color.length === 4 ) {
@@ -36,3 +25,18 @@ const shadeColor = (color, inc) => {// from https://stackoverflow.com/questions/
 
   return "#"+RR+GG+BB;
 }
+
+let linkcolor = document.createElement("link");
+  linkcolor.href = chrome.extension.getURL("src/inject/linkcolor/linkcolor.css");
+  linkcolor.type = "text/css";
+  linkcolor.rel = "stylesheet";
+  document.documentElement.appendChild(linkcolor);
+
+useReactiveFeatures([{
+  settingName: "canvasplus-setting-linkcolor",
+  onChanged: (color) => {
+    basecolor.setRule(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? "--ic-link-color: " + color + " !important": "");
+    colordark.setRule(color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/) ? "--ic-link-color-darkened-10: " + shadeColor(color,-10) + " !important": "");
+    if (color.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)) {console.log('[Canvas+] Injecting Linkcolor...')}
+  }
+}])

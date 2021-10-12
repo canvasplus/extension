@@ -1,0 +1,3 @@
+.ic-app-header__logomark-container, .ic-sidebar-logo {
+    display: var(--logo-display, block) !important;
+}

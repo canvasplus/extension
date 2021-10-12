@@ -40,19 +40,19 @@ const injectSearchBox = () => {
     }
     else
     {
-        if (window.location.pathname.split('/')[1] == "conversations") {
+        if (getPathAPI.toString().split('/')[1] == "conversations") {
           document.getElementsByClassName("panel__secondary")[0].appendChild(searchWrapper);
-        } else if (window.location.pathname.split('/')[1] == "calendar") {
+        } else if (getPathAPI.toString().split('/')[1] == "calendar") {
           document.getElementById("right-side-wrapper").insertBefore(searchWrapper, document.getElementById("right-side-wrapper").firstChild);
           document.getElementById("right-side").style.marginTop = "24px";
-        } else if (window.location.pathname == "/courses") {
+        } else if (getPathAPI.toString() == "/courses") {
           document.getElementsByClassName("header-bar")[0].children[0].style.display = "inline-block";
           document.getElementsByClassName("header-bar")[0].appendChild(searchWrapper);
           searchWrapper.style.display = "inline-block";
           searchWrapper.style.float = "right";
-        } else if (window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) == "files") {
+        } else if (getPathAPI.toString().substring(getPathAPI.toString().lastIndexOf("/") + 1) == "files") {
           document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
-        } else if (window.location.pathname == "/grades") {
+        } else if (getPathAPI.toString() == "/grades") {
           topNav.appendChild(searchWrapper);
           searchWrapper.style.marginInlineStart = "auto";
         } else if (typeof document.getElementsByClassName("not_found_page_artwork")[0] !== 'undefined' || typeof document.getElementsByClassName("ic-Error-page")[0] !== 'undefined') {
@@ -476,10 +476,15 @@ const searchModules = (courseId, checkStorage) => {
     })
 }
 
-chrome.storage.local.get(["canvasplus-setting-search"], function(data) {
-    if(data["canvasplus-setting-search"])
-    {
-        console.log('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
-        runSearch()
+useReactiveFeatures([{
+    settingName: "canvasplus-setting-search",
+    onChanged: (data) => {
+        if (data == true) {
+            console.log('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
+            runSearch()
+        } else {
+            try {document.getElementById('ic-app-class-search-wrapper').remove();} catch {}
+            try {document.getElementById('ic-app-class-search-results').remove();} catch {}
+        }
     }
-})
+}])
