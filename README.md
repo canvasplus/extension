@@ -7,7 +7,7 @@
 <p align="center">Everything you could need, from color themes, to navigation shortcuts, to improved performance.</p>
 
 <br>
-=======
+
 <p align="center">
 <a href="https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh"><img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/kdkadcnebmokaadholinmnpjelphnghh?label=Chrome%20Users&color=important"></a>
 <a href="https://www.github.com/canvasplus/extension"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/canvasplus/extension"></a>
