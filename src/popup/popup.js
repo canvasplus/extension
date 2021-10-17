@@ -28,7 +28,7 @@ const frames = {
         <Hover />
         <div className="cpc-header">
           <img src="../../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
-          <p>Release 0.3.2</p>
+          <p>Release 0.3.3</p>
         </div>
         <div className="changes-list">
           <p className="changes-items">Custom Sidebar</p>
@@ -44,7 +44,7 @@ const frames = {
         <SettingGroup name="Navigation">
           <Setting name="Search" setting="search" description="Search through your courses anywhere on Canvas." />
           <Setting name="Smart Scrolling" setting="smartscroll" description="Adds scroll to bottom and back to top buttons." />
-          <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links." />
+          <Setting name="Speed Boost" setting="quicklink" description="Improve loading speeds by preloading links. May cause 403 Forbidden errors." />
         </SettingGroup>
         <SettingGroup name="Other">
           <Setting name="Rounder Modules" setting="roundermodules" description="Give the modules page a rounder appearance." />
@@ -60,7 +60,7 @@ const frames = {
           <div className="margin">
             <b>Appearance</b>
             <p className="color-gray small-margin">Change the color scheme of Canvas.</p>
-            <p className="color-gray small-margin">Note: Dark and dim mode may have issues. You can report bugs <a href="https://github.com/adrWasTaken/CanvasPlus/issues">here</a>.</p>
+            <p className="color-gray small-margin">Note: Dark and dim mode may have issues. You can report bugs <a href="https://github.com/canvasplus/extension/issues" target="_blank">here</a>.</p>
           </div>
           <AppearanceSelector appearances={[
             {

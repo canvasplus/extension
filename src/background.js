@@ -16,11 +16,9 @@ const oldDefaults = {
 }
 
 const newDefaults = {
-  "canvasplus-setup-stage": -1
 }
 
-const newDefaults = {
-}
+console.log("backgrounf page");
 
 chrome.runtime.onInstalled.addListener((details) => {
     if(details.reason === "install"){
@@ -36,7 +34,12 @@ chrome.runtime.onInstalled.addListener((details) => {
         }
       })
     }
-    else if (details.reason === "update" && details.previousVersion !== "0.3.2") {
+    else if (details.reason === "update" && details.previousVersion !== "0.3.3") {
       chrome.storage.local.set(newDefaults);
+      chrome.storage.local.get("installDate", ({installDate}) => {
+        if(installDate.timestamp > 1633669200000) {
+          chrome.storage.local.set({"canvasplus-setting-quicklink": false})
+        }
+      })
     }
 });
