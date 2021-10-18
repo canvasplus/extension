@@ -285,7 +285,7 @@ const getCourseModules = async ( courseId, forceReload = false ) => {
     }, forceReload)
 }
 
-const searchContent = {done: false, courses: {}, searchIndexByWord: {}};
+const searchContent = {done: false, courses: {}, searchIndexByWord: {}, entireRawIndex: []};
 
 const main = async () => {
     const courses =  await getCourseList()
@@ -299,9 +299,7 @@ const main = async () => {
     Promise.allSettled(courseContentPromises)
     .then((results) => {
         results.forEach((course) => {
-            console.log(course);
             course = course.value      
-            console.log(course);
             searchContent['courses'][course['courseId']] = {
                 meta: courses[course.courseId],
                 content: course
@@ -310,6 +308,9 @@ const main = async () => {
             Object.keys(course.content).forEach(key => {
                 if(key !== "tabs") {
                     const page = course["content"][key];
+
+                    searchContent["entireRawIndex"].push(page)
+
                     const words = smartSplit(page.title);
                     words.forEach(word => {
                         if(searchContent["searchIndexByWord"][word]) {
@@ -326,46 +327,129 @@ const main = async () => {
     })
 }
 
-const search = async (query) => {
+const search = async (query, callback) => {
     const simpleQuery = filterAlphanumeric(query).toLowerCase();
-    const results = {}
+    let results = {}
 
     Object.keys(searchContent["searchIndexByWord"]).forEach(key => {
         if(simpleQuery.includes(key)) {
             searchContent["searchIndexByWord"][key].forEach(item => {
-                const indices = [... simpleQuery.matchAll(new RegExp(key, 'g')) ].map(i => { return i.index } );
-                if(results[item.url]) {
-                    const newIndices = indices.filter(i => {
-                        return !results[item.url].indices.includes(i)
+                const references = smartSplit(query);
+                const subjects = smartSplit(item.title);
+                let scores = 0;
+                references.forEach(reference => {
+                    const max = reference.length;
+
+                    let current = {subject: undefined, similarity: 0};
+                    subjects.find(subject => {
+                        if(reference === subject) {
+                            current = {subject: subject, similarity: max};
+                            return true;
+                        }
+                        const similarity = compareWords(reference, subject);
+                        if(similarity >= max) {
+                            current = {subject: subject, similarity: max};
+                            return true;
+                        }
+                        if(similarity > current.similarity) {
+                            current = {subject: subject, similarity: similarity};
+                        }
+                        return false;
                     })
-                    results[item.url].relevance += (0.1 * key.length * 2) + (newIndices.length * 1.5)
-                    results[item.url].indices = results[item.url].indices.concat(newIndices)
+                    scores += current.similarity
+                })
+                
+                const max = references.map(reference => {
+                    return reference.length;
+                }).reduce((a, b) => { return a + b} )
+                
+                if(results[item.url]) {
+                    results[item.url].relevance = Math.max(results[item.url].relevance, scores/max)
                 } else {
-                    results[item.url] = {relevance: (0.1 * key.length * 2) + (indices.length * 2), indices: indices, item: item}
+                    results[item.url] = {
+                        relevance: scores/max,
+                        item: item
+                    }
                 }
             })
         }
     })
-    return Object.values(results).sort((a, b) => {
-        return b.relevance - a.relevance
-    });
-}
 
-const searchUpdateUI = async(query) => {
-    const results = await search(query);
-    searchUI.results = []
-    results.forEach(result => {
-        searchUI.results.push({
-            course: {
-                name: "Course",
-                color: "#f43daa"
-            },
-            name: result.item.title,
-            locations: result.item.locations
+
+    callbackReturn = Object.values(results).sort((a, b) => {
+        return b.relevance - a.relevance
+    })
+
+    new Promise((resolve, reject) => {
+        callback(callbackReturn);
+    })
+
+
+    results = {}
+
+    new Promise((resolve, reject) => {
+        searchContent["entireRawIndex"].forEach((item, idx) => {
+            const references = smartSplit(query);
+            const subjects = smartSplit(item.title);
+            let scores = 0;
+            references.forEach(reference => {
+                const max = reference.length;
+    
+                let current = {subject: undefined, similarity: 0};
+                subjects.find(subject => {
+                    if(reference === subject) {
+                        current = {subject: subject, similarity: max};
+                        return true;
+                    }
+                    const similarity = compareWords(reference, subject);
+                    if(similarity >= max) {
+                        current = {subject: subject, similarity: max};
+                        return true;
+                    }
+                    if(similarity > current.similarity) {
+                        current = {subject: subject, similarity: similarity};
+                    }
+                    return false;
+                })
+                scores += current.similarity
+            })
+            
+            const max = references.map(reference => {
+                return reference.length;
+            }).reduce((a, b) => { return a + b} )
+            
+            if(results[item.url]) {
+                results[item.url].relevance = Math.max(results[item.url].relevance, scores/max)
+            } else {
+                results[item.url] = {
+                    relevance: scores/max,
+                    item: item
+                }
+            }
         })
     })
-    searchUI.buildResults()
-    return results;
+
+    callback(Object.values(results).sort((a, b) => {
+        return b.relevance - a.relevance
+    }));
+}
+
+const searchUpdateUI = (query) => {
+    search(query, (results) => {
+        searchUI.results = []
+        results.splice(5)
+        results.forEach(result => {
+            searchUI.results.push({
+                course: {
+                    name: "Course",
+                    color: "#f43daa"
+                },
+                name: result.item.title,
+                locations: result.item.locations
+            })
+            searchUI.buildResults()
+        })
+    });
 }
 
 class SearchUI {
@@ -506,7 +590,7 @@ class SearchUI {
             
             const resultRightBreadcrumb = document.createElement('div')
             resultRightBreadcrumb.className = 'canvasplus-search-ui-results-single-result-right-breadcrumb'
-            console.log(result);
+            
             resultRightBreadcrumb.innerText = result.locations[0].name
 
             resultRight.appendChild(resultRightBreadcrumb)
