@@ -380,10 +380,7 @@ const search = async (query, callback) => {
         return b.relevance - a.relevance
     })
 
-    new Promise((resolve, reject) => {
-        callback(callbackReturn);
-    })
-
+    callback(callbackReturn);
 
     results = {}
 
@@ -478,17 +475,21 @@ class SearchUI {
         this.controls = []
 
         this.lastUISearch = ''
+
         setInterval(() => {
             if(this.lastUISearch !== this.headerElementQueryWrapper.textContent) {
                 searchUpdateUI(this.headerElementQueryWrapper.textContent);
                 this.lastUISearch = this.headerElementQueryWrapper.textContent;
             }
         }, 1000)
+
+        this.selected = 0
     }
 
     addListeners() {
         document.addEventListener("keydown", (event) => {
             event = event || window.event;
+            event.preventDefault()
 
             if(event.key === "Backspace") {
                 if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
@@ -496,6 +497,20 @@ class SearchUI {
             } else if(event.key.length === 1) {
                 this.headerElementQueryWrapper.textContent += event.key;
                 this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+            } else if(event.key === "ArrowUp") {
+                if(this.selected > 0) {
+                    this.selected -= 1;
+                    this.resultsElement.children[this.selected].classList.add('result-selected')
+                    this.resultsElement.children[this.selected + 1].classList.remove('result-selected')
+                } // do something
+            } else if(event.key === "ArrowDown") {
+                if(this.selected + 1 < this.results.length) {
+                    this.selected += 1;
+                    this.resultsElement.children[this.selected].classList.add('result-selected')
+                    this.resultsElement.children[this.selected - 1].classList.remove('result-selected')
+                } // do something
+            } else {
+                console.log(event.key);
             }
 
             if(event.key === ' ') {
@@ -549,14 +564,18 @@ class SearchUI {
 
     buildResults() {
         this.resultsElement.innerHTML = ''
-        this.results.forEach((result) => {
-            this.resultsElement.appendChild(this.buildResult(result))
+        this.results.forEach((result, idx) => {
+            this.resultsElement.appendChild(this.buildResult(result, idx))
         })
     }
 
-    buildResult(result) {
+    buildResult(result, idx) {
         const resultElement = document.createElement('div')
         resultElement.className = 'canvasplus-search-ui-results-single-result'
+        
+        if(idx === this.selected) {
+            resultElement.classList.add('result-selected')
+        }
 
         const resultLeft = document.createElement('div')
         resultLeft.className = 'canvasplus-search-ui-results-single-result-left'

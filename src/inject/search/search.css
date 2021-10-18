@@ -55,6 +55,10 @@
   font-size: 15px;
 }
 
+.canvasplus-search-ui-results-single-result.result-selected {
+  background: #e2efff;
+}
+
 .canvasplus-search-ui-results-single-result-left {
   float: left;
   position: relative;
