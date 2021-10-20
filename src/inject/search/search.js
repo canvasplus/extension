@@ -446,21 +446,26 @@ const search = async (query, callback) => {
 }
 
 const searchUpdateUI = (query) => {
-    search(query, (results) => {
-        searchUI.results = []
-        results.splice(5)
-        results.forEach(result => {
-            searchUI.results.push({
-                course: {
-                    name: result.item.course.name,
-                    color: result.item.course.color
-                },
-                name: result.item.title,
-                locations: result.item.locations
+    if(query.length > 0) {
+        search(query, (results) => {
+            searchUI.results = []
+            results.splice(5)
+            results.forEach(result => {
+                searchUI.results.push({
+                    course: {
+                        name: result.item.course.name,
+                        color: result.item.course.color
+                    },
+                    name: result.item.title,
+                    locations: result.item.locations
+                })
+                searchUI.buildResults()
             })
-            searchUI.buildResults()
-        })
-    });
+        });
+    } else {
+        searchUI.results = []
+        searchUI.buildResults()
+    }
 }
 
 class SearchUI {
@@ -491,11 +496,12 @@ class SearchUI {
         this.lastUISearch = ''
 
         setInterval(() => {
-            if(this.lastUISearch !== this.headerElementQueryWrapper.textContent) {
-                searchUpdateUI(this.headerElementQueryWrapper.textContent);
-                this.lastUISearch = this.headerElementQueryWrapper.textContent;
+            const search = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
+            if(this.lastUISearch !== search) {
+                searchUpdateUI(search);
+                this.lastUISearch = search;
             }
-        }, 1000)
+        }, 250)
 
         this.selected = 0
     }
@@ -523,13 +529,26 @@ class SearchUI {
                     this.resultsElement.children[this.selected].classList.add('result-selected')
                     this.resultsElement.children[this.selected - 1].classList.remove('result-selected')
                 } // do something
+            
+            } else if(event.key === "ArrowLeft") {
+                if(this.headerElementQueryWrapper.textContent.length > 0) {
+                    this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
+                    this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substring(0, this.headerElementQueryWrapper.textContent.length - 1);
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                }
+            } else if(event.key === "ArrowRight") {
+                if(this.headerElementQueryRight.textContent.length > 0) {
+                    this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
+                    this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                }
             } else {
                 console.log(event.key);
             }
 
             if(event.key === ' ') {
-                searchUpdateUI(this.headerElementQueryWrapper.textContent)
-                this.lastUISearch = this.headerElementQueryWrapper.textContent;
+                searchUpdateUI(this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent)
+                this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
             }
         })
     }
@@ -551,11 +570,16 @@ class SearchUI {
 
             this.headerElementQueryWrapper = document.createElement('div')
             this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
-            this.headerElementQueryWrapper.innerText = 'Search Query'
+            this.headerElementQueryWrapper.innerText = 'Search'
             this.headerElementQueryWrapper.setAttribute('data-caret-position', '20px')
+            
+            this.headerElementQueryRight = document.createElement('div')
+            this.headerElementQueryRight.className = 'canvasplus-search-ui-query-wrapper-right'
+            this.headerElementQueryRight.innerText = ' Query'
 
             this.headerElement.appendChild(this.headerElementIcon)
             this.headerElement.appendChild(this.headerElementQueryWrapper)
+            this.headerElement.appendChild(this.headerElementQueryRight)
             this.element.appendChild(this.headerElement)
         }
 

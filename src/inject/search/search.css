@@ -6,8 +6,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: red;
+  background: rgb(204 219 239 / 50%);
+  backdrop-filter: blur(5px);
   border-radius: 20px;
+  border: 1px solid rgb(255, 255, 255);
+  overflow: hidden;
 }
 
 .canvasplus-search-ui-wrapper {
@@ -27,7 +30,6 @@
   width: 100%;  
   padding: 22.5px 0;
   height: 35px;
-  border-radius: 20px 20px 0 0;
   display: flex;
   position: relative;
 }
@@ -39,11 +41,15 @@
   background: red;
 }
 
-.canvasplus-search-ui-query-wrapper {
+.canvasplus-search-ui-query-wrapper, .canvasplus-search-ui-query-wrapper-right {
   height: 35px;
   font-size: 18px;
   line-height: 35px;
   position: relative;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .canvasplus-search-ui-results-single-result {
