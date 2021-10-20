@@ -41,7 +41,7 @@
   background: red;
 }
 
-.canvasplus-search-ui-query-wrapper, .canvasplus-search-ui-query-wrapper-right {
+.canvasplus-search-ui-query-wrapper, .canvasplus-search-ui-query-wrapper-right, .canvasplus-search-ui-query-wrapper-autocomplete {
   height: 35px;
   font-size: 18px;
   line-height: 35px;
@@ -50,6 +50,10 @@
   word-wrap: break-word;
   white-space: pre;
   white-space: pre-wrap;
+}
+
+.canvasplus-search-ui-query-wrapper-autocomplete {
+  color: #aaa;
 }
 
 .canvasplus-search-ui-results-single-result {

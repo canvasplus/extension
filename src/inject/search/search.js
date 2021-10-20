@@ -514,22 +514,25 @@ class SearchUI {
             if(event.key === "Backspace") {
                 if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
                 this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                this.buildAutocomplete()
             } else if(event.key.length === 1) {
                 this.headerElementQueryWrapper.textContent += event.key;
                 this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                this.buildAutocomplete()
             } else if(event.key === "ArrowUp") {
                 if(this.selected > 0) {
                     this.selected -= 1;
                     this.resultsElement.children[this.selected].classList.add('result-selected')
                     this.resultsElement.children[this.selected + 1].classList.remove('result-selected')
+                    this.buildAutocomplete()
                 } // do something
             } else if(event.key === "ArrowDown") {
                 if(this.selected + 1 < this.results.length) {
                     this.selected += 1;
                     this.resultsElement.children[this.selected].classList.add('result-selected')
                     this.resultsElement.children[this.selected - 1].classList.remove('result-selected')
+                    this.buildAutocomplete()
                 } // do something
-            
             } else if(event.key === "ArrowLeft") {
                 if(this.headerElementQueryWrapper.textContent.length > 0) {
                     this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
@@ -577,9 +580,14 @@ class SearchUI {
             this.headerElementQueryRight.className = 'canvasplus-search-ui-query-wrapper-right'
             this.headerElementQueryRight.innerText = ' Query'
 
+            this.headerElementQueryAutoComplete = document.createElement('div')
+            this.headerElementQueryAutoComplete.className = 'canvasplus-search-ui-query-wrapper-autocomplete'
+            this.headerElementQueryAutoComplete.innerText = 'Autocomplete'
+
             this.headerElement.appendChild(this.headerElementIcon)
             this.headerElement.appendChild(this.headerElementQueryWrapper)
             this.headerElement.appendChild(this.headerElementQueryRight)
+            this.headerElement.appendChild(this.headerElementQueryAutoComplete)
             this.element.appendChild(this.headerElement)
         }
 
@@ -600,7 +608,26 @@ class SearchUI {
         this.wrapperElement.appendChild(this.element)
     }
 
+    buildAutocomplete() {
+        const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
+        if(currentQuery.length === 0) { 
+            this.headerElementQueryAutoComplete.textContent = 'Search your courses';
+        }
+        if(this.results.length > 0) {
+            let newAutocomplete = '';
+            const selected = this.results[this.selected];
+            if(!selected) return;
+            if(selected.name.toLowerCase().includes(currentQuery)) {
+                newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
+            }
+    
+            this.headerElementQueryAutoComplete.textContent = newAutocomplete;
+        }
+    }
+
     buildResults() {
+        this.buildAutocomplete()
+
         this.resultsElement.innerHTML = ''
         this.results.forEach((result, idx) => {
             this.resultsElement.appendChild(this.buildResult(result, idx))
