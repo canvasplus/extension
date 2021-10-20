@@ -493,6 +493,8 @@ class SearchUI {
         this.results = []
         this.controls = []
 
+        this.lastAction = []
+
         this.lastUISearch = ''
 
         setInterval(() => {
@@ -509,17 +511,26 @@ class SearchUI {
     addListeners() {
         document.addEventListener("keydown", (event) => {
             event = event || window.event;
-            event.preventDefault()
+            
+            if((event.metaKey && onMac) || (event.ctrlKey && !onMac)) {
+                // stuff
+            }
 
             if(event.key === "Backspace") {
+                event.preventDefault()
+
                 if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
                 this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                 this.buildAutocomplete()
             } else if(event.key.length === 1) {
+                event.preventDefault()
+
                 this.headerElementQueryWrapper.textContent += event.key;
                 this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                 this.buildAutocomplete()
             } else if(event.key === "ArrowUp") {
+                event.preventDefault()
+
                 if(this.selected > 0) {
                     this.selected -= 1;
                     this.resultsElement.children[this.selected].classList.add('result-selected')
@@ -527,6 +538,8 @@ class SearchUI {
                     this.buildAutocomplete()
                 } // do something
             } else if(event.key === "ArrowDown") {
+                event.preventDefault()
+
                 if(this.selected + 1 < this.results.length) {
                     this.selected += 1;
                     this.resultsElement.children[this.selected].classList.add('result-selected')
@@ -534,15 +547,23 @@ class SearchUI {
                     this.buildAutocomplete()
                 } // do something
             } else if(event.key === "ArrowLeft") {
+                event.preventDefault()
+
                 if(this.headerElementQueryWrapper.textContent.length > 0) {
                     this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
                     this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substring(0, this.headerElementQueryWrapper.textContent.length - 1);
                     this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                 }
             } else if(event.key === "ArrowRight") {
+                event.preventDefault()
+
                 if(this.headerElementQueryRight.textContent.length > 0) {
                     this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
                     this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                }  else if(this.headerElementQueryAutoComplete.textContent.length > 0 && !event.repeat) {
+                    this.headerElementQueryWrapper.textContent += this.headerElementQueryAutoComplete.textContent;
+                    this.headerElementQueryAutoComplete.textContent = ''
                     this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                 }
             } else {

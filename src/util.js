@@ -1,3 +1,5 @@
+const onMac = window.navigator.platform === 'MacIntel'
+
 const smartAPIFetch = async (url) => {
     const response = await fetch(url)
     
