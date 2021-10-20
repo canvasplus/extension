@@ -356,8 +356,13 @@ const search = async (query, callback) => {
                         }
                         return false;
                     })
-                    scores += current.similarity
                 })
+                if(filterAlphanumeric(item.title).toLowerCase().includes(filterAlphanumeric(query).toLowerCase())) {
+                    scores *= 1.5
+                    if(item.title.toLowerCase().includes(query.toLowerCase())) {
+                        scores *= 1.5
+                    }
+                }
                 
                 const max = references.map(reference => {
                     return reference.length;
@@ -410,6 +415,13 @@ const search = async (query, callback) => {
                 })
                 scores += current.similarity
             })
+            
+            if(filterAlphanumeric(item.title).toLowerCase().includes(filterAlphanumeric(query).toLowerCase())) {
+                scores *= 1.5
+                if(item.title.toLowerCase().includes(query.toLowerCase())) {
+                    scores *= 1.5
+                }
+            }
             
             const max = references.map(reference => {
                 return reference.length;
