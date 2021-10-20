@@ -300,14 +300,16 @@ const main = async () => {
     .then((results) => {
         results.forEach((course) => {
             course = course.value      
+            const meta = courses[course.courseId];
             searchContent['courses'][course['courseId']] = {
-                meta: courses[course.courseId],
+                meta: meta,
                 content: course
             }
 
             Object.keys(course.content).forEach(key => {
                 if(key !== "tabs") {
                     const page = course["content"][key];
+                    page.course = meta;
 
                     searchContent["entireRawIndex"].push(page)
 
@@ -422,7 +424,7 @@ const search = async (query, callback) => {
                     scores *= 1.5
                 }
             }
-            
+
             const max = references.map(reference => {
                 return reference.length;
             }).reduce((a, b) => { return a + b} )
@@ -450,8 +452,8 @@ const searchUpdateUI = (query) => {
         results.forEach(result => {
             searchUI.results.push({
                 course: {
-                    name: "Course",
-                    color: "#f43daa"
+                    name: result.item.course.name,
+                    color: result.item.course.color
                 },
                 name: result.item.title,
                 locations: result.item.locations
