@@ -6,10 +6,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgb(204 219 239 / 50%);
+  background: var(--cpt-dark-search-ui-glass-color, rgba(204,219,239,50%));
   backdrop-filter: blur(5px);
   border-radius: 20px;
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid var(--cpt-dark-interactable-border-color, rgb(255, 255, 255));
   overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .canvasplus-search-ui-header {
-  background: #F8F8F8;
+  background: var(--cpt-dark-search-ui-header-background-color, #F8F8F8);
   width: 100%;  
   padding: 22.5px 0;
   height: 35px;
@@ -50,6 +50,7 @@
   word-wrap: break-word;
   white-space: pre;
   white-space: pre-wrap;
+  color: var(--cpt-dark-important-text-color, #000)
 }
 
 .canvasplus-search-ui-query-wrapper-autocomplete {
@@ -58,15 +59,15 @@
 
 .canvasplus-search-ui-results-single-result {
   width: 100%;
-  background: #F0F7FF;
+  background: var(--cpt-dark-search-ui-result-background-color, #F0F7FF);
   height: 72px;
   position: relative;
-  border-top: 1px solid #CCCCCC;
+  border-top: 1px solid var(--cpt-dark-interactable-border-color, #CCCCCC);
   font-size: 15px;
 }
 
 .canvasplus-search-ui-results-single-result.result-selected {
-  background: #e2efff;
+  background: var(--cpt-dark-search-ui-selected-result-background-color, #e2efff);
 }
 
 .canvasplus-search-ui-results-single-result-left {
@@ -78,10 +79,11 @@
   max-width: 55%;
   overflow: hidden;
   white-space: nowrap;
+  color: var(--cpt-dark-important-text-color, #000);
 }
 
 .canvasplus-search-ui-results-single-result-left-topmeta {
-  color: #808080;
+  color: var(--ic-brand-font-color-dark, #808080);
   padding-bottom: 3px;
 }
 
@@ -104,7 +106,7 @@
 }
 
 .canvasplus-search-ui-results-single-result-right-breadcrumb {
-  color: #808080;
+  color: var(--ic-brand-font-color-dark, #808080);
   text-align: right;
 }
 
@@ -146,7 +148,7 @@
   left: var(--data-caret-position);
   width: 1px;
   height: 75%;
-  background: #888;
+  background: var(--ic-brand-font-color-dark, #808080);
   content: '';
   transition: 0.1s left linear;
 }
