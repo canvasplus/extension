@@ -51,7 +51,7 @@ A few dark mode and rounder modules fixes, turn off speed boost for recent users
 Adds Canvas+ diagnostic tool, made to find bugs and troubleshoot or report them
   
 **0.4**
-Revamps search bar to be on top of the UI and have more accurate search results
+Revamps search bar to be on top of the UI and have more accurate search results, also a (possible) dark mode revamp
 
 **0.5**
 Adds navigator to the search bar (more below)
