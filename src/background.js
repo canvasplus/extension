@@ -19,9 +19,6 @@ const newDefaults = {
   "canvasplus-setup-stage": -1
 }
 
-const newDefaults = {
-}
-
 chrome.runtime.onInstalled.addListener((details) => {
     if(details.reason === "install"){
       chrome.tabs.create({

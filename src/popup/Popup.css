@@ -16,6 +16,31 @@
 body {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 12px;
+  background: #ccc;
+}
+
+#popup {
+  position: absolute;
+  background: #FFF;
+}
+
+@media only screen and (min-width: 240px) {
+  #popup {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media only screen and (min-height: 400px) {
+  #popup {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+@media only screen and (min-width: 240px) and (min-height: 400px) {
+  #popup {
+    transform: translate(-50%, -50%);
+  }
 }
 
 body, p {

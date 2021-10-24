@@ -16,7 +16,8 @@
          "assets/img/light.png",
          "assets/img/dim.png",
          "assets/img/dark.png",
-         "assets/img/extension-menu.png"
+         "assets/img/extension-menu.png",
+         "src/popup/popup.html"
      ],
   "content_scripts": [
     {
