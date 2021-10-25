@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6, b {
 }
 
 .canvasplus-changes {
-  background: URL(https://images.unsplash.com/photo-1536250695484-36ed15d06abf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80);
+  background: #1c4b85;
   text-align: center;
   height: 320px;
   width: 240px;
@@ -130,12 +130,18 @@ h2 {
   margin-top: 10px;
   font-family: 'Montserrat', sans-serif;
   border-radius: 16px;
-  background: rgba(0,0,0,0.5);
   padding: 8px 16px;
   width: fit-content;
   width: -moz-fit-content;
   margin: auto;
   margin-bottom: 5px;
+}
+
+.changes-items.changes-gold {
+  background: -webkit-linear-gradient(45deg, rgb(255, 240, 30), rgb(253, 88, 12));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
 .overlay {

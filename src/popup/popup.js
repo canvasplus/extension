@@ -28,29 +28,13 @@ const popup = () => {
   //   }
   // }, [])
 
-  const [currentTab, setCurrentTab] = useState("changes")
+  const [currentTab, setCurrentTab] = useState("settings")
 const tabChangeHandler = (newTabId) => {
   setCurrentTab(newTabId)
 }
 
 const frames = {
-  "changes": {
-    "name": "Changes",
-    "element": (
-      <div className="canvasplus-changes">
-        <Hover />
-        <div className="cpc-header">
-          <img src="../../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
-          <p>Release 0.3.2</p>
-        </div>
-        <div className="changes-list">
-          <p className="changes-items">Custom Sidebar</p>
-          <p className="changes-items">Email Peeker</p>
-          <p className="changes-items">Dim Mode</p>
-        </div>
-      </div>
-    )
-  }, "settings": {
+  "settings": {
     "name": "Settings",
     "element": (
       <span>

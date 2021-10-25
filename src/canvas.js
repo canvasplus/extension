@@ -21,17 +21,7 @@ let settings = {};
 chrome.storage.local.get(settingsList, function(data) {
   settings = data;
 
-  let setupStage = settings["canvasplus-setup-stage"] ?? 0;
-
-  if(setupStage === -1) {
-    if(settings["canvasplus-setting-sidebar-color"] !== '#1b7ecf') {
-      setupStage = 2;
-      chrome.storage.local.set({"canvasplus-setup-stage": 1});
-    } else {
-      setupStage = 0;
-      chrome.storage.local.set({"canvasplus-setup-stage": 0});
-    }
-  }
+  let setupStage = settings["canvasplus-setup-stage"] ?? -1;
 
   if(setupStage === 0) {
     createFinishSettingUp(settings["canvasplus-display-appearance"])
@@ -49,33 +39,6 @@ alert.addEventListener("click", function (evt) {
   this.style.opacity = "0";
   this.style.visibility = "hidden";
 });
-
-let settingsUpdateBox = document.createElement("div");
-settingsUpdateBox.id = "canvasplus-alert-settings-update"
-settingsUpdateBox.innerHTML = "<h2>Canvas+ Settings were Changed</h2><p>Your changes will be applied once this page is reloaded.</p><br><button class='btn' onclick='location.reload()'>Reload</button>"
-
-alert.appendChild(settingsUpdateBox);
-document.body.insertBefore(alert, document.body.firstElementChild);
-
-let settingprev = [];
-
-const getprevsetting = async (settingname) => {
-  await chrome.storage.local.get([settingname], function (data) {
-    settingprev[settingname] = data;
-  })
-}
-
-getprevsetting("canvasplus-setting-quicklink")
-
-const settingchanged = (val, settingname) => {
-  if (settingprev[settingname]) {
-
-    if (val != settingprev[settingname][settingname]) {
-      alert.style.opacity = "1";
-      alert.style.visibility = "visible";
-    }
-  }
-}
 
 useReactiveFeatures([{
   settingName: "canvasplus-setting-quicklink",

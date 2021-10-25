@@ -16,7 +16,6 @@ const oldDefaults = {
 }
 
 const newDefaults = {
-  "canvasplus-setup-stage": -1
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -33,7 +32,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         }
       })
     }
-    else if (details.reason === "update" && details.previousVersion !== "0.3.2") {
-      chrome.storage.local.set(newDefaults);
+    else if (details.reason === "update" && details.previousVersion !== "0.3.3") {
+      
     }
 });

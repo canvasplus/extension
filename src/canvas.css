@@ -185,7 +185,8 @@
 }
 
 .canvasplus-finish-setting-up__ExtensionMenu img {
-  width: 250px;
+  width: 80px;
+  margin-right: 20px;
   image-rendering: -webkit-optimize-contrast;
 }
 
