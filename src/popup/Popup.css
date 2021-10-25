@@ -17,27 +17,31 @@ body {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 12px;
   background: #ccc;
+  width: 240px;
+  height: 400px;
 }
 
 #popup {
   position: absolute;
   background: #FFF;
+  width: 240px;
+  height: 400px;
 }
 
-@media only screen and (min-width: 240px) {
+@media only screen and (min-width: 241px) {
   #popup {
     left: 50%;
     transform: translateX(-50%);
   }
 }
 
-@media only screen and (min-height: 400px) {
+@media only screen and (min-height: 401px) {
   #popup {
     top: 50%;
     transform: translateY(-50%);
   }
 }
-@media only screen and (min-width: 240px) and (min-height: 400px) {
+@media only screen and (min-width: 241px) and (min-height: 401px) {
   #popup {
     transform: translate(-50%, -50%);
   }

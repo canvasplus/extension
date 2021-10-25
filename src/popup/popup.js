@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import './Popup.css'
 
@@ -15,6 +15,19 @@ import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColo
 import SidebarBackgroundColorPicker from './components/interactive/color/SidebarBackgroundColorPicker';
 
 const popup = () => {
+  // useEffect(() => {
+  //   if(true) {
+  //     const style = document.createElement('style')
+  //     style.innerHTML = `
+  //         body {
+  //             width: 240px;
+  //             height: 400px;
+  //         }
+  //     `
+  //     document.body.appendChild(style)
+  //   }
+  // }, [])
+
   const [currentTab, setCurrentTab] = useState("changes")
 const tabChangeHandler = (newTabId) => {
   setCurrentTab(newTabId)
