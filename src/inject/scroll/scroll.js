@@ -42,6 +42,9 @@ useReactiveFeatures([{
         if (document.documentElement.scrollTop > 100) {
           backToTopButton.style.visibility = "visible";
           backToTopButton.style.opacity = "1";
+          if ((document.documentElement.scrollHeight - window.innerHeight - window.scrollY) < 83) {
+            backToTopButton.style.bottom = (83 - (document.documentElement.scrollHeight - window.innerHeight - window.scrollY)) + "px"
+          }
         } else {
           backToTopButton.style.visibility = "";
           backToTopButton.style.opacity = "";

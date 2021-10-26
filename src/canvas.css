@@ -59,7 +59,12 @@
   opacity: 0;
 }
 
+.canvasplus-finish-setting-up::-webkit-scrollbar {
+  display: none;
+}
+
 .canvasplus-finish-setting-up {
+  scrollbar-width: none;
   position: relative;
   height: 100px;
   width: clamp(min(calc(100% - 20px), 500px),70%,850px);
