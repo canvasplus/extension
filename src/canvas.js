@@ -102,3 +102,12 @@ const createFinishSettingUp = (selectedAppearance) => {
   document.body.appendChild(popup)
 
 }
+
+chrome.storage.local.get("canvasplus-current-version", (data) => {
+  const current = data["canvasplus-current-version"]
+  if(current !== "0.3.4" || true) {
+    notification("Thanks for 800 users! This week, we've added a dedicated settings button to the sidebar and fixed dark mode on new quizzes.", "heart", "#ffd0d8", "#ff6680", () => {
+      alert("done")
+    }, "Got it", () => {}, "No thanks", "#f3dae1")
+  }
+})
