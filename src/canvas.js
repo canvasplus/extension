@@ -103,11 +103,17 @@ const createFinishSettingUp = (selectedAppearance) => {
 
 }
 
-chrome.storage.local.get("canvasplus-current-version", (data) => {
+chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appearance"], (data) => {
   const current = data["canvasplus-current-version"]
-  if(current !== "0.3.4" || true) {
-    notification("Thanks for 800 users! This week, we've added a dedicated settings button to the sidebar and fixed dark mode on new quizzes.", "heart", "#ffd0d8", "#ff6680", () => {
-      alert("done")
-    }, "Got it", () => {}, "No thanks", "#f3dae1")
+  const displayAppearence = data["canvasplus-display-appearance"]
+
+  if(current !== "0.3.4") {
+    notification("Thanks for 800 users! This week, we've added a dedicated settings button to the sidebar and fixed dark mode on new quizzes.", "heart", "#ffd0d8", "#ff6680", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-current-version": "0.3.4"})
+      dismissMe()
+    }, "Dismiss", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-display-appearance": "dim", "canvasplus-current-version": "0.3.4"})
+      dismissMe()
+    }, displayAppearence !== "light" ? undefined : "Enable Dark Mode", "#f3dae1")
   }
 })

@@ -68,12 +68,19 @@ const notificationContainer = document.createElement('div')
 const notification = async(text, emoji, fill, border, button1callback, button1text, button2callback, button2text, alternativeButtonColor) => {
     const notification = document.createElement('div')
         notification.className = 'canvasplus-notification'
-        notification.style.border = '2px solid' +  border
+        notification.style.border = '1px solid' +  border
         notification.style.backgroundColor = fill
         notificationContainer.appendChild(notification)
 
-    const image = document.createElement('img')
-        image.src = chrome.extension.getURL(`assets/img/notification-emoji/${emoji}.png`)
+    const dismissMe = () => {
+        notification.classList.add('dismissing')
+        setTimeout(() => {
+            notification.remove()
+        }, 1500)
+    }
+
+    const image = document.createElement('div')
+        image.style = `--src:url(${chrome.extension.getURL(`assets/img/notification-emoji/${emoji}.png`)})`
         image.className = 'notification-image notification-image-' + emoji
         notification.appendChild(image)
 
@@ -94,15 +101,17 @@ const notification = async(text, emoji, fill, border, button1callback, button1te
         notificationButton.className = 'notificationButton mainNotificationButton'
         notificationButton.style.backgroundColor = border
         notificationButton.innerText = button1text
-        notificationButton.addEventListener('click', (e) => { button1callback(notification) })
+        notificationButton.addEventListener('click', (e) => { button1callback(notification, dismissMe, e) })
         buttonContainer.appendChild(notificationButton)
 
-    const notificationButton2 = document.createElement('button')
+    if(button2text) {
+        const notificationButton2 = document.createElement('button')
         notificationButton2.className = 'notificationButton alternativeNotificationButton'
         notificationButton2.style.backgroundColor = alternativeButtonColor
         notificationButton2.innerText = button2text
-        notificationButton2.addEventListener('click', (e) => { button2callback(notification) })
+        notificationButton2.addEventListener('click', (e) => { button2callback(notification, dismissMe, e) })
         buttonContainer.appendChild(notificationButton2)
+    }
 }
 
 // const injectnoification = async(time) => {
