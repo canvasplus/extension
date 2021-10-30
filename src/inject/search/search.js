@@ -574,6 +574,15 @@ class SearchUI {
                 searchUpdateUI(this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent)
                 this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
             }
+
+            if(event.ctrlKey && event.key === 'k') {
+                event.preventDefault()
+                document.querySelector('#canvasplus-search-ui-wrapper').style.display = '';
+            }
+            if(event.key === 'Escape') {
+                event.preventDefault()
+                document.querySelector('#canvasplus-search-ui-wrapper').style.display = 'none';
+            }
         })
     }
 
@@ -581,6 +590,7 @@ class SearchUI {
         this.wrapperElement = document.createElement('div')
         this.wrapperElement.id = 'canvasplus-search-ui-wrapper'
         this.wrapperElement.className = 'canvasplus-search-ui-wrapper'
+        this.wrapperElement.style.display = 'none'
 
         this.element = document.createElement('div')
         this.element.className = 'canvasplus-search-ui'
