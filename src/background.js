@@ -1,5 +1,5 @@
 const oldDefaults = {
-  "canvasplus-setting-quicklink": true,
+  "canvasplus-setting-quicklink": false,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
   "canvasplus-display-appearance": "light",

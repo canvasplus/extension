@@ -38,7 +38,28 @@
 
 <br><br>
 
-<h3 align="center">What we're working on</h3>
+
+<h3 align="center">Update Plans as of Oct 17</h3>
+<br>
+  
+**0.3.3 (Pending Review)**
+A few dark mode and rounder modules fixes, turn off speed boost for recent users
+
+... bug fixes
+  
+**0.3.x**
+Adds Canvas+ diagnostic tool, made to find bugs and troubleshoot or report them
+  
+**0.4**
+Revamps search bar to be on top of the UI and have more accurate search results, also a (possible) dark mode revamp
+
+**0.5**
+Adds navigator to the search bar (more below)
+  
+  
+<br><br>
+  
+<h3 align="center">What we're working on (Somewhat out of date)</h3>
 <br>
 
 Hey curious Canvas+ user! We believe transparency is key to a great product, so in addition being open-source, we're outgoing about what we're working on next. We've always found the search bar to be one of the most helpful features for daily use, but a search bar doesn't work for everything. Think about it. There's a reason your file explorer isn't just a search bar, which is why we're overhauling our search engine and adding a new way to search: navigator.
