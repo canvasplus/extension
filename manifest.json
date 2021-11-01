@@ -1,6 +1,6 @@
 {
   "name": "Canvas+",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "manifest_version": 2,
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "http://canvasplus.adrwas.dev/",
@@ -16,13 +16,15 @@
          "assets/img/light.png",
          "assets/img/dim.png",
          "assets/img/dark.png",
-         "assets/img/extension-menu.png"
+         "assets/img/extension-menu.png",
+          "assets/img/notification-emoji/heart.png",
+         "src/popup/popup.html"
      ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
       "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/notification/notification.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css"]
+      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/notification/notification.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],

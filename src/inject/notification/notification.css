@@ -5,17 +5,28 @@
     z-index: 100;
     width: 400px;
     height: inherit;
-    animation-duration: 2s;
-    animation-name: slidein;
+    animation-duration: 0.5s;
+    animation-name: notificationAppear;
 }
 
 .canvasplus-notification {
     width: 400px;
-    height: 175px;
-    display: inline-block;
+    display: flex;
     border-radius: 10px;
     margin-bottom: 20px;
     position: relative;
+}
+
+.canvasplus-notification.dismissing {
+    animation: canvasplus-notification-dismissing 1.5s ease;
+}
+
+@keyframes canvasplus-notification-dismissing {
+    from {
+        opacity: 1;
+    } to {
+        opacity: 0;
+    }
 }
 
 .text-container {
@@ -26,44 +37,47 @@
 }
 
 .notification-text {
-    width: 280px;
+    margin: 0;
+    padding-top: 25px;
+    width: 260px;
     right: 10px;
-    color: black;
+    color: #656565;
     display: inline-block;
     height: max-content;
 }
 
 .notificationButton {
+    border: none;
     border-radius: 10px;
-    height: 35px;
+    height: 50px;
+    padding: 0 20px 0 20px;
+}
+
+.mainNotificationButton {
+    color: #FFFFFF;
+}
+
+.alternativeNotificationButton {
+    color: #656565;
 }
 
 .notificationButton:not(:last-child) {
-    margin-right: 5px;
+    margin-right: 15px;
 }
 
 .buttoncontainer {
-    width: max-content;
     position: relative;
-    transform: translateX(-50%);
-    left: 50%;
-}
-
-.notification-image {
-    width: 50px;
-    height: 50px;
-    transform: TRANSLATEX(-50%);
-    margin-left: 62px;
-    margin-top: 64px;
+    margin: 20px 0;
+    width: 260px;
 }
 
 
-@keyframes slidein {
+@keyframes notificationAppear {
     from {
-        top: -170px;
+        opacity: 0;
     }
     to {
-        top: 10px;
+        opacity: 1;
     }
 }
 
@@ -102,4 +116,40 @@
     background-color: rgba(0,0,0,0.5);
     cursor: pointer;
     transition: visibility 0.3s ease 0s, opacity 0.3s linear 0s;
+}
+
+.notification-image-heart {
+    position: relative;
+    display: block;
+}
+
+.notification-image-heart::before {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: var(--src);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    animation: notification-image-heart 7.5s linear 2s infinite;
+}
+
+.notification-image {
+    width: 50px;
+    height: 50px;
+    background: var(--src);
+    background-size: cover;
+    margin: 30px;
+}
+
+@keyframes notification-image-heart {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    } 20%, 100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
 }

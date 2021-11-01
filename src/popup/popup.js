@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import './Popup.css'
 
@@ -15,29 +15,26 @@ import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColo
 import SidebarBackgroundColorPicker from './components/interactive/color/SidebarBackgroundColorPicker';
 
 const popup = () => {
-  const [currentTab, setCurrentTab] = useState("changes")
+  // useEffect(() => {
+  //   if(true) {
+  //     const style = document.createElement('style')
+  //     style.innerHTML = `
+  //         body {
+  //             width: 240px;
+  //             height: 400px;
+  //         }
+  //     `
+  //     document.body.appendChild(style)
+  //   }
+  // }, [])
+
+  const [currentTab, setCurrentTab] = useState("settings")
 const tabChangeHandler = (newTabId) => {
   setCurrentTab(newTabId)
 }
 
 const frames = {
-  "changes": {
-    "name": "Changes",
-    "element": (
-      <div className="canvasplus-changes">
-        <Hover />
-        <div className="cpc-header">
-          <img src="../../assets/icons/canvas-wide-white.png" alt="" width="140px" height="47px"/>
-          <p>Release 0.3.3</p>
-        </div>
-        <div className="changes-list">
-          <p className="changes-items">Custom Sidebar</p>
-          <p className="changes-items">Email Peeker</p>
-          <p className="changes-items">Dim Mode</p>
-        </div>
-      </div>
-    )
-  }, "settings": {
+  "settings": {
     "name": "Settings",
     "element": (
       <span>

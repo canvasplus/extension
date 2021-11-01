@@ -21,17 +21,7 @@ let settings = {};
 chrome.storage.local.get(settingsList, function(data) {
   settings = data;
 
-  let setupStage = settings["canvasplus-setup-stage"] ?? 0;
-
-  if(setupStage === -1) {
-    if(settings["canvasplus-setting-sidebar-color"] !== '#1b7ecf') {
-      setupStage = 2;
-      chrome.storage.local.set({"canvasplus-setup-stage": 1});
-    } else {
-      setupStage = 0;
-      chrome.storage.local.set({"canvasplus-setup-stage": 0});
-    }
-  }
+  let setupStage = settings["canvasplus-setup-stage"] ?? -1;
 
   if(setupStage === 0) {
     createFinishSettingUp(settings["canvasplus-display-appearance"])
@@ -49,33 +39,6 @@ alert.addEventListener("click", function (evt) {
   this.style.opacity = "0";
   this.style.visibility = "hidden";
 });
-
-let settingsUpdateBox = document.createElement("div");
-settingsUpdateBox.id = "canvasplus-alert-settings-update"
-settingsUpdateBox.innerHTML = "<h2>Canvas+ Settings were Changed</h2><p>Your changes will be applied once this page is reloaded.</p><br><button class='btn' onclick='location.reload()'>Reload</button>"
-
-alert.appendChild(settingsUpdateBox);
-document.body.insertBefore(alert, document.body.firstElementChild);
-
-let settingprev = [];
-
-const getprevsetting = async (settingname) => {
-  await chrome.storage.local.get([settingname], function (data) {
-    settingprev[settingname] = data;
-  })
-}
-
-getprevsetting("canvasplus-setting-quicklink")
-
-const settingchanged = (val, settingname) => {
-  if (settingprev[settingname]) {
-
-    if (val != settingprev[settingname][settingname]) {
-      alert.style.opacity = "1";
-      alert.style.visibility = "visible";
-    }
-  }
-}
 
 useReactiveFeatures([{
   settingName: "canvasplus-setting-quicklink",
@@ -139,3 +102,18 @@ const createFinishSettingUp = (selectedAppearance) => {
   document.body.appendChild(popup)
 
 }
+
+chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appearance"], (data) => {
+  const current = data["canvasplus-current-version"]
+  const displayAppearence = data["canvasplus-display-appearance"]
+
+  if(current !== "0.3.4") {
+    notification("Thanks for 800 users! This week, we've added a dedicated settings button to the sidebar and fixed dark mode on new quizzes.", "heart", "#ffd0d8", "#ff6680", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-current-version": "0.3.4"})
+      dismissMe()
+    }, "Dismiss", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-display-appearance": "dim", "canvasplus-current-version": "0.3.4"})
+      dismissMe()
+    }, displayAppearence !== "light" ? undefined : "Enable Dark Mode", "#f3dae1")
+  }
+})

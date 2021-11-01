@@ -12,7 +12,8 @@ const oldDefaults = {
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
-  "canvasplus-setup-stage": 0
+  "canvasplus-setup-stage": 0,
+  "canvasplus-current-version": "0.3.4"
 }
 
 const newDefaults = {
@@ -32,12 +33,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         }
       })
     }
-    else if (details.reason === "update" && details.previousVersion !== "0.3.3") {
-      chrome.storage.local.set(newDefaults);
-      chrome.storage.local.get("installDate", ({installDate}) => {
-        if(installDate.timestamp > 1633669200000) {
-          chrome.storage.local.set({"canvasplus-setting-quicklink": false})
-        }
-      })
+    else if (details.reason === "update" && details.previousVersion !== "0.3.4") {
+      chrome.storage.local.set({"canvasplus-current-version": "0.3.3"}) // canvasjs will detect new version
     }
 });
