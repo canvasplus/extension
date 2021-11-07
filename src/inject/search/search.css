@@ -6,8 +6,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--cpt-dark-search-ui-glass-color, rgba(204,219,239,50%));
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  background: var(--cpt-dark-search-ui-glass-color, rgba(204,219,239,75%));
   border-radius: 20px;
   border: 1px solid var(--cpt-dark-interactable-border-color, rgb(255, 255, 255));
   overflow: hidden;

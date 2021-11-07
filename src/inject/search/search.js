@@ -449,18 +449,25 @@ const searchUpdateUI = (query) => {
     if(query.length > 0) {
         search(query, (results) => {
             searchUI.results = []
+
             results.splice(5)
             results.forEach(result => {
-                searchUI.results.push({
-                    course: {
-                        name: result.item.course.name,
-                        color: result.item.course.color
-                    },
-                    name: result.item.title,
-                    locations: result.item.locations
-                })
-                searchUI.buildResults()
+                if(result.relevance >= 0.65) {
+                    searchUI.results.push({
+                        course: {
+                            name: result.item.course.name,
+                            color: result.item.course.color
+                        },
+                        name: result.item.title,
+                        locations: result.item.locations,
+                        url: result.item.url
+                    })
+                }
             })
+            
+            searchUI.selected = 0;
+
+            searchUI.buildResults()
         });
     } else {
         searchUI.results = []
@@ -497,7 +504,11 @@ class SearchUI {
 
         this.lastUISearch = ''
 
+        this.showing = false;
+
         setInterval(() => {
+            if(!document.body.contains(this.headerElementQueryWrapper)) return;
+            
             const search = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
             if(this.lastUISearch !== search) {
                 searchUpdateUI(search);
@@ -512,85 +523,120 @@ class SearchUI {
         document.addEventListener("keydown", (event) => {
             event = event || window.event;
             
-            if((event.metaKey && onMac) || (event.ctrlKey && !onMac)) {
-                // stuff
-            }
-
-            if(event.key === "Backspace") {
-                event.preventDefault()
-
-                if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
-                this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
-                this.buildAutocomplete()
-            } else if(event.key.length === 1) {
-                event.preventDefault()
-
-                this.headerElementQueryWrapper.textContent += event.key;
-                this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
-                this.buildAutocomplete()
-            } else if(event.key === "ArrowUp") {
-                event.preventDefault()
-
-                if(this.selected > 0) {
-                    this.selected -= 1;
-                    this.resultsElement.children[this.selected].classList.add('result-selected')
-                    this.resultsElement.children[this.selected + 1].classList.remove('result-selected')
-                    this.buildAutocomplete()
-                } // do something
-            } else if(event.key === "ArrowDown") {
-                event.preventDefault()
-
-                if(this.selected + 1 < this.results.length) {
-                    this.selected += 1;
-                    this.resultsElement.children[this.selected].classList.add('result-selected')
-                    this.resultsElement.children[this.selected - 1].classList.remove('result-selected')
-                    this.buildAutocomplete()
-                } // do something
-            } else if(event.key === "ArrowLeft") {
-                event.preventDefault()
-
-                if(this.headerElementQueryWrapper.textContent.length > 0) {
-                    this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
-                    this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substring(0, this.headerElementQueryWrapper.textContent.length - 1);
-                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+            const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
+            
+            const openUI = () => {
+                this.showing = true;
+                
+                if(document.body.contains(searchUI.element)) {
+                      searchUI.element.remove()
                 }
-            } else if(event.key === "ArrowRight") {
-                event.preventDefault()
-
-                if(this.headerElementQueryRight.textContent.length > 0) {
-                    this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
-                    this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
-                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
-                }  else if(this.headerElementQueryAutoComplete.textContent.length > 0 && !event.repeat) {
-                    this.headerElementQueryWrapper.textContent += this.headerElementQueryAutoComplete.textContent;
-                    this.headerElementQueryAutoComplete.textContent = ''
-                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+    
+                if(document.body.contains(searchUI.wrapperElement)) {
+                    searchUI.wrapperElement.remove()
                 }
-            } else {
-                console.log(event.key);
+    
+                searchUI.insert(document.body)
+            }
+            
+            const closeUI = () => {
+                this.showing = false;
+                searchUI.element.remove()
+                searchUI.wrapperElement.remove()
             }
 
-            if(event.key === ' ') {
-                searchUpdateUI(this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent)
-                this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
-            }
 
-            if(event.ctrlKey && event.key === 'k') {
-                event.preventDefault()
-                document.querySelector('#canvasplus-search-ui-wrapper').style.display = '';
+            if(usingControlKey) {
+                if(event.key === 'k') {
+                    if(this.showing) {
+                        closeUI()
+                    } else {
+                        openUI()
+                    }
+                    return;
+                }
             }
-            if(event.key === 'Escape') {
-                event.preventDefault()
-                document.querySelector('#canvasplus-search-ui-wrapper').style.display = 'none';
+            if(this.showing) {
+                if(event.key === "Backspace") {
+                    event.preventDefault()
+    
+                    if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    this.buildAutocomplete()
+                } else if(event.key === " " && !usingControlKey) {
+                    event.preventDefault()
+    
+                    this.headerElementQueryWrapper.textContent += event.key;
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    this.buildAutocomplete()
+
+                    searchUpdateUI(this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent)
+                    this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
+                } else if(event.key.length === 1 && !usingControlKey) {
+                    event.preventDefault()
+    
+                    this.headerElementQueryWrapper.textContent += event.key;
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    this.buildAutocomplete()
+                } else if(event.key === "ArrowUp") {
+                    event.preventDefault()
+    
+                    if(this.selected > 0) {
+                        this.selected -= 1;
+                        this.resultsElement.children[this.selected].classList.add('result-selected')
+                        this.resultsElement.children[this.selected + 1].classList.remove('result-selected')
+                        this.buildAutocomplete()
+                    } // do something
+                } else if(event.key === "ArrowDown") {
+                    event.preventDefault()
+    
+                    if(this.selected + 1 < this.results.length) {
+                        this.selected += 1;
+                        this.resultsElement.children[this.selected].classList.add('result-selected')
+                        this.resultsElement.children[this.selected - 1].classList.remove('result-selected')
+                        this.buildAutocomplete()
+                    } // do something
+                } else if(event.key === "ArrowLeft") {
+                    event.preventDefault()
+    
+                    if(this.headerElementQueryWrapper.textContent.length > 0) {
+                        this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
+                        this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substring(0, this.headerElementQueryWrapper.textContent.length - 1);
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }
+                } else if(event.key === "ArrowRight") {
+                    event.preventDefault()
+    
+                    if(this.headerElementQueryRight.textContent.length > 0) {
+                        this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
+                        this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }  else if(this.headerElementQueryAutoComplete.textContent.length > 0 && !event.repeat) {
+                        this.headerElementQueryWrapper.textContent += this.headerElementQueryAutoComplete.textContent;
+                        this.headerElementQueryAutoComplete.textContent = ''
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }
+                } else if(event.key === "Enter") {
+                    // do stuff based on settings
+                    const invertTemp = true;
+                    const urlToOpen = searchUI.results[searchUI.selected].url
+
+                    if(usingControlKey ^ invertTemp) {
+                        window.open(urlToOpen);
+                    } else {
+                        location.href = urlToOpen;
+                    }
+                } else if(event.key === 'Escape') {
+                    closeUI()
+                }
             }
-        })
+        })              
     }
 
     createEntireElement() {
         this.wrapperElement = document.createElement('div')
         this.wrapperElement.id = 'canvasplus-search-ui-wrapper'
         this.wrapperElement.className = 'canvasplus-search-ui-wrapper'
-        this.wrapperElement.style.display = 'none'
 
         this.element = document.createElement('div')
         this.element.className = 'canvasplus-search-ui'
@@ -604,16 +650,16 @@ class SearchUI {
 
             this.headerElementQueryWrapper = document.createElement('div')
             this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
-            this.headerElementQueryWrapper.innerText = 'Search'
+            this.headerElementQueryWrapper.innerText = ''
             this.headerElementQueryWrapper.setAttribute('data-caret-position', '20px')
             
             this.headerElementQueryRight = document.createElement('div')
             this.headerElementQueryRight.className = 'canvasplus-search-ui-query-wrapper-right'
-            this.headerElementQueryRight.innerText = ' Query'
+            this.headerElementQueryRight.innerText = ''
 
             this.headerElementQueryAutoComplete = document.createElement('div')
             this.headerElementQueryAutoComplete.className = 'canvasplus-search-ui-query-wrapper-autocomplete'
-            this.headerElementQueryAutoComplete.innerText = 'Autocomplete'
+            this.headerElementQueryAutoComplete.innerText = 'Search your courses...'
 
             this.headerElement.appendChild(this.headerElementIcon)
             this.headerElement.appendChild(this.headerElementQueryWrapper)
@@ -726,14 +772,9 @@ class SearchUI {
         this.where = where;
         where.appendChild(this.wrapperElement)
     }
-
-    remove() {
-        this.where.removeChild(this.element)
-    }
 }
 
 const searchUI = new SearchUI()
-    searchUI.insert(document.body)
     searchUI.addListeners()
     
 main()
