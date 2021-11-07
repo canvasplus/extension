@@ -506,6 +506,8 @@ class SearchUI {
 
         this.showing = false;
 
+        this.invertOpenNewTab = false;
+
         setInterval(() => {
             if(!document.body.contains(this.headerElementQueryWrapper)) return;
             
@@ -618,10 +620,9 @@ class SearchUI {
                     }
                 } else if(event.key === "Enter") {
                     // do stuff based on settings
-                    const invertTemp = true;
                     const urlToOpen = searchUI.results[searchUI.selected].url
 
-                    if(usingControlKey ^ invertTemp) {
+                    if(usingControlKey ^ searchUI.invertOpenNewTab) {
                         window.open(urlToOpen);
                     } else {
                         location.href = urlToOpen;
@@ -714,6 +715,23 @@ class SearchUI {
     buildResult(result, idx) {
         const resultElement = document.createElement('div')
         resultElement.className = 'canvasplus-search-ui-results-single-result'
+        
+        resultElement.addEventListener('mouseover', (event) => {
+            if(this.selected === idx) return;
+            this.resultsElement.children[this.selected].classList.remove('result-selected')
+            this.resultsElement.children[idx].classList.add('result-selected')
+            this.selected = idx;
+            this.buildAutocomplete()
+        })
+
+        resultElement.addEventListener('click', (event) => {
+            const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
+            if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                location.href = result.url
+            } else {
+                window.open(result.url)
+            }
+        })
         
         if(idx === this.selected) {
             resultElement.classList.add('result-selected')
