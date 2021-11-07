@@ -519,9 +519,24 @@ class SearchUI {
         }, 250)
 
         this.selected = 0
+
+        this.invertTabSnackbar = undefined;
     }
 
     addListeners() {
+        document.addEventListener("keyup", (event) => {
+            const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
+            if(usingControlKey && this.invertTabSnackbar?.element?.innerText?.startsWith('Opening in')) {
+                const id = this.invertTabSnackbar.id;
+                setTimeout(() => {
+                    if(this.invertTabSnackbar && id === this.invertTabSnackbar.id) {
+                        removeSnackbar(this.invertTabSnackbar)
+                        this.invertTabSnackbar = undefined;
+                    }
+                }, Math.max(375 - (Date.now() - this.invertTabSnackbar.created), 0))
+            }
+        })
+
         document.addEventListener("keydown", (event) => {
             event = event || window.event;
             
@@ -552,10 +567,37 @@ class SearchUI {
                 if(event.key === 'k') {
                     if(this.showing) {
                         closeUI()
+                        
+                        if(this.invertTabSnackbar) {
+                            this.invertTabSnackbar = setSnackbar("Press escape to close faster")
+                    
+                            const id = this.invertTabSnackbar.id
+
+                            setTimeout(() => {
+                                if(searchUI.invertTabSnackbar.id === id) {
+                                    removeSnackbar(this.invertTabSnackbar)
+                                    this.invertTabSnackbar = undefined;
+                                }
+                            }, 1000);
+                        }
                     } else {
                         openUI()
                     }
                     return;
+                } else if(this.showing) {
+                    if(this.invertTabSnackbar) {
+                        this.invertTabSnackbar.element.remove() 
+                    }
+                    this.invertTabSnackbar = setSnackbar("Opening in new tab")
+                    
+                    const id = this.invertTabSnackbar.id
+
+                    setTimeout(() => {
+                        if(searchUI.invertTabSnackbar.id === id) {
+                            removeSnackbar(this.invertTabSnackbar)
+                            this.invertTabSnackbar = undefined;
+                        }
+                    }, 2500);
                 }
             }
             if(this.showing) {

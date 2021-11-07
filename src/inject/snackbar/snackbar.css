@@ -1,0 +1,40 @@
+.cpx-snackbar-container {
+    display: block;
+    top: 0;
+    z-index: 1000;
+    left: 50%;
+    position: fixed;
+    transform: translateX(-50%);
+}
+
+.cpx-snackbar {
+    background: var(--cpt-dark-search-ui-header-background-color, #FFF);
+    padding: 12px 18px;
+    border-radius: 1000px;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.15));
+    margin-top: 15px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: cpx-snackbar-appear 0.35s ease-out;
+}
+
+.cpx-snackbar.removing {
+    animation: cpx-snackbar-disappear 0.35s ease;
+}
+
+@keyframes cpx-snackbar-appear {
+    from {
+        transform: translate(-50%, -50px);
+    } to {
+        transform: translate(-50%, -0px);
+    }
+}
+
+@keyframes cpx-snackbar-disappear {
+    to {
+        transform: translate(-50%, -50px);
+    } from {
+        transform: translate(-50%, -0px);
+    }
+}
