@@ -12,9 +12,9 @@ const html = document.querySelector('html');
 html.appendChild(linkApplyVars);
 html.appendChild(varSheet);
 
-const applyVarsURL = chrome.extension.getURL("src/inject/colors/apply-variables.css");;
+const applyVarsURL = chrome.extension.getURL("src/inject/colors/apply-variables.css");
 
-useReactiveFeature('canvasplus-display-appearance', (appearance) => {
+const applyAppearance = (appearance) => {
   if(appearance && appearance !== 'light') {
     linkApplyVars.href = applyVarsURL;
     varSheet.href = chrome.extension.getURL('src/inject/colors/' + appearance + '.css')
@@ -22,4 +22,16 @@ useReactiveFeature('canvasplus-display-appearance', (appearance) => {
     linkApplyVars.href = '';
     varSheet.href = '';
   }
+}
+
+window.matchMedia("(prefers-color-scheme: light)").addEventListener('change', e => {
+  if (originalappearance == 'auto') {applyAppearance(e.matches ? "light" : "dark")}
+})
+
+var appearance = '';
+var originalappearance = '';
+useReactiveFeature('canvasplus-display-appearance', (color) => {
+  appearance = originalappearance = color;
+  originalappearance == 'auto' ? (appearance = window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light') : color;
+  applyAppearance(appearance)
 })

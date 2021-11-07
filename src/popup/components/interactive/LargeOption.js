@@ -14,8 +14,8 @@ const LargeOption = (props) => {
   var style = {"--background-color": backgroundColor, "--background-hover-color": tinycolor(backgroundColor).darken()};
 
   return (
-    <div className={className} style={style} onClick={clickHandler}>
-      <p style={{color: color}}>{ props.children }</p>
+    <div className={className + ' ' + props.id} style={style} onClick={clickHandler}>
+      <p style={{color: color}} className={props.id + "-text"}>{ props.children }</p>
     </div>
   );
 }

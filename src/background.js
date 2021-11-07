@@ -2,7 +2,7 @@ const oldDefaults = {
   "canvasplus-setting-quicklink": false,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
-  "canvasplus-display-appearance": "light",
+  "canvasplus-display-appearance": "auto",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',

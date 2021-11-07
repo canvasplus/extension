@@ -2,7 +2,7 @@ const defaults = {
   "canvasplus-setting-quicklink": false,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
-  "canvasplus-display-appearance": "light",
+  "canvasplus-display-appearance": "auto",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
@@ -55,7 +55,7 @@ const createFinishSettingUp = (selectedAppearance) => {
       <h3 class='canvasplus-finish-setting-up__Header'>Finish Setting Up</h3>
       <div class='canvasplus-finish-setting-up__DisplayHeader'>Chose a Look</div>
       <div class='canvasplus-finish-setting-up__DisplayWrapper'>
-        <div class='canvasplus-finish-setting-up__DisplayOption light ${!['dim','dark'].includes(selectedAppearance) ? 'selected' : ''}'>
+        <div class='canvasplus-finish-setting-up__DisplayOption light ${selectedAppearance === 'light' ? 'selected' : ''}'>
           <img src='${ chrome.extension.getURL('assets/img/light.png') }' />
           <p>Default</p>
         </div>
@@ -66,6 +66,10 @@ const createFinishSettingUp = (selectedAppearance) => {
         <div class='canvasplus-finish-setting-up__DisplayOption dark ${selectedAppearance === 'dark' ? 'selected' : ''}'>
           <img src='${ chrome.extension.getURL('assets/img/dark.png') }' />
           <p>Dark</p>
+        </div>
+        <div class='canvasplus-finish-setting-up__DisplayOption auto ${!['dim','dark','light'].includes(selectedAppearance) ? 'selected' : ''}'>
+          <img src='${ chrome.extension.getURL('assets/img/' + (window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light') + '.png') }' />
+          <p>Auto</p>
         </div>
       </div>
       <div class='canvasplus-finish-setting-up__ExtensionMenu'>
@@ -78,6 +82,10 @@ const createFinishSettingUp = (selectedAppearance) => {
       <button class='canvasplus-finish-setting-up__Done'>Done</button>
     </div>
   `
+  const colorscheme = (e) => {
+    if (originalappearance == 'auto') {document.querySelector('.canvasplus-finish-setting-up__DisplayOption.auto').children[0].src = chrome.extension.getURL('assets/img/' + (e.matches ? 'light' : 'dark') + '.png')}
+  }
+  
   const select = (appearance) => {
     popup.querySelectorAll('.canvasplus-finish-setting-up__DisplayOption.selected').forEach((ele) => {
       ele.classList.remove('selected')
@@ -92,15 +100,17 @@ const createFinishSettingUp = (selectedAppearance) => {
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.light').addEventListener('click', () => { select('light') })
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim').addEventListener('click', () => { select('dim') })
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark').addEventListener('click', () => { select('dark') })
+  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.auto').addEventListener('click', () => { select('auto') })
   popup.querySelector('.canvasplus-finish-setting-up__Done').addEventListener('click', () => {
     popup.classList.add('closing')
     setTimeout(() => {
       document.body.removeChild(popup)
+      window.matchMedia("(prefers-color-scheme: light)").onchange = null;
     }, 1000)
     chrome.storage.local.set({"canvasplus-setup-stage": 1, "canvasplus-setting-sidebar-color": `linear-gradient(45deg, ${getColor()}, ${getColor()})`})
   })
   document.body.appendChild(popup)
-
+  matchMedia("(prefers-color-scheme: light)").onchange = ( e => { colorscheme(e) });
 }
 
 chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appearance"], (data) => {
