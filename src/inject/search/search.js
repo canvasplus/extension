@@ -327,6 +327,21 @@ const main = async () => {
 
         searchContent.done = true;
     })
+
+    if(!sessionStorage.getItem("canvasplus-search-session")) {
+        sessionStorage.setItem("canvasplus-search-session", true)
+
+        const snackbar = setSnackbar([{
+            'type': 'text', 'text': 'Press '
+        }, {
+            'type': 'code', 'text': 'Cmd+P'
+        }, {
+            'type': 'text', 'text': 'to search '
+        }])
+        //setTimeout(() => {
+        //    removeSnackbar(snackbar);    
+        //}, 2000)
+    }
 }
 
 const search = async (query, callback) => {
@@ -569,16 +584,7 @@ class SearchUI {
                         closeUI()
                         
                         if(this.invertTabSnackbar) {
-                            this.invertTabSnackbar = setSnackbar("Press escape to close faster")
-                    
-                            const id = this.invertTabSnackbar.id
-
-                            setTimeout(() => {
-                                if(searchUI.invertTabSnackbar.id === id) {
-                                    removeSnackbar(this.invertTabSnackbar)
-                                    this.invertTabSnackbar = undefined;
-                                }
-                            }, 1000);
+                            instantlyRemoveSnackbar(this.invertTabSnackbar)
                         }
                     } else {
                         openUI()
