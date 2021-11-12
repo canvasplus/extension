@@ -332,15 +332,16 @@ const main = async () => {
         sessionStorage.setItem("canvasplus-search-session", true)
 
         const snackbar = setSnackbar([{
-            'type': 'text', 'text': 'Press '
+            'type': 'text', 'text': 'Press'
         }, {
-            'type': 'code', 'text': 'Cmd+P'
+            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'P'
         }, {
-            'type': 'text', 'text': 'to search '
+            'type': 'text', 'text': 'to search'
         }])
-        //setTimeout(() => {
-        //    removeSnackbar(snackbar);    
-        //}, 2000)
+
+        setTimeout(() => {
+           removeSnackbar(snackbar);    
+        }, 2000)
     }
 }
 
@@ -594,7 +595,7 @@ class SearchUI {
                     if(this.invertTabSnackbar) {
                         this.invertTabSnackbar.element.remove() 
                     }
-                    this.invertTabSnackbar = setSnackbar("Opening in new tab")
+                    this.invertTabSnackbar = setSnackbar([{"type":"text","text":"Opening in new tab"}])
                     
                     const id = this.invertTabSnackbar.id
 

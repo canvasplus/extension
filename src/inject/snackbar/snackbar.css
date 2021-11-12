@@ -9,7 +9,7 @@
 
 .cpx-snackbar {
     background: var(--cpt-dark-search-ui-header-background-color, #FFF);
-    padding: 12px 18px;
+    padding: 0 18px;
     border-radius: 1000px;
     filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.15));
     margin-top: 15px;
@@ -37,4 +37,20 @@
     } from {
         transform: translate(-50%, -0px);
     }
+}
+
+span.cpx-snackbar-text-span {
+    display: inline-block;
+    float: none;
+    margin: 0;
+    white-space: pre;
+    margin: 12px 0;
+}
+
+span.cpx-snackbar-text-span-code {
+    background: var(--cpt-dark-snackbar-code-segment-color, #f3f3f3);
+    padding: 6px 14px;
+    border-radius: 24px;
+    margin: 0 8px;
+    font-size: 14px;
 }
