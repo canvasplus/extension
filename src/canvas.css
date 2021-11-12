@@ -101,6 +101,7 @@
 .canvasplus-finish-setting-up__DisplayOption {
   padding: 10px 10px 0 10px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .canvasplus-finish-setting-up__DisplayWrapper {
@@ -150,6 +151,20 @@
 .canvasplus-finish-setting-up__DisplayOption.dark {
   background: #050d26;
   color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: light) {
+  .canvasplus-finish-setting-up__DisplayOption.auto {
+    background: #EEE;
+    color: #444444;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .canvasplus-finish-setting-up__DisplayOption.auto {
+    background: #050d26;
+    color: #FFFFFF;
+  }
 }
 
 .canvasplus-finish-setting-up__DisplayOption img {
