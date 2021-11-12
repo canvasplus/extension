@@ -29,4 +29,11 @@
   --cpt-dark-current-page: #26292d;
 
   --cpt-dark-dashboard-header: rgba(38, 41, 45, 0.95);
+
+  --cpt-dark-search-ui-header-background-color: #2c3438;
+  --cpt-dark-search-ui-result-background-color: #232a2e;
+  --cpt-dark-search-ui-selected-result-background-color: #223142;
+  --cpt-dark-search-ui-glass-color: rgba(40, 45, 51, 0.5);
+
+  --cpt-dark-snackbar-code-segment-color: #232a2e;
 }

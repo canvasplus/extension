@@ -1,490 +1,851 @@
-const courseNames = {}
-const searchLog = []
+const STORAGE_PREFIX = "canvasplus-search-cache-v4-"
 
-const runSearch = () => {
-    const search = injectSearchBox()
+let searchData = {}
 
-    getCoursesToSearch().then(courses => {
-        searchCourses(courses)
-    })
-
-}
-
-const injectSearchBox = () => {
-    const wrapper = document.getElementById("wrapper");
-    const topNav = wrapper.firstElementChild;
-
-    const searchWrapper = document.createElement("div");
-    searchWrapper.id = "ic-app-class-search-wrapper";
-
-    const search = document.createElement("input");
-    search.id = "ic-app-class-search";
-    search.type = "search";
-    search.placeholder = "Loading Search...";
-    search.classList = "ic-app-class-search";
-    search.autocomplete = "off";
-    search.disabled = true;
-
-    const searchProgress = document.createElement("span");
-    searchProgress.id = "ic-app-class-search-progress";
-    searchProgress.classList = "ic-app-class-search-progress";
-
-    searchWrapper.appendChild(search);
-    searchWrapper.appendChild(searchProgress);
-
-    if(document.getElementById("dashboard_header_container") != null) // Sidebar is not exclusive to wrapper
-    {
-        searchWrapper.style.marginBottom = "40px";
-        const sidebar = document.getElementById("right-side-wrapper");
-        sidebar.insertBefore(searchWrapper, sidebar.firstChild);
-    }
-    else
-    {
-        if (getPathAPI.toString().split('/')[1] == "conversations") {
-          document.getElementsByClassName("panel__secondary")[0].appendChild(searchWrapper);
-        } else if (getPathAPI.toString().split('/')[1] == "calendar") {
-          document.getElementById("right-side-wrapper").insertBefore(searchWrapper, document.getElementById("right-side-wrapper").firstChild);
-          document.getElementById("right-side").style.marginTop = "24px";
-        } else if (getPathAPI.toString() == "/courses") {
-          document.getElementsByClassName("header-bar")[0].children[0].style.display = "inline-block";
-          document.getElementsByClassName("header-bar")[0].appendChild(searchWrapper);
-          searchWrapper.style.display = "inline-block";
-          searchWrapper.style.float = "right";
-        } else if (getPathAPI.toString().substring(getPathAPI.toString().lastIndexOf("/") + 1) == "files") {
-          document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].appendChild(searchWrapper);
-        } else if (getPathAPI.toString() == "/grades") {
-          topNav.appendChild(searchWrapper);
-          searchWrapper.style.marginInlineStart = "auto";
-        } else if (typeof document.getElementsByClassName("not_found_page_artwork")[0] !== 'undefined' || typeof document.getElementsByClassName("ic-Error-page")[0] !== 'undefined') {
-            console.log("[Canvas+] Not Injecting Search Due to 404 page");
-            process.exit(1);
-        } else {
-          topNav.appendChild(searchWrapper);
-        }
-    }
-
-    setTimeout(() => {
-        if(document.body.contains(searchProgress)) {
-        search.placeholder = "Search is taking longer than expected...";
-        search.classList.add("taking-longer-than-expected")
-        }
-    }, 10000)
-    setTimeout(() => {
-        if(document.body.contains(searchProgress)) {
-        search.placeholder = "Search may have failed. Try reloading.";
-        }
-    }, 20000)
-    return search;
-}
-
-const injectSearchResults = (results) => {
-    const wrapper = document.getElementById("wrapper");
-    const topNav = wrapper.firstElementChild;
-
-    const searchResults = document.createElement('div');
-    searchResults.id = 'ic-app-class-search-results'
-    searchResults.classList = 'ic-app-class-search-results'
-    searchResults.innerHTML = ''
-
-    if(document.getElementById("dashboard_header_container") != null)
-    {
-        searchResults.style.top = "70px";
-        searchResults.style.right = "40px";
-    }
-
-    fetch(getPathAPI('/api/v1/users/self/colors'), {
-        headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
-    }).then(colors => {
-        colors.json().then(colors => {
-            let searchResultsCounter = document.createElement("b");
-            searchResultsCounter.hidden = true;
-            searchResultsCounter.id = "canvasplus-search-results-counter";
-            searchResultsCounter.classList = "canvasplus-search-results-counter";
-            searchResultsCounter.innerHTML = "??? Results";
-
-            let searchResultsNoResults = document.createElement("div");
-            searchResultsNoResults.hidden = true;
-            searchResultsNoResults.id = "canvasplus-search-results-no-results";
-            searchResultsNoResults.classList = "canvasplus-search-results-no-results";
-            searchResultsNoResults.innerHTML = "<b class='canvasplus-search-results-no-results-header'>No Results</b><p class='canvasplus-search-results-no-results-description'>At this time, Canvas+ only searches your course pages and modules.</p>";
-
-            searchResults.appendChild(searchResultsCounter);
-            searchResults.appendChild(searchResultsNoResults);
-
-            results.forEach(item => {
-                const row = document.createElement('div')
-                row.classList = 'canvasplus-search-results-list-item'
-
-                const courseIndicator = document.createElement("p");
-                courseIndicator.classList = "canvasplus-search-results-list-course-indicator";
-                courseIndicator.style.color = colors.custom_colors['course_' + item.course];
-                courseIndicator.innerHTML = courseNames[item.course];
-
-                let link = document.createElement("a")
-                link.classList = "ig-title title item_link";
-                link.target = "_blank";
-                link.rel = "noreferrer noopener";
-                link.innerHTML = item.title;
-                link.href = item.url;
-
-                row.setAttribute("link-name", link.innerHTML);
-                row.appendChild(courseIndicator);
-                row.appendChild(link);
-
-                item.element = row
-
-                searchResults.appendChild(row)
-            });
-            topNav.appendChild(searchResults);
-
-            let search = document.getElementById("ic-app-class-search")
-            search.placeholder = 'Search'
-            search.disabled = false
-            search.classList.remove('taking-longer-than-expected')
-
-            search.onblur = () => {
-                searchResults.style.visibility = "hidden";
-                searchResults.style.opacity = "0";
-            }
-
-            search.onfocus = () => {
-                if(search.value.length > 0)
-                {
-                    searchResults.style.visibility = "visible";
-                    searchResults.style.opacity = "1";
-                }
-            }
-
-            search.onkeyup = () => {
-                let query = search.value.toLowerCase()
-                if (query === "hawkins") {
-                  /* from https://github.com/DavidLozzi/Stranger-Things-Easter-Egg */
-                  window.upsideDown = (function () {
-                  let music = {};
-                  let body = {};
-                  let originalBody = {};
-                  let status = '';
-
-                  const start = () => {
-                    music = new Audio('https://raw.githubusercontent.com/DavidLozzi/Stranger-Things-Easter-Egg/master/music.mp3');
-                    music.play();
-                    status = 'started';
-
-                    body = document.querySelectorAll("html")[0];
-                    originalBody = { ...body };
-
-                    body.style.background = 'radial-gradient(transparent, black), #C11B1F';
-                    body.style.backgroundRepeat = 'no-repeat';
-                    body.style.backgroundSize = 'cover';
-                    body.style.overflow = 'hidden';
-
-                    const fadeMusic = () => {
-                      setTimeout(() => {
-                        music.volume = Math.round(music.volume) > 0 ? music.volume - 0.1 : 0;
-                        if (music.volume > 0) {
-                          fadeMusic();
-                        } else {
-                          status = 'done';
-                          stop()
-                        }
-                      }, 400);
-                    };
-
-                    window.setTimeout(() => {
-                      status = 'running';
-                      body.style.transition = 'all 10s ease 0s, transform 12s';
-                      body.style.transform = 'rotate(180deg) scale(.9)';
-                      body.style.filter = 'invert(1)';
-
-                      window.setTimeout(() => {
-                        fadeMusic();
-                      }, 10500);
-                    }, 1000);
-                  };
-
-                  const stop = () => {
-                    music.pause();
-                    music = null;
-                    body.style = originalBody.style;
-                    status = '';
-                  };
-
-                  const getStatus = () => {
-                    return status;
-                  };
-
-                  return {
-                    start,
-                    stop,
-                    getStatus
-                  };
-                }());
-                window.upsideDown.start();
-              };
-                if (query == "rick") {
-                  window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-                  search.value = "";
-                };
-                if(query.length == 0) {
-                    searchResults.style.visibility = "hidden";
-                    searchResults.style.opacity = "0";
-                } else {
-                    searchResults.style.visibility = "visible";
-                    searchResults.style.opacity = "1";
-                }
-                let length = results.filter(item => {
-                    if(item.title.toLowerCase().includes(query)) {
-                        item.element.hidden = false
-                        return true
-                    } else {
-                        item.element.hidden = true
-                        return false
-                    }
-                }).length
-                if(length > 0) {
-                    searchResultsCounter.innerHTML = length + " Results"
-                    searchResultsCounter.hidden = false
-                    searchResultsNoResults.hidden = true
-                } else {
-                    searchResultsCounter.hidden = true
-                    searchResultsNoResults.hidden = false
-                }
-            }
-
-            searchResults.style.visibility = "hidden";
-            searchResults.style.opacity = "0";
-
-            setTimeout(() => {
-                document.getElementById("ic-app-class-search-progress").classList.add("removing");
-            }, 1000)
-            setTimeout(() => {
-                document.getElementById("ic-app-class-search-progress").remove();
-            }, 1600)
-        });
-    });
-}
-
-const getCoursesToSearch = async () => {
-    let courses = await fetch(getPathAPI('/api/v1/users/self/favorites/courses?include[]=term&exclude[]=enrollment'), {
-        headers: {accept: "application/json, text/javascript, application/json+canvas-string-ids"}
-    });
-    courses = await courses.json();
-
-    let output = {}
-
-    courses.forEach(item => {
-        output[item.id] = {
-            id: item.id,
-            name: item.name
-        }
-        if(item.name.length < 15) {
-            courseNames[item.id] = item.name
-        } else {
-            courseNames[item.id] = item.name.substr(0, 12).trim() + "..."
-        }
-    })
-
-    return output;
-}
-
-const searchCourses = (courses) => {
-    let process = 0
-    const searchStages = 1 // number of places that are search per course
-
-    let items = []
-
-    let i = 0
-    let allItems = []
-
-    const searchCourseContinue = (id) => {
-        searchPages(id).then(pages => {
-            allItems = allItems.concat(pages)
-
-            searchModules(id).then(modules => {
-                allItems = allItems.concat(modules)
-                i++
-
-
-                document.getElementById('ic-app-class-search-progress').classList.remove('dont-round-borders')
-                document.getElementById('ic-app-class-search-progress').style.width = (i / Object.values(courses).length * 100) + '%'
-                document.getElementById('ic-app-class-search-progress').style.backgroundSize = (1500 / (i / Object.values(courses).length)) + "%"
-
-                if(i >= Object.values(courses).length) {
-                    injectSearchResults(allItems)
-                }
-            })
-        })
-    }
-
-    let j = 0
-    Object.values(courses).forEach(item => {
-        chrome.storage.local.get('canvasplus-searchcache-v3-pages-' + item.id, pagesStorageObj => {
-            let pagesStorage = pagesStorageObj['canvasplus-searchcache-v3-pages-' + item.id]
-
-            chrome.storage.local.get('canvasplus-searchcache-v3-modules-' + item.id, modulesStorageObj => {
-                let modulesStorage = modulesStorageObj['canvasplus-searchcache-v3-modules-' + item.id]
-
-                let pagesSession = sessionStorage.getItem('canvasplus-searchcache-v3-pages-' + item.id)
-                let modulesSession = sessionStorage.getItem('canvasplus-searchcache-v3-modules-' + item.id)
-
-                if((pagesStorage || pagesSession) && (modulesStorage || modulesSession)) {
-                    searchCourseContinue(item.id)
-                } else {
-                    setTimeout(() => {
-                        searchCourseContinue(item.id)
-                    }, j * 1000)
-                }
-                j++
-            })
-        })
-    })
-}
-
-const doneSearchingCourses = (items) => {
-    searchLog.push(items)
-}
-
-const searchPages = async (courseId, checkStorage) => {
-    if(checkStorage === undefined) checkStorage = true
-
-    let storageName = ('canvasplus-searchcache-v3-pages-' + courseId)
-
-    if(checkStorage) {
-        if(sessionStorage.getItem(storageName) !== null) {
-            searchLog.push('Used session storage to get pages from course ' + courseId + ' ...')
-            return JSON.parse(sessionStorage.getItem(storageName))
-        }
-
-        let getStorage = new Promise(resolve => {
-            chrome.storage.local.get(storageName, output => {
-                resolve(output)
-            })
-        })
-
-        let storageList = await getStorage
-        let storageItem = storageList[storageName]
-
-        if(storageItem) {
-            searchLog.push('Refreshing page index of course ' + courseId + ' ...')
-            searchPages(courseId, false)
-            return storageItem
-        }
-    }
-
-
-    let pages = []
-    let pageIndex = 1
-
-    while(true) {
-        // Get JSON from API
-        data = await fetch(getPathAPI('/api/v1/courses/' + courseId + '/pages?per_page=100&page=' + pageIndex))
-        data = await data.json()
-
-        if(data.message === 'That page has been disabled for this course') {
-            // Runs if pages feature is disabled
-            break;
-        } else {
-            // Convert to small object and add to list
-
-            data.forEach(item => {
-                pages.push({
-                    title: item.title,
-                    url: item.html_url,
-                    course: courseId
-                })
-            })
-
-            // Runs if there are no more pages
-            if(data.length < 100) {
-                break;
-            }
-        }
-
-        pageIndex += 1 // "Turn" the page
-    }
-
-    sessionStorage.setItem(storageName, JSON.stringify(pages))
-    let storageChanges = {}
-    storageChanges[storageName] = pages
-    chrome.storage.local.set(storageChanges)
-
-    searchLog.push('Done getting pages from course ' + courseId + ' ...')
-    return pages
-}
-
-const searchModules = (courseId, checkStorage) => {
-    if(checkStorage === undefined) checkStorage = true
-
-    let storageName = ('canvasplus-searchcache-v3-modules-' + courseId)
-
+const getLocalStoragePromise = async(get) => {
     return new Promise((resolve, reject) => {
-        const getModulesPage = (pageIndex, existing) => {
-            fetch(getPathAPI('/api/v1/courses/' + courseId + '/modules?include=items&per_page=100&page=' + pageIndex)).then(output => {
-                output.json().then(json => {
-                    if(json.length < 100) {
-                        existing = existing.concat(json)
-                        let items = []
-                        existing.forEach(module => {
-                            module.items.forEach(item => {
-                                let obj = {
-                                    title: item.title,
-                                    url: item.html_url,
-                                    course: courseId
-                                }
-                                items.push(obj)
-                            })
-                        })
-
-                        sessionStorage.setItem(storageName, JSON.stringify(items))
-                        let storageChanges = {}
-                        storageChanges[storageName] = items
-                        chrome.storage.local.set(storageChanges)
-
-                        searchLog.push('Done getting modules from course ' + courseId + ' ...')
-                        resolve(items);
-                    } else {
-                        getModulesPage(pageIndex + 1, existing.concat(json))
-                    }
-                })
-            })
-        }
-
-        if(checkStorage) {
-            if(sessionStorage.getItem(storageName) !== null) {
-                searchLog.push('Used session storage to get modules from course ' + courseId + ' ...')
-                resolve(JSON.parse(sessionStorage.getItem(storageName)))
-            }
-
-            new Promise(resolve => {
-                chrome.storage.local.get(storageName, output => {
-                    resolve(output)
-                })
-            }).then(storageList => {
-                let storageItem = storageList[storageName]
-
-                if(storageItem) {
-                    searchLog.push('Refreshing modules index of course ' + courseId + ' ...')
-                    searchPages(courseId, false)
-                    resolve(storageItem)
-                }
-
-                getModulesPage(1, [])
-            })
-        } else {
-            getModulesPage(1, [])
-        }
+        chrome.storage.local.get(get, (data) => {
+            resolve(data)
+        })
     })
 }
 
-useReactiveFeatures([{
-    settingName: "canvasplus-setting-search",
-    onChanged: (data) => {
-        if (data == true) {
-            console.log('[Canvas+] Injecting search bar ...\n \nNote: 404 errors in this window do not have an impact on the functionality of search.\n \nClick to see your search log. ', searchLog)
-            runSearch()
-        } else {
-            try {document.getElementById('ic-app-class-search-wrapper').remove();} catch {}
-            try {document.getElementById('ic-app-class-search-results').remove();} catch {}
+const getFromCache = async (path, getFromStorageIndividually = true) => {
+    path = STORAGE_PREFIX + path;
+
+    if(Array.isArray(path)) {
+        const returnable = {}
+        const notInSessionStorage = []
+
+        for(let eachPath of path) {
+            const session = getFromCache(eachPath, false)
+            if(sesion !== null) {
+                returnable[eachPath]  = sesion
+            } else {
+                notInSessionStorage.push(eachPath)
+            }
+        }
+
+        const fromStorage = await getLocalStoragePromise(notInSessionStorage)
+        for(let eachPath of Object.keys(fromStorage)) {
+            returnable[eachPath] = fromStorage[eachPath]
+        }
+
+        return returnable
+    }
+
+    const session = sessionStorage.getItem(path)
+    if(session !== null && session !== undefined) {
+        try {
+            const json = JSON.parse(session)
+            return json
+        } catch {
+            return session;
         }
     }
-}])
+
+    if(getFromStorageIndividually) {
+        const storage = await getLocalStoragePromise([path])
+        return storage[path];
+    }
+}
+
+const getFetchableBasic = async( searchDataKey, cachePath, fetchPath, fetchResponseHandler = (data) => {return data}, forceReload = false, validCachePeriod = 604800000, recacheGrace = 259200000 ) => {
+    if(!forceReload) {
+        const fromSearchData = searchData[searchDataKey]
+        if(fromSearchData !== undefined) {
+            return fromSearchData
+        }
+
+        const cached = await getFromCache(cachePath)
+        if(cached !== undefined && cached !== null && Date.now() - cached.lastUpdated <= validCachePeriod) {
+            if(Date.now() - cached.lastUpdated > recacheGrace) {
+                getFetchableBasic( searchDataKey, cachePath, fetchPath, true )
+            }
+            return cached.data
+        }
+    }
+
+    const response = await smartAPIFetch(getPathAPI(fetchPath))
+    const json = await response.json()
+    const returnable = await fetchResponseHandler(json)
+
+    const toChangeStorage = {}
+    toChangeStorage[STORAGE_PREFIX + cachePath] = {
+        lastUpdated: Date.now(),
+        data: returnable
+    }
+
+    sessionStorage.setItem(STORAGE_PREFIX + cachePath, JSON.stringify(toChangeStorage[STORAGE_PREFIX + cachePath]))
+
+    chrome.storage.local.set(toChangeStorage)
+
+    return returnable;
+}
+
+const getFetchablePaginated = async( searchDataKey, cachePath, fetchPath, fetchResponseHandler = (data) => {return data}, forceReload = false, validCachePeriod = 604800000, recacheGrace = 259200000 ) => {
+    if(!forceReload) {
+        const fromSearchData = searchData[searchDataKey]
+        if(fromSearchData !== undefined) {
+            return fromSearchData
+        }
+
+        const cached = await getFromCache(cachePath)
+        if(cached !== undefined && cached !== null && Date.now() - cached.lastUpdated <= validCachePeriod) {
+            if(Date.now() - cached.lastUpdated > recacheGrace) {
+                getFetchableBasic( searchDataKey, cachePath, fetchPath, true )
+            }
+            return cached.data
+        }
+    }
+
+    let response = []
+    let i = 1;
+    const url = getPathAPI(fetchPath);
+    const urlParamsStarter = (new URL(url).searchParams.keys().next().done ? "?" : "&")
+    while(true) {
+        const fetchResponse = await smartAPIFetch(url + urlParamsStarter + "per_page=100&page=" + i)
+        const fetchResponseJson = await fetchResponse.json()
+        response = response.concat(fetchResponseJson)
+        if(fetchResponseJson.length < 100) break;
+    }
+
+
+    const returnable = await fetchResponseHandler(response)
+
+    const toChangeStorage = {}
+    toChangeStorage[STORAGE_PREFIX + cachePath] = {
+        lastUpdated: Date.now(),
+        data: returnable
+    }
+
+    sessionStorage.setItem(STORAGE_PREFIX + cachePath, JSON.stringify(toChangeStorage[STORAGE_PREFIX + cachePath]))
+
+    chrome.storage.local.set(toChangeStorage)
+
+    return returnable;
+}
+
+const getCourseList = async (forceReload = false) => {
+    return getFetchableBasic("courses", "courses", "/api/v1/users/self/favorites/courses", async (data) => {
+        const colors = (await (await fetch("/api/v1/users/self/colors")).json())["custom_colors"]
+        const returnable = {}
+
+        for(let course of data) {
+            returnable[course.id] = {
+                id: course.id,
+                name: course.name,
+                color: colors['course_' + course.id]
+            }
+        }
+
+        return returnable
+    }, forceReload)
+}
+
+const getCourseContent = async ( courseId, forceReload = false ) => {
+    const tabs = await getFetchableBasic("courses/" + courseId + "/tabs", "courses/" + courseId + "/tabs", "/api/v1/courses/" + courseId + "/tabs", async (data) => {
+        const returnable = {}
+        for(let tab of data) {
+            returnable[tab.id] = tab
+        }
+        return returnable;
+    }, forceReload)
+
+    const courseContent = {tabs:tabs}
+
+    const courseContentPromises = []
+
+    if(tabs.pages) {
+        const pages = getCoursePages(courseId, forceReload);
+        pages.then((data) => {
+
+            data.forEach(page => {
+                courseContent['pages/' + page.id] = page
+            })
+        })
+        courseContentPromises.push(pages)
+    }
+
+    if(tabs.assignments) {
+        const assignments = getCourseAssignments(courseId, forceReload);
+        assignments.then((data) => {
+            data.forEach((assignment) => {
+                courseContent['assignments/' + assignment.id] = assignment;
+            })
+        })
+    }
+
+    if(tabs.modules) {
+        const modules = getCourseModules(courseId, forceReload);
+        modules.then((data) => {
+            data.modules.forEach(module => {
+                courseContent['modules/' + module.id] = module
+            })
+            data.items.forEach(item => {
+                let courseContentPath;
+                if(item.type === 'Page') {
+                    courseContentPath = 'pages/' + item.id;
+                } else if(item.type === 'Assignment') {
+                    courseContentPath = 'assignments/' + item.id;
+                } else {
+                    courseContentPath = 'module-item/' + item.id;
+                }
+
+                if(courseContentPath) {
+                    if(courseContent[courseContentPath]) {
+                        courseContent[courseContentPath].locations = courseContent[courseContentPath].locations.concat(item.locations)
+                    } else {
+                        courseContent[courseContentPath] = item
+                    }
+                }
+            })
+        })
+        courseContentPromises.push(modules)
+    }
+
+    await Promise.allSettled(courseContentPromises)
+
+    return { courseId: courseId, content: courseContent };
+}
+
+const getCoursePages = async ( courseId, forceReload = false ) => {
+    return getFetchablePaginated("courses/" + courseId + "/pages", "courses/" + courseId + "/pages", "/api/v1/courses/" + courseId + "/pages", async (data) => {
+        const returnable = []
+        for(let page of data) {
+            returnable.push({
+                title: page.title,
+                url: page.html_url,
+                updated: new Date(page.updated_at).getTime(),
+                id: page.url,
+                locations: [{'type': 'tab', 'name': 'Pages', 'id': 'pages'}]
+            })
+        }
+        return returnable;
+    }, forceReload)
+}
+
+const getCourseAssignments = async ( courseId, forceReload = false ) => {
+    return getFetchablePaginated("courses/" + courseId + "/assignments", "courses/" + courseId + "/assignments", "/api/v1/courses/" + courseId + "/assignments", async (data) => {
+        const returnable = []
+        for(let assignment of data) {
+            returnable.push({
+                title: assignment.name,
+                url: assignment.html_url,
+                updated: new Date(assignment.updated_at).getTime(),
+                id: assignment.id,
+                locations: [{'type': 'tab', 'name': 'Assignments', 'id': 'assignments'}]
+            })
+        }
+        return returnable;
+    }, forceReload)
+}
+
+const getCourseModules = async ( courseId, forceReload = false ) => {
+    return getFetchablePaginated("courses/" + courseId + "/modules", "courses/" + courseId + "/modules", "/api/v1/courses/" + courseId + "/modules?include=items", async (data) => {
+        const modules = []
+        const items = []
+        for(let module of data) {
+            const url = new URL(module["items_url"])
+            modules.push({
+                id: module.id,
+                url: url.protocol + '//' + url.hostname + '/courses/' + courseId + '/modules?cpx-jump-to=' + module.id,
+                title: module.name,
+                locations: [{'type': 'tab', 'name': 'Modules', 'id': 'modules'}]
+            })
+            module.items.forEach(moduleItem => {
+                let itemUrl;
+                let itemId;
+
+                if(moduleItem.type === "Page") {
+                    itemUrl = url.protocol + '//' + url.hostname + '/courses/' + courseId + '/pages/' + moduleItem['page_url'];
+                    itemId = moduleItem['page_url'];
+                }
+                else if(moduleItem.type === "Assignment") {
+                    itemUrl = url.protocol + '//' + url.hostname + '/courses/' + courseId + '/assignments/' + moduleItem['content_id']
+                    itemId = moduleItem['content_id']
+                }
+                else if(moduleItem.type !== "Header" && moduleItem.type !== "SubHeader") {
+                    itemUrl = moduleItem['html_url'];
+                }
+
+                if(itemUrl) {
+                    items.push({
+                        id: itemId || moduleItem.id,
+                        title: moduleItem.title,
+                        url: itemUrl,
+                        type: moduleItem.type,
+                        locations: [{'type': 'module', 'name': module.name, 'id': module.id}]
+                    })
+                }
+            })
+        }
+        const returnable = { modules, items };
+        return returnable;
+    }, forceReload)
+}
+
+const searchContent = {done: false, courses: {}, searchIndexByWord: {}, entireRawIndex: []};
+
+const main = async () => {
+    const courses =  await getCourseList()
+
+    const courseContentPromises = []
+
+    for(let course of Object.values(courses))  {
+        courseContentPromises.push(getCourseContent(course.id, true))
+    }
+
+    Promise.allSettled(courseContentPromises)
+    .then((results) => {
+        results.forEach((course) => {
+            course = course.value
+            const meta = courses[course.courseId];
+            searchContent['courses'][course['courseId']] = {
+                meta: meta,
+                content: course
+            }
+
+            Object.keys(course.content).forEach(key => {
+                if(key !== "tabs") {
+                    const page = course["content"][key];
+                    page.course = meta;
+
+                    searchContent["entireRawIndex"].push(page)
+
+                    const words = smartSplit(page.title);
+                    words.forEach(word => {
+                        if(searchContent["searchIndexByWord"][word]) {
+                            searchContent["searchIndexByWord"][word].push(page)
+                        } else {
+                            searchContent["searchIndexByWord"][word] = [page]
+                        }
+                    })
+                }
+            })
+        })
+
+        searchContent.done = true;
+    })
+
+    if(!sessionStorage.getItem("canvasplus-search-session")) {
+        sessionStorage.setItem("canvasplus-search-session", true)
+
+        const snackbar = setSnackbar([{
+            'type': 'text', 'text': 'Press'
+        }, {
+            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'P'
+        }, {
+            'type': 'text', 'text': 'to search'
+        }])
+
+        setTimeout(() => {
+           removeSnackbar(snackbar);
+        }, 2000)
+    }
+}
+
+const search = async (query, callback) => {
+    const simpleQuery = filterAlphanumeric(query).toLowerCase();
+    let results = {}
+
+    Object.keys(searchContent["searchIndexByWord"]).forEach(key => {
+        if(simpleQuery.includes(key)) {
+            searchContent["searchIndexByWord"][key].forEach(item => {
+                const references = smartSplit(query);
+                const subjects = smartSplit(item.title);
+                let scores = 0;
+                references.forEach(reference => {
+                    const max = reference.length;
+
+                    let current = {subject: undefined, similarity: 0};
+                    subjects.find(subject => {
+                        if(reference === subject) {
+                            current = {subject: subject, similarity: max};
+                            return true;
+                        }
+                        const similarity = compareWords(reference, subject);
+                        if(similarity >= max) {
+                            current = {subject: subject, similarity: max};
+                            return true;
+                        }
+                        if(similarity > current.similarity) {
+                            current = {subject: subject, similarity: similarity};
+                        }
+                        return false;
+                    })
+                })
+                if(filterAlphanumeric(item.title).toLowerCase().includes(filterAlphanumeric(query).toLowerCase())) {
+                    scores *= 1.5
+                    if(item.title.toLowerCase().includes(query.toLowerCase())) {
+                        scores *= 1.5
+                    }
+                }
+
+                const max = references.map(reference => {
+                    return reference.length;
+                }).reduce((a, b) => { return a + b} )
+
+                if(results[item.url]) {
+                    results[item.url].relevance = Math.max(results[item.url].relevance, scores/max)
+                } else {
+                    results[item.url] = {
+                        relevance: scores/max,
+                        item: item
+                    }
+                }
+            })
+        }
+    })
+
+
+    callbackReturn = Object.values(results).sort((a, b) => {
+        return b.relevance - a.relevance
+    })
+
+    callback(callbackReturn);
+
+    results = {}
+
+    new Promise((resolve, reject) => {
+        searchContent["entireRawIndex"].forEach((item, idx) => {
+            const references = smartSplit(query);
+            const subjects = smartSplit(item.title);
+            let scores = 0;
+            references.forEach(reference => {
+                const max = reference.length;
+
+                let current = {subject: undefined, similarity: 0};
+                subjects.find(subject => {
+                    if(reference === subject) {
+                        current = {subject: subject, similarity: max};
+                        return true;
+                    }
+                    const similarity = compareWords(reference, subject);
+                    if(similarity >= max) {
+                        current = {subject: subject, similarity: max};
+                        return true;
+                    }
+                    if(similarity > current.similarity) {
+                        current = {subject: subject, similarity: similarity};
+                    }
+                    return false;
+                })
+                scores += current.similarity
+            })
+
+            if(filterAlphanumeric(item.title).toLowerCase().includes(filterAlphanumeric(query).toLowerCase())) {
+                scores *= 1.5
+                if(item.title.toLowerCase().includes(query.toLowerCase())) {
+                    scores *= 1.5
+                }
+            }
+
+            const max = references.map(reference => {
+                return reference.length;
+            }).reduce((a, b) => { return a + b} )
+
+            if(results[item.url]) {
+                results[item.url].relevance = Math.max(results[item.url].relevance, scores/max)
+            } else {
+                results[item.url] = {
+                    relevance: scores/max,
+                    item: item
+                }
+            }
+        })
+    })
+
+    callback(Object.values(results).sort((a, b) => {
+        return b.relevance - a.relevance
+    }));
+}
+
+const searchUpdateUI = (query) => {
+    if(query.length > 0) {
+        search(query, (results) => {
+            searchUI.results = []
+
+            results.splice(5)
+            results.forEach(result => {
+                if(result.relevance >= 0.65) {
+                    searchUI.results.push({
+                        course: {
+                            name: result.item.course.name,
+                            color: result.item.course.color
+                        },
+                        name: result.item.title,
+                        locations: result.item.locations,
+                        url: result.item.url
+                    })
+                }
+            })
+
+            searchUI.selected = 0;
+
+            searchUI.buildResults()
+        });
+    } else {
+        searchUI.results = []
+        searchUI.buildResults()
+    }
+}
+
+class SearchUI {
+    constructor() {
+        this.mode = 'search'
+
+        this.queryCompontents = []
+        /*
+        interface SearchResult {
+            course: Course,
+            name: String,
+            topMeta: String,
+            locations: Array[SearchResultLocation]
+        }
+        interface SearchResultLocation {
+            selected: boolean,
+            name: String,
+            modifyUrl: function
+        }
+        interface Course {
+            color: String,
+            name: String
+        }
+        */
+        this.results = []
+        this.controls = []
+
+        this.lastAction = []
+
+        this.lastUISearch = ''
+
+        this.showing = false;
+
+        this.invertOpenNewTab = false;
+
+        setInterval(() => {
+            if(!document.body.contains(this.headerElementQueryWrapper)) return;
+
+            const search = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
+            if(this.lastUISearch !== search) {
+                searchUpdateUI(search);
+                this.lastUISearch = search;
+            }
+        }, 250)
+
+        this.selected = 0
+
+        this.invertTabSnackbar = undefined;
+    }
+
+    addListeners() {
+        const openUI = () => {
+            this.showing = true;
+
+            if(document.body.contains(searchUI.element)) {
+                  searchUI.element.remove()
+            }
+
+            if(document.body.contains(searchUI.wrapperElement)) {
+                searchUI.wrapperElement.remove()
+            }
+
+            searchUI.insert(document.body)
+        }
+
+        const closeUI = () => {
+            this.showing = false;
+            searchUI.element.remove()
+            searchUI.wrapperElement.remove()
+        }
+
+        document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
+            openUI()
+        })
+
+        document.addEventListener("keyup", (event) => {
+            const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
+            if(usingControlKey && this.invertTabSnackbar?.element?.innerText?.startsWith('Opening in')) {
+                const id = this.invertTabSnackbar.id;
+                setTimeout(() => {
+                    if(this.invertTabSnackbar && id === this.invertTabSnackbar.id) {
+                        removeSnackbar(this.invertTabSnackbar)
+                        this.invertTabSnackbar = undefined;
+                    }
+                }, Math.max(375 - (Date.now() - this.invertTabSnackbar.created), 0))
+            }
+        })
+
+        document.addEventListener("keydown", (event) => {
+            event = event || window.event;
+
+            const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
+
+
+            if(usingControlKey) {
+                if(event.key === 'k') {
+                    if(this.showing) {
+                        closeUI()
+
+                        if(this.invertTabSnackbar) {
+                            instantlyRemoveSnackbar(this.invertTabSnackbar)
+                        }
+                    } else {
+                        openUI()
+                    }
+                    return;
+                } else if(this.showing) {
+                    if(this.invertTabSnackbar) {
+                        this.invertTabSnackbar.element.remove()
+                    }
+                    this.invertTabSnackbar = setSnackbar([{"type":"text","text":"Opening in new tab"}])
+
+                    const id = this.invertTabSnackbar.id
+
+                    setTimeout(() => {
+                        if(searchUI.invertTabSnackbar.id === id) {
+                            removeSnackbar(this.invertTabSnackbar)
+                            this.invertTabSnackbar = undefined;
+                        }
+                    }, 2500);
+                }
+            }
+            if(this.showing) {
+                if(event.key === "Backspace") {
+                    event.preventDefault()
+
+                    if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    this.buildAutocomplete()
+                } else if(event.key === " " && !usingControlKey) {
+                    event.preventDefault()
+
+                    this.headerElementQueryWrapper.textContent += event.key;
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    this.buildAutocomplete()
+
+                    searchUpdateUI(this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent)
+                    this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
+                } else if(event.key.length === 1 && !usingControlKey) {
+                    event.preventDefault()
+
+                    this.headerElementQueryWrapper.textContent += event.key;
+                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    this.buildAutocomplete()
+                } else if(event.key === "ArrowUp") {
+                    event.preventDefault()
+
+                    if(this.selected > 0) {
+                        this.selected -= 1;
+                        this.resultsElement.children[this.selected].classList.add('result-selected')
+                        this.resultsElement.children[this.selected + 1].classList.remove('result-selected')
+                        this.buildAutocomplete()
+                    } // do something
+                } else if(event.key === "ArrowDown") {
+                    event.preventDefault()
+
+                    if(this.selected + 1 < this.results.length) {
+                        this.selected += 1;
+                        this.resultsElement.children[this.selected].classList.add('result-selected')
+                        this.resultsElement.children[this.selected - 1].classList.remove('result-selected')
+                        this.buildAutocomplete()
+                    } // do something
+                } else if(event.key === "ArrowLeft") {
+                    event.preventDefault()
+
+                    if(this.headerElementQueryWrapper.textContent.length > 0) {
+                        this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
+                        this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substring(0, this.headerElementQueryWrapper.textContent.length - 1);
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }
+                } else if(event.key === "ArrowRight") {
+                    event.preventDefault()
+
+                    if(this.headerElementQueryRight.textContent.length > 0) {
+                        this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
+                        this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }  else if(this.headerElementQueryAutoComplete.textContent.length > 0 && !event.repeat) {
+                        this.headerElementQueryWrapper.textContent += this.headerElementQueryAutoComplete.textContent;
+                        this.headerElementQueryAutoComplete.textContent = ''
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }
+                } else if(event.key === "Enter") {
+                    // do stuff based on settings
+                    const urlToOpen = searchUI.results[searchUI.selected].url
+
+                    if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                        window.open(urlToOpen);
+                    } else {
+                        location.href = urlToOpen;
+                    }
+                } else if(event.key === 'Escape') {
+                    closeUI()
+                }
+            }
+        })
+    }
+
+    createEntireElement() {
+        this.wrapperElement = document.createElement('div')
+        this.wrapperElement.id = 'canvasplus-search-ui-wrapper'
+        this.wrapperElement.className = 'canvasplus-search-ui-wrapper'
+
+        this.element = document.createElement('div')
+        this.element.className = 'canvasplus-search-ui'
+
+        {
+            this.headerElement = document.createElement('div')
+            this.headerElement.className = 'canvasplus-search-ui-header'
+
+            this.headerElementIcon = document.createElement('div')
+            this.headerElementIcon.className = 'canvasplus-search-ui-header-icon'
+
+            this.headerElementQueryWrapper = document.createElement('div')
+            this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
+            this.headerElementQueryWrapper.innerText = ''
+            this.headerElementQueryWrapper.setAttribute('data-caret-position', '20px')
+
+            this.headerElementQueryRight = document.createElement('div')
+            this.headerElementQueryRight.className = 'canvasplus-search-ui-query-wrapper-right'
+            this.headerElementQueryRight.innerText = ''
+
+            this.headerElementQueryAutoComplete = document.createElement('div')
+            this.headerElementQueryAutoComplete.className = 'canvasplus-search-ui-query-wrapper-autocomplete'
+            this.headerElementQueryAutoComplete.innerText = 'Search your courses...'
+
+            this.headerElement.appendChild(this.headerElementIcon)
+            this.headerElement.appendChild(this.headerElementQueryWrapper)
+            this.headerElement.appendChild(this.headerElementQueryRight)
+            this.headerElement.appendChild(this.headerElementQueryAutoComplete)
+            this.element.appendChild(this.headerElement)
+        }
+
+        {
+            this.resultsElement = document.createElement('div')
+            this.resultsElement.className = 'canvasplus-search-ui-results'
+            this.element.appendChild(this.resultsElement)
+        }
+
+        {
+            this.controlsElement = document.createElement('div')
+            this.controlsElement.className = 'canvasplus-search-ui-controls'
+            this.element.appendChild(this.controlsElement)
+        }
+
+        this.buildResults()
+
+        this.wrapperElement.appendChild(this.element)
+    }
+
+    buildAutocomplete() {
+        const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
+        if(currentQuery.length === 0) {
+            this.headerElementQueryAutoComplete.textContent = 'Search your courses';
+        }
+        if(this.results.length > 0) {
+            let newAutocomplete = '';
+            const selected = this.results[this.selected];
+            if(!selected) return;
+            if(selected.name.toLowerCase().includes(currentQuery)) {
+                newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
+            }
+
+            this.headerElementQueryAutoComplete.textContent = newAutocomplete;
+        }
+    }
+
+    buildResults() {
+        this.buildAutocomplete()
+
+        this.resultsElement.innerHTML = ''
+        this.results.forEach((result, idx) => {
+            this.resultsElement.appendChild(this.buildResult(result, idx))
+        })
+    }
+
+    buildResult(result, idx) {
+        const resultElement = document.createElement('div')
+        resultElement.className = 'canvasplus-search-ui-results-single-result'
+
+        resultElement.addEventListener('mouseover', (event) => {
+            if(this.selected === idx) return;
+            this.resultsElement.children[this.selected].classList.remove('result-selected')
+            this.resultsElement.children[idx].classList.add('result-selected')
+            this.selected = idx;
+            this.buildAutocomplete()
+        })
+
+        resultElement.addEventListener('click', (event) => {
+            const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
+            if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                location.href = result.url
+            } else {
+                window.open(result.url)
+            }
+        })
+
+        if(idx === this.selected) {
+            resultElement.classList.add('result-selected')
+        }
+
+        const resultLeft = document.createElement('div')
+        resultLeft.className = 'canvasplus-search-ui-results-single-result-left'
+
+        const resultInner = document.createElement('div')
+        resultInner.className = 'canvasplus-search-ui-results-single-result-left-inner'
+        resultInner.innerText = result.name
+
+        if(result.topMeta) {
+            resultElement.classList.add('includes-top-meta')
+
+            const resultTopMeta = document.createElement('div')
+            resultTopMeta.className = 'canvasplus-search-ui-results-single-result-left-topmeta'
+            resultTopMeta.innerText = result.topMeta
+
+            resultLeft.appendChild(resultTopMeta)
+        }
+        resultLeft.appendChild(resultInner)
+        resultElement.appendChild(resultLeft)
+
+        if(result.course) {
+            resultElement.classList.add('includes-course-card')
+
+            const resultRight = document.createElement('div')
+            resultRight.className = 'canvasplus-search-ui-results-single-result-right'
+
+            const resultRightCourse = document.createElement('div')
+            resultRightCourse.className = 'canvasplus-search-ui-results-single-result-right-course'
+            resultRightCourse.innerText = result.course.name
+            resultRightCourse.style = `--course-card-color:${result.course.color}`
+
+            const resultRightBreadcrumb = document.createElement('div')
+            resultRightBreadcrumb.className = 'canvasplus-search-ui-results-single-result-right-breadcrumb'
+
+            resultRightBreadcrumb.innerText = result.locations[0].name
+
+            resultRight.appendChild(resultRightBreadcrumb)
+            resultRight.appendChild(resultRightCourse)
+
+            if(result.locations.length >= 2) {
+                resultElement.classList.add('includes-multiple-locations')
+            }
+
+            resultElement.appendChild(resultRight)
+        }
+
+        return resultElement;
+    }
+
+    insert(where) {
+        this.createEntireElement()
+        this.where = where;
+        where.appendChild(this.wrapperElement)
+    }
+}
+
+const searchUI = new SearchUI()
+    searchUI.addListeners()
+
+main()

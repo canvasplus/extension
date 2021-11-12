@@ -42,16 +42,8 @@
 <h3 align="center">Update Plans as of Oct 17</h3>
 <br>
   
-**0.3.3 (Pending Review)**
-A few dark mode and rounder modules fixes, turn off speed boost for recent users
-
-... bug fixes
-  
-**0.3.x**
-Adds Canvas+ diagnostic tool, made to find bugs and troubleshoot or report them
-  
 **0.4**
-Revamps search bar to be on top of the UI and have more accurate search results, also a (possible) dark mode revamp
+Revamps search bar to be on top of the UI and have more accurate search results, adds diagnostic tool, dark mode revamp, better changes page, and much more
 
 **0.5**
 Adds navigator to the search bar (more below)

@@ -1,3 +1,5 @@
+const onMac = window.navigator.platform === 'MacIntel'
+
 const smartAPIFetch = async (url) => {
     const response = await fetch(url)
     
@@ -19,6 +21,30 @@ const smartAPIFetch = async (url) => {
     // }
 
     return response
+}
+
+const smartSplit = (toSplit) => {
+    const blocks = []
+    let currentBlock = ""
+    for(let char of toSplit) {
+        if(char.match(/^[a-zA-Z0-9]*$/)) {
+            currentBlock += char
+        } else {
+            if(currentBlock !== "") {
+                blocks.push(currentBlock.toLowerCase())
+                currentBlock = ""
+            }
+        }
+    }
+    if(currentBlock !== "") {
+        blocks.push(currentBlock.toLowerCase())
+        currentBlock = ""
+    }
+    return blocks
+}
+
+const filterAlphanumeric = (toFilter) => {
+    return toFilter.replace(/[^0-9a-z]/gi, '')
 }
 
 const getPathAPI = (rel) => {
@@ -191,6 +217,42 @@ const addStylingRule = (rule) => {
 
     return stylingRule
 }
+
+const compareWords = (ref, sub) =>  {
+    const refAna = {}
+    ref.split("").forEach(ref => { // sort words into object with quantities of letters
+        refAna[ref] = (refAna[ref] || 0) + 1
+    })
+    
+    const subAna = {}
+    sub.split("").forEach(sub => { // sort words into object with quantities of letters
+        subAna[sub] = (subAna[sub] || 0) + 1
+    })
+
+    let missing = [] // chars in ref not in sub
+    let stray = [] // chars in sub not in ref
+
+    Object.keys(refAna).forEach(ref => { // add missing chars to missing
+        const quantity = refAna[ref] || 0
+        const subQuantity = subAna[ref] || 0
+        if(quantity > subQuantity) {
+            missing = missing.concat(Array(quantity - subQuantity).fill(ref))
+        }
+    })
+
+    Object.keys(subAna).forEach(sub => { // add stray chars to stray
+        const quantity = refAna[sub] || 0
+        const subQuantity = subAna[sub] || 0
+        if(subQuantity > quantity) {
+            stray = stray.concat(Array(subQuantity - quantity).fill(sub))
+        }
+    })
+
+    // calculate score
+    let score = Math.min((ref.length - (missing.length + stray.length * 0.5) + (ref.includes(sub) || sub.includes(ref) ? 2 : 0)) / ref.length, 1) * /*Math.min(ref.length, sub.length)*/ ref.length
+    
+    return score
+};
 
 const delayedQuerySelector = (selector) => { // from https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
     return new Promise(resolve => {
