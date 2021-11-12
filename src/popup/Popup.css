@@ -13,9 +13,43 @@
   --large-option-selected-indicator-color: #0392ff;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 body {
+  scrollbar-width: none;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 12px;
+  background: #ccc;
+  width: 240px;
+  height: 400px;
+}
+
+#popup {
+  position: absolute;
+  background: #FFF;
+  width: 240px;
+  height: 400px;
+}
+
+@media only screen and (min-width: 241px) {
+  #popup {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media only screen and (min-height: 401px) {
+  #popup {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+@media only screen and (min-width: 241px) and (min-height: 401px) {
+  #popup {
+    transform: translate(-50%, -50%);
+  }
 }
 
 body, p {
@@ -52,7 +86,7 @@ h1, h2, h3, h4, h5, h6, b {
 }
 
 .canvasplus-changes {
-  background: URL(https://images.unsplash.com/photo-1536250695484-36ed15d06abf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80);
+  background: #1c4b85;
   text-align: center;
   height: 320px;
   width: 240px;
@@ -101,12 +135,18 @@ h2 {
   margin-top: 10px;
   font-family: 'Montserrat', sans-serif;
   border-radius: 16px;
-  background: rgba(0,0,0,0.5);
   padding: 8px 16px;
   width: fit-content;
   width: -moz-fit-content;
   margin: auto;
   margin-bottom: 5px;
+}
+
+.changes-items.changes-gold {
+  background: -webkit-linear-gradient(45deg, rgb(255, 240, 30), rgb(253, 88, 12));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
 .overlay {
@@ -118,4 +158,38 @@ h2 {
   top: 0;
   left: 0;
   z-index: 100;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker {
+
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:first-child {
+  border-radius: 6px;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:nth-child(2) > div:first-child > div:first-child, .SidebarBackgroundColorSwitch__ColorPicker .sketch-picker > div:nth-child(2) > div:nth-child(2) {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) {
+  box-shadow: none !important;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker input[id^=rc-editable-input] {
+  border-radius: 20px;
+  text-align: center;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker label {
+  display: none !important;
+}
+
+.SidebarBackgroundColorPicker__ColorPicker .sketch-picker > div:last-child {
+  border: none !important;
+}
+
+.SidebarBackgroundColorSwitch__ColorPicker .sketch-picker > div:last-child > div > span > div {
+  border-radius: 50% !important;
 }

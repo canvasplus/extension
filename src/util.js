@@ -107,7 +107,7 @@ const useReactiveFeatures = (features) => {
     })
     chrome.storage.local.get( Object.keys(settingNames).filter(settingName => {
         const session = sessionStorage.getItem('storage-cache-' + settingName)
-        if(session) {
+        if(session == true) {
             try {
                 const json = JSON.parse(session)
                 settingNames[settingName].onChanged(json)

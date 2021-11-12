@@ -182,10 +182,15 @@ const getConversations = () => {
     })
 }
 
-chrome.storage.local.get(["canvasplus-setting-convopeeker"], function(data) {
-    if(data["canvasplus-setting-convopeeker"])
-    {
-        console.log('[Canvas+] Injecting email peeker ...')
-        runConvoKeeper()
+useReactiveFeatures([{
+    settingName: "canvasplus-setting-convopeeker",
+    onChanged: (data) => {
+        if (data) {
+            console.log('[Canvas+] Injecting email peeker ...')
+            runConvoKeeper()
+        } else {
+            try {peekerBack.remove();} catch {}
+            try {peekerElement.remove();} catch {}
+        }
     }
-})
+}])

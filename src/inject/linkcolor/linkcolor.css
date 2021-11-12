@@ -1,8 +1,8 @@
 :root:root {
-    --ic-brand-primary: var(--cp-link-color) !important;
-    --ic-link-color: var(--cp-link-color) !important;
-    --ic-link-color-lightened-10: var(--cp-link-color-lightened-10) !important;
-    --ic-link-color-darkened-10: var(--cp-link-color-darkened-10) !important;
+    --cp-brand-primary: var(--ic-link-color) !important;
+    --cp-link-color: var(--ic-link-color) !important;
+    --cp-link-color-lightened-10: var(--ic-link-color-lightened-10) !important;
+    --cp-link-color-darkened-10: var(--ic-link-color-darkened-10) !important;
 }
 
 .ToDoSidebarItem__Title > a:not(:hover),

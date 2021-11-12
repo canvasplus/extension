@@ -6,7 +6,7 @@ const getLocalStoragePromise = async(get) => {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(get, (data) => {
             resolve(data)
-        })  
+        })
     })
 }
 
@@ -138,7 +138,7 @@ const getCourseList = async (forceReload = false) => {
                 color: colors['course_' + course.id]
             }
         }
-        
+
         return returnable
     }, forceReload)
 }
@@ -151,11 +151,11 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
         }
         return returnable;
     }, forceReload)
-    
+
     const courseContent = {tabs:tabs}
 
     const courseContentPromises = []
-    
+
     if(tabs.pages) {
         const pages = getCoursePages(courseId, forceReload);
         pages.then((data) => {
@@ -191,7 +191,7 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
                 } else {
                     courseContentPath = 'module-item/' + item.id;
                 }
-                
+
                 if(courseContentPath) {
                     if(courseContent[courseContentPath]) {
                         courseContent[courseContentPath].locations = courseContent[courseContentPath].locations.concat(item.locations)
@@ -205,7 +205,7 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
     }
 
     await Promise.allSettled(courseContentPromises)
-    
+
     return { courseId: courseId, content: courseContent };
 }
 
@@ -299,7 +299,7 @@ const main = async () => {
     Promise.allSettled(courseContentPromises)
     .then((results) => {
         results.forEach((course) => {
-            course = course.value      
+            course = course.value
             const meta = courses[course.courseId];
             searchContent['courses'][course['courseId']] = {
                 meta: meta,
@@ -340,7 +340,7 @@ const main = async () => {
         }])
 
         setTimeout(() => {
-           removeSnackbar(snackbar);    
+           removeSnackbar(snackbar);
         }, 2000)
     }
 }
@@ -381,11 +381,11 @@ const search = async (query, callback) => {
                         scores *= 1.5
                     }
                 }
-                
+
                 const max = references.map(reference => {
                     return reference.length;
                 }).reduce((a, b) => { return a + b} )
-                
+
                 if(results[item.url]) {
                     results[item.url].relevance = Math.max(results[item.url].relevance, scores/max)
                 } else {
@@ -414,7 +414,7 @@ const search = async (query, callback) => {
             let scores = 0;
             references.forEach(reference => {
                 const max = reference.length;
-    
+
                 let current = {subject: undefined, similarity: 0};
                 subjects.find(subject => {
                     if(reference === subject) {
@@ -433,7 +433,7 @@ const search = async (query, callback) => {
                 })
                 scores += current.similarity
             })
-            
+
             if(filterAlphanumeric(item.title).toLowerCase().includes(filterAlphanumeric(query).toLowerCase())) {
                 scores *= 1.5
                 if(item.title.toLowerCase().includes(query.toLowerCase())) {
@@ -444,7 +444,7 @@ const search = async (query, callback) => {
             const max = references.map(reference => {
                 return reference.length;
             }).reduce((a, b) => { return a + b} )
-            
+
             if(results[item.url]) {
                 results[item.url].relevance = Math.max(results[item.url].relevance, scores/max)
             } else {
@@ -480,7 +480,7 @@ const searchUpdateUI = (query) => {
                     })
                 }
             })
-            
+
             searchUI.selected = 0;
 
             searchUI.buildResults()
@@ -526,7 +526,7 @@ class SearchUI {
 
         setInterval(() => {
             if(!document.body.contains(this.headerElementQueryWrapper)) return;
-            
+
             const search = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
             if(this.lastUISearch !== search) {
                 searchUpdateUI(search);
@@ -540,6 +540,30 @@ class SearchUI {
     }
 
     addListeners() {
+        const openUI = () => {
+            this.showing = true;
+
+            if(document.body.contains(searchUI.element)) {
+                  searchUI.element.remove()
+            }
+
+            if(document.body.contains(searchUI.wrapperElement)) {
+                searchUI.wrapperElement.remove()
+            }
+
+            searchUI.insert(document.body)
+        }
+
+        const closeUI = () => {
+            this.showing = false;
+            searchUI.element.remove()
+            searchUI.wrapperElement.remove()
+        }
+
+        document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
+            openUI()
+        })
+
         document.addEventListener("keyup", (event) => {
             const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
             if(usingControlKey && this.invertTabSnackbar?.element?.innerText?.startsWith('Opening in')) {
@@ -555,35 +579,15 @@ class SearchUI {
 
         document.addEventListener("keydown", (event) => {
             event = event || window.event;
-            
+
             const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
-            
-            const openUI = () => {
-                this.showing = true;
-                
-                if(document.body.contains(searchUI.element)) {
-                      searchUI.element.remove()
-                }
-    
-                if(document.body.contains(searchUI.wrapperElement)) {
-                    searchUI.wrapperElement.remove()
-                }
-    
-                searchUI.insert(document.body)
-            }
-            
-            const closeUI = () => {
-                this.showing = false;
-                searchUI.element.remove()
-                searchUI.wrapperElement.remove()
-            }
 
 
             if(usingControlKey) {
                 if(event.key === 'k') {
                     if(this.showing) {
                         closeUI()
-                        
+
                         if(this.invertTabSnackbar) {
                             instantlyRemoveSnackbar(this.invertTabSnackbar)
                         }
@@ -593,10 +597,10 @@ class SearchUI {
                     return;
                 } else if(this.showing) {
                     if(this.invertTabSnackbar) {
-                        this.invertTabSnackbar.element.remove() 
+                        this.invertTabSnackbar.element.remove()
                     }
                     this.invertTabSnackbar = setSnackbar([{"type":"text","text":"Opening in new tab"}])
-                    
+
                     const id = this.invertTabSnackbar.id
 
                     setTimeout(() => {
@@ -610,13 +614,13 @@ class SearchUI {
             if(this.showing) {
                 if(event.key === "Backspace") {
                     event.preventDefault()
-    
+
                     if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
                     this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                     this.buildAutocomplete()
                 } else if(event.key === " " && !usingControlKey) {
                     event.preventDefault()
-    
+
                     this.headerElementQueryWrapper.textContent += event.key;
                     this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                     this.buildAutocomplete()
@@ -625,13 +629,13 @@ class SearchUI {
                     this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
                 } else if(event.key.length === 1 && !usingControlKey) {
                     event.preventDefault()
-    
+
                     this.headerElementQueryWrapper.textContent += event.key;
                     this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                     this.buildAutocomplete()
                 } else if(event.key === "ArrowUp") {
                     event.preventDefault()
-    
+
                     if(this.selected > 0) {
                         this.selected -= 1;
                         this.resultsElement.children[this.selected].classList.add('result-selected')
@@ -640,7 +644,7 @@ class SearchUI {
                     } // do something
                 } else if(event.key === "ArrowDown") {
                     event.preventDefault()
-    
+
                     if(this.selected + 1 < this.results.length) {
                         this.selected += 1;
                         this.resultsElement.children[this.selected].classList.add('result-selected')
@@ -649,7 +653,7 @@ class SearchUI {
                     } // do something
                 } else if(event.key === "ArrowLeft") {
                     event.preventDefault()
-    
+
                     if(this.headerElementQueryWrapper.textContent.length > 0) {
                         this.headerElementQueryRight.textContent = this.headerElementQueryWrapper.textContent.substr(-1) + this.headerElementQueryRight.textContent
                         this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substring(0, this.headerElementQueryWrapper.textContent.length - 1);
@@ -657,7 +661,7 @@ class SearchUI {
                     }
                 } else if(event.key === "ArrowRight") {
                     event.preventDefault()
-    
+
                     if(this.headerElementQueryRight.textContent.length > 0) {
                         this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
                         this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
@@ -680,7 +684,7 @@ class SearchUI {
                     closeUI()
                 }
             }
-        })              
+        })
     }
 
     createEntireElement() {
@@ -702,7 +706,7 @@ class SearchUI {
             this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
             this.headerElementQueryWrapper.innerText = ''
             this.headerElementQueryWrapper.setAttribute('data-caret-position', '20px')
-            
+
             this.headerElementQueryRight = document.createElement('div')
             this.headerElementQueryRight.className = 'canvasplus-search-ui-query-wrapper-right'
             this.headerElementQueryRight.innerText = ''
@@ -731,13 +735,13 @@ class SearchUI {
         }
 
         this.buildResults()
-        
+
         this.wrapperElement.appendChild(this.element)
     }
 
     buildAutocomplete() {
         const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
-        if(currentQuery.length === 0) { 
+        if(currentQuery.length === 0) {
             this.headerElementQueryAutoComplete.textContent = 'Search your courses';
         }
         if(this.results.length > 0) {
@@ -747,7 +751,7 @@ class SearchUI {
             if(selected.name.toLowerCase().includes(currentQuery)) {
                 newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
             }
-    
+
             this.headerElementQueryAutoComplete.textContent = newAutocomplete;
         }
     }
@@ -764,7 +768,7 @@ class SearchUI {
     buildResult(result, idx) {
         const resultElement = document.createElement('div')
         resultElement.className = 'canvasplus-search-ui-results-single-result'
-        
+
         resultElement.addEventListener('mouseover', (event) => {
             if(this.selected === idx) return;
             this.resultsElement.children[this.selected].classList.remove('result-selected')
@@ -781,7 +785,7 @@ class SearchUI {
                 window.open(result.url)
             }
         })
-        
+
         if(idx === this.selected) {
             resultElement.classList.add('result-selected')
         }
@@ -792,14 +796,14 @@ class SearchUI {
         const resultInner = document.createElement('div')
         resultInner.className = 'canvasplus-search-ui-results-single-result-left-inner'
         resultInner.innerText = result.name
-        
+
         if(result.topMeta) {
             resultElement.classList.add('includes-top-meta')
-            
+
             const resultTopMeta = document.createElement('div')
             resultTopMeta.className = 'canvasplus-search-ui-results-single-result-left-topmeta'
             resultTopMeta.innerText = result.topMeta
-            
+
             resultLeft.appendChild(resultTopMeta)
         }
         resultLeft.appendChild(resultInner)
@@ -810,15 +814,15 @@ class SearchUI {
 
             const resultRight = document.createElement('div')
             resultRight.className = 'canvasplus-search-ui-results-single-result-right'
-            
+
             const resultRightCourse = document.createElement('div')
             resultRightCourse.className = 'canvasplus-search-ui-results-single-result-right-course'
             resultRightCourse.innerText = result.course.name
             resultRightCourse.style = `--course-card-color:${result.course.color}`
-            
+
             const resultRightBreadcrumb = document.createElement('div')
             resultRightBreadcrumb.className = 'canvasplus-search-ui-results-single-result-right-breadcrumb'
-            
+
             resultRightBreadcrumb.innerText = result.locations[0].name
 
             resultRight.appendChild(resultRightBreadcrumb)
@@ -843,5 +847,5 @@ class SearchUI {
 
 const searchUI = new SearchUI()
     searchUI.addListeners()
-    
+
 main()
