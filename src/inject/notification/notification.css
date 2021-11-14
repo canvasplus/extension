@@ -118,12 +118,12 @@
     transition: visibility 0.3s ease 0s, opacity 0.3s linear 0s;
 }
 
-.notification-image-heart {
+.notification-image {
     position: relative;
     display: block;
 }
 
-.notification-image-heart::before {
+.notification-image::before {
     width: 100%;
     height: 100%;
     display: block;
@@ -133,7 +133,7 @@
     top: 0;
     left: 0;
     background-size: cover;
-    animation: notification-image-heart 7.5s linear 2s infinite;
+    animation: notification-image-grow 7.5s linear 2s infinite;
 }
 
 .notification-image {
@@ -144,7 +144,7 @@
     margin: 30px;
 }
 
-@keyframes notification-image-heart {
+@keyframes notification-image-grow {
     0% {
         transform: scale(1);
         opacity: 1;

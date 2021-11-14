@@ -124,18 +124,18 @@ chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appe
     }, "Dismiss", (notification, dismissMe, e) => {
       chrome.storage.local.set({"canvasplus-display-appearance": "dim", "canvasplus-current-version": "0.3.4"})
       dismissMe()
-    }, displayAppearence !== "light" ? undefined : "Enable Dark Mode", "#f3dae1")
+    }, displayAppearence !== "light" && displayAppearence !== "auto" ? undefined : "Enable Dark Mode", "#f3dae1")
   }
 })
 
-chrome.storage.local.get(["canvasplus-survey"], (data) => {
+chrome.storage.local.get(["canvasplus-survey", "installDate"], (data) => {
   const viewed = data["canvasplus-survey"]
-  if (viewed !== true) {
-    notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "heart", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
+  const time = (Math.round(data["installDate"]['timestamp']) / 86400000)
+  if (viewed !== true &&  time >= 14) {
+    notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "scroll", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
       const surveysettings = { "canvasplus-setting-quicklink": "Speed+Boost", "canvasplus-setting-search": "Search", "canvasplus-setting-smartscroll": "Smart+Scrolling", "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out', 'auto': 'Auto'}, "canvasplus-setting-convopeeker": "Quick+Inbox", "canvasplus-setting-hidelogo": "Hide+Logo", "canvasplus-setting-sidebar-color": 'use default', "canvasplus-setting-roundermodules": "Rounder+Modules", "canvasplus-setting-linkcolor": 'use default' }
       
       chrome.storage.local.get(surveysettings, (data) => {
-        console.log(data)
         var url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_url';
 
         for (rotation = 0; rotation < Object.entries(data).length; rotation++) {
@@ -147,9 +147,26 @@ chrome.storage.local.get(["canvasplus-survey"], (data) => {
         } url += navigator.userAgent.indexOf('Firefox') > -1 ? '&entry.1159662235=Firefox' : '&entry.1159662235=Chrome%5CChromium'; injectsurvey(url)});
       
       const injectsurvey = (url) => {
-        let survey = document.createElement('div'); survey.className = 'survey'; document.documentElement.appendChild(survey); let surveyiframe = document.createElement('iframe'); surveyiframe.src = url; surveyiframe.className = 'surveyiframe'; surveyiframe.innerText = 'Loading...'; survey.appendChild(surveyiframe); chrome.storage.local.set({"canvasplus-survey": true}); let surveyBackground = document.createElement('div'); surveyBackground.className = 'surveyBackground'; document.documentElement.appendChild(surveyBackground); document.addEventListener('click', function (event) {if (event.target === surveyBackground) {surveyBackground.remove(); survey.remove();}}); notification.remove();
-    }; dismissMe() }, "Survey", (notification, dismissMe, e) => {
+        let survey = document.createElement('div'); survey.className = 'survey'; document.documentElement.appendChild(survey); let surveyiframe = document.createElement('iframe'); surveyiframe.src = url; surveyiframe.className = 'surveyiframe'; surveyiframe.innerText = 'Loading...'; survey.appendChild(surveyiframe); let surveyBackground = document.createElement('div'); surveyBackground.className = 'surveyBackground'; document.documentElement.appendChild(surveyBackground); document.addEventListener('click', function (event) {if (event.target === surveyBackground) {surveyBackground.remove(); survey.remove();}});
+        chrome.storage.local.set({"canvasplus-survey": true})
+      }; dismissMe() }, "Survey", (notification, dismissMe, e) => {
       chrome.storage.local.set({"canvasplus-survey": true})
       dismissMe()
-    }, "Maybe Later", "#f3dae1")
-  }})
+    }, "Maybe Later", "#ffe4cf")
+}})
+
+chrome.storage.local.get(["canvasplus-rating", "installDate"], (data) => {
+  const viewed = data["canvasplus-rating"]
+  const time = (Math.round(data["installDate"]['timestamp']) / 86400000)
+
+  if (viewed !== true &&  time >= 20) {
+    notification("Seems like you've been using Canvas+ for a whlie now. Please consider rating it, it helps us grow.", "star", "#e6f8ff", "#1791c0", (notification, dismissMe, e) => {
+      window.open(navigator.userAgent.indexOf('Firefox') > -1 ? "https://addons.mozilla.org/en-US/firefox/addon/canvasplus/reviews/?utm_source=firefox-browser&utm_medium=firefox-browser&utm_content=addons-manager-reviews-link" : "https://chrome.google.com/webstore/detail/canvas%2B/kdkadcnebmokaadholinmnpjelphnghh/reviews");
+      chrome.storage.local.set({"canvasplus-rating": true})
+      dismissMe()
+    }, "Rate", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-rating": true})
+      dismissMe()
+    }, "Maybe Later", "#caf0ff")
+  }
+})
