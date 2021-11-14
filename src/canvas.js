@@ -130,7 +130,7 @@ chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appe
 
 chrome.storage.local.get(["canvasplus-survey"], (data) => {
   const viewed = data["canvasplus-survey"]
-  if (viewed !== 'temp') {
+  if (viewed !== true) {
     notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "heart", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
       const surveysettings = { "canvasplus-setting-quicklink": "Speed+Boost", "canvasplus-setting-search": "Search", "canvasplus-setting-smartscroll": "Smart+Scrolling", "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out', 'auto': 'Auto'}, "canvasplus-setting-convopeeker": "Quick+Inbox", "canvasplus-setting-hidelogo": "Hide+Logo", "canvasplus-setting-sidebar-color": 'use default', "canvasplus-setting-roundermodules": "Rounder+Modules", "canvasplus-setting-linkcolor": 'use default' }
       
