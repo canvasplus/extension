@@ -40,12 +40,12 @@ alert.addEventListener("click", function (evt) {
   this.style.visibility = "hidden";
 });
 
-useReactiveFeatures([{
+/*useReactiveFeatures([{
   settingName: "canvasplus-setting-quicklink",
   onChanged: (val) => {
     settingchanged(val, "canvasplus-setting-quicklink")
   }
-}])
+}])*/
 
 const createFinishSettingUp = (selectedAppearance) => {
   const popup = document.createElement('div')
@@ -127,3 +127,29 @@ chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appe
     }, displayAppearence !== "light" ? undefined : "Enable Dark Mode", "#f3dae1")
   }
 })
+
+chrome.storage.local.get(["canvasplus-survey"], (data) => {
+  const viewed = data["canvasplus-survey"]
+  if (viewed !== 'temp') {
+    notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "heart", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
+      const surveysettings = { "canvasplus-setting-quicklink": "Speed+Boost", "canvasplus-setting-search": "Search", "canvasplus-setting-smartscroll": "Smart+Scrolling", "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out', 'auto': 'Auto'}, "canvasplus-setting-convopeeker": "Quick+Inbox", "canvasplus-setting-hidelogo": "Hide+Logo", "canvasplus-setting-sidebar-color": 'use default', "canvasplus-setting-roundermodules": "Rounder+Modules", "canvasplus-setting-linkcolor": 'use default' }
+      
+      chrome.storage.local.get(surveysettings, (data) => {
+        console.log(data)
+        var url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_url';
+
+        for (rotation = 0; rotation < Object.entries(data).length; rotation++) {
+          var hexurl = undefined
+          url += (Object.entries(data)[rotation][1] == true ? '&entry.1198748745=' + surveysettings[Object.entries(data)[rotation][0]] : '');
+          url += (Object.entries(data)[rotation][0] == "canvasplus-display-appearance" ? '&entry.1404289257=' + surveysettings["canvasplus-display-appearance"][Object.entries(data)[rotation][1]] : '');
+          Object.entries(data)[rotation][0] == "canvasplus-setting-sidebar-color" ? hexurl = '&entry.1808318442' : Object.entries(data)[rotation][0] == "canvasplus-setting-linkcolor" ? hexurl = '&entry.1599750073' : undefined;
+          url += (hexurl != undefined ? (data[Object.entries(data)[rotation][0]] == "" || data[Object.entries(data)[rotation][0]] == "use default" ? hexurl + '=' + 'Unset' : (Object.entries(data)[rotation][1]).split('#')[0] == "linear-gradient(45deg, " ? hexurl + '=__other_option__' + hexurl + '.other_option_response=' + ((Object.entries(data)[rotation][1]).split('#')[0]).toString() + '%23' + ((Object.entries(data)[rotation][1]).split('#')[1]).toString() + '%23' + ((Object.entries(data)[rotation][1]).split('#')[2]).toString() : hexurl + '=__other_option__' + hexurl + '.other_option_response=%23' + ((Object.entries(data)[rotation][1]).split('#')[1])) : '');
+        } url += navigator.userAgent.indexOf('Firefox') > -1 ? '&entry.1159662235=Firefox' : '&entry.1159662235=Chrome%5CChromium'; injectsurvey(url)});
+      
+      const injectsurvey = (url) => {
+        let survey = document.createElement('div'); survey.className = 'survey'; document.documentElement.appendChild(survey); let surveyiframe = document.createElement('iframe'); surveyiframe.src = url; surveyiframe.className = 'surveyiframe'; surveyiframe.innerText = 'Loading...'; survey.appendChild(surveyiframe); chrome.storage.local.set({"canvasplus-survey": true}); let surveyBackground = document.createElement('div'); surveyBackground.className = 'surveyBackground'; document.documentElement.appendChild(surveyBackground); document.addEventListener('click', function (event) {if (event.target === surveyBackground) {surveyBackground.remove(); survey.remove();}}); notification.remove();
+    }; dismissMe() }, "Survey", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-survey": true})
+      dismissMe()
+    }, "Maybe Later", "#f3dae1")
+  }})
