@@ -273,3 +273,12 @@ const delayedQuerySelector = (selector) => { // from https://stackoverflow.com/q
         });
     });
 }
+
+    let pointerX = undefined;
+    let pointerY = undefined;
+
+    window.addEventListener('mousemove', (e) => {
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+    })
+

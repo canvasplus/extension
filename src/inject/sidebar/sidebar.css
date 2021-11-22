@@ -27,6 +27,53 @@ body:not(.primary-nav-expanded) .menu-item__text {
         padding: var(--sidebar-icon-height, .4375rem) 0 !important;
     }
 }
+
+#menu > li:not(.cpx-outside-settings-drawer) {
+    display: none;
+}
+
+#sidebar-custom-menu-icon-more-expansion {
+    position: fixed;
+    z-index: 150;
+    background: var(--sidebar-background-color);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    left: 54px;
+}
+
+.primary-nav-expanded #sidebar-custom-menu-icon-more-expansion  {
+    left: 84px;
+}
+
+.primary-nav-expanded #sidebar-custom-menu-icon-more-expansion .menu-item {
+    width: 84px;
+}
+
+#sidebar-custom-menu-icon-more-expansion .menu-item {
+    width: 54px;
+}
+
+.more-expansion-top {
+    top: var(--y-position);
+}
+
+.more-expansion-bottom {
+    bottom: var(--y-position);
+}
+
+#sidebar-custom-menu-icon-more-expansion-overlay {
+    z-index: 149;
+    top: 0;
+    right: 0;
+    width: calc(100% - 54px);
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    position: fixed;
+}
+
+.primary-nav-expanded #sidebar-custom-menu-icon-more-expansion-overlay {
+    width: calc(100% - 84px);
+}
 /* :root:root {
     --custom-padding: .4375rem;
     --custom-active-background: #FFFFFF;
