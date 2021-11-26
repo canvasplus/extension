@@ -12,8 +12,12 @@ const oldDefaults = {
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
+  "canvasplus-setting-sidebar-show-settings": true,
   "canvasplus-setup-stage": 0,
-  "canvasplus-current-version": "0.3.4"
+  "canvasplus-current-version": "0.3.4",
+  "canvasplus-birthday-confetti": false,
+  "canvasplus-survey": false,
+  "canvasplus-rating": false
 }
 
 const newDefaults = {

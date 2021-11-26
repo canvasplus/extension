@@ -3,7 +3,7 @@
   "version": "0.3.4",
   "manifest_version": 2,
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
-  "homepage_url": "http://canvasplus.adrwas.dev/",
+  "homepage_url": "https://canvasplus.adrwas.dev/",
   "web_accessible_resources": [
          "src/inject/colors/apply-variables.css",
          "src/inject/colors/dark.css",

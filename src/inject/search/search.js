@@ -552,6 +552,10 @@ class SearchUI {
             }
 
             searchUI.insert(document.body)
+
+            searchUI.wrapperElement.onclick = () => {
+                closeUI();
+            }
         }
 
         const closeUI = () => {
@@ -560,9 +564,18 @@ class SearchUI {
             searchUI.wrapperElement.remove()
         }
 
-        document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
-            openUI()
-        })
+        useReactiveFeatures([{
+            settingName: 'canvasplus-setting-sidebar-show-settings',
+            onChanged: (value) => { if (value) {
+                delayedQuerySelector("#sidebar-custom-menu-icon-search").then((e) => {
+                    e.addEventListener('click', () => {
+                        openUI();
+                    })
+                })
+            }}
+        }])
+
+        
 
         document.addEventListener("keyup", (event) => {
             const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
@@ -585,6 +598,7 @@ class SearchUI {
 
             if(usingControlKey) {
                 if(event.key === 'k') {
+                    event.preventDefault()
                     if(this.showing) {
                         closeUI()
 
@@ -600,15 +614,6 @@ class SearchUI {
                         this.invertTabSnackbar.element.remove()
                     }
                     this.invertTabSnackbar = setSnackbar([{"type":"text","text":"Opening in new tab"}])
-
-                    const id = this.invertTabSnackbar.id
-
-                    setTimeout(() => {
-                        if(searchUI.invertTabSnackbar.id === id) {
-                            removeSnackbar(this.invertTabSnackbar)
-                            this.invertTabSnackbar = undefined;
-                        }
-                    }, 2500);
                 }
             }
             if(this.showing) {
@@ -673,12 +678,14 @@ class SearchUI {
                     }
                 } else if(event.key === "Enter") {
                     // do stuff based on settings
-                    const urlToOpen = searchUI.results[searchUI.selected].url
+                    const urlToOpen = searchUI.results[searchUI.selected] ?  searchUI.results[searchUI.selected].url : undefined;
 
-                    if(usingControlKey ^ searchUI.invertOpenNewTab) {
-                        window.open(urlToOpen);
-                    } else {
-                        location.href = urlToOpen;
+                    if (urlToOpen != undefined){
+                        if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                            window.open(urlToOpen);
+                        } else {
+                            location.href = urlToOpen;
+                        }
                     }
                 } else if(event.key === 'Escape') {
                     closeUI()
@@ -736,7 +743,7 @@ class SearchUI {
 
         this.buildResults()
 
-        this.wrapperElement.appendChild(this.element)
+        document.documentElement.appendChild(this.element)
     }
 
     buildAutocomplete() {
