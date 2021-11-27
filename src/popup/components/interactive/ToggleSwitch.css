@@ -8,6 +8,7 @@
 
   cursor: pointer;
   transition: 0.3s background-color;
+  border: none;
 }
 
 .ToggleSwitch__Handle {

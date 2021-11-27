@@ -152,3 +152,18 @@
   content: '';
   transition: 0.1s left linear;
 }
+
+.canvasplus-search-ui-widget-center {
+  padding: 30px;
+  display: inline-block;
+  grid-gap: 30px;
+}
+
+.canvasplus-search-ui-widget {
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 250px;
+  max-height: 250px;
+  background: #FFF;
+  border-radius: 20px;
+}

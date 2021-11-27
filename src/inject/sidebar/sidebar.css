@@ -39,6 +39,16 @@ body:not(.primary-nav-expanded) .menu-item__text {
     border: 1px solid #ccc;
     border-radius: 8px;
     left: 54px;
+    max-height: 55%;
+    overflow: scroll;
+}
+
+#sidebar-custom-menu-icon-more-expansion .menu-item__text {
+    display: none;
+}
+
+.primary-nav-expanded #sidebar-custom-menu-icon-more-expansion .menu-item__text {
+    display: block;
 }
 
 .primary-nav-expanded #sidebar-custom-menu-icon-more-expansion  {

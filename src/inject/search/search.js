@@ -727,6 +727,12 @@ class SearchUI {
             this.resultsElement.className = 'canvasplus-search-ui-results'
             this.element.appendChild(this.resultsElement)
         }
+        
+        {
+            this.widgetCenter = document.createElement('div')
+            this.widgetCenter.className = 'canvasplus-search-ui-widget-center'
+            this.element.appendChild(this.widgetCenter)
+        }
 
         {
             this.controlsElement = document.createElement('div')
@@ -735,6 +741,7 @@ class SearchUI {
         }
 
         this.buildResults()
+        this.buildWidgets( /* ... */ )
 
         this.wrapperElement.appendChild(this.element)
     }
@@ -842,6 +849,31 @@ class SearchUI {
         this.createEntireElement()
         this.where = where;
         where.appendChild(this.wrapperElement)
+    }
+
+    buildWidgets(widgets) {
+        widgets = [{
+            type: 'quote',
+            wide: true,
+            index: 0 
+        }]
+
+        this.widgetCenter.innerHTML = '';
+
+        widgets.forEach((widget) => {
+            this.widgetCenter.appendChild(this.buildWidget(widget))
+        })
+    }
+
+    buildWidget(widgetData) {
+        const widget = document.createElement('div');
+        widget.className = 'canvasplus-search-ui-widget'
+
+        if(widgetData.wide) {
+            widget.classList.add('canvasplus-search-ui-widget-wide')
+        }
+
+        return widget;
     }
 }
 

@@ -17,6 +17,9 @@ const oldDefaults = {
 }
 
 const newDefaults = {
+  "canvasplus-setting-sidebar-drawer": true,
+  "canvasplus-setting-sidebar-drawer-excluded": ["Dashboard", "Courses", "Calendar", "Inbox", "Settings", "Search"],
+  "canvasplus-setting-sidebar-drawer-all-items": ["Settings", "Search"] 
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
