@@ -5,8 +5,4 @@
 
 .content .context_module_items li:last-child .ig-row, .assignment-list li:last-child .ig-row {
     border-radius: 0 0 10px 10px;
-}
-
-.ig-header {
-    transition: border-radius 0.3s linear;
 } 
