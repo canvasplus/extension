@@ -66,6 +66,14 @@
   font-size: 15px;
 }
 
+.compact-results .canvasplus-search-ui-results-single-result {
+  height: 48px;
+}
+
+.compact-results .canvasplus-search-ui-results-single-result-left-inner {
+  font-size: 15px !important;
+}
+
 .canvasplus-search-ui-results-single-result.result-selected {
   background: var(--cpt-dark-search-ui-selected-result-background-color, #e2efff);
 }
@@ -80,6 +88,7 @@
   overflow: hidden;
   white-space: nowrap;
   color: var(--cpt-dark-important-text-color, #000);
+  display: flex;
 }
 
 .canvasplus-search-ui-results-single-result-left-topmeta {
@@ -166,4 +175,14 @@
   max-height: 250px;
   background: #FFF;
   border-radius: 20px;
+}
+
+.canvasplus-search-ui-results-single-result-left-course-card-color {
+  width: 12px;
+  height: 12px;
+  background: var(--course-card-color);
+  border-radius: 4px;
+  top: 50%;
+  position: relative;
+  margin: 6px 10px 0 0;
 }

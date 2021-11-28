@@ -179,10 +179,7 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
     if(tabs.modules) {
         const modules = getCourseModules(courseId, forceReload);
         modules.then((data) => {
-            data.modules.forEach(module => {
-                courseContent['modules/' + module.id] = module
-            })
-            data.items.forEach(item => {
+            data.forEach(item => {
                 let courseContentPath;
                 if(item.type === 'Page') {
                     courseContentPath = 'pages/' + item.id;
@@ -243,16 +240,10 @@ const getCourseAssignments = async ( courseId, forceReload = false ) => {
 
 const getCourseModules = async ( courseId, forceReload = false ) => {
     return getFetchablePaginated("courses/" + courseId + "/modules", "courses/" + courseId + "/modules", "/api/v1/courses/" + courseId + "/modules?include=items", async (data) => {
-        const modules = []
         const items = []
         for(let module of data) {
             const url = new URL(module["items_url"])
-            modules.push({
-                id: module.id,
-                url: url.protocol + '//' + url.hostname + '/courses/' + courseId + '/modules?cpx-jump-to=' + module.id,
-                title: module.name,
-                locations: [{'type': 'tab', 'name': 'Modules', 'id': 'modules'}]
-            })
+            
             module.items.forEach(moduleItem => {
                 let itemUrl;
                 let itemId;
@@ -280,8 +271,7 @@ const getCourseModules = async ( courseId, forceReload = false ) => {
                 }
             })
         }
-        const returnable = { modules, items };
-        return returnable;
+        return items;
     }, forceReload)
 }
 
@@ -334,7 +324,7 @@ const main = async () => {
         const snackbar = setSnackbar([{
             'type': 'text', 'text': 'Press'
         }, {
-            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'P'
+            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'K'
         }, {
             'type': 'text', 'text': 'to search'
         }])
@@ -461,8 +451,122 @@ const search = async (query, callback) => {
     }));
 }
 
+const searchCoursesOnly = async (query, callback) => {
+    if(query.length === 0) {
+        
+        let results = {}
+
+        Object.values(searchContent["courses"]).forEach((item, idx) => {
+            const { name, color, id } = item.meta;
+
+            results[id] = {
+                relevance: 1,
+                item: { name: name, color: color, id: id }
+            }
+        })
+
+        callback(Object.values(results).sort((a, b) => {
+            const aName = a["item"]["name"];
+            const bName = b["item"]["name"];
+            return aName.toLowerCase().localeCompare(bName.toLowerCase())
+        }))
+
+        return;
+    }
+
+    const simpleQuery = filterAlphanumeric(query).toLowerCase();
+    let results = {}
+
+    Object.values(searchContent["courses"]).forEach((item, idx) => {
+        const { name, color, id } = item.meta;
+
+        const references = smartSplit(query);
+        const subjects = smartSplit(name);
+
+        let scores = 0;
+
+        references.forEach(reference => {
+
+            const max = reference.length;
+
+            let current = {subject: undefined, similarity: 0};
+
+            subjects.find(subject => {
+
+                if(reference === subject) {
+                    current = {subject: subject, similarity: max};
+                    return true;
+                }
+
+                const similarity = compareWords(reference, subject);
+
+                if(similarity >= max) {
+                    current = {subject: subject, similarity: max};
+                    return true;
+                }
+
+                if(similarity > current.similarity) {
+                    current = {subject: subject, similarity: similarity};
+                }
+                return false;
+            })
+            scores += current.similarity
+        })
+
+        if(filterAlphanumeric(name).toLowerCase().includes(filterAlphanumeric(query).toLowerCase())) {
+            scores *= 1.5
+            if(name.toLowerCase().includes(query.toLowerCase())) {
+                scores *= 1.5
+            }
+        }
+
+        const max = references.map(reference => {
+            return reference.length;
+        }).reduce((a, b) => { return a + b} )
+
+        if(results[id]) {
+            results[id].relevance = Math.max(results[id].relevance, scores/max)
+        } else {
+            results[id] = {
+                relevance: scores/max,
+                item: { name: name, color: color, id: id }
+            }
+        }
+    })
+
+    callback(Object.values(results).sort((a, b) => {
+        const aName = a["item"]["name"];
+        const bName = b["item"]["name"];
+        return aName.toLowerCase().localeCompare(bName.toLowerCase())
+    }).sort((a, b) => {
+        return b.relevance - a.relevance
+    }));
+}
+
 const searchUpdateUI = (query) => {
-    if(query.length > 0) {
+    searchUI.element.classList.remove('compact-results')
+    if(query.startsWith("#")) {
+        searchCoursesOnly(query.substr(1), (results) => {
+            searchUI.element.classList.add('compact-results')
+
+            searchUI.results = []
+            results.splice(8)
+            results.forEach(result => {
+                searchUI.results.push({
+                    course: {
+                        name: result.item.name,
+                        color: result.item.color
+                    },
+                    url: getPathAPI('/courses/' + result.item.id)
+                })
+            })
+
+            searchUI.selected = 0;
+
+            searchUI.buildResults()
+        })
+    }
+    else if(query.length > 0) {
         search(query, (results) => {
             searchUI.results = []
 
@@ -584,7 +688,7 @@ class SearchUI {
 
 
             if(usingControlKey) {
-                if(event.key === 'k') {
+                if(event.key === 'k' || event.key === 'b') {
                     if(this.showing) {
                         closeUI()
 
@@ -593,6 +697,15 @@ class SearchUI {
                         }
                     } else {
                         openUI()
+
+                        if(event.shiftKey || event.key === 'b') {
+                            searchUI.headerElementQueryWrapper.textContent = '#'
+                            searchUI.buildAutocomplete()
+                            
+                            searchUpdateUI("#")
+
+                            searchUI.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                        }
                     }
                     return;
                 } else if(this.showing) {
@@ -728,11 +841,11 @@ class SearchUI {
             this.element.appendChild(this.resultsElement)
         }
         
-        {
-            this.widgetCenter = document.createElement('div')
-            this.widgetCenter.className = 'canvasplus-search-ui-widget-center'
-            this.element.appendChild(this.widgetCenter)
-        }
+        // {
+        //     this.widgetCenter = document.createElement('div')
+        //     this.widgetCenter.className = 'canvasplus-search-ui-widget-center'
+        //     this.element.appendChild(this.widgetCenter)
+        // }
 
         {
             this.controlsElement = document.createElement('div')
@@ -741,7 +854,7 @@ class SearchUI {
         }
 
         this.buildResults()
-        this.buildWidgets( /* ... */ )
+        //this.buildWidgets( /* ... */ )
 
         this.wrapperElement.appendChild(this.element)
     }
@@ -750,29 +863,49 @@ class SearchUI {
         const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
         if(currentQuery.length === 0) {
             this.headerElementQueryAutoComplete.textContent = 'Search your courses';
+        } else if(currentQuery.length === 1 && currentQuery === '#') {
+           this.headerElementQueryAutoComplete.textContent = 'Jump to a course';
         }
-        if(this.results.length > 0) {
-            let newAutocomplete = '';
-            const selected = this.results[this.selected];
-            if(!selected) return;
-            if(selected.name.toLowerCase().includes(currentQuery)) {
-                newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
-            }
+        else if(this.results.length > 0) {
+            if(currentQuery.startsWith("#")) {
+                let newAutocomplete = '';
+                const selected = this.results[this.selected];
+                if(!selected) return;
+                if(selected.name.toLowerCase().includes(currentQuery)) {
+                    newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
+                }
 
-            this.headerElementQueryAutoComplete.textContent = newAutocomplete;
+                this.headerElementQueryAutoComplete.textContent = newAutocomplete;
+            } else {
+                let newAutocomplete = '';
+                const selected = this.results[this.selected];
+                if(!selected) return;
+                if(selected.name.toLowerCase().includes(currentQuery)) {
+                    newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
+                }
+
+                this.headerElementQueryAutoComplete.textContent = newAutocomplete;
+            }
+            
         }
     }
 
     buildResults() {
-        this.buildAutocomplete()
-
         this.resultsElement.innerHTML = ''
         this.results.forEach((result, idx) => {
             this.resultsElement.appendChild(this.buildResult(result, idx))
         })
+
+        this.buildAutocomplete()
     }
 
     buildResult(result, idx) {
+        let isCourseResult = !result.name && result.course;
+
+        if(isCourseResult) {
+            result.name = result.course.name;
+        }
+
         const resultElement = document.createElement('div')
         resultElement.className = 'canvasplus-search-ui-results-single-result'
 
@@ -799,6 +932,13 @@ class SearchUI {
 
         const resultLeft = document.createElement('div')
         resultLeft.className = 'canvasplus-search-ui-results-single-result-left'
+        resultLeft.style = '--course-card-color: ' + result.course.color + ';';
+        
+        if(isCourseResult) {
+            const resultCourseCardColor = document.createElement('div')
+            resultCourseCardColor.className = 'canvasplus-search-ui-results-single-result-left-course-card-color'
+            resultLeft.appendChild(resultCourseCardColor)
+        }
 
         const resultInner = document.createElement('div')
         resultInner.className = 'canvasplus-search-ui-results-single-result-left-inner'
@@ -816,7 +956,7 @@ class SearchUI {
         resultLeft.appendChild(resultInner)
         resultElement.appendChild(resultLeft)
 
-        if(result.course) {
+        if(result.course && !isCourseResult) {
             resultElement.classList.add('includes-course-card')
 
             const resultRight = document.createElement('div')
@@ -851,30 +991,30 @@ class SearchUI {
         where.appendChild(this.wrapperElement)
     }
 
-    buildWidgets(widgets) {
-        widgets = [{
-            type: 'quote',
-            wide: true,
-            index: 0 
-        }]
+    // buildWidgets(widgets) {
+    //     widgets = [{
+    //         type: 'quote',
+    //         wide: true,
+    //         index: 0 
+    //     }]
 
-        this.widgetCenter.innerHTML = '';
+    //     this.widgetCenter.innerHTML = '';
 
-        widgets.forEach((widget) => {
-            this.widgetCenter.appendChild(this.buildWidget(widget))
-        })
-    }
+    //     widgets.forEach((widget) => {
+    //         this.widgetCenter.appendChild(this.buildWidget(widget))
+    //     })
+    // }
 
-    buildWidget(widgetData) {
-        const widget = document.createElement('div');
-        widget.className = 'canvasplus-search-ui-widget'
+    // buildWidget(widgetData) {
+    //     const widget = document.createElement('div');
+    //     widget.className = 'canvasplus-search-ui-widget'
 
-        if(widgetData.wide) {
-            widget.classList.add('canvasplus-search-ui-widget-wide')
-        }
+    //     if(widgetData.wide) {
+    //         widget.classList.add('canvasplus-search-ui-widget-wide')
+    //     }
 
-        return widget;
-    }
+    //     return widget;
+    // }
 }
 
 const searchUI = new SearchUI()

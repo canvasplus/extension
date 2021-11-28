@@ -168,7 +168,7 @@ const renderSidebarDrawer = () => {
   
     document.querySelectorAll("#menu > li .menu-item__text").forEach(buttonText => {
       const buttonName = buttonText.textContent.trim();
-      if(buttonName !== "More") {
+      if(buttonName !== "More" && buttonName !== "Edit") {
   
         if(notHidden.includes(buttonName)) {
           buttonText.parentElement.parentElement.classList.add("cpx-outside-settings-drawer")
