@@ -155,7 +155,8 @@ chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appe
 
 chrome.storage.local.get(["canvasplus-survey", "installDate"], (data) => {
   const viewed = data["canvasplus-survey"]
-  const time = (Math.round(data["installDate"]['timestamp']) / 86400000)
+  const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
+
   if (viewed !== true &&  time >= 14) {
     notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "scroll", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
       const surveysettings = { "canvasplus-setting-quicklink": "Speed+Boost", "canvasplus-setting-search": "Search", "canvasplus-setting-smartscroll": "Smart+Scrolling", "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out', 'auto': 'Auto'}, "canvasplus-setting-convopeeker": "Quick+Inbox", "canvasplus-setting-hidelogo": "Hide+Logo", "canvasplus-setting-sidebar-color": 'use default', "canvasplus-setting-roundermodules": "Rounder+Modules", "canvasplus-setting-linkcolor": 'use default' }
@@ -182,7 +183,7 @@ chrome.storage.local.get(["canvasplus-survey", "installDate"], (data) => {
 
 chrome.storage.local.get(["canvasplus-rating", "installDate"], (data) => {
   const viewed = data["canvasplus-rating"]
-  const time = (Math.round(data["installDate"]['timestamp']) / 86400000)
+  const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
 
   if (viewed !== true &&  time >= 20) {
     notification("Seems like you've been using Canvas+ for a whlie now. Please consider rating it, it helps us grow.", "star", "#e6f8ff", "#1791c0", (notification, dismissMe, e) => {

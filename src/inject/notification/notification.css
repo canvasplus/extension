@@ -4,7 +4,7 @@
     right: 10px;
     z-index: 100;
     width: 400px;
-    height: inherit;
+    height: min-content;
     animation-duration: 0.5s;
     animation-name: notificationAppear;
 }
