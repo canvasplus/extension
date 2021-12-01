@@ -545,8 +545,8 @@ const searchCoursesOnly = async (query, callback) => {
 
 const searchUpdateUI = (query) => {
     searchUI.element.classList.remove('compact-results')
-    if(query.startsWith("#")) {
-        searchCoursesOnly(query.substr(1), (results) => {
+    if(searchUI.mode === "navigator") {
+        searchCoursesOnly(query, (results) => {
             searchUI.element.classList.add('compact-results')
 
             searchUI.results = []
@@ -644,7 +644,9 @@ class SearchUI {
     }
 
     addListeners() {
-        const openUI = () => {
+        this.openUI = () => {
+            this.mode = 'search'
+            this.results = []
             this.showing = true;
 
             if(document.body.contains(searchUI.element)) {
@@ -658,14 +660,16 @@ class SearchUI {
             searchUI.insert(document.body)
         }
 
-        const closeUI = () => {
+        this.closeUI = () => {
             this.showing = false;
             searchUI.element.remove()
             searchUI.wrapperElement.remove()
         }
 
+        
+
         document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
-            openUI()
+            this.openUI()
         })
 
         document.addEventListener("keyup", (event) => {
@@ -690,19 +694,18 @@ class SearchUI {
             if(usingControlKey) {
                 if(event.key === 'k' || event.key === 'b') {
                     if(this.showing) {
-                        closeUI()
+                        this.closeUI()
 
                         if(this.invertTabSnackbar) {
                             instantlyRemoveSnackbar(this.invertTabSnackbar)
                         }
                     } else {
-                        openUI()
+                        this.openUI()
 
                         if(event.shiftKey || event.key === 'b') {
-                            searchUI.headerElementQueryWrapper.textContent = '#'
-                            searchUI.buildAutocomplete()
-                            
-                            searchUpdateUI("#")
+                            searchUI.mode = 'navigator'
+                            searchUI.buildIcon()
+                            searchUpdateUI("")
 
                             searchUI.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                         }
@@ -717,7 +720,7 @@ class SearchUI {
                     const id = this.invertTabSnackbar.id
 
                     setTimeout(() => {
-                        if(searchUI.invertTabSnackbar.id === id) {
+                        if(searchUI?.invertTabSnackbar?.id === id) {
                             removeSnackbar(this.invertTabSnackbar)
                             this.invertTabSnackbar = undefined;
                         }
@@ -727,10 +730,22 @@ class SearchUI {
             if(this.showing) {
                 if(event.key === "Backspace") {
                     event.preventDefault()
+                    
+                    if(this.mode === "navigator" && this.headerElementQueryWrapper.textContent.length + this.headerElementQueryRight.textContent.length === 0) {
+                        this.mode = "search";
+                        this.results = []
+                        this.buildResults()
+                        this.buildIcon();
+                    }
 
                     if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
                     this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                     this.buildAutocomplete()
+                } else if(event.key === "#" && !usingControlKey && this.headerElementQueryWrapper.textContent.length + this.headerElementQueryRight.textContent.length === 0) {
+                    event.preventDefault()
+                    this.mode = this.mode === "navigator" ? "search" : "navigator";
+                    this.buildIcon();
+                    searchUpdateUI("")
                 } else if(event.key === " " && !usingControlKey) {
                     event.preventDefault()
 
@@ -794,7 +809,7 @@ class SearchUI {
                         location.href = urlToOpen;
                     }
                 } else if(event.key === 'Escape') {
-                    closeUI()
+                    this.closeUI()
                 }
             }
         })
@@ -804,6 +819,11 @@ class SearchUI {
         this.wrapperElement = document.createElement('div')
         this.wrapperElement.id = 'canvasplus-search-ui-wrapper'
         this.wrapperElement.className = 'canvasplus-search-ui-wrapper'
+        this.wrapperElement.addEventListener("click", (e) => {
+            if(e.currentTarget === e.target) {
+                this.closeUI()
+            }
+        })
 
         this.element = document.createElement('div')
         this.element.className = 'canvasplus-search-ui'
@@ -813,7 +833,8 @@ class SearchUI {
             this.headerElement.className = 'canvasplus-search-ui-header'
 
             this.headerElementIcon = document.createElement('div')
-            this.headerElementIcon.className = 'canvasplus-search-ui-header-icon'
+            this.headerElementIcon.className = 'canvasplus-search-ui-header-icon run-animation'
+            this.buildIcon()
 
             this.headerElementQueryWrapper = document.createElement('div')
             this.headerElementQueryWrapper.className = 'canvasplus-search-ui-query-wrapper'
@@ -859,35 +880,37 @@ class SearchUI {
         this.wrapperElement.appendChild(this.element)
     }
 
-    buildAutocomplete() {
+    buildAutocomplete(overrideSelected) {
         const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
         if(currentQuery.length === 0) {
             this.headerElementQueryAutoComplete.textContent = 'Search your courses';
-        } else if(currentQuery.length === 1 && currentQuery === '#') {
-           this.headerElementQueryAutoComplete.textContent = 'Jump to a course';
         }
         else if(this.results.length > 0) {
-            if(currentQuery.startsWith("#")) {
-                let newAutocomplete = '';
-                const selected = this.results[this.selected];
+            let newAutocomplete = '';
+                const selected = this.results[overrideSelected ?? this.selected];
                 if(!selected) return;
                 if(selected.name.toLowerCase().includes(currentQuery)) {
                     newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
                 }
 
                 this.headerElementQueryAutoComplete.textContent = newAutocomplete;
-            } else {
-                let newAutocomplete = '';
-                const selected = this.results[this.selected];
-                if(!selected) return;
-                if(selected.name.toLowerCase().includes(currentQuery)) {
-                    newAutocomplete = selected.name.substr(selected.name.toLowerCase().lastIndexOf(currentQuery) + currentQuery.length)
-                }
-
-                this.headerElementQueryAutoComplete.textContent = newAutocomplete;
-            }
             
         }
+    }
+
+    buildIcon() {
+        if(this.mode === "navigator") {
+            this.headerElementIcon.innerHTML = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" style="width: calc(var(--sidebar-icon-width, 26px) * 1.2) !important;" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="523.3" y1="150.7" x2="453.2" y2="649.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="346.8" y1="150.7" x2="276.7" y2="649.3"/>	</g>	<g>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="636.8" y1="488.3" x2="138.3" y2="488.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="661.7" y1="311.7" x2="163.2" y2="311.7"/></g></g></svg>`
+        } else {
+            this.headerElementIcon.innerHTML = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" style="width: calc(var(--sidebar-icon-width, 26px) * 1.2) !important;" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><line id="Line_3" style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;stroke-linecap:round;" x1="693.83" y1="707.5" x2="529.83" y2="543.5"/><g id="Ellipse_1"><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:0.8605;stroke-miterlimit:10;" cx="372.67" cy="359" r="266.5"/><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;" cx="372.67" cy="359" r="239.17"/></g></g></svg>`
+        }
+
+        this.headerElementIcon.classList.add("hide-for-animation")
+        this.headerElementIcon.classList.remove("run-animation")
+        setTimeout(() => {
+            this.headerElementIcon.classList.remove("hide-for-animation")
+            this.headerElementIcon.classList.add("run-animation")
+        }, 0)
     }
 
     buildResults() {
@@ -910,10 +933,10 @@ class SearchUI {
         resultElement.className = 'canvasplus-search-ui-results-single-result'
 
         resultElement.addEventListener('mouseover', (event) => {
-            if(this.selected === idx) return;
-            this.resultsElement.children[this.selected].classList.remove('result-selected')
-            this.resultsElement.children[idx].classList.add('result-selected')
-            this.selected = idx;
+            this.buildAutocomplete(idx)
+        })
+
+        resultElement.addEventListener('mouseout', (event) => {
             this.buildAutocomplete()
         })
 
@@ -970,14 +993,10 @@ class SearchUI {
             const resultRightBreadcrumb = document.createElement('div')
             resultRightBreadcrumb.className = 'canvasplus-search-ui-results-single-result-right-breadcrumb'
 
-            resultRightBreadcrumb.innerText = result.locations[0].name
+            resultRightBreadcrumb.innerText = result?.locations?.[0]?.name || "No Location"
 
             resultRight.appendChild(resultRightBreadcrumb)
             resultRight.appendChild(resultRightCourse)
-
-            if(result.locations.length >= 2) {
-                resultElement.classList.add('includes-multiple-locations')
-            }
 
             resultElement.appendChild(resultRight)
         }
