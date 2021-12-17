@@ -794,10 +794,6 @@ class SearchUI {
                         this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
                         this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
                         this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
-                    }  else if(this.headerElementQueryAutoComplete.textContent.length > 0 && !event.repeat) {
-                        this.headerElementQueryWrapper.textContent += this.headerElementQueryAutoComplete.textContent;
-                        this.headerElementQueryAutoComplete.textContent = ''
-                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                     }
                 } else if(event.key === "Enter") {
                     // do stuff based on settings
