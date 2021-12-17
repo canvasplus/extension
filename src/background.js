@@ -2,18 +2,22 @@ const oldDefaults = {
   "canvasplus-setting-quicklink": false,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
-  "canvasplus-display-appearance": "light",
+  "canvasplus-display-appearance": "auto",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",
-  "canvasplus-setting-sidebar-smaller-icons": true,
+  "canvasplus-setting-sidebar-icon-size": 9,
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
+  "canvasplus-setting-sidebar-show-settings": true,
   "canvasplus-setup-stage": 0,
-  "canvasplus-current-version": "0.3.4"
+  "canvasplus-current-version": "0.3.4",
+  "canvasplus-birthday-confetti": false,
+  "canvasplus-survey": false,
+  "canvasplus-rating": false
 }
 
 const newDefaults = {

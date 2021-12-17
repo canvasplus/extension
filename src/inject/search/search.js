@@ -658,6 +658,10 @@ class SearchUI {
             }
 
             searchUI.insert(document.body)
+
+            searchUI.wrapperElement.onclick = () => {
+                closeUI();
+            }
         }
 
         this.closeUI = () => {
@@ -665,8 +669,6 @@ class SearchUI {
             searchUI.element.remove()
             searchUI.wrapperElement.remove()
         }
-
-        
 
         document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
             this.openUI()
@@ -797,12 +799,14 @@ class SearchUI {
                     }
                 } else if(event.key === "Enter") {
                     // do stuff based on settings
-                    const urlToOpen = searchUI.results[searchUI.selected].url
+                    const urlToOpen = searchUI.results[searchUI.selected] ?  searchUI.results[searchUI.selected].url : undefined;
 
-                    if(usingControlKey ^ searchUI.invertOpenNewTab) {
-                        window.open(urlToOpen);
-                    } else {
-                        location.href = urlToOpen;
+                    if (urlToOpen != undefined){
+                        if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                            window.open(urlToOpen);
+                        } else {
+                            location.href = urlToOpen;
+                        }
                     }
                 } else if(event.key === 'Escape') {
                     this.closeUI()
@@ -873,7 +877,7 @@ class SearchUI {
         this.buildResults()
         //this.buildWidgets( /* ... */ )
 
-        this.wrapperElement.appendChild(this.element)
+        document.documentElement.appendChild(this.element)
     }
 
     buildAutocomplete(overrideSelected) {

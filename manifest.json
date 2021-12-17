@@ -3,7 +3,7 @@
   "version": "0.3.4",
   "manifest_version": 2,
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
-  "homepage_url": "http://canvasplus.adrwas.dev/",
+  "homepage_url": "https://canvasplus.org",
   "web_accessible_resources": [
          "src/inject/colors/apply-variables.css",
          "src/inject/colors/dark.css",
@@ -17,13 +17,15 @@
          "assets/img/dim.png",
          "assets/img/dark.png",
          "assets/img/extension-menu.png",
-          "assets/img/notification-emoji/heart.png",
+         "assets/img/notification-emoji/heart.png",
+         "assets/img/notification-emoji/scroll.png",
+         "assets/img/notification-emoji/star.png",
          "src/popup/popup.html"
      ],
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/snackbar/snackbar.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js"],
+      "js": ["src/canvas.js", "src/inject/snackbar/snackbar.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/notification/notification.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js"],
       "css": ["src/canvas.css", "src/inject/snackbar/snackbar.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/notification/notification.css", "src/inject/scroll/scroll.css"]
     },
     {

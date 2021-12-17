@@ -11,6 +11,7 @@
   border-radius: 20px;
   border: 1px solid var(--cpt-dark-interactable-border-color, rgb(255, 255, 255));
   overflow: hidden;
+  z-index: 201;
 }
 
 .canvasplus-search-ui-wrapper {
@@ -20,6 +21,7 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,0.3);
+  cursor: pointer;
   top: 0;
   left: 0;
   z-index: 200;
@@ -32,6 +34,7 @@
   height: 35px;
   display: flex;
   position: relative;
+  cursor: pointer;
 }
 
 .canvasplus-search-ui-header-icon {
@@ -74,6 +77,7 @@
 
 .canvasplus-search-ui-query-wrapper-autocomplete {
   color: #aaa;
+  cursor: text;
 }
 
 .canvasplus-search-ui-results-single-result {

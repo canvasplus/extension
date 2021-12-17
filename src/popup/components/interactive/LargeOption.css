@@ -42,3 +42,13 @@
 .LargeOptionForm__Option:hover:not(.selected) {
   background-color: var(--background-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .auto { --background-color: #050d26 !important; --background-hover-color: #000000 !important; }
+  .auto-text { color: #fff !important; }
+}
+
+@media (prefers-color-scheme: light) {
+  .auto { --background-color: #eee !important; --background-hover-color: #d4d4d4 !important; }
+  .auto-text { color: #444 !important; }
+}
