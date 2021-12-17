@@ -16,6 +16,7 @@ body:not(.primary-nav-expanded) .menu-item__text {
 
 .menu-item-icon-container svg {
     width: var(--sidebar-icon-width, 26px) !important;
+    transition: width .4s;
 }
 
 .ic-app-header__menu-list-item.ic-app-header__menu-list-item--active .ic-app-header__menu-list-link, #mobile-header {

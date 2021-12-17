@@ -53,7 +53,7 @@ useReactiveFeatures([{
 }, {
   settingName: 'canvasplus-setting-sidebar-smaller-icons',
   onChanged: (value) => {
-    sidebarIconWidth.setRule(value ? '--sidebar-icon-width: 22px' : '')
+    value != 9 ? sidebarIconWidth.setRule('--sidebar-icon-width: ' + String(value + 17) + 'px') : '';
   }
 }, {
   settingName: 'canvasplus-setting-sidebar-more-spacing',
