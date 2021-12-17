@@ -23,8 +23,8 @@
   "content_scripts": [
     {
       "matches": [ "*://*.instructure.com/*" ],
-      "js": ["src/canvas.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/notification/notification.js"],
-      "css": ["src/canvas.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/notification/notification.css"]
+      "js": ["src/canvas.js", "src/inject/snackbar/snackbar.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js"],
+      "css": ["src/canvas.css", "src/inject/snackbar/snackbar.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/notification/notification.css", "src/inject/scroll/scroll.css"]
     },
     {
       "matches": [ "*://*.instructure.com/*"],

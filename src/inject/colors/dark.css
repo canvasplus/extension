@@ -28,5 +28,11 @@
 
   --cpt-dark-current-page: #fff;
 
-  --cpt-dark-dashboard-header: rgba(29, 29, 33, 0.95);
+  --cpt-dark-dashboard-header: rgba(10, 10, 12, 0.95);
+
+  --cpt-dark-search-ui-header-background-color: #1e2427;
+  --cpt-dark-search-ui-result-background-color: #2d3235;
+  --cpt-dark-search-ui-selected-result-background-color: #162333;
+  --cpt-dark-search-ui-glass-color: rgba(40, 45, 51, 0.5);
+  --cpt-dark-snackbar-code-segment-color: #232a2e;
 }

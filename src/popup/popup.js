@@ -5,6 +5,7 @@ import './Popup.css'
 import Panel from './components/structure/Panel';
 import Navigation from './components/navigation/Navigation';
 import FrameContainer from './components/frames/FrameContainer';
+import CustomizableSetting from './components/settings/CustomizableSetting';
 import Setting from './components/settings/Setting';
 import SettingGroup from './components/settings/SettingGroup';
 import AppearanceSelector from './components/display/AppearanceSelector';
@@ -13,23 +14,12 @@ import ColorSwitch from './components/interactive/ColorSwitch';
 import LimitedColorSwitch from './components/interactive/LimitedColorSwitch';
 import ActiveSidebarColorSwitch from './components/interactive/ActiveSidebarColorSwitch';
 import SidebarBackgroundColorPicker from './components/interactive/color/SidebarBackgroundColorPicker';
+import SidebarDrawerExpansionCustomization from './components/interactive/SidebarDrawerExpansionCustomization';
 
 const popup = () => {
-  // useEffect(() => {
-  //   if(true) {
-  //     const style = document.createElement('style')
-  //     style.innerHTML = `
-  //         body {
-  //             width: 240px;
-  //             height: 400px;
-  //         }
-  //     `
-  //     document.body.appendChild(style)
-  //   }
-  // }, [])
 
   const [currentTab, setCurrentTab] = useState("settings")
-const tabChangeHandler = (newTabId) => {
+  const tabChangeHandler = (newTabId) => {
   setCurrentTab(newTabId)
 }
 
@@ -81,6 +71,7 @@ const frames = {
           ]}></AppearanceSelector>
         </div>
         <SettingGroup name="Sidebar">
+          <CustomizableSetting name="Expansion Drawer" setting="sidebar-drawer" description={"Adds a \"More\" button to the sidebar to hide unused buttons."} customizationContent={(enabled) => { return <SidebarDrawerExpansionCustomization featureEnabled={enabled}/>} } /> 
           <Setting name="Background Color" setting="sidebar-color" description="Change the background color of the sidebar." defaultValue="#1b7ecf" customInput={(state, setState) => { return <SidebarBackgroundColorPicker state={state} setState={setState} />}}/>
           <Setting name="Active Background Color" setting="active-sidebar-color" description="Change the background color of the active sidebar button."  defaultValue={{'background': 'darker', 'icon': 'white'}} customInput={(state, setState) => { return <ActiveSidebarColorSwitch state={state} setState={setState}/> }} />
           <Setting name="Icon Color" setting="sidebar-icon-color" description="Change the icon color of the sidebar." defaultValue="white" customInput={(state, setState) => { return <LimitedColorSwitch state={state} setState={setState} generateTooltip={(color) => {if(color === "unset") {return <><b>Default Icons</b><p>Sidebar icons will inherit the default colors of your school.</p></>;} else if(["black","white"].includes(color)) {return <><b>{ color.charAt(0).toUpperCase() + color.slice(1) } Icons</b><p>Sidebar icons will always appear in { color }.</p></>} else {return <><b>Custom Icons</b><p>Click to open a color wheel and chose a custom icon color.</p></>;}}}/> }} />
@@ -95,6 +86,18 @@ const frames = {
     )
   }
 }
+
+useEffect(() => {
+  const urlParams = new URLSearchParams(window.location.search)
+  
+  if(urlParams.get("tab") === "display") {
+    setCurrentTab("display")
+  }
+
+  if(urlParams.get("click-x-id")) {
+    document.querySelector("#" + urlParams.get("click-x-id"))?.click()
+  }
+}, [])
 
   return (
     <div><Panel size='1'>
