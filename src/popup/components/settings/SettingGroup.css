@@ -14,11 +14,11 @@
   cursor: pointer;
 }
 
-.SettingGroup__SettingsContainer .Setting {
+.SettingGroup__SettingsContainer .Setting, .SettingGroup__SettingsContainer .CustomizableSetting {
   padding: 7px;
 }
 
-.SettingGroup__SettingsContainer .Setting:not(:last-child) {
+.SettingGroup__SettingsContainer .Setting:not(:last-child), .SettingGroup__SettingsContainer .CustomizableSetting:not(:last-child) { 
   border-bottom: 1px solid var(--setting-line-color);
 }
 

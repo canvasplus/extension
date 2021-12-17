@@ -13,9 +13,9 @@ const ToggleSwitch = (props) => {
   }
 
   return (
-    <div className={switched ? "SettingInput ToggleSwitch on" : "SettingInput ToggleSwitch"} onClick={clickHandler}>
+    <button className={switched ? "SettingInput ToggleSwitch on" : "SettingInput ToggleSwitch"} onClick={clickHandler}>
       <div className="ToggleSwitch__Handle"></div>
-    </div>
+    </button>
   );
 }
 
