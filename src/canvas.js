@@ -8,7 +8,7 @@ const defaults = {
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",
-  "canvasplus-setting-sidebar-smaller-icons": 9,
+  "canvasplus-setting-sidebar-icon-size": 9,
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
