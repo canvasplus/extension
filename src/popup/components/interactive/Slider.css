@@ -1,10 +1,11 @@
 .Slider-Bubble {
-	background: var(--slider-border-color);
-	color: white;
-	padding: 1px 10px;
-	border-radius: 6px;
+	background: #E8E8E8;
+	color: #555;
+	padding: 6px 12px;
+	border-radius: 8px;
 	display: inline-block;
 	margin: 0.75px 0px 0.75px 5px;
+	float: right;
 }
 
 .Slider .range {
@@ -12,12 +13,12 @@
 	-webkit-appearance: none;
 	appearance: none;
 	height: 2px;
-	background: var(--slider-border-color);
+	background: #096dca;
 	outline: none;
 	opacity: 0.7;
 	animation-duration: 0.2s;
 	transition: opacity .2s;
-	width: 75%;
+	width: 50%;
 }
 .range::-webkit-slider-thumb {
 	height: 15px;
@@ -25,7 +26,7 @@
 	border-radius: 50%;
 	cursor: pointer;
 	width: 15px;
-	border: 2px solid var(--slider-border-color);
+	border: 2px solid #096dca;
 	-webkit-appearance: none;
 }
 
@@ -35,7 +36,7 @@
 	border-radius: 50%;
 	cursor: pointer;
 	width: 15px;
-	border: 2px solid var(--slider-border-color);
+	border: 2px solid #096dca;
 	-webkit-appearance: none;
 }
 
@@ -46,8 +47,4 @@
 	margin: 0;
 	align-self: center;
 	width: 100%;
-}
-
-:root:root {
-	--slider-border-color: #096dca;
 }
