@@ -1,15 +1,20 @@
 .Slider-Bubble {
 	background: #E8E8E8;
 	color: #555;
-	padding: 6px 12px;
+	padding: 8px 14px;
 	border-radius: 8px;
-	display: inline-block;
 	margin: 0.75px 0px 0.75px 5px;
 	float: right;
+	cursor: pointer;
+	transition: 0.3s background linear;
+}
+
+.Slider-Bubble:hover {
+	background: #D8D8D8;
 }
 
 .Slider .range {
-	vertical-align: middle;
+	float: left;
 	-webkit-appearance: none;
 	appearance: none;
 	height: 2px;
@@ -19,18 +24,13 @@
 	animation-duration: 0.2s;
 	transition: opacity .2s;
 	width: 50%;
-}
-.range::-webkit-slider-thumb {
-	height: 15px;
-	background: #ffffff;
-	border-radius: 50%;
-	cursor: pointer;
-	width: 15px;
-	border: 2px solid #096dca;
-	-webkit-appearance: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 4px;
 }
 
-.range::-moz-range-thumb {
+.Slider .range::-webkit-slider-thumb, .Slider .range::-moz-range-thumb {
 	height: 15px;
 	background: #ffffff;
 	border-radius: 50%;
@@ -41,7 +41,7 @@
 }
 
 .Slider {
-	display: inline-block;
+	display: flow-root;
 	height: auto;
 	position: relative;
 	margin: 0;

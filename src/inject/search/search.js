@@ -660,7 +660,7 @@ class SearchUI {
             searchUI.insert(document.body)
 
             searchUI.wrapperElement.onclick = () => {
-                closeUI();
+                this.closeUI();
             }
         }
 
@@ -669,10 +669,6 @@ class SearchUI {
             searchUI.element.remove()
             searchUI.wrapperElement.remove()
         }
-
-        document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
-            this.openUI()
-        })
 
         document.addEventListener("keyup", (event) => {
             const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
