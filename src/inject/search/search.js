@@ -658,10 +658,6 @@ class SearchUI {
             }
 
             searchUI.insert(document.body)
-
-            searchUI.wrapperElement.onclick = () => {
-                this.closeUI();
-            }
         }
 
         this.closeUI = () => {
@@ -669,6 +665,12 @@ class SearchUI {
             searchUI.element.remove()
             searchUI.wrapperElement.remove()
         }
+
+        
+
+        document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
+            this.openUI()
+        })
 
         document.addEventListener("keyup", (event) => {
             const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
@@ -792,17 +794,19 @@ class SearchUI {
                         this.headerElementQueryWrapper.textContent += this.headerElementQueryRight.textContent.substr(0,1);
                         this.headerElementQueryRight.textContent = this.headerElementQueryRight.textContent.substring(1);
                         this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                    }  else if(this.headerElementQueryAutoComplete.textContent.length > 0 && !event.repeat) {
+                        this.headerElementQueryWrapper.textContent += this.headerElementQueryAutoComplete.textContent;
+                        this.headerElementQueryAutoComplete.textContent = ''
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
                     }
                 } else if(event.key === "Enter") {
                     // do stuff based on settings
-                    const urlToOpen = searchUI.results[searchUI.selected] ?  searchUI.results[searchUI.selected].url : undefined;
+                    const urlToOpen = searchUI.results[searchUI.selected].url
 
-                    if (urlToOpen != undefined){
-                        if(usingControlKey ^ searchUI.invertOpenNewTab) {
-                            window.open(urlToOpen);
-                        } else {
-                            location.href = urlToOpen;
-                        }
+                    if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                        window.open(urlToOpen);
+                    } else {
+                        location.href = urlToOpen;
                     }
                 } else if(event.key === 'Escape') {
                     this.closeUI()
@@ -873,7 +877,7 @@ class SearchUI {
         this.buildResults()
         //this.buildWidgets( /* ... */ )
 
-        document.documentElement.appendChild(this.element)
+        this.wrapperElement.appendChild(this.element)
     }
 
     buildAutocomplete(overrideSelected) {
