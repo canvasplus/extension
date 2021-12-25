@@ -2,17 +2,36 @@ html {
     scroll-behavior: smooth;
 }
 
-#scrollup {
-    margin-right: 5px;
+#canvasplus-smartscroll-stub {
     position: fixed;
-    z-index: 101;
-    bottom: 10px;
+    bottom: 0;
     right: 10px;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.5s linear, visibility 0.5s linear;
+    z-index: 101;
+    padding: 20px 20px 0 20px;
 }
 
-#scrolldown {
-    margin-right: 5px;
+.canvasplus-smartscroll-inner {
+    min-height: 6px;
+    min-width: 100px;
+    background: #DDDDDD;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    grid-gap: 20px;
+}
+
+.cpx-smartscroll-button  {
+    display: none;
+}
+
+.cpx-smartscroll-button i {
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+}
+
+#canvasplus-smartscroll-stub:hover .cpx-smartscroll-button {
+    display: inline-block;
+
 }

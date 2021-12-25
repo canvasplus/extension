@@ -1,56 +1,32 @@
 useReactiveFeatures([{
   settingName: "canvasplus-setting-smartscroll",
-  onChanged: (data) => {
-    if (data == true) {
-      console.log("[Canvas+] Injecting Smart Scroll Buttons...");
+  onChanged: (value) => {
+    if(value === true) {
+      const stub = document.createElement('div')
+      stub.id = 'canvasplus-smartscroll-stub'
+      
+      const stubInner = document.createElement('div')
+      stubInner.className = 'canvasplus-smartscroll-inner'
 
-      const scrollTop = () => {
-        document.documentElement.scrollIntoView()
-      }
+      stubInner.innerHTML = `
+        <div class="cpx-smartscroll-button cpx-smartscroll-top">
+          <i class="icon-arrow-up" role="presentation"></i>
+        </div>
+        
+        <div class="cpx-smartscroll-button cpx-smartscroll-bottom">
+          <i class="icon-arrow-down" role="presentation"></i>
+        </div>
 
-      const scrollBottom = () => {
-        window.scrollTo(0, document.body.scrollHeight)
-      }
+        <div class="cpx-smartscroll-button cpx-smartscroll-close">
+          <i class="icon-end" role="presentation"></i>
+        </div>
+      `
+      stub.appendChild(stubInner)
 
-      let backToTopButton = document.createElement("button");
-      backToTopButton.classList = ["btn"];
-      backToTopButton.id = "scrollup";
-      backToTopButton.innerHTML = '<i class="icon-arrow-open-up" role="presentation"></i> Back to Top';
-      backToTopButton.onclick = () => {scrollTop();}
-
-      document.documentElement.appendChild(backToTopButton)
-
-      let backToBottomButton = document.createElement("button");
-      backToBottomButton.classList = ["btn"];
-      backToBottomButton.id = "scrolldown";
-      backToBottomButton.innerHTML = '<i class="icon-arrow-down" role="presentation"></i></i> Scroll to Bottom';
-      backToBottomButton.onclick = () => {scrollBottom();}
-
-      if (document.getElementsByClassName("header-bar-right__buttons")[0]) {
-        document.getElementsByClassName("header-bar-right__buttons")[0].insertBefore(backToBottomButton, document.getElementsByClassName("header-bar-right__buttons")[0].children[0])
-      } else {
-        document.getElementsByClassName("ic-app-nav-toggle-and-crumbs")[0].insertBefore(backToBottomButton, document.getElementsByClassName("right-of-crumbs")[0])
-        backToBottomButton.float = "right";
-      }
-
-      if (document.documentElement.scrollTop > 100) {
-        backToTopButton.style.visibility = "visible";
-        backToTopButton.style.opacity = "1";
-      }
-
-      window.onscroll = () => {
-        if (document.documentElement.scrollTop > 100) {
-          backToTopButton.style.visibility = "visible";
-          backToTopButton.style.opacity = "1";
-          backToTopButton.style.bottom = (document.documentElement.scrollHeight - window.innerHeight - window.scrollY) < 83 ? (83 - (document.documentElement.scrollHeight - window.innerHeight - window.scrollY)) + "px" : "";
-        } else {
-          backToTopButton.style.visibility = "";
-          backToTopButton.style.opacity = "";
-        }
-      }
+      document.body.appendChild(stub)
     } else {
-      try {document.getElementById('scrolldown').remove();} catch {}
-      try {document.getElementById('scrollup').remove();} catch {}
-    }}
+      document.querySelector('#canvasplus-smartscroll-stub')?.remove()
+    }
+  }
 }])
     
