@@ -2,30 +2,26 @@ useReactiveFeatures([{
   settingName: "canvasplus-setting-smartscroll",
   onChanged: (value) => {
     if(value === true) {
-      const stub = document.createElement('div')
-      stub.id = 'canvasplus-smartscroll-stub'
-      
-      const stubInner = document.createElement('div')
-      stubInner.className = 'canvasplus-smartscroll-inner'
+      const scroll = (direction) => {
+        window.scrollTo(0, direction == "up" ? 0 : document.body.scrollHeight);
+      };
 
-      stubInner.innerHTML = `
-        <div class="cpx-smartscroll-button cpx-smartscroll-top">
-          <i class="icon-arrow-up" role="presentation"></i>
-        </div>
-        
-        <div class="cpx-smartscroll-button cpx-smartscroll-bottom">
-          <i class="icon-arrow-down" role="presentation"></i>
-        </div>
+      const stub = document.createElement('div');
+        stub.id = 'smartscroll-padding';
+        stub.innerHTML = `
+          <div id="smartscroll-stub">
+            <div class="smartscroll-button" id="smartscroll-top">
+              <i class="icon-arrow-up icon-arrow" role="presentation"></i>
+            </div>
+            <div class="smartscroll-button" id="smartscroll-bottom">
+              <i class="icon-arrow-down icon-arrow" role="presentation"></i>
+            </div>
+          </div>`;
+      document.body.appendChild(stub);
 
-        <div class="cpx-smartscroll-button cpx-smartscroll-close">
-          <i class="icon-end" role="presentation"></i>
-        </div>
-      `
-      stub.appendChild(stubInner)
-
-      document.body.appendChild(stub)
+      document.querySelectorAll('.smartscroll-button').forEach(el => {el.addEventListener('click', () => { scroll(el.id == "smartscroll-bottom" ? "down" : "up"); })});
     } else {
-      document.querySelector('#canvasplus-smartscroll-stub')?.remove()
+      document.querySelector('#smartscroll-stub')?.remove();
     }
   }
 }])

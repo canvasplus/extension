@@ -2,36 +2,44 @@ html {
     scroll-behavior: smooth;
 }
 
-#canvasplus-smartscroll-stub {
+#smartscroll-padding {
+    height: inherit;
+    width: inherit;
     position: fixed;
-    bottom: 0;
-    right: 10px;
-    z-index: 101;
-    padding: 20px 20px 0 20px;
+    right: 50px;
+    bottom: -30px;
+    padding: 15px 15px 0 15px;
+    transition: padding 1s;
+    z-index: 1000;
 }
 
-.canvasplus-smartscroll-inner {
-    min-height: 6px;
-    min-width: 100px;
-    background: #DDDDDD;
-    border-radius: 12px 12px 0 0;
+#smartscroll-padding:hover {
+    padding: 15px 15px 40px 15px;
+}
+
+#smartscroll-stub {
+    background: rgb(179 179 179 / 50%);
+    border-radius: 5px;
     display: flex;
-    grid-gap: 20px;
+    grid-gap: 5px;
+    box-sizing: border-box;
+    height: 35px;
+    width: 70px;
+    border-radius: 7px;
+    align-items: center;
+    justify-content: center;
 }
 
-.cpx-smartscroll-button  {
-    display: none;
-}
-
-.cpx-smartscroll-button i {
-    padding: 10px;
-    background: rgba(0,0,0,0.2);
+.smartscroll-button {
+    padding: 5px;
+    background: #b2b2b2;
     border-radius: 50%;
     width: 16px;
     height: 16px;
+    cursor: pointer;
 }
 
-#canvasplus-smartscroll-stub:hover .cpx-smartscroll-button {
-    display: inline-block;
-
+.icon-arrow {
+    line-height: unset !important;
+    color: #f3f3f3;
 }

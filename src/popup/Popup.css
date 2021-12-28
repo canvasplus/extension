@@ -13,7 +13,7 @@
   --large-option-selected-indicator-color: #0392ff;
 }
 
-body::-webkit-scrollbar {
+body::-webkit-scrollbar, div.SidebarDrawerExpansionCustomization__Right > div::-webkit-scrollbar, div.SidebarDrawerExpansionCustomization__Left > div::-webkit-scrollbar, .CustomizableSetting__Customization__Content::-webkit-scrollbar {
   display: none;
 }
 
