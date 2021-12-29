@@ -3,7 +3,7 @@
 }
 
 body:not(.primary-nav-expanded) .menu-item__text::after {
-    border-right-color: var(--sidebar-background-color) !important;
+    border-right-color: var(--sidebar-color-gradient-fallback, var(--sidebar-background-color)) !important;
 }
 
 body:not(.primary-nav-expanded) .menu-item__text {

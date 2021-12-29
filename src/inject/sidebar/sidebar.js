@@ -1,4 +1,5 @@
 const sidebarColor = addStylingRule('')
+const sidebarColorGradientFallback = addStylingRule('')
 const sidebarIconColor = addStylingRule('')
 const sidebarActiveColor = addStylingRule('')
 const sidebarActiveIconColor = addStylingRule('')
@@ -18,6 +19,12 @@ var expansionDrawerEnabled = false;
 useReactiveFeatures([{
   settingName: 'canvasplus-setting-sidebar-color',
   onChanged: (value) => {
+    if(value?.startsWith('linear-gradient')) {
+      const linearGradient = extractLinearGradient(value)
+      sidebarColorGradientFallback.setRule('--sidebar-color-gradient-fallback: ' + linearGradient[0])
+    } else {
+      sidebarColorGradientFallback.setRule('')
+    }
     sidebarColor.setRule('--sidebar-background-color: ' + ((value !== '') ? value : 'var(--ic-brand-global-nav-bgd)'))
   }
 }, {
@@ -236,3 +243,10 @@ useReactiveFeature("canvasplus-setting-sidebar-drawer-excluded", (excluded) => {
   notHidden = excluded || [];
   renderSidebarDrawer()
 })
+
+const extractLinearGradient = (gradient) => {
+  let ai = gradient.indexOf(',') + 1;
+  let a = gradient.substr(ai, gradient.substr(ai).indexOf(','));
+  let b = gradient.substring(ai + a.length + 1, gradient.trim().length - 1);
+  return [a.trim(), b.trim()]
+}
