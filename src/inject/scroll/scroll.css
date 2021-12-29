@@ -7,9 +7,9 @@ html {
     width: inherit;
     position: fixed;
     right: 50px;
-    bottom: -30px;
+    bottom: -40px;
     padding: 15px 15px 0 15px;
-    transition: padding 1s;
+    transition: padding 0.3s ease;
     z-index: 1000;
 }
 
@@ -18,28 +18,34 @@ html {
 }
 
 #smartscroll-stub {
-    background: rgb(179 179 179 / 50%);
-    border-radius: 5px;
+    background: var(--sidebar-background-color, rgb(19, 121, 255));
     display: flex;
-    grid-gap: 5px;
-    box-sizing: border-box;
-    height: 35px;
-    width: 70px;
-    border-radius: 7px;
-    align-items: center;
-    justify-content: center;
+    border-radius: 7px 7px 0 0;
+    gap: 5px;
+    padding: 5px;
 }
 
 .smartscroll-button {
-    padding: 5px;
-    background: #b2b2b2;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
+    position: relative;
+    background: rgba(0,0,0,0.2);
+    width: 36px;
+    height: 36px;
+    border-radius: 5px;
+    transition: 0.3s background;
 }
 
-.icon-arrow {
-    line-height: unset !important;
+.smartscroll-button:hover {
+    background: rgba(0,0,0,0.4);
+}
+
+#smartscroll-stub .icon-arrow {
     color: #f3f3f3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#smartscroll-stub .icon-arrow::before {
+    font-size: 14px;
 }
