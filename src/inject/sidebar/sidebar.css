@@ -46,7 +46,9 @@ body:not(.primary-nav-expanded) .menu-item__text {
     align-content: center;
     display: flex;
     flex-direction: column;
-}::--webkit-scrollbar {
+}
+
+#sidebar-custom-menu-icon-more-expansion::-webkit-scrollbar {
     display: none;
 }
 
