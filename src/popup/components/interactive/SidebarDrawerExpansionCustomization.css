@@ -4,6 +4,10 @@
     padding: 8px;
 }
 
+.CustomizableSetting__Customization__Content {
+    scrollbar-width: none;
+}
+
 .SidebarDrawerExpansionCustomization__Left, .SidebarDrawerExpansionCustomization__Right {
     width: 50%;
 }
@@ -18,6 +22,7 @@
     margin-bottom: 8px;
     transition: transform 0.2s;
     cursor: pointer;
+    scrollbar-width: none;
 }
 
 .SidebarDrawerExpansionCustomization__Left > div.none, .SidebarDrawerExpansionCustomization__Right > div.none {
