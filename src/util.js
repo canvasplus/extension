@@ -1,7 +1,7 @@
 const onMac = window.navigator.platform === 'MacIntel'
 
 const smartAPIFetch = async (url) => {
-    const response = await fetch(url)
+    const response = await fetch( url )
     
     //const headers = response.headers.entries()
     // let currentHeaderIt = headers.next()
@@ -49,7 +49,7 @@ const filterAlphanumeric = (toFilter) => {
 
 const getPathAPI = (rel) => {
     const url = new URL(window.location);
-    return url.protocol + '//' + url.hostname + rel;
+    return url.origin + rel;
 }
 
 const reactiveToggledFeatures = {}

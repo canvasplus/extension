@@ -128,7 +128,7 @@ const getFetchablePaginated = async( searchDataKey, cachePath, fetchPath, fetchR
 
 const getCourseList = async (forceReload = false) => {
     return getFetchableBasic("courses", "courses", "/api/v1/users/self/favorites/courses", async (data) => {
-        const colors = (await (await fetch("/api/v1/users/self/colors")).json())["custom_colors"]
+        const colors = (await (await fetch(getPathAPI("/api/v1/users/self/colors"))).json())["custom_colors"]
         const returnable = {}
 
         for(let course of data) {
