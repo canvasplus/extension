@@ -42,6 +42,12 @@ body:not(.primary-nav-expanded) .menu-item__text {
     left: 54px;
     max-height: 55%;
     overflow: scroll;
+    scrollbar-width: none;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+}::--webkit-scrollbar {
+    display: none;
 }
 
 #sidebar-custom-menu-icon-more-expansion .menu-item__text {
