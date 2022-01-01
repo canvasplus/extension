@@ -56,10 +56,10 @@ const AppearanceSelector = (props) => {
       { options }
     </LargeOptionForm>
     <label className={selected === "light" ? styles.AppearanceSelector__SyncLabel_Disabled : styles.AppearanceSelector__SyncLabel }>
-      Sync with OS
       <input ref={syncCheckbox} type="checkbox" onChange={() => {
         selectHandler(selected)
       }}></input>
+      <p>Sync with OS</p>
     </label>
   </>);
 }
