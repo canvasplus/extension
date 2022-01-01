@@ -209,3 +209,15 @@
   position: relative;
   margin: 6px 10px 0 0;
 }
+
+.canvasplus-search-ui-header-icon__loading svg {
+  animation: canvasplus-search-ui-header-icon__loading 1.5s ease 0s infinite;
+}
+
+@keyframes canvasplus-search-ui-header-icon__loading {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}

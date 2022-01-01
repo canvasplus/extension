@@ -316,6 +316,9 @@ const main = async () => {
         })
 
         searchContent.done = true;
+
+        searchUI.buildIcon()
+        searchUI.buildAutocomplete()
     })
 
     if(!sessionStorage.getItem("canvasplus-search-session")) {
@@ -757,10 +760,12 @@ class SearchUI {
                     this.lastUISearch = this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent;
                 } else if(event.key.length === 1 && !usingControlKey) {
                     event.preventDefault()
-
-                    this.headerElementQueryWrapper.textContent += event.key;
-                    this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
-                    this.buildAutocomplete()
+                    
+                    if(searchContent.done) {
+                        this.headerElementQueryWrapper.textContent += event.key;
+                        this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                        this.buildAutocomplete()
+                    }
                 } else if(event.key === "ArrowUp") {
                     event.preventDefault()
 
@@ -878,7 +883,10 @@ class SearchUI {
 
     buildAutocomplete(overrideSelected) {
         const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
-        if(currentQuery.length === 0) {
+        if(!searchContent.done) {
+            this.headerElementQueryAutoComplete.textContent = 'Search is loading ...';
+        }
+       else if(currentQuery.length === 0) {
             this.headerElementQueryAutoComplete.textContent = 'Search your courses';
         }
         else if(this.results.length > 0) {
@@ -895,10 +903,31 @@ class SearchUI {
     }
 
     buildIcon() {
-        if(this.mode === "navigator") {
+
+        const removePossibleIconClassNames = (element) => {
+            [
+                'canvasplus-search-ui-header-icon__loading',
+                'canvasplus-search-ui-header-icon__navigator',
+                'canvasplus-search-ui-header-icon__search'
+            ].forEach(className => {
+                element.classList.remove(className)
+            })
+        }
+
+
+        if (!searchContent.done) {
+            this.headerElementIcon.innerHTML = `<svg class="ic-icon-svg menu-item__icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve"><path style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" d="M404.2,160.8C273,160.8,165,268.8,165,400c0,135,114.3,239.4,239.2,239.2C507,639,601.9,567.8,635,462.3"/></svg>`
+            removePossibleIconClassNames(this.headerElementIcon)
+            this.headerElementIcon.classList.add('canvasplus-search-ui-header-icon__loading')
+        }
+        else if(this.mode === "navigator") {
             this.headerElementIcon.innerHTML = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="523.3" y1="150.7" x2="453.2" y2="649.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="346.8" y1="150.7" x2="276.7" y2="649.3"/>	</g>	<g>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="636.8" y1="488.3" x2="138.3" y2="488.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="661.7" y1="311.7" x2="163.2" y2="311.7"/></g></g></svg>`
+            removePossibleIconClassNames(this.headerElementIcon)
+            this.headerElementIcon.classList.add('canvasplus-search-ui-header-icon__navigator')
         } else {
             this.headerElementIcon.innerHTML = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><line id="Line_3" style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;stroke-linecap:round;" x1="693.83" y1="707.5" x2="529.83" y2="543.5"/><g id="Ellipse_1"><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:0.8605;stroke-miterlimit:10;" cx="372.67" cy="359" r="266.5"/><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;" cx="372.67" cy="359" r="239.17"/></g></g></svg>`
+            removePossibleIconClassNames(this.headerElementIcon)
+            this.headerElementIcon.classList.add('canvasplus-search-ui-header-icon__search')
         }
 
         this.headerElementIcon.classList.add("hide-for-animation")
