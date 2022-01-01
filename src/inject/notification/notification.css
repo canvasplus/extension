@@ -133,7 +133,15 @@
     top: 0;
     left: 0;
     background-size: cover;
-    animation: notification-image-grow 7.5s linear 2s infinite;
+}
+
+.notification-image-cake {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.notification-image-cake:hover {
+    transform: scale(1.2);
 }
 
 .notification-image {

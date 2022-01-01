@@ -25,13 +25,13 @@ const applyAppearance = (appearance) => {
 }
 
 window.matchMedia("(prefers-color-scheme: light)").addEventListener('change', e => {
-  if (originalappearance == 'auto') {applyAppearance(e.matches ? "light" : "dark")}
+  if(originalappearance.endsWith('auto')) applyAppearance(appearance = window.matchMedia("(prefers-color-scheme: dark)").matches ? originalappearance.substring(0, originalappearance.length - 5) : 'light')
 })
 
 var appearance = '';
 var originalappearance = '';
 useReactiveFeature('canvasplus-display-appearance', (color) => {
   appearance = originalappearance = color;
-  originalappearance == 'auto' ? (appearance = window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light') : color;
+  originalappearance.endsWith('auto') ? (appearance = window.matchMedia("(prefers-color-scheme: dark)").matches ? originalappearance.substring(0, originalappearance.length - 5) : 'light') : color;
   applyAppearance(appearance)
 })

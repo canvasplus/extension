@@ -111,6 +111,10 @@ const notification = async(text, emoji, fill, border, button1callback, button1te
         notificationButton2.innerText = button2text
         notificationButton2.addEventListener('click', (e) => { button2callback(notification, dismissMe, e) })
         buttonContainer.appendChild(notificationButton2)
+
+        return { notification, dismissMe, image, textcontainer, buttonContainer, notificationButton, notificationButton2}
+    } else {
+        return { notification, dismissMe, image, textcontainer, buttonContainer, notificationButton }
     }
 }
 

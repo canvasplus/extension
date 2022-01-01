@@ -67,10 +67,6 @@ const frames = {
               appearance: "dark",
               background: "#050d26",
               foreground: "#fff"
-            },
-            {
-              name: "Automatic",
-              appearance: "auto"
             }
           ]}></AppearanceSelector>
         </div>

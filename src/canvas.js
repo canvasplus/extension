@@ -63,14 +63,12 @@ const createFinishSettingUp = (selectedAppearance) => {
         <div class='canvasplus-finish-setting-up__DisplayOption dim ${selectedAppearance === 'dim' ? 'selected' : ''}'>
           <img src='${ chrome.extension.getURL('assets/img/dim.png') }' />
           <p>Dim</p>
+          <label><input type="checkbox"></input><p>Sync with OS</p></label>
         </div>
         <div class='canvasplus-finish-setting-up__DisplayOption dark ${selectedAppearance === 'dark' ? 'selected' : ''}'>
           <img src='${ chrome.extension.getURL('assets/img/dark.png') }' />
           <p>Dark</p>
-        </div>
-        <div class='canvasplus-finish-setting-up__DisplayOption auto ${!['dim','dark','light'].includes(selectedAppearance) ? 'selected' : ''}'>
-          <img src='${ chrome.extension.getURL('assets/img/' + (window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light') + '.png') }' />
-          <p>Auto</p>
+          <label><input type="checkbox"></input><p>Sync with OS</p></label>
         </div>
       </div>
       <div class='canvasplus-finish-setting-up__ExtensionMenu'>
@@ -80,7 +78,9 @@ const createFinishSettingUp = (selectedAppearance) => {
           <p>If you need to recolor your sidebar, toggle features, or change your appearance later, you can do it all from the extension settings.</p>
         </div>
       </div>
-      <button class='canvasplus-finish-setting-up__Done'>Done</button>
+      <div class='canvasplus-finish-setting-up__Footer'>
+        <button class='canvasplus-finish-setting-up__Done'>Done</button>
+      </div>
     </div>
   `
   const colorscheme = (e) => {
@@ -92,6 +92,8 @@ const createFinishSettingUp = (selectedAppearance) => {
       ele.classList.remove('selected')
       chrome.storage.local.set({'canvasplus-display-appearance': appearance})
     })
+    if(appearance.endsWith("-auto")) appearance = appearance.substring(0, appearance.length - 5)
+    
     popup.querySelector(`.canvasplus-finish-setting-up__DisplayOption.${appearance}`).classList.add('selected')
   }
   const getColor = () => {
@@ -99,9 +101,16 @@ const createFinishSettingUp = (selectedAppearance) => {
     return colors[Math.floor(Math.random() * colors.length)]
   }
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.light').addEventListener('click', () => { select('light') })
-  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim').addEventListener('click', () => { select('dim') })
-  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark').addEventListener('click', () => { select('dark') })
-  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.auto').addEventListener('click', () => { select('auto') })
+  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim').addEventListener('click', () => {
+    popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input').checked = false;
+    const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input')
+    select(checkbox?.checked ? "dim-auto" : "dim")
+  })
+  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark').addEventListener('click', () => {
+    popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input').checked = false;
+    const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input')
+    select(checkbox?.checked ? "dark-auto" : "dark")
+  })
   popup.querySelector('.canvasplus-finish-setting-up__Done').addEventListener('click', () => {
     popup.classList.add('closing')
     setTimeout(() => {
@@ -122,18 +131,30 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
     var maxParticleCount = 150; var particleSpeed = 2; var startConfetti; var stopConfetti; var toggleConfetti; var removeConfetti;
     (function() { startConfetti = startConfettiInner; stopConfetti = stopConfettiInner; toggleConfetti = toggleConfettiInner; removeConfetti = removeConfettiInner; var colors = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"]; var streamingConfetti = false; var animationTimer = null; var particles = []; var waveAngle = 0; function resetParticle(particle, width, height) { particle.color = colors[(Math.random() * colors.length) | 0]; particle.x = Math.random() * width; particle.y = Math.random() * height - height; particle.diameter = Math.random() * 10 + 5; particle.tilt = Math.random() * 10 - 10; particle.tiltAngleIncrement = Math.random() * 0.07 + 0.05; particle.tiltAngle = 0; return particle; } function startConfettiInner() { var width = window.innerWidth; var height = window.innerHeight; window.requestAnimFrame = (function() { return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) { return window.setTimeout(callback, 16.6666667); }; })(); var canvas = document.getElementById("confetti-canvas"); if (canvas === null) { canvas = document.createElement("canvas"); canvas.setAttribute("id", "confetti-canvas"); canvas.setAttribute("style", "position:fixed;top:0px;left:0px;z-index:999999;pointer-events:none"); document.body.appendChild(canvas); canvas.width = width; canvas.height = height; window.addEventListener("resize", function() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }, true); } var context = canvas.getContext("2d"); while (particles.length < maxParticleCount) particles.push(resetParticle({}, width, height)); streamingConfetti = true; if (animationTimer === null) { (function runAnimation() { context.clearRect(0, 0, window.innerWidth, window.innerHeight); if (particles.length === 0) animationTimer = null; else { updateParticles(); drawParticles(context); animationTimer = requestAnimFrame(runAnimation); } })(); } } function stopConfettiInner() { streamingConfetti = false; } function removeConfettiInner() { stopConfetti(); particles = []; } function toggleConfettiInner() { if (streamingConfetti) stopConfettiInner(); else startConfettiInner(); } function drawParticles(context) { var particle; var x; for (var i = 0; i < particles.length; i++) { particle = particles[i]; context.beginPath(); context.lineWidth = particle.diameter; context.strokeStyle = particle.color; x = particle.x + particle.tilt; context.moveTo(x + particle.diameter / 2, particle.y); context.lineTo(x, particle.y + particle.tilt + particle.diameter / 2); context.stroke(); } } function updateParticles() { var width = window.innerWidth; var height = window.innerHeight; var particle; waveAngle += 0.01; for (var i = 0; i < particles.length; i++) { particle = particles[i]; if (!streamingConfetti && particle.y < -15) particle.y = height + 100; else { particle.tiltAngle += particle.tiltAngleIncrement; particle.x += Math.sin(waveAngle); particle.y += (Math.cos(waveAngle) + particle.diameter + particleSpeed) * 0.5; particle.tilt = Math.sin(particle.tiltAngle) * 15; } if (particle.x > width + 20 || particle.x < -20 || particle.y > height) { if (streamingConfetti && particles.length <= maxParticleCount) resetParticle(particle, width, height); else { particles.splice(i, 1); i--; }; }; }; }; })();
     startConfetti()
+    let confettiRunning = true;
 
     setTimeout(() => {
+      confettiRunning = false;
       stopConfetti()
     }, 5000);
 
-    notification("Canvas+ is now a year old! Thanks for supporting us along the journey, we have lots of new features coming soon!", "heart", "#ffd0d8", "#ff6680", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-birthday-confetti": true})
+    chrome.storage.local.set({"canvasplus-birthday-confetti": true})
+
+    notification("Canvas+ is now a year old! Thanks for supporting us along the journey, we have lots of new features coming soon!", "cake", "#ffcff0", "#ff66dd", (notification, dismissMe, e) => {
       dismissMe()
-    }, "Yay!", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-birthday-confetti": true})
-      dismissMe()
-    }, undefined)
+    }, "Done").then(({ image }) => {
+        image.addEventListener("click", () => {
+          if(!confettiRunning) {
+            confettiRunning = true
+            startConfetti()
+            
+            setTimeout(() => {
+              confettiRunning = false;
+              stopConfetti()
+            }, 1500);
+          }
+        })
+    })
     
   }
 })

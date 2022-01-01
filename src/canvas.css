@@ -108,7 +108,7 @@
   justify-content: center;
 }
 
-.canvasplus-finish-setting-up__DisplayOption p {
+.canvasplus-finish-setting-up__DisplayOption > p {
   font-weight: 700;
   width: fit-content;
   margin: 12px auto;
@@ -116,11 +116,11 @@
   transition: 0.3s padding-left linear;
 }
 
-.canvasplus-finish-setting-up__DisplayOption.selected p {
+.canvasplus-finish-setting-up__DisplayOption.selected > p {
   padding-left: 16px;
 }
 
-.canvasplus-finish-setting-up__DisplayOption p::before {
+.canvasplus-finish-setting-up__DisplayOption > p::before {
   position: absolute;
   content: '';
   top: 50%;
@@ -134,7 +134,7 @@
   transition: 0.3s opacity linear;
 }
 
-.canvasplus-finish-setting-up__DisplayOption.selected p::before {
+.canvasplus-finish-setting-up__DisplayOption.selected > p::before {
   opacity: 1;
 }
 
@@ -227,5 +227,36 @@
   border: none;
   border-radius: 5px;
   display: block;
-  margin: 30px auto;
+  margin: auto;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label {
+  display: flex;
+  width: fit-content;
+  margin: auto;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label > input:not(:checked) + p {
+  text-decoration: line-through;
+  color: #aaa;
+  border-bottom: 1px transparent;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label > input + p {
+  cursor: pointer;
+  height: 18px;
+  margin: 0;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label > input:checked + p {
+  border-bottom: 1px #ccc dotted;
+}
+
+.canvasplus-finish-setting-up__Footer {
+  position: sticky;
+    bottom: 0px;
+    padding: 15px 0px;
+    background: rgba(255, 255, 255, 0.9);
 }
