@@ -887,7 +887,7 @@ class SearchUI {
             return
         }
 
-        const currentQuery = (this.headerElementQueryWrapper?.textContent + this.headerElementQueryRight?.textContent).toLowerCase()
+        const currentQuery = `${this.headerElementQueryWrapper?.textContent}${this.headerElementQueryRight?.textContent}`.toLowerCase()
         
         if(currentQuery.length === 0) {
             this.headerElementQueryAutoComplete.textContent = 'Search your courses';

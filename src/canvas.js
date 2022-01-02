@@ -60,15 +60,15 @@ const createFinishSettingUp = (selectedAppearance) => {
           <img src='${ chrome.extension.getURL('assets/img/light.png') }' />
           <p>Default</p>
         </div>
-        <div class='canvasplus-finish-setting-up__DisplayOption dim ${selectedAppearance === 'dim' ? 'selected' : ''}'>
+        <div class='canvasplus-finish-setting-up__DisplayOption dim ${selectedAppearance.startsWith('dim') ? 'selected' : ''}'>
           <img src='${ chrome.extension.getURL('assets/img/dim.png') }' />
           <p>Dim</p>
-          <label><input type="checkbox"></input><p>Sync with OS</p></label>
+          <label><input type="checkbox" ${selectedAppearance.startsWith('dim') && selectedAppearance.endsWith('auto') ? 'checked' : ''}></input><p>Sync with OS</p></label>
         </div>
-        <div class='canvasplus-finish-setting-up__DisplayOption dark ${selectedAppearance === 'dark' ? 'selected' : ''}'>
+        <div class='canvasplus-finish-setting-up__DisplayOption dark ${selectedAppearance.startsWith('dark') ? 'selected' : ''}'>
           <img src='${ chrome.extension.getURL('assets/img/dark.png') }' />
           <p>Dark</p>
-          <label><input type="checkbox"></input><p>Sync with OS</p></label>
+          <label><input type="checkbox" ${selectedAppearance.startsWith('dark') && selectedAppearance.endsWith('auto') ? 'checked' : ''}></input><p>Sync with OS</p></label>
         </div>
       </div>
       <div class='canvasplus-finish-setting-up__ExtensionMenu'>
@@ -100,16 +100,25 @@ const createFinishSettingUp = (selectedAppearance) => {
     const colors = ['#e0245e', '#ffad1f', '#85c924', '#40afe3', '#6b54ff',  '#fc74e1', '#515975', '#222a42', '#b5043a', '#f45d22', '#17bf63', '#1059e3', '#794bc4', '#c840e3']
     return colors[Math.floor(Math.random() * colors.length)]
   }
-  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.light').addEventListener('click', () => { select('light') })
+  popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.light').addEventListener('click', () => {
+    if(popup.querySelector('.canvasplus-finish-setting-up__DisplayOption input:checked')) {
+      popup.querySelector('.canvasplus-finish-setting-up__DisplayOption input:checked').checked = false;
+    }
+    select('light')
+  })
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim').addEventListener('click', () => {
     popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input').checked = false;
-    const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input')
-    select(checkbox?.checked ? "dim_auto" : "dim")
+    setTimeout(() => {
+      const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input')
+      select(checkbox?.checked ? "dim_auto" : "dim")
+    }, 0);
   })
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark').addEventListener('click', () => {
     popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input').checked = false;
-    const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input')
-    select(checkbox?.checked ? "dark_auto" : "dark")
+    setTimeout(() => {
+      const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input')
+      select(checkbox?.checked ? "dark_auto" : "dark")
+    }, 0);
   })
   popup.querySelector('.canvasplus-finish-setting-up__Done').addEventListener('click', () => {
     popup.classList.add('closing')
