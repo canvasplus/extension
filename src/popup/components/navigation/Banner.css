@@ -15,6 +15,15 @@
   height: 18px;
 
   image-rendering: -webkit-optimize-contrast;
+  padding: 11px 15px;
+
+  transition: 0.3s background linear;
+  background: #A82020;
+  cursor: pointer;
+}
+
+.Navigation__Banner__image:hover {
+  background: #821414;
 }
 
 .Navigation__Banner__Popout__Wrapper {
