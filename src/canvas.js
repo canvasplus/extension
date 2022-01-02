@@ -2,13 +2,13 @@ const defaults = {
   "canvasplus-setting-quicklink": false,
   "canvasplus-setting-search": true,
   "canvasplus-setting-smartscroll": true,
-  "canvasplus-display-appearance": "auto",
+  "canvasplus-display-appearance": "light",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-hidelogo": true,
   "canvasplus-setting-sidebar-color": '#1b7ecf',
   "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
   "canvasplus-setting-sidebar-icon-color": "white",
-  "canvasplus-setting-sidebar-icon-size": 9,
+  "canvasplus-setting-sidebar-icon-size": 3,
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
@@ -92,7 +92,7 @@ const createFinishSettingUp = (selectedAppearance) => {
       ele.classList.remove('selected')
       chrome.storage.local.set({'canvasplus-display-appearance': appearance})
     })
-    if(appearance.endsWith("-auto")) appearance = appearance.substring(0, appearance.length - 5)
+    if(appearance.endsWith("_auto")) appearance = appearance.substring(0, appearance.length - 5)
     
     popup.querySelector(`.canvasplus-finish-setting-up__DisplayOption.${appearance}`).classList.add('selected')
   }
@@ -104,12 +104,12 @@ const createFinishSettingUp = (selectedAppearance) => {
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim').addEventListener('click', () => {
     popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input').checked = false;
     const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input')
-    select(checkbox?.checked ? "dim-auto" : "dim")
+    select(checkbox?.checked ? "dim_auto" : "dim")
   })
   popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark').addEventListener('click', () => {
     popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dim input').checked = false;
     const checkbox = popup.querySelector('.canvasplus-finish-setting-up__DisplayOption.dark input')
-    select(checkbox?.checked ? "dark-auto" : "dark")
+    select(checkbox?.checked ? "dark_auto" : "dark")
   })
   popup.querySelector('.canvasplus-finish-setting-up__Done').addEventListener('click', () => {
     popup.classList.add('closing')
@@ -127,7 +127,7 @@ const createFinishSettingUp = (selectedAppearance) => {
 chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
   const current = data["canvasplus-birthday-confetti"]
 
-  if(current !== true && (Math.floor((((new Date()) - (new Date((new Date()).getFullYear(), 0, 0))) + (((new Date((new Date()).getFullYear(), 0, 0)).getTimezoneOffset() - (new Date()).getTimezoneOffset()) * 60 * 1000)) / 86400000)) == 13) {
+  if(current !== true && (Math.floor((((new Date()) - (new Date((new Date()).getFullYear(), 0, 0))) + (((new Date((new Date()).getFullYear(), 0, 0)).getTimezoneOffset() - (new Date()).getTimezoneOffset()) * 60 * 1000)) / 86400000)) === 13) {
     var maxParticleCount = 150; var particleSpeed = 2; var startConfetti; var stopConfetti; var toggleConfetti; var removeConfetti;
     (function() { startConfetti = startConfettiInner; stopConfetti = stopConfettiInner; toggleConfetti = toggleConfettiInner; removeConfetti = removeConfettiInner; var colors = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"]; var streamingConfetti = false; var animationTimer = null; var particles = []; var waveAngle = 0; function resetParticle(particle, width, height) { particle.color = colors[(Math.random() * colors.length) | 0]; particle.x = Math.random() * width; particle.y = Math.random() * height - height; particle.diameter = Math.random() * 10 + 5; particle.tilt = Math.random() * 10 - 10; particle.tiltAngleIncrement = Math.random() * 0.07 + 0.05; particle.tiltAngle = 0; return particle; } function startConfettiInner() { var width = window.innerWidth; var height = window.innerHeight; window.requestAnimFrame = (function() { return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) { return window.setTimeout(callback, 16.6666667); }; })(); var canvas = document.getElementById("confetti-canvas"); if (canvas === null) { canvas = document.createElement("canvas"); canvas.setAttribute("id", "confetti-canvas"); canvas.setAttribute("style", "position:fixed;top:0px;left:0px;z-index:999999;pointer-events:none"); document.body.appendChild(canvas); canvas.width = width; canvas.height = height; window.addEventListener("resize", function() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }, true); } var context = canvas.getContext("2d"); while (particles.length < maxParticleCount) particles.push(resetParticle({}, width, height)); streamingConfetti = true; if (animationTimer === null) { (function runAnimation() { context.clearRect(0, 0, window.innerWidth, window.innerHeight); if (particles.length === 0) animationTimer = null; else { updateParticles(); drawParticles(context); animationTimer = requestAnimFrame(runAnimation); } })(); } } function stopConfettiInner() { streamingConfetti = false; } function removeConfettiInner() { stopConfetti(); particles = []; } function toggleConfettiInner() { if (streamingConfetti) stopConfettiInner(); else startConfettiInner(); } function drawParticles(context) { var particle; var x; for (var i = 0; i < particles.length; i++) { particle = particles[i]; context.beginPath(); context.lineWidth = particle.diameter; context.strokeStyle = particle.color; x = particle.x + particle.tilt; context.moveTo(x + particle.diameter / 2, particle.y); context.lineTo(x, particle.y + particle.tilt + particle.diameter / 2); context.stroke(); } } function updateParticles() { var width = window.innerWidth; var height = window.innerHeight; var particle; waveAngle += 0.01; for (var i = 0; i < particles.length; i++) { particle = particles[i]; if (!streamingConfetti && particle.y < -15) particle.y = height + 100; else { particle.tiltAngle += particle.tiltAngleIncrement; particle.x += Math.sin(waveAngle); particle.y += (Math.cos(waveAngle) + particle.diameter + particleSpeed) * 0.5; particle.tilt = Math.sin(particle.tiltAngle) * 15; } if (particle.x > width + 20 || particle.x < -20 || particle.y > height) { if (streamingConfetti && particles.length <= maxParticleCount) resetParticle(particle, width, height); else { particles.splice(i, 1); i--; }; }; }; }; })();
     startConfetti()
@@ -163,14 +163,15 @@ chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appe
   const current = data["canvasplus-current-version"]
   const displayAppearence = data["canvasplus-display-appearance"]
 
-  if(current !== "0.3.4") {
-    notification("Thanks for 800 users! This week, we've added a dedicated settings button to the sidebar and fixed dark mode on new quizzes.", "heart", "#ffd0d8", "#ff6680", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-current-version": "0.3.4"})
+  if(current !== "0.4") {
+    notification("Start 2022 on a good note! Search just got even better, try it out by clicking the new button on the sidebar. Also, we've improved dark mode and smart scrolling, and you can now hide unnecessary items from your sidebar.", "tada", "#dff2c9", "#85ba49", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-current-version": "0.4"})
       dismissMe()
     }, "Dismiss", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-display-appearance": "dim", "canvasplus-current-version": "0.3.4"})
+      window.open(chrome.extension.getURL('src/popup/popup.html'), "Popup", 'width=240px,height=400px,resizable=0,scrollbars=no,menubar=no,toolbar=no')
+      chrome.storage.local.set({"canvasplus-current-version": "0.4"})
       dismissMe()
-    }, displayAppearence !== "light" && displayAppearence !== "auto" ? undefined : "Enable Dark Mode", "#f3dae1")
+    }, "Open Settings", "#cedbcc")
   }
 })
 

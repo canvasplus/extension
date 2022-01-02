@@ -882,11 +882,14 @@ class SearchUI {
     }
 
     buildAutocomplete(overrideSelected) {
-        const currentQuery = (this.headerElementQueryWrapper.textContent + this.headerElementQueryRight.textContent).toLowerCase()
         if(!searchContent.done) {
             this.headerElementQueryAutoComplete.textContent = 'Search is loading ...';
+            return
         }
-       else if(currentQuery.length === 0) {
+
+        const currentQuery = (this.headerElementQueryWrapper?.textContent + this.headerElementQueryRight?.textContent).toLowerCase()
+        
+        if(currentQuery.length === 0) {
             this.headerElementQueryAutoComplete.textContent = 'Search your courses';
         }
         else if(this.results.length > 0) {
@@ -914,6 +917,7 @@ class SearchUI {
             })
         }
 
+        if(!this.headerElementIcon) return;
 
         if (!searchContent.done) {
             this.headerElementIcon.innerHTML = `<svg class="ic-icon-svg menu-item__icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve"><path style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" d="M404.2,160.8C273,160.8,165,268.8,165,400c0,135,114.3,239.4,239.2,239.2C507,639,601.9,567.8,635,462.3"/></svg>`
@@ -932,6 +936,7 @@ class SearchUI {
 
         this.headerElementIcon.classList.add("hide-for-animation")
         this.headerElementIcon.classList.remove("run-animation")
+
         setTimeout(() => {
             this.headerElementIcon.classList.remove("hide-for-animation")
             this.headerElementIcon.classList.add("run-animation")

@@ -21,6 +21,7 @@
          "assets/img/notification-emoji/cake.png",
          "assets/img/notification-emoji/scroll.png",
          "assets/img/notification-emoji/star.png",
+         "assets/img/notification-emoji/tada.png",
          "src/popup/popup.html"
      ],
   "content_scripts": [
