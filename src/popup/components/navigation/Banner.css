@@ -12,8 +12,84 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 102px;
-  height: 34px;
+  height: 18px;
 
   image-rendering: -webkit-optimize-contrast;
+}
+
+.Navigation__Banner__Popout__Wrapper {
+  position: fixed;
+  z-index: 100;
+  background: rgba(0,0,0,0.3);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.Navigation__Banner__Popout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  background: white;
+  width: calc(100% - 20px);
+  margin: 10px 0 0 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.Navigation__Banner__PopoutPadding {
+  padding: 10px;
+}
+
+.Navigation__Banner__Popout__DebugInfo {
+  overflow: scroll;
+  white-space: nowrap;
+  color: #666;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 10px 0;
+}
+
+.Navigation__Banner__Popout__DebugInfo button {
+  font-family: 'Open Sans';
+    background: #ebebeb;
+    border: none;
+    padding: 4px 8px;
+    font-size: 12px;
+    margin: 4px 0 8px 0;
+    border-radius: 4px;
+}
+
+.Navigation__Banner__Popout__Contributors {
+  text-align: center;
+}
+
+.Navigation__Banner__Popout__Contributors b, .Navigation__Banner__Popout__Contributors p {
+  line-height: 1.5;
+}
+
+.Navigation__Banner__Popout__Contributors b {
+  margin-top: 10px;
+  display: block;
+}
+
+.Navigation__Banner__Popout__Contributors p {
+  color: rgb(155, 155, 155);
+}
+
+.Navigation__Banner__Popout__Footer {
+  text-align: center;
+  background: hsl(0, 0%, 92%);
+  padding: 2px 0 8px 0;
+  margin-top: 8px;
+}
+
+.Navigation__Banner__Popout__Footer a {
+  line-height: 2.5;
+}
+
+.Navigation__Banner__Popout__Footer a, .Navigation__Banner__Popout__Footer img {
+  display: block;
+  margin: auto;
 }
