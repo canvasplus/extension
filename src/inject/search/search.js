@@ -275,7 +275,7 @@ const getCourseModules = async ( courseId, forceReload = false ) => {
     }, forceReload)
 }
 
-const searchContent = {done: false, courses: {}, searchIndexByWord: {}, entireRawIndex: []};
+const searchContent = {done: false, courses: {}, searchIndexByWord: {}, entireRawIndex: [], enabled: false };
 
 const main = async () => {
     const courses =  await getCourseList()
@@ -321,21 +321,46 @@ const main = async () => {
         searchUI.buildAutocomplete()
     })
 
-    if(!sessionStorage.getItem("canvasplus-search-session")) {
-        sessionStorage.setItem("canvasplus-search-session", true)
+    let pageLoaded = false; // determines if snackbar should be shown, shouldn't be shown if setting is enabled on page load and search session is present
 
-        const snackbar = setSnackbar([{
-            'type': 'text', 'text': 'Press'
-        }, {
-            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'K'
-        }, {
-            'type': 'text', 'text': 'to search'
-        }])
+    useReactiveFeatures([
+        {
+            "settingName": "canvasplus-setting-search",
+            onChanged: (value) => {
+                searchContent.enabled = value
 
-        setTimeout(() => {
-           removeSnackbar(snackbar);
-        }, 2000)
-    }
+                if(value === true) {
+
+                    if(!sessionStorage.getItem("canvasplus-search-session")) {
+                        sessionStorage.setItem("canvasplus-search-session", true)
+                    } else if(!pageLoaded) {
+                        pageLoaded = true
+                        return
+                    }
+                
+                        const snackbar = setSnackbar([{
+                            'type': 'text', 'text': 'Press'
+                        }, {
+                            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'K'
+                        }, {
+                            'type': 'text', 'text': 'to search'
+                        }])
+                
+                        setTimeout(() => {
+                           removeSnackbar(snackbar);
+                        }, 2000)
+
+                } else {
+                    if(searchUI.wrapperElement) {
+                        searchUI.closeUI()
+                    }
+                }
+
+                pageLoaded = true
+            }
+        }
+    ])
+    
 }
 
 const search = async (query, callback) => {
@@ -669,12 +694,6 @@ class SearchUI {
             searchUI.wrapperElement.remove()
         }
 
-        
-
-        document.querySelector("#sidebar-custom-menu-icon-search")?.addEventListener('click', (e) => {
-            this.openUI()
-        })
-
         document.addEventListener("keyup", (event) => {
             const usingControlKey = (event.key === 'Meta' && onMac) || (event.key === 'Control' && !onMac);
             if(usingControlKey && this.invertTabSnackbar?.element?.innerText?.startsWith('Opening in')) {
@@ -689,6 +708,8 @@ class SearchUI {
         })
 
         document.addEventListener("keydown", (event) => {
+            if(!searchContent.enabled) return;
+
             event = event || window.event;
 
             const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
@@ -973,9 +994,9 @@ class SearchUI {
         resultElement.addEventListener('click', (event) => {
             const usingControlKey = (event.metaKey && onMac) || (event.ctrlKey && !onMac);
             if(usingControlKey ^ searchUI.invertOpenNewTab) {
-                location.href = result.url
-            } else {
                 window.open(result.url)
+            } else {
+                location.href = result.url
             }
         })
 
