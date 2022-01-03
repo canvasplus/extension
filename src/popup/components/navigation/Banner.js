@@ -5,7 +5,16 @@ import './Banner.css'
 class Banner extends Component {
   constructor(props) {
     super(props)
-    this.state = { popoutShowing: false, copied: "Copy to Clipboard" }
+    this.state = { popoutShowing: false, copied: "Copy to Clipboard", installationInfo: "<loading>", surveySeed: "<loading>" }
+  }
+
+  componentDidMount() {
+    chrome.storage.local.get(["installDate", "canvasplus-survey-seed-1"], (data) => {
+      this.setState({
+        installationInfo: JSON.stringify(data["installDate"]),
+        surveySeed: data["canvasplus-survey-seed-1"]
+      })
+    })
   }
 
   render() {
@@ -24,13 +33,14 @@ class Banner extends Component {
             <div className='Navigation__Banner__Popout__DebugInfo'>
               <p>{ '(' + chrome.runtime.getManifest().version + ') ' + chrome.runtime.id }</p>
               <p>{ navigator.userAgent }</p>
+              <p>{ `Installation Info: ${ this.state.installationInfo } Survey Seed (1): ${ this.state.surveySeed }` }</p>
 
               <button onClick={() => {
                 if(!navigator?.clipboard?.writeText) {
                 this.setState({copied: "Couldn't Copy to Clipboard"}) 
                 } else {
                   navigator.clipboard.writeText(
-                    '(' + chrome.runtime.getManifest().version + ') ' + chrome.runtime.id + ' // ' + navigator.userAgent
+                    '(' + chrome.runtime.getManifest().version + ') ' + chrome.runtime.id + ' // ' + navigator.userAgent + ' // ' + `Installation Info: ${ this.state.installationInfo } Survey Seed (1): ${ this.state.surveySeed }`
                   )
                   this.setState({copied: "Copied to Clipboard"}) 
                 }
@@ -50,7 +60,7 @@ class Banner extends Component {
             </div>
           </div>
           <div className='Navigation__Banner__Popout__Footer'>
-            <a href="https://github.com/canvasplus" target={"_blank"}>GitHub</a>
+            <a href="https://github.com/canvasplus" target={"_blank"}>Contribute</a>
             <img src="../../../assets/img/notification-emoji/blue-heart.png" width={20}></img>
           </div>
         </div>

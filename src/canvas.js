@@ -168,10 +168,9 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
   }
 })
 
-chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appearance"], (data) => {
+chrome.storage.local.get(["canvasplus-current-version"], (data) => {
   const current = data["canvasplus-current-version"]
-  const displayAppearence = data["canvasplus-display-appearance"]
-
+  
   if(current !== "0.4") {
     notification("Start 2022 on a good note! Search just got even better, try it out by clicking the new button on the sidebar. Also, we've improved dark mode and smart scrolling, and you can now hide unnecessary items from your sidebar.", "tada", "#dff2c9", "#85ba49", (notification, dismissMe, e) => {
       chrome.storage.local.set({"canvasplus-current-version": "0.4"})
@@ -184,113 +183,158 @@ chrome.storage.local.get(["canvasplus-current-version", "canvasplus-display-appe
   }
 })
 
-chrome.storage.local.get(["canvasplus-survey", "installDate"], (data) => {
-  const viewed = data["canvasplus-survey"]
-  const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
+const doSurvey = () => {
+  // const surveysettings = { "canvasplus-setting-quicklink": "Speed+Boost", "canvasplus-setting-search": "Search", "canvasplus-setting-smartscroll": "Smart+Scrolling", "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out', 'auto': 'Auto'}, "canvasplus-setting-convopeeker": "Quick+Inbox", "canvasplus-setting-hidelogo": "Hide+Logo", "canvasplus-setting-sidebar-color": 'use default', "canvasplus-setting-roundermodules": "Rounder+Modules", "canvasplus-setting-linkcolor": 'use default' }
+  const surveySettings = [
+    "canvasplus-setting-search",
+    "canvasplus-setting-smartscroll",
+    "canvasplus-setting-quicklink",
+    "canvasplus-setting-roundermodules",
+    "canvasplus-setting-convopeeker",
+    "canvasplus-setting-hidelogo",
+    "canvasplus-setting-sidebar-more-spacing",
+    "canvasplus-setting-sidebar-show-settings",
+    "canvasplus-display-appearance",
+    "canvasplus-setting-sidebar-color",
+    "canvasplus-setting-sidebar-icon-size",
+    "canvasplus-setting-sidebar-drawer",
+    "canvasplus-setting-sidebar-drawer-excluded",
+    "canvasplus-setting-linkcolor",
+    "installDate"
+  ]
+  
+  chrome.storage.local.get(surveySettings, (data) => {
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_ur' +
+        ( data["canvasplus-setting-search"] ? "&entry.1198748745=Search" : "" ) +
+        ( data["canvasplus-setting-smartscroll"] ? "&entry.1198748745=Smart+Scrolling" : "" ) +
+        ( data["canvasplus-setting-quicklink"] ? "&entry.1198748745=Speed+Boost" : "" ) +
+        ( data["canvasplus-setting-roundermodules"] ? "&entry.1198748745=Rounder+Modules" : "" ) +
+        ( data["canvasplus-setting-convopeeker"] ? "&entry.1198748745=Quick+Inbox" : "" ) +
+        ( data["canvasplus-setting-hidelogo"] ? "&entry.1198748745=Hide+Sidebar+Logo" : "" ) +
+        ( data["canvasplus-setting-sidebar-more-spacing"] ? "&entry.1198748745=Sidebar+More+Spacing" : "" ) +
+        ( data["canvasplus-setting-sidebar-show-settings"] ? "&entry.1198748745=Sidebar+Setting+Icon" : "" ) +
+        `&entry.1404289257=${
+          (() => {
+            switch(data["canvasplus-display-appearance"]) {
+              case "dim":
+                return "Dim+(Always+on)"
+              case "dim_auto":
+                return "Dim+(Synced+with+OS)"
+              case "dark":
+                return "Dark+(Always+on)"
+              case "dark_auto":
+                return "Dark+(Synced+with+OS)"
+            }
+          })() ?? "Default+(Light)"
+        }` +
+        `&entry.1808318442=${
+          data["canvasplus-setting-sidebar-color"] ?
+          (
+            `__other_option__&entry.1808318442.other_option_response=${encodeURIComponent(data["canvasplus-setting-sidebar-color"])}`
+          ) : "Unset"
+        }` +
+        `&entry.2146677563=${ data["canvasplus-setting-sidebar-icon-size"] }` +
+        `&entry.2001245057=${
+          data["canvasplus-setting-sidebar-drawer"] ? (
+            `__other_option__&entry.2001245057.other_option_response=${encodeURIComponent(JSON.stringify(data["canvasplus-setting-sidebar-drawer-excluded"]))}`
+          ) : "Setting+disabled"
+        }` + 
+        `&entry.1599750073=${
+          data["canvasplus-setting-linkcolor"] ?
+          (
+            `__other_option__&entry.1599750073.other_option_response=${encodeURIComponent(data["canvasplus-setting-linkcolor"])}`
+          ) : "Unset"
+        }` +
+        `&entry.1159662235=${
+          navigator.userAgent.indexOf('Firefox') > -1 ? "Firefox" : "Chrome/Chromium"
+        }` +
+        `&entry.1858991990=${
+          encodeURIComponent(JSON.stringify(data["installDate"]))
+        }`
 
-  if (viewed !== true &&  time >= 14) {
-    notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "scroll", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
-      // const surveysettings = { "canvasplus-setting-quicklink": "Speed+Boost", "canvasplus-setting-search": "Search", "canvasplus-setting-smartscroll": "Smart+Scrolling", "canvasplus-display-appearance": {'light': 'Default+(Light)', 'dim': 'Dim', 'dark': 'Lights+Out', 'auto': 'Auto'}, "canvasplus-setting-convopeeker": "Quick+Inbox", "canvasplus-setting-hidelogo": "Hide+Logo", "canvasplus-setting-sidebar-color": 'use default', "canvasplus-setting-roundermodules": "Rounder+Modules", "canvasplus-setting-linkcolor": 'use default' }
-      const surveySettings = [
-        "canvasplus-setting-search",
-        "canvasplus-setting-smartscroll",
-        "canvasplus-setting-quicklink",
-        "canvasplus-setting-roundermodules",
-        "canvasplus-setting-convopeeker",
-        "canvasplus-setting-hidelogo",
-        "canvasplus-setting-sidebar-more-spacing",
-        "canvasplus-setting-sidebar-show-settings",
-        "canvasplus-display-appearance",
-        "canvasplus-setting-sidebar-color",
-        "canvasplus-setting-sidebar-icon-size",
-        "canvasplus-setting-sidebar-drawer",
-        "canvasplus-setting-sidebar-drawer-excluded",
-        "canvasplus-setting-linkcolor"
-      ]
-      
-      chrome.storage.local.get(surveySettings, (data) => {
-        const url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_ur' +
-            ( data["canvasplus-setting-search"] ? "&entry.1198748745=Search" : "" ) +
-            ( data["canvasplus-setting-smartscroll"] ? "&entry.1198748745=Smart+Scrolling" : "" ) +
-            ( data["canvasplus-setting-quicklink"] ? "&entry.1198748745=Speed+Boost" : "" ) +
-            ( data["canvasplus-setting-roundermodules"] ? "&entry.1198748745=Rounder+Modules" : "" ) +
-            ( data["canvasplus-setting-convopeeker"] ? "&entry.1198748745=Quick+Inbox" : "" ) +
-            ( data["canvasplus-setting-hidelogo"] ? "&entry.1198748745=Hide+Sidebar+Logo" : "" ) +
-            ( data["canvasplus-setting-sidebar-more-spacing"] ? "&entry.1198748745=Sidebar+More+Spacing" : "" ) +
-            ( data["canvasplus-setting-sidebar-show-settings"] ? "&entry.1198748745=Sidebar+Setting+Icon" : "" ) +
-            `&entry.1404289257=${
-              (() => {
-                switch(data["canvasplus-display-appearance"]) {
-                  case "dim":
-                    return "Dim+(Always+on)"
-                  case "dim_auto":
-                    return "Dim+(Synced+with+OS)"
-                  case "dark":
-                    return "Dark+(Always+on)"
-                  case "dark_auto":
-                    return "Dark+(Synced+with+OS)"
-                }
-              })() ?? "Default+(Light)"
-            }` +
-            `&entry.1808318442=${
-              data["canvasplus-setting-sidebar-color"] ?
-              (
-                `__other_option__&entry.1808318442.other_option_response=${encodeURIComponent(data["canvasplus-setting-sidebar-color"])}`
-              ) : "Unset"
-            }` +
-            `&entry.2146677563=${ data["canvasplus-setting-sidebar-icon-size"] }` +
-            `&entry.2001245057=${
-              data["canvasplus-setting-sidebar-drawer"] ? (
-                `__other_option__&entry.2001245057.other_option_response=${encodeURIComponent(JSON.stringify(data["canvasplus-setting-sidebar-drawer-excluded"]))}`
-              ) : "Setting+disabled"
-            }` + 
-            `&entry.1599750073=${
-              data["canvasplus-setting-linkcolor"] ?
-              (
-                `__other_option__&entry.1599750073.other_option_response=${encodeURIComponent(data["canvasplus-setting-linkcolor"])}`
-              ) : "Unset"
-            }` +
-            `&entry.1159662235=${
-              navigator.userAgent.indexOf('Firefox') > -1 ? "Firefox" : "Chrome/Chromium"
-            }`
-
-            console.log(url);
-            injectsurvey(url)
-            })
-        //var url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_url';
-
-        // for (rotation = 0; rotation < Object.entries(data).length; rotation++) {
-        //   var hexurl = undefined
-        //   url += (Object.entries(data)[rotation][1] == true ? '&entry.1198748745=' + surveysettings[Object.entries(data)[rotation][0]] : '');
-        //   url += (Object.entries(data)[rotation][0] == "canvasplus-display-appearance" ? '&entry.1404289257=' + surveysettings["canvasplus-display-appearance"][Object.entries(data)[rotation][1]] : '');
-        //   Object.entries(data)[rotation][0] == "canvasplus-setting-sidebar-color" ? hexurl = '&entry.1808318442' : Object.entries(data)[rotation][0] == "canvasplus-setting-linkcolor" ? hexurl = '&entry.1599750073' : undefined;
-        //   url += (hexurl != undefined ? (data[Object.entries(data)[rotation][0]] == "" || data[Object.entries(data)[rotation][0]] == "use default" ? hexurl + '=' + 'Unset' : (Object.entries(data)[rotation][1]).split('#')[0] == "linear-gradient(45deg, " ? hexurl + '=__other_option__' + hexurl + '.other_option_response=' + ((Object.entries(data)[rotation][1]).split('#')[0]).toString() + '%23' + ((Object.entries(data)[rotation][1]).split('#')[1]).toString() + '%23' + ((Object.entries(data)[rotation][1]).split('#')[2]).toString() : hexurl + '=__other_option__' + hexurl + '.other_option_response=%23' + ((Object.entries(data)[rotation][1]).split('#')[1])) : '');
-        // } url += navigator.userAgent.indexOf('Firefox') > -1 ? '&entry.1159662235=Firefox' : '&entry.1159662235=Chrome%5CChromium'; injectsurvey(url)});
-      
-      const injectsurvey = (url) => {
-        const survey = document.createElement('div')
-        survey.className = 'cpx-survey-wrapper'
-
-        const surveyBackground = document.createElement('div')
-        surveyBackground.className = 'cpx-survey__Background'
-        surveyBackground.addEventListener("click", () => {
-          survey.remove()
+        injectsurvey(url)
         })
+    //var url = 'https://docs.google.com/forms/d/e/1FAIpQLScHWEI7TY5W6DWSqRGaUWTlxLYHKAhcdwUvywvW_oj7MmM9Pw/viewform?usp=pp_url';
 
-        const surveyFrame = document.createElement('iframe')
-        surveyFrame.src = url
-        surveyFrame.innerText = 'Loading ...'
-        surveyFrame.className = 'cpx-survey__Frame'
+    // for (rotation = 0; rotation < Object.entries(data).length; rotation++) {
+    //   var hexurl = undefined
+    //   url += (Object.entries(data)[rotation][1] == true ? '&entry.1198748745=' + surveysettings[Object.entries(data)[rotation][0]] : '');
+    //   url += (Object.entries(data)[rotation][0] == "canvasplus-display-appearance" ? '&entry.1404289257=' + surveysettings["canvasplus-display-appearance"][Object.entries(data)[rotation][1]] : '');
+    //   Object.entries(data)[rotation][0] == "canvasplus-setting-sidebar-color" ? hexurl = '&entry.1808318442' : Object.entries(data)[rotation][0] == "canvasplus-setting-linkcolor" ? hexurl = '&entry.1599750073' : undefined;
+    //   url += (hexurl != undefined ? (data[Object.entries(data)[rotation][0]] == "" || data[Object.entries(data)[rotation][0]] == "use default" ? hexurl + '=' + 'Unset' : (Object.entries(data)[rotation][1]).split('#')[0] == "linear-gradient(45deg, " ? hexurl + '=__other_option__' + hexurl + '.other_option_response=' + ((Object.entries(data)[rotation][1]).split('#')[0]).toString() + '%23' + ((Object.entries(data)[rotation][1]).split('#')[1]).toString() + '%23' + ((Object.entries(data)[rotation][1]).split('#')[2]).toString() : hexurl + '=__other_option__' + hexurl + '.other_option_response=%23' + ((Object.entries(data)[rotation][1]).split('#')[1])) : '');
+    // } url += navigator.userAgent.indexOf('Firefox') > -1 ? '&entry.1159662235=Firefox' : '&entry.1159662235=Chrome%5CChromium'; injectsurvey(url)});
+  
+  const injectsurvey = (url) => {
+    const survey = document.createElement('div')
+    survey.className = 'cpx-survey-wrapper'
 
-        survey.appendChild(surveyBackground)
-        survey.appendChild(surveyFrame)
+    const surveyBackground = document.createElement('div')
+    surveyBackground.className = 'cpx-survey__Background'
+    surveyBackground.addEventListener("click", () => {
+      survey.remove()
+    })
 
-        document.body.appendChild(survey)
+    const surveyFrame = document.createElement('iframe')
+    surveyFrame.src = url
+    surveyFrame.innerText = 'Loading ...'
+    surveyFrame.className = 'cpx-survey__Frame'
+
+    survey.appendChild(surveyBackground)
+    survey.appendChild(surveyFrame)
+
+    document.body.appendChild(survey)
 
 
-        chrome.storage.local.set({"canvasplus-survey": true})
-      }; dismissMe() }, "Survey", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-survey": true})
+    chrome.storage.local.set({"canvasplus-survey": true})
+  };
+}
+
+chrome.storage.local.get(["canvasplus-survey", "installDate", "canvasplus-allow-surveys"], (data) => {
+  const viewed = data["canvasplus-survey"]
+
+  if(data["canvasplus-allow-surveys"] === false) return;
+
+  const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
+  if(viewed === true) return;
+  if (Date.now() - viewed >= 60000 &&  time >= 14) {
+    notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "scroll", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
+        doSurvey()
+      dismissMe() }, "Survey", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-survey": Date.now()})
+
+      const snackbar = setSnackbar([{"type":"text","text":"You'll be asked about the survey again in a few days."}, {
+        "type": "spacer", "spacing": "10px"
+      }, {
+        "type": "button-hstack", "buttons": [
+          {
+            "text": "Take Survey",
+            "onClick": () => {
+              doSurvey()
+              removeSnackbar(snackbar)
+            }
+          },
+          {
+            "text": "Opt Out",
+            "textColor": "var(--ic-brand-font-color-dark)",
+            "backgroundColor": "var(--cpt-dark-snackbar-code-segment-color, #e1e1e1)",
+            "onClick": () => {
+              removeSnackbar(snackbar)
+              
+              chrome.storage.local.set({"canvasplus-allow-surveys": false})
+
+              const snackbar2 = setSnackbar([{"type":"text","text":"Your survey settings have been updated"}])
+              setTimeout(() => {
+                removeSnackbar(snackbar2)
+              }, 2500)
+            }
+          }
+        ]
+      }], "large")
+
+      setTimeout(() => {
+        removeSnackbar(snackbar)
+      }, 4500)
+
       dismissMe()
     }, "Maybe Later", "#ffe4cf")
 }})

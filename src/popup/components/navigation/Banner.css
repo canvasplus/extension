@@ -90,15 +90,24 @@
 .Navigation__Banner__Popout__Footer {
   text-align: center;
   background: hsl(0, 0%, 92%);
-  padding: 2px 0 8px 0;
   margin-top: 8px;
+  display: flex;
 }
 
 .Navigation__Banner__Popout__Footer a {
   line-height: 2.5;
+    margin-left: 25px;
+    width: 100%;
+    text-align: left;
+    margin-top: 5px;
+    color: #636363;
+    text-decoration: none;
 }
 
 .Navigation__Banner__Popout__Footer a, .Navigation__Banner__Popout__Footer img {
   display: block;
-  margin: auto;
+}
+
+.Navigation__Banner__Popout__Footer img {
+  margin: 10px 20px;
 }

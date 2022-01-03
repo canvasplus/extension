@@ -8,8 +8,8 @@
 }
 
 .cpx-snackbar {
-    background: var(--cpt-dark-search-ui-header-background-color, #FFF);
-    padding: 0 18px;
+    background: var(--cpt-dark-search-ui-header-background-color, #F5F5F5);
+    padding: 10px 18px;
     border-radius: 1000px;
     filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.15));
     margin-top: 15px;
@@ -19,8 +19,17 @@
     animation: cpx-snackbar-appear 0.35s ease-out;
 }
 
+.cpx-snackbar__size-large {
+    padding: 15px 40px;
+    animation: cpx-snackbar-appear_large 0.75s ease-out;
+}
+
 .cpx-snackbar.removing {
     animation: cpx-snackbar-disappear 0.35s ease;
+}
+
+.cpx-snackbar__size-large.removing {
+    animation: cpx-snackbar-disappear_large 0.75s ease;
 }
 
 @keyframes cpx-snackbar-appear {
@@ -32,10 +41,26 @@
 }
 
 @keyframes cpx-snackbar-disappear {
-    to {
-        transform: translate(-50%, -50px);
-    } from {
+    from {
         transform: translate(-50%, -0px);
+    } to {
+        transform: translate(-50%, -50px);
+    }
+}
+
+@keyframes cpx-snackbar-appear_large {
+    from {
+        transform: translate(-50%, -150px);
+    } to {
+        transform: translate(-50%, -0px);
+    }
+}
+
+@keyframes cpx-snackbar-disappear_large {
+    from {
+        transform: translate(-50%, -0px);
+    } to {
+        transform: translate(-50%, -150px);
     }
 }
 
@@ -44,13 +69,33 @@ span.cpx-snackbar-text-span {
     float: none;
     margin: 0;
     white-space: pre;
-    margin: 12px 0;
 }
 
 span.cpx-snackbar-text-span-code {
-    background: var(--cpt-dark-snackbar-code-segment-color, #f3f3f3);
+    background: var(--cpt-dark-snackbar-code-segment-color, #e1e1e1);
     padding: 6px 14px;
     border-radius: 24px;
     margin: 0 8px;
     font-size: 14px;
+}
+
+.cpx-snackbar-spacer {
+    height: var(--spacing);
+}
+
+.cpx-snackbar-button-hstack {
+    display: flex;
+    grid-gap: 10px;
+    width: fit-content;
+    margin: auto;
+}
+
+.cpx-snackbar-button {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 40px;
+    font-size: 15px;
+    background: var(--buttonColor, #3177cc);
+    color: var(--textColor, #FFF);
+    cursor: pointer;
 }

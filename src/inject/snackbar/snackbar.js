@@ -4,9 +4,9 @@ const snackbar = () => {
 
     document.body.appendChild(snackbarContainer)
 
-    const setSnackbar = (content) => {
+    const setSnackbar = (content, size="") => {
         const element = document.createElement('div');
-        element.className = 'cpx-snackbar'
+        element.className = `cpx-snackbar${size ? " cpx-snackbar__size-" + size : ""}`
 
         const constructSpan = () => {
             const span = document.createElement('span')
@@ -27,6 +27,31 @@ const snackbar = () => {
                 span.classList.add('cpx-snackbar-text-span-code');
                 span.textContent = text;
             }
+
+            if(type === "spacer") {
+                const spacer = document.createElement('div')
+                spacer.className = 'cpx-snackbar-spacer'
+                spacer.style = `--spacing:${contentSegment.spacing};`
+                element.appendChild(spacer)
+            }
+
+            if(type === "button-hstack") {
+                const stack = document.createElement('div')
+                stack.className = 'cpx-snackbar-button-hstack'
+                element.appendChild(stack)
+
+                contentSegment.buttons.forEach(buttonData => {
+                    const button = document.createElement('button')
+                    button.className = 'cpx-snackbar-button'
+                    
+                    button.innerText = buttonData.text
+                    button.style = `--textColor: ${buttonData.textColor ?? '#FFF'}; --buttonColor: ${buttonData.backgroundColor ?? '#3177cc'};`
+
+                    button.addEventListener('click', buttonData.onClick)
+
+                    stack.appendChild(button)
+                });
+            }
         }
 
         snackbarContainer.innerHTML = ''
@@ -35,9 +60,17 @@ const snackbar = () => {
     }
 
     const removeSnackbar = ({ element }) => {
+        const size = (() => {
+            if(element.classList.contains("cpx-snackbar__size-large")) {
+                return 725;
+            } else {
+                return 325;
+            }
+        })()
+
         setTimeout(() => {
             element.remove()
-        }, 325)
+        }, size)
         element.classList.add('removing')
     }
 
