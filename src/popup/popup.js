@@ -89,15 +89,17 @@ const frames = {
 }
 
 useEffect(() => {
-  const urlParams = new URLSearchParams(window.location.search)
+  setTimeout(() => {
+    const urlParams = new URLSearchParams(window.location.search)
   
-  if(urlParams.get("tab") === "display") {
-    setCurrentTab("display")
-  }
+    if(urlParams.get("tab") === "display") {
+      setCurrentTab("display")
+    }
 
-  if(urlParams.get("click-x-id")) {
-    document.querySelector("#" + urlParams.get("click-x-id"))?.click()
-  }
+    if(urlParams.get("click-x-id")) {
+      document.querySelector("#" + urlParams.get("click-x-id"))?.click()
+    }
+  })
 }, [])
 
   return (

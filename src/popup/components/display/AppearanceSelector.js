@@ -6,20 +6,23 @@ import LargeOptionForm from '../interactive/LargeOptionForm.js'
 import styles from './AppearanceSelector.module.css'
 
 const AppearanceSelector = (props) => {
-  const selectHandler = (id) => {
+  const selectHandler = (id=selected, isAuto=auto) => {
     if(id === "light") {
-      syncCheckbox.current.checked = false;
-      syncCheckbox.current.disabled = true;
+      isAuto = false
+      syncCheckbox.current.checked = false
+      syncCheckbox.current.disabled = true
     } else {
-      syncCheckbox.current.disabled = false;
+      syncCheckbox.current.disabled = false
     }
 
-    setSelected(id);
-    const newAppearance = id + (syncCheckbox.current.checked ? '_auto' : '')
-    chrome.storage.local.set({'canvasplus-display-appearance': newAppearance})
+    setSelected(id)
+    setAuto(isAuto)
+
+    chrome.storage.local.set({'canvasplus-display-appearance': `${id}${isAuto ? "_auto" : ""}`})
   }
 
   const [selected, setSelected] = useState("")
+  const [auto, setAuto] = useState(false)
 
   const syncCheckbox = React.createRef()
 
@@ -29,38 +32,26 @@ const AppearanceSelector = (props) => {
 
   useEffect(() => {
     chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
-      if(data['canvasplus-display-appearance'] !== undefined) {
-        let appearance = data['canvasplus-display-appearance']
-        
-        if(appearance.endsWith("auto")) {
-          appearance = appearance.substring(0, appearance.length - 5)
-          syncCheckbox.current.checked = true
-        }
+      const originalAppearance = data['canvasplus-display-appearance']
+      const isAuto = originalAppearance.endsWith("_auto")
 
-        setSelected(appearance)
-      } else {
-        console.log('Setting canvasplus-display-appearance was unset')
-
-        const toChange = {}
-        toChange['canvasplus-display-appearance'] = 'light'
-
-        chrome.storage.local.set(toChange)
-
-        setSelected('light')
-      }
-    });
+      setSelected(isAuto ? originalAppearance.substring(0, originalAppearance.length - 5) : originalAppearance)
+      setAuto(isAuto)
+    })
   }, [])
   
   return (<>
     <LargeOptionForm>
       { options }
     </LargeOptionForm>
-    <label className={selected === "light" ? styles.AppearanceSelector__SyncLabel_Disabled : styles.AppearanceSelector__SyncLabel }>
-      <input ref={syncCheckbox} type="checkbox" onChange={() => {
-        selectHandler(selected)
+
+    <label className={selected === "light" || selected === "" ? styles.AppearanceSelector__SyncLabel_Disabled : styles.AppearanceSelector__SyncLabel }>
+      <input ref={syncCheckbox} type="checkbox" checked={auto} onChange={(e) => {
+        selectHandler(undefined, e.target.checked)
       }}></input>
       <p>Sync with OS</p>
     </label>
+
   </>);
 }
 
