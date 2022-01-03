@@ -5,6 +5,7 @@ const sidebarActiveColor = addStylingRule('')
 const sidebarActiveIconColor = addStylingRule('')
 const sidebarIconWidth = addStylingRule('')
 const sidebarIconHeight = addStylingRule('')
+const displaySidebarItemSettingsDrawer = addStylingRule('')
 
 let sidebarlink = document.createElement("link");
   sidebarlink.href = chrome.extension.getURL("src/inject/sidebar/sidebar.css");
@@ -86,6 +87,7 @@ useReactiveFeatures([{
 }, {
   settingName: 'canvasplus-setting-sidebar-drawer',
   onChanged: (value) => {
+    displaySidebarItemSettingsDrawer.setRule(value ? '--display-sidebar-item-settings-drawer: none' : '')
     expansionDrawerEnabled = value
     renderSidebarButtons()
   }

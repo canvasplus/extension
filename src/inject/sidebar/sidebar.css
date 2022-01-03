@@ -30,7 +30,7 @@ body:not(.primary-nav-expanded) .menu-item__text {
 }
 
 #menu > li:not(.cpx-outside-settings-drawer) {
-    display: none;
+    display: var(--display-sidebar-item-settings-drawer, list-item);
 }
 
 #sidebar-custom-menu-icon-more-expansion {
