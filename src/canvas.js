@@ -296,7 +296,7 @@ chrome.storage.local.get(["canvasplus-survey", "installDate", "canvasplus-allow-
 
   const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
   if(viewed === true) return;
-  if (Date.now() - viewed >= 60000 &&  time >= 14) {
+  if (Date.now() - viewed >= 475200000 &&  time >= 14) {
     notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "scroll", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
         doSurvey()
       dismissMe() }, "Survey", (notification, dismissMe, e) => {

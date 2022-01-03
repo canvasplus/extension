@@ -17,7 +17,7 @@ const Setting = (props) => {
   }
 
   useEffect(() => {
-    const fullSettingName = 'canvasplus-setting-' + setting;
+    const fullSettingName = setting.startsWith('$') ? setting.substr(1) : `canvasplus-setting-${setting}`;
     chrome.storage.local.get([fullSettingName], (data) => {
       if(data[fullSettingName] === undefined) {
         data[fullSettingName] = defaultValue;

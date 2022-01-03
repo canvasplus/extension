@@ -36,6 +36,7 @@ const frames = {
         <SettingGroup name="Other">
           <Setting name="Rounder Modules" setting="roundermodules" description="Give the modules page a rounder appearance." />
           <Setting name="Quick Inbox" setting="convopeeker" description="View your emails without opening a new page, just click the inbox button." />
+          <Setting name="Allow Surveys" setting="$canvasplus-allow-surveys" description="From time to time, the Canvas+ team releases surveys to help improve your learning." />
         </SettingGroup>
       </span>
     )
