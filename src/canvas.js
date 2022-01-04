@@ -289,55 +289,66 @@ const doSurvey = () => {
   };
 }
 
-chrome.storage.local.get(["canvasplus-survey", "installDate", "canvasplus-allow-surveys"], (data) => {
-  const viewed = data["canvasplus-survey"]
+chrome.storage.local.get(["canvasplus-survey", "installDate", "canvasplus-allow-surveys", "canvasplus-survey-seed-1"], (data) => {
+  fetch("https://canvasplus.org/remote.json").then(remoteData => {
+    remoteData.json().then(remoteData => {
+      const seedPct = data["canvasplus-survey-seed-1"] ?? 0
+      const rolloutPct = remoteData["survey-1-rollout-pct"] ?? 0
+      if(seedPct >= rolloutPct) return;
 
-  if(data["canvasplus-allow-surveys"] === false) return;
+      const viewed = data["canvasplus-survey"]
+    
+      if(data["canvasplus-allow-surveys"] === false) return;
+    
+      const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
+      if(viewed === true) return;
+      if (Date.now() - viewed >= 475200000 &&  time >= 14) {
+        notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "draw", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
+            doSurvey()
+          dismissMe() }, "Survey", (notification, dismissMe, e) => {
+          chrome.storage.local.set({"canvasplus-survey": Date.now()})
+    
+          const snackbar = setSnackbar([{"type":"text","text":"You'll be asked about the survey again in a few days."}, {
+            "type": "spacer", "spacing": "10px"
+          }, {
+            "type": "button-hstack", "buttons": [
+              {
+                "text": "Take Survey",
+                "onClick": () => {
+                  doSurvey()
+                  removeSnackbar(snackbar)
+                }
+              },
+              {
+                "text": "Opt Out",
+                "textColor": "var(--ic-brand-font-color-dark)",
+                "backgroundColor": "var(--cpt-dark-snackbar-code-segment-color, #e1e1e1)",
+                "onClick": () => {
+                  removeSnackbar(snackbar)
+                  
+                  chrome.storage.local.set({"canvasplus-allow-surveys": false})
+    
+                  const snackbar2 = setSnackbar([{"type":"text","text":"Your survey settings have been updated"}])
+                  setTimeout(() => {
+                    removeSnackbar(snackbar2)
+                  }, 2500)
+                }
+              }
+            ]
+          }], "large")
+    
+          setTimeout(() => {
+            removeSnackbar(snackbar)
+          }, 4500)
+    
+          dismissMe()
+        }, "Maybe Later", "#ffe4cf")
+      }
 
-  const time = Math.round(new Date / 86400000) - Math.round(data["installDate"]['timestamp'] / 86400000)
-  if(viewed === true) return;
-  if (Date.now() - viewed >= 475200000 &&  time >= 14) {
-    notification("Help us make Canvas+ better! Consider taking this short survey about new improvements we can make!", "scroll", "#fff1e6", "#e5a573", (notification, dismissMe, e) => {
-        doSurvey()
-      dismissMe() }, "Survey", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-survey": Date.now()})
+    })
 
-      const snackbar = setSnackbar([{"type":"text","text":"You'll be asked about the survey again in a few days."}, {
-        "type": "spacer", "spacing": "10px"
-      }, {
-        "type": "button-hstack", "buttons": [
-          {
-            "text": "Take Survey",
-            "onClick": () => {
-              doSurvey()
-              removeSnackbar(snackbar)
-            }
-          },
-          {
-            "text": "Opt Out",
-            "textColor": "var(--ic-brand-font-color-dark)",
-            "backgroundColor": "var(--cpt-dark-snackbar-code-segment-color, #e1e1e1)",
-            "onClick": () => {
-              removeSnackbar(snackbar)
-              
-              chrome.storage.local.set({"canvasplus-allow-surveys": false})
-
-              const snackbar2 = setSnackbar([{"type":"text","text":"Your survey settings have been updated"}])
-              setTimeout(() => {
-                removeSnackbar(snackbar2)
-              }, 2500)
-            }
-          }
-        ]
-      }], "large")
-
-      setTimeout(() => {
-        removeSnackbar(snackbar)
-      }, 4500)
-
-      dismissMe()
-    }, "Maybe Later", "#ffe4cf")
-}})
+  })
+})
 
 // chrome.storage.local.get(["canvasplus-rating", "installDate"], (data) => {
 //   const viewed = data["canvasplus-rating"]
