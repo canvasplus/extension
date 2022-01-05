@@ -108,6 +108,7 @@ const getFetchablePaginated = async( searchDataKey, cachePath, fetchPath, fetchR
         const fetchResponseJson = await fetchResponse.json()
         response = response.concat(fetchResponseJson)
         if(fetchResponseJson.length < 100) break;
+        i++;
     }
 
 
