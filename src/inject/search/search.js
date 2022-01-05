@@ -719,7 +719,7 @@ class SearchUI {
             if(usingControlKey) {
                 if(event.key === 'k' || event.key === 'b') {
                     event.preventDefault()
-                    
+
                     if(this.showing) {
                         this.closeUI()
 
@@ -739,6 +739,8 @@ class SearchUI {
                     }
                     return;
                 } else if(this.showing) {
+                    if(event.repeat) return;
+                    
                     if(this.invertTabSnackbar) {
                         this.invertTabSnackbar.element.remove()
                     }
