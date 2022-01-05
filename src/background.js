@@ -42,7 +42,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         }
       })
     }
-    else if (details.reason === "update" && details.previousVersion !== "0.4") {
+    else if (details.reason === "update" && details.previousVersion === "0.3.4") {
       //chrome.storage.local.set({"canvasplus-current-version": "0.4"}) // canvasjs will detect new version
       chrome.storage.local.set(newDefaults);
     }

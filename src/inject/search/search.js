@@ -718,6 +718,8 @@ class SearchUI {
 
             if(usingControlKey) {
                 if(event.key === 'k' || event.key === 'b') {
+                    event.preventDefault()
+                    
                     if(this.showing) {
                         this.closeUI()
 
