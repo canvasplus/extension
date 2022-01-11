@@ -342,7 +342,7 @@ const main = async () => {
                         const snackbar = setSnackbar([{
                             'type': 'text', 'text': 'Press'
                         }, {
-                            'type': 'code', 'text': (onMac ? '⌘' : 'Control ') + 'K'
+                            'type': 'code', 'text': (onMac ? '⌘' : 'CTRL ') + 'K'
                         }, {
                             'type': 'text', 'text': 'to search'
                         }])
