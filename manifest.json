@@ -13,6 +13,7 @@
          "src/inject/roundermodules/roundermodules.css",
          "src/inject/hidelogo/hidelogo.css",
          "src/inject/notification/notification.css",
+         "src/inject/quiz/quiz.css",
          "assets/img/light.png",
          "assets/img/dim.png",
          "assets/img/dark.png",
@@ -39,6 +40,10 @@
     {
       "matches": [ "*://*.instructure.com/conversations?*"],
       "js": ["src/inject/convopeeker/conversation-param-utils.js"]
+    },
+    {
+      "matches": [ "*://*.instructure.com/courses/*/quizzes/*/take*"],
+      "js": ["src/inject/quiz/quiz.js"]
     }
   ],
   "browser_action": {

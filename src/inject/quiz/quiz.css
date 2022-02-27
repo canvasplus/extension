@@ -1,0 +1,17 @@
+#quizrefill {
+    height: 50px;
+    width: 120px;
+    background: #f5f5f5;
+    border: 1px solid;
+    border-color: #c7cdd1;
+    color: #2d3b45;
+    border-radius: 7px;
+    transition: background-color .2s ease-in-out;
+    user-select: none;
+    cursor: pointer;
+}
+
+#quizrefill:hover {
+    background: #e8e8e8;
+    color: #2d3b45;
+}
