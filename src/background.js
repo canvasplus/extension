@@ -12,10 +12,7 @@ const oldDefaults = {
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
   "canvasplus-setup-stage": 0,
-  "canvasplus-current-version": "0.4"
-}
-
-const newDefaults = {
+  "canvasplus-current-version": "0.4.2",
   "canvasplus-setting-sidebar-drawer": true,
   "canvasplus-setting-sidebar-drawer-excluded": ["Dashboard", "Courses", "Calendar", "Inbox", "Settings", "Search"],
   "canvasplus-setting-sidebar-drawer-all-items": ["Settings", "Search"],
@@ -26,6 +23,10 @@ const newDefaults = {
   "canvasplus-rating": false,
   "canvasplus-setting-sidebar-icon-size": 3,
   "canvasplus-setting-sidebar-show-settings": true
+}
+
+const newDefaults = {
+  "canvasplus-setting-quizrefill": false,
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -42,7 +43,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         }
       })
     }
-    else if (details.reason === "update" && details.previousVersion === "0.3.4") {
+    else if (details.reason === "update" && details.previousVersion === "0.4.1") {
       //chrome.storage.local.set({"canvasplus-current-version": "0.4"}) // canvasjs will detect new version
       chrome.storage.local.set(newDefaults);
     }

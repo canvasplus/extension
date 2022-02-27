@@ -2,10 +2,8 @@ useReactiveFeatures([{
     settingName: "canvasplus-setting-quizrefill",
     onChanged: (value) => {
         if (value) {
-            const FetchData = () => { fetch(`/courses/${ window.location.pathname.split("/")[2] }/quizzes/${ window.location.pathname.split("/")[4] }/submission_versions`)
-                .then(data => data.text())
-                .then(response => (new DOMParser()).parseFromString(response, 'text/html').querySelector("tbody").querySelector("td").children[0].href)
-                .then(response => fetch(response))
+            const FetchData = (response) => {
+                fetch(response)
                 .then(data => data.text())
                 .then(response => {
                     const Array = {};
@@ -20,13 +18,13 @@ useReactiveFeatures([{
             };
 
             const IsQuestion = (question, value) => {
-                question.classList.contains("multiple_choice_question") || question.classList.contains("true_false_question") ? question.querySelectorAll(".answer_label").forEach(element => element.innerText == value ? element.click() : null) :
-                question.classList.contains("short_answer_question") ? question.querySelector(".question_input").value = value :
-                question.classList.contains("fill_in_multiple_blanks_question") ? ForArrayMultiBlanks(question.querySelectorAll(".question_input"), value) :
-                question.classList.contains("multiple_answers_question") ? question.querySelectorAll(".answer_label").forEach(element => (value.indexOf(element.innerText) > -1 && !element.parentNode.querySelector(".question_input").checked) || (!(value.indexOf(element.innerText) > -1) && element.parentNode.querySelector(".question_input").checked) ? element.click() : null) : null
-                question.classList.contains("multiple_dropdowns_question") ? MultiDropDowns(question.querySelectorAll(".question_input"), value) :
-                question.classList.contains("matching_question") ? document.querySelectorAll(".question_input").forEach(element => Array.from(element.children).forEach(child => child.innerText == value[`${ element.id.split("_")[2]}_${ element.id.split("_")[3] }`] ? element.value = child.value : null)) :
-                question.classList.contains("numerical_question") || question.classList.contains("calculated_question") ? question.querySelector(".question_input").value = value : null;
+                question?.classList.contains("multiple_choice_question") || question?.classList.contains("true_false_question") ? question.querySelectorAll(".answer_label").forEach(element => element.innerText == value ? element.click() : null) :
+                question?.classList.contains("short_answer_question") ? question.querySelector(".question_input").value = value :
+                question?.classList.contains("fill_in_multiple_blanks_question") ? ForArrayMultiBlanks(question.querySelectorAll(".question_input"), value) :
+                question?.classList.contains("multiple_answers_question") ? question.querySelectorAll(".answer_label").forEach(element => (value.indexOf(element.innerText) > -1 && !element.parentNode.querySelector(".question_input").checked) || (!(value.indexOf(element.innerText) > -1) && element.parentNode.querySelector(".question_input").checked) ? element.click() : null) : null
+                question?.classList.contains("multiple_dropdowns_question") ? MultiDropDowns(question.querySelectorAll(".question_input"), value) :
+                question?.classList.contains("matching_question") ? document.querySelectorAll(".question_input").forEach(element => Array.from(element.children).forEach(child => child.innerText == value[`${ element.id.split("_")[2]}_${ element.id.split("_")[3] }`] ? element.value = child.value : null)) :
+                question?.classList.contains("numerical_question") || question?.classList.contains("calculated_question") ? question.querySelector(".question_input").value = value : null;
             };
 
             const GetInput = (element) => {
@@ -64,11 +62,17 @@ useReactiveFeatures([{
                 quizlink.rel = "stylesheet";
                 document.documentElement.appendChild(quizlink);
 
-            const button = document.createElement("button")
-                button.id = "quizrefill";
-                button.innerText = "Quiz Refill";
-                button.addEventListener("click", () => { FetchData(); button.remove(); });
-                document.querySelector(".ic-app-nav-toggle-and-crumbs").appendChild(button)
+            fetch(`/courses/${ window.location.pathname.split("/")[2] }/quizzes/${ window.location.pathname.split("/")[4] }/submission_versions`)
+                .then(data => data.text())
+                .then(response => (new DOMParser()).parseFromString(response, 'text/html').querySelector("tbody").querySelector("td").children[0].href)
+                .then(response => {
+                    if (response) {
+                        const button = document.createElement("button")
+                            button.id = "quizrefill";
+                            button.innerText = "Quiz Refill";
+                            button.addEventListener("click", () => { FetchData(response); button.remove(); });
+                            document.querySelector(".ic-app-nav-toggle-and-crumbs").appendChild(button);
+            }});
             
         } else {
             document.querySelector("#quizrefill")?.remove();
