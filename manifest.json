@@ -27,22 +27,22 @@
      ],
   "content_scripts": [
     {
-      "matches": [ "*://*.instructure.com/*" ],
+      "matches": [ "*://*.instructure.com/*", "*://canvas.*.edu/*" ],
       "js": ["src/canvas.js", "src/inject/snackbar/snackbar.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/notification/notification.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js", "src/inject/scroll/scroll.js"],
       "css": ["src/canvas.css", "src/inject/snackbar/snackbar.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/notification/notification.css", "src/inject/scroll/scroll.css"]
     },
     {
-      "matches": [ "*://*.instructure.com/*"],
+      "matches": [ "*://*.instructure.com/*", "*://canvas.*.edu/*" ],
       "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js", "src/inject/linkcolor/linkcolor.js", "src/inject/hidelogo/hidelogo.js"],
       "run_at": "document_start",
       "all_frames": true
     },
     {
-      "matches": [ "*://*.instructure.com/conversations?*"],
+      "matches": [ "*://*.instructure.com/conversations?*", "*://canvas.*.edu/conversations?*" ],
       "js": ["src/inject/convopeeker/conversation-param-utils.js"]
     },
     {
-      "matches": [ "*://*.instructure.com/courses/*/quizzes/*/take*"],
+      "matches": [ "*://*.instructure.com/courses/*/quizzes/*/take*", "*://canvas.*.edu/courses/*/quizzes/*/take*" ],
       "js": ["src/inject/quiz/quiz.js"]
     }
   ],

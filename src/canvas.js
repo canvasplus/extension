@@ -172,7 +172,7 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
 chrome.storage.local.get(["canvasplus-current-version"], (data) => {
   const current = data["canvasplus-current-version"]
   
-  if(current !== "0.4.1") {
+  if(current !== "0.4.2") {
     notification("Speed up your productivity! Quiz refill imports your previous quiz response with the press of a button.", "tada", "#dff2c9", "#85ba49", (notification, dismissMe, e) => {
       chrome.storage.local.set({"canvasplus-current-version": "0.4.2"})
       dismissMe()
