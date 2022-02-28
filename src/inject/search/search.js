@@ -39,6 +39,7 @@ const getFromCache = async (path, getFromStorageIndividually = true) => {
         try {
             const json = JSON.parse(session)
             return json
+
         } catch {
             return session;
         }
@@ -151,7 +152,7 @@ const getCourseContent = async ( courseId, forceReload = false ) => {
             returnable[tab.id] = tab
         }
         return returnable;
-    }, forceReload)
+    }, forceReload, 129600000, 10800000)
 
     const courseContent = {tabs:tabs}
 
@@ -278,13 +279,20 @@ const getCourseModules = async ( courseId, forceReload = false ) => {
 
 const searchContent = {done: false, courses: {}, searchIndexByWord: {}, entireRawIndex: [], enabled: false };
 
-const main = async () => {
-    const courses =  await getCourseList()
+const main = async (forceReload = false) => {
+
+    searchContent.done = false
+    searchContent.courses = {}
+    searchContent.searchIndexByWord = {}
+    searchContent.entireRawIndex = []
+    searchContent.enabled = false
+
+    const courses =  await getCourseList(forceReload)
 
     const courseContentPromises = []
 
     for(let course of Object.values(courses))  {
-        courseContentPromises.push(getCourseContent(course.id, true))
+        courseContentPromises.push(getCourseContent(course.id, forceReload))
     }
 
     Promise.allSettled(courseContentPromises)
@@ -320,6 +328,7 @@ const main = async () => {
 
         searchUI.buildIcon()
         searchUI.buildAutocomplete()
+        searchUI.buildControls()
     })
 
     let pageLoaded = false; // determines if snackbar should be shown, shouldn't be shown if setting is enabled on page load and search session is present
@@ -574,19 +583,22 @@ const searchCoursesOnly = async (query, callback) => {
 
 const searchUpdateUI = (query) => {
     searchUI.element.classList.remove('compact-results')
+    searchUI.buildIcon()
+    searchUI.buildControls()
+
     if(searchUI.mode === "navigator") {
         searchCoursesOnly(query, (results) => {
             searchUI.element.classList.add('compact-results')
 
             searchUI.results = []
-            results.splice(8)
-            results.forEach(result => {
+            results.forEach((result, idx) => {
                 searchUI.results.push({
                     course: {
                         name: result.item.name,
                         color: result.item.color
                     },
-                    url: getPathAPI('/courses/' + result.item.id)
+                    url: getPathAPI('/courses/' + result.item.id),
+                    hotkey: idx <= 4 ? idx + 1 : undefined
                 })
             })
 
@@ -757,14 +769,27 @@ class SearchUI {
                 }
             }
             if(this.showing) {
+                if(["1", "2", "3", "4", "5"].includes(event.key) && searchUI.mode === 'navigator') {
+                    const index = parseInt(event.key) - 1
+                    if(searchUI.results.length > index) {
+                        const urlToOpen = searchUI.results[index].url
+
+                        if(usingControlKey ^ searchUI.invertOpenNewTab) {
+                            window.open(urlToOpen);
+                        } else {
+                            location.href = urlToOpen;
+                        }
+
+                        return
+                    }
+                }
+
                 if(event.key === "Backspace") {
                     event.preventDefault()
                     
                     if(this.mode === "navigator" && this.headerElementQueryWrapper.textContent.length + this.headerElementQueryRight.textContent.length === 0) {
                         this.mode = "search";
-                        this.results = []
-                        this.buildResults()
-                        this.buildIcon();
+                        searchUpdateUI("")
                     }
 
                     if(this.headerElementQueryWrapper.textContent.length >= 1) this.headerElementQueryWrapper.textContent = this.headerElementQueryWrapper.textContent.substr(0, this.headerElementQueryWrapper.textContent.length - 1)
@@ -887,6 +912,7 @@ class SearchUI {
             this.resultsElement = document.createElement('div')
             this.resultsElement.className = 'canvasplus-search-ui-results'
             this.element.appendChild(this.resultsElement)
+            this.buildResults()
         }
         
         // {
@@ -899,9 +925,9 @@ class SearchUI {
             this.controlsElement = document.createElement('div')
             this.controlsElement.className = 'canvasplus-search-ui-controls'
             this.element.appendChild(this.controlsElement)
+            this.buildControls()
         }
 
-        this.buildResults()
         //this.buildWidgets( /* ... */ )
 
         this.wrapperElement.appendChild(this.element)
@@ -931,6 +957,78 @@ class SearchUI {
         }
     }
 
+    buildControls() {
+        if(!this.controlsElement) return;
+        
+        const buildControl = (text, icon, buttonCallback) => {
+            const control = document.createElement('div')
+               control.classList.add('canvasplus-search-ui-controls__control')
+   
+               if(buttonCallback != null) {
+                   control.classList.add('canvasplus-search-ui-controls__control-clickable')
+                   control.addEventListener('click', () => {
+                       if(searchContent.enabled) buttonCallback()
+                   })    
+               }
+   
+               const controlIcon = document.createElement('span')
+                   controlIcon.classList.add('canvasplus-search-ui-controls__control__icon')
+                   controlIcon.innerHTML = icon
+               
+               const controlLabel = document.createElement('span')
+                   controlLabel.classList.add('canvasplus-search-ui-controls__control__label')
+                   controlLabel.innerText = text
+   
+               control.appendChild(controlIcon)
+               control.appendChild(controlLabel)
+           
+               return control
+       }
+
+       this.controlsElement.innerHTML = ''
+
+       if(!searchContent.enabled) {
+        this.controlsElement.classList.add("canvasplus-search-ui-controls__Disabled")
+       } else {
+        this.controlsElement.classList.remove("canvasplus-search-ui-controls__Disabled")
+       }
+
+       const controls = [{
+           text: 'Refresh',
+           icon: '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve"><path style="display:none;fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-miterlimit:10;" d="M404.2,160.8C273,160.8,165,268.8,165,400c0,135,114.3,239.4,239.2,239.2C507,639,601.9,567.8,635,462.3"/><path style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" d="M217.9,401.9"/><g><path style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" d="M315.6,225.8c-12.8,9.2-28.9,22.6-44.4,41.4"/><path style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" d="M261.4,553.7c75.6,105.5,222.4,129.8,327.9,54.2S719,385.6,643.5,280.1s-222.4-129.8-327.9-54.2"/></g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="360.9" y1="374" x2="203.8" y2="260.9"/><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="203.8" y1="260.9" x2="316.8" y2="103.8"/></g></svg>',
+           buttonCallback: () => {
+                main(true)
+                searchUI.mode = 'search'
+                searchUpdateUI('')
+               searchUI.buildIcon()
+                searchUI.buildAutocomplete()
+                searchUI.buildControls()
+                searchUI.buildResults()
+                searchUI.headerElementQueryWrapper.innerText = ''
+                searchUI.headerElementQueryRight.innerText = ''
+                this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+           }
+       }, {
+           text: searchUI.mode === 'navigator' ? 'Search' : 'Courses',
+           icon: searchUI.mode === 'navigator' ? 
+            '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><line id="Line_3" style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;stroke-linecap:round;" x1="693.83" y1="707.5" x2="529.83" y2="543.5"/><g id="Ellipse_1"><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:0.8605;stroke-miterlimit:10;" cx="372.67" cy="359" r="266.5"/><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;" cx="372.67" cy="359" r="239.17"/></g></g></svg>'
+            : '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="523.3" y1="150.7" x2="453.2" y2="649.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="346.8" y1="150.7" x2="276.7" y2="649.3"/>	</g>	<g>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="636.8" y1="488.3" x2="138.3" y2="488.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="661.7" y1="311.7" x2="163.2" y2="311.7"/></g></g></svg>',
+           buttonCallback: () => {
+               searchUI.mode = searchUI.mode === 'navigator' ? 'search' : 'navigator',
+               searchUI.headerElementQueryWrapper.innerText = ''
+               searchUI.headerElementQueryRight.innerText = ''
+               this.headerElementQueryWrapper.style = '--data-caret-position:' + this.headerElementQueryWrapper.clientWidth + 'px;';
+                this.buildIcon();
+                searchUpdateUI("")
+                this.buildControls();
+           }
+       }].reverse()
+
+       controls.forEach(control => {
+           this.controlsElement.appendChild(buildControl(control.text, control.icon, control.buttonCallback))
+       })
+    }
+
     buildIcon() {
 
         const removePossibleIconClassNames = (element) => {
@@ -945,28 +1043,39 @@ class SearchUI {
 
         if(!this.headerElementIcon) return;
 
+        const existingClassNames = Array.from(this.headerElementIcon.classList)
+
+        let reanimate = true;
+
         if (!searchContent.done) {
             this.headerElementIcon.innerHTML = `<svg class="ic-icon-svg menu-item__icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;" xml:space="preserve"><path style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" d="M404.2,160.8C273,160.8,165,268.8,165,400c0,135,114.3,239.4,239.2,239.2C507,639,601.9,567.8,635,462.3"/></svg>`
             removePossibleIconClassNames(this.headerElementIcon)
+            if(existingClassNames.includes('canvasplus-search-ui-header-icon__loading')) reanimate = false;
             this.headerElementIcon.classList.add('canvasplus-search-ui-header-icon__loading')
         }
         else if(this.mode === "navigator") {
             this.headerElementIcon.innerHTML = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="523.3" y1="150.7" x2="453.2" y2="649.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="346.8" y1="150.7" x2="276.7" y2="649.3"/>	</g>	<g>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="636.8" y1="488.3" x2="138.3" y2="488.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="661.7" y1="311.7" x2="163.2" y2="311.7"/></g></g></svg>`
             removePossibleIconClassNames(this.headerElementIcon)
+            if(existingClassNames.includes('canvasplus-search-ui-header-icon__navigator')) reanimate = false;
             this.headerElementIcon.classList.add('canvasplus-search-ui-header-icon__navigator')
         } else {
             this.headerElementIcon.innerHTML = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><line id="Line_3" style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;stroke-linecap:round;" x1="693.83" y1="707.5" x2="529.83" y2="543.5"/><g id="Ellipse_1"><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:0.8605;stroke-miterlimit:10;" cx="372.67" cy="359" r="266.5"/><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;" cx="372.67" cy="359" r="239.17"/></g></g></svg>`
             removePossibleIconClassNames(this.headerElementIcon)
+            if(existingClassNames.includes('canvasplus-search-ui-header-icon__search')) reanimate = false;
             this.headerElementIcon.classList.add('canvasplus-search-ui-header-icon__search')
         }
 
-        this.headerElementIcon.classList.add("hide-for-animation")
-        this.headerElementIcon.classList.remove("run-animation")
+        if(reanimate) {
 
-        setTimeout(() => {
-            this.headerElementIcon.classList.remove("hide-for-animation")
-            this.headerElementIcon.classList.add("run-animation")
-        }, 0)
+            this.headerElementIcon.classList.add("hide-for-animation")
+            this.headerElementIcon.classList.remove("run-animation")
+
+            setTimeout(() => {
+                this.headerElementIcon.classList.remove("hide-for-animation")
+                this.headerElementIcon.classList.add("run-animation")
+            }, 0)
+            
+        }
     }
 
     buildResults() {
@@ -1055,6 +1164,16 @@ class SearchUI {
             resultRight.appendChild(resultRightCourse)
 
             resultElement.appendChild(resultRight)
+        }
+
+        if(result.hotkey) {
+            resultElement.classList.add('includes-hotkey')
+
+            const resultHotkey = document.createElement('div')
+            resultHotkey.className = 'canvasplus-search-ui-results-single-result-hotkey'
+            resultHotkey.innerText = result.hotkey;
+
+            resultElement.appendChild(resultHotkey)
         }
 
         return resultElement;

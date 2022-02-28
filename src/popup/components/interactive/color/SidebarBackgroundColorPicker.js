@@ -58,8 +58,8 @@ export function SidebarBackgroundGradientPicker({ state, setState, initialColors
     return <div className={styles.SidebarBackgroundGradientPicker} style={{'--color1': color1, '--color2': color2}}>
         <div className={styles.SidebarBackgroundColorPicker__Tab}>
             <div onClick={() => { setTab(0) }} className={ (tab === 0 ? styles.SidebarBackgroundColorPicker__TabButtonSelected : styles.SidebarBackgroundColorPicker__TabButton) + ' ' + styles.SidebarBackgroundColorPicker__TabButton__GradientPreview } >Preview</div>
-            <div onClick={() => { setTab(1) }} className={ (tab === 1 ? styles.SidebarBackgroundColorPicker__TabButtonSelected : styles.SidebarBackgroundColorPicker__TabButton) + ' ' + styles.SidebarBackgroundColorPicker__TabButton__Gradient1 } ></div>
             <div onClick={() => { setTab(2) }} className={ (tab === 2 ? styles.SidebarBackgroundColorPicker__TabButtonSelected : styles.SidebarBackgroundColorPicker__TabButton) + ' ' + styles.SidebarBackgroundColorPicker__TabButton__Gradient2 } ></div>
+            <div onClick={() => { setTab(1) }} className={ (tab === 1 ? styles.SidebarBackgroundColorPicker__TabButtonSelected : styles.SidebarBackgroundColorPicker__TabButton) + ' ' + styles.SidebarBackgroundColorPicker__TabButton__Gradient1 } ></div>
         </div>
         {
             tab === 0 ? (
@@ -69,7 +69,7 @@ export function SidebarBackgroundGradientPicker({ state, setState, initialColors
         {
             tab === 1 ? (
                 <div style={{padding:10}} className={"SidebarBackgroundColorPicker__ColorPicker"}>
-                    <SketchPicker width={160} disableAlpha={true} color={color1} onChange={(c) => {setColor1(c.hex)}} onChangeComplete={(c) => {setColor1(c.hex); setState(`linear-gradient(45deg, ${c.hex}, ${color2})`)}} presetColors={[
+                    <SketchPicker width={160} disableAlpha={true} color={color2} onChange={(c) => {setColor2(c.hex)}} onChangeComplete={(c) => {setColor2(c.hex); setState(`linear-gradient(45deg, ${color1}, ${c.hex})`)}} presetColors={[
                         '#e0245e', '#ffad1f', '#85c924', '#40afe3', '#6b54ff',  '#fc74e1', '#515975', '#222a42',
                         '#b5043a', '#f45d22', '#17bf63', '#1059e3', '#794bc4', '#c840e3'
                     ]}/>
@@ -79,7 +79,7 @@ export function SidebarBackgroundGradientPicker({ state, setState, initialColors
         {
             tab === 2 ? (
                 <div style={{padding:10}} className={"SidebarBackgroundColorPicker__ColorPicker"}>
-                    <SketchPicker width={160} disableAlpha={true} color={color2} onChange={(c) => {setColor2(c.hex)}} onChangeComplete={(c) => {setColor2(c.hex); setState(`linear-gradient(45deg, ${color1}, ${c.hex})`)}} presetColors={[
+                    <SketchPicker width={160} disableAlpha={true} color={color1} onChange={(c) => {setColor1(c.hex)}} onChangeComplete={(c) => {setColor1(c.hex); setState(`linear-gradient(45deg, ${c.hex}, ${color2})`)}} presetColors={[
                         '#e0245e', '#ffad1f', '#85c924', '#40afe3', '#6b54ff',  '#fc74e1', '#515975', '#222a42',
                         '#b5043a', '#f45d22', '#17bf63', '#1059e3', '#794bc4', '#c840e3'
                     ]}/>

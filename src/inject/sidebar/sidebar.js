@@ -13,9 +13,10 @@ let sidebarlink = document.createElement("link");
   sidebarlink.rel = "stylesheet";
   document.documentElement.appendChild(sidebarlink);
 
-var settingsButtonEnabled = false;
-var searchButtonEnabled = false;
-var expansionDrawerEnabled = false;
+let settingsButtonEnabled = false;
+let searchButtonEnabled = false;
+let expansionDrawerEnabled = false;
+let fullscreenCoursesEnabled = false;
 
 useReactiveFeatures([{
   settingName: 'canvasplus-setting-sidebar-color',
@@ -91,7 +92,13 @@ useReactiveFeatures([{
     expansionDrawerEnabled = value
     renderSidebarButtons()
   }
-}])
+}, {
+  settingName: 'canvasplus-setting-fullscreen-courses',
+  onChanged: (value) => {
+    fullscreenCoursesEnabled = value;
+  }
+}
+])
 
 const renderSidebarButtons = () => {
   delayedQuerySelector("#header .ic-app-header__main-navigation #menu.ic-app-header__menu-list #global_nav_conversations_link").then((element) => {
@@ -244,6 +251,17 @@ const renderSidebarDrawer = () => {
 useReactiveFeature("canvasplus-setting-sidebar-drawer-excluded", (excluded) => {
   notHidden = excluded || [];
   renderSidebarDrawer()
+})
+
+delayedQuerySelector("#global_nav_courses_link").then(element => {
+  element.addEventListener('click', (e) => {
+    if(!fullscreenCoursesEnabled) {
+      e.stopPropagation()
+      searchUI.openUI()
+      searchUI.mode = 'navigator'
+      searchUpdateUI('')
+    }
+  }, true)
 })
 
 const extractLinearGradient = (gradient) => {
