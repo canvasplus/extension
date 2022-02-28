@@ -13,7 +13,8 @@ const defaults = {
   "canvasplus-setting-roundermodules": true,
   "canvasplus-setting-linkcolor": 'use default',
   "canvasplus-setting-sidebar-show-settings": true,
-  "canvasplus-setup-stage": 0
+  "canvasplus-setting-quizrefill": false,
+  "canvasplus-setup-stage": 0,
 }
 
 const settingsList = Object.keys(defaults);
@@ -171,13 +172,13 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
 chrome.storage.local.get(["canvasplus-current-version"], (data) => {
   const current = data["canvasplus-current-version"]
   
-  if(current !== "0.4") {
-    notification("Start 2022 on a good note! Search just got even better, try it out by clicking the new button on the sidebar. Also, we've improved dark mode and smart scrolling, and you can now hide unnecessary items from your sidebar.", "tada", "#dff2c9", "#85ba49", (notification, dismissMe, e) => {
-      chrome.storage.local.set({"canvasplus-current-version": "0.4"})
+  if(current !== "0.4.2") {
+    notification("Speed up your productivity! Quiz refill imports your previous quiz response with the press of a button.", "tada", "#dff2c9", "#85ba49", (notification, dismissMe, e) => {
+      chrome.storage.local.set({"canvasplus-current-version": "0.4.2"})
       dismissMe()
     }, "Dismiss", (notification, dismissMe, e) => {
       window.open(chrome.extension.getURL('src/popup/popup.html'), "Popup", 'width=240px,height=400px,resizable=0,scrollbars=no,menubar=no,toolbar=no')
-      chrome.storage.local.set({"canvasplus-current-version": "0.4"})
+      chrome.storage.local.set({"canvasplus-current-version": "0.4.2"})
       dismissMe()
     }, "Open Settings", "#cedbcc")
   }

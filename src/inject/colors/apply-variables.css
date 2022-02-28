@@ -49,7 +49,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
   background-color: var(--cpt-dark-nav-tray-color);
 }
 
-.btn, .Button:not(.reply-btn):not(.al-trigger.Button.Button--icon-action):not(.Button.Button--icon-action-rev.Button--large.mobile-header-hamburger):not(Button.Button--icon-action-rev.Button--large.mobile-header-arrow), .ui-button, #immersive_reader_mount_point div button span, select, input[name="announcements_search"], .ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover, .ui-tabs .ui-tabs-nav li.ui-tabs-active:hover, .ui-tabs .ui-tabs-nav li.ui-state-hover, .ui-tabs .ui-tabs-nav li:hover, #planner-today-btn:not(:hover), div.message-left-column div.select-checkbox div label span span:first-child, .ac-input-box, .dropdown-menu, .dropdown-menu li, #record_media_tab, select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input, #discussion_settings span, input[id^=ColorPickerCustomInput], #undated-events .event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event, .tox .tox-tbtn:hover, .tox .tox-split-button:hover, .tox .tox-tbtn.tox-tbtn--enabled:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron:hover, .ColorPicker__Container label span span span:nth-child(2) span input, .ReturnButtonContainer-styles__returnButtonContainer > a > span, #root .PageContent-styles__content button span, .TakeHeader-styles__submitButtonContainer > button > span {
+.btn, .Button:not(.reply-btn):not(.al-trigger.Button.Button--icon-action):not(.Button.Button--icon-action-rev.Button--large.mobile-header-hamburger):not(Button.Button--icon-action-rev.Button--large.mobile-header-arrow), .ui-button, #immersive_reader_mount_point div button span, select, input[name="announcements_search"], .ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover, .ui-tabs .ui-tabs-nav li.ui-tabs-active:hover, .ui-tabs .ui-tabs-nav li.ui-state-hover, .ui-tabs .ui-tabs-nav li:hover, #planner-today-btn:not(:hover), div.message-left-column div.select-checkbox div label span span:first-child, .ac-input-box, .dropdown-menu, .dropdown-menu li, #record_media_tab, select.ic-Input, textarea.ic-Input, input[type="text"].ic-Input, input[type="password"].ic-Input, input[type="datetime"].ic-Input, input[type="datetime-local"].ic-Input, input[type="date"].ic-Input, input[type="month"].ic-Input, input[type="time"].ic-Input, input[type="week"].ic-Input, input[type="number"].ic-Input, input[type="email"].ic-Input, input[type="url"].ic-Input, input[type="search"].ic-Input, input[type="tel"].ic-Input, input[type="color"].ic-Input, .uneditable-input.ic-Input, #discussion_settings span, input[id^=ColorPickerCustomInput], #undated-events .event, #calendar-drag-and-drop-container .fc-agendaWeek-view .fc-event, .tox .tox-tbtn:hover, .tox .tox-split-button:hover, .tox .tox-tbtn.tox-tbtn--enabled:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron:hover, .ColorPicker__Container label span span span:nth-child(2) span input, .ReturnButtonContainer-styles__returnButtonContainer > a > span, #root .PageContent-styles__content button span, .TakeHeader-styles__submitButtonContainer > button > span, #quizrefill {
   color: var(--cpt-dark-interactable-text-color) !important;
   background-color: var(--cpt-dark-interactable-color) !important;
   border-color: var(--cpt-dark-interactable-border-color) !important;
@@ -66,7 +66,7 @@ table[style="margin: 1.5rem 0px;"] tbody tr td span span button span span span s
   border: none;
 }
 
-.btn:hover, .OyUs_bGBk, .Button:hover:not(.Button.Button--icon-action-rev.Button--large.mobile-header-hamburger):not(Button.Button--icon-action-rev.Button--large.mobile-header-arrow), .ui-button:hover, #immersive_reader_mount_point div button:hover span, #planner-today-btn:hover, #undated-events .event:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron{
+.btn:hover, .OyUs_bGBk, .Button:hover:not(.Button.Button--icon-action-rev.Button--large.mobile-header-hamburger):not(Button.Button--icon-action-rev.Button--large.mobile-header-arrow), .ui-button:hover, #immersive_reader_mount_point div button:hover span, #planner-today-btn:hover, #undated-events .event:hover, .tox .tox-split-button .tox-tbtn.tox-split-button__chevron, #quizrefill:hover {
   color: var(--cpt-dark-interactable-hover-text-color) !important;
   background-color: var(--cpt-dark-interactable-hover-color) !important;
   border-color: var(--cpt-dark-interactable-hover-border-color) !important;
@@ -300,7 +300,7 @@ svg[aria-labelledby="LoadingSpinner"] g circle:nth-child(2) {
   background: var(--cpt-dark-current-page) !important;
 }
 
-.ic-Dashboard-header__layout { 
+.ic-Dashboard-header__layout {
   background: var(--cpt-dark-dashboard-header) !important;
 }
 
