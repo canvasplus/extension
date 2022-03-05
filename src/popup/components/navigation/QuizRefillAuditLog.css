@@ -1,0 +1,46 @@
+.QuizRefillAuditLog__Wrapper {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 10px;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Open Sans";
+}
+.QuizRefillAuditLog {
+  background: #ffffff;
+  border-radius: 5px;
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  overflow: scroll;
+}
+
+.QuizRefillAuditLog__Block {
+  padding-right: 20px;
+}
+
+.QuizRefillAuditLog__Header {
+  display: block;
+  color: #000000;
+  padding: 10px;
+}
+
+.QuizRefillAuditLog__Filter {
+  display: block;
+  padding: 6px 8px;
+  margin: 0 10px 10px 10px;
+  font-family: "Open Sans";
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.QuizRefillAuditLog__Block {
+  padding: 10px 10px 10px 20px;
+  width: fit-content;
+}
+
+.QuizRefillAuditLog__Block:hover {
+  background: #e6f7ff;
+}

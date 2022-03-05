@@ -1,84 +1,84 @@
 .notification-container {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-    width: 400px;
-    height: min-content;
-    animation-duration: 0.5s;
-    animation-name: notificationAppear;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  height: min-content;
+  animation-duration: 0.5s;
+  animation-name: notificationAppear;
 }
 
 .canvasplus-notification {
-    width: 400px;
-    display: flex;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    position: relative;
+  width: 400px;
+  display: flex;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  margin-left: auto;
 }
 
 .canvasplus-notification.dismissing {
-    animation: canvasplus-notification-dismissing 1.5s ease;
+  animation: canvasplus-notification-dismissing 1.5s ease;
 }
 
 @keyframes canvasplus-notification-dismissing {
-    from {
-        opacity: 1;
-    } to {
-        opacity: 0;
-    }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .text-container {
-    width: min-content;
-    float: right;
-    height: inherit;
-    display: block;
+  width: min-content;
+  float: right;
+  height: inherit;
+  display: block;
 }
 
 .notification-text {
-    margin: 0;
-    padding-top: 25px;
-    width: 260px;
-    right: 10px;
-    color: #656565;
-    display: inline-block;
-    height: max-content;
+  margin: 0;
+  padding-top: 25px;
+  width: 260px;
+  right: 10px;
+  color: #656565;
+  display: inline-block;
+  height: max-content;
 }
 
 .notificationButton {
-    border: none;
-    border-radius: 10px;
-    height: 50px;
-    padding: 0 20px 0 20px;
+  border: none;
+  border-radius: 10px;
+  height: 50px;
+  padding: 0 20px 0 20px;
 }
 
 .mainNotificationButton {
-    color: #FFFFFF;
+  color: #ffffff;
 }
 
 .alternativeNotificationButton {
-    color: #656565;
+  color: #656565;
 }
 
 .notificationButton:not(:last-child) {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 
 .buttoncontainer {
-    position: relative;
-    margin: 20px 0;
-    width: 260px;
+  position: relative;
+  margin: 20px 0;
+  width: 260px;
 }
 
-
 @keyframes notificationAppear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* .survey {
@@ -119,73 +119,118 @@
 } */
 
 .cpx-survey-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    overflow: scroll;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  overflow: scroll;
 }
 
 .cpx-survey__Background {
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.65);
-    position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  position: absolute;
 }
 
 .cpx-survey__Frame {
-    position: absolute;
-    border: none;
-    width: clamp(100px, calc(100% - 80px), 1000px);
-    height: clamp(200px, calc(100% - 80px), 600px);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
+  position: absolute;
+  border: none;
+  width: clamp(100px, calc(100% - 80px), 1000px);
+  height: clamp(200px, calc(100% - 80px), 600px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 
 .notification-image {
-    position: relative;
-    display: block;
+  position: relative;
+  display: block;
 }
 
 .notification-image::before {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: var(--src);
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-size: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--src);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
 }
 
 .notification-image-cake {
-    transition: transform 0.3s ease;
-    cursor: pointer;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .notification-image-cake:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .notification-image {
-    width: 50px;
-    height: 50px;
-    background: var(--src);
-    background-size: cover;
-    margin: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--src);
+  background-size: cover;
+  margin: 30px;
 }
 
 @keyframes notification-image-grow {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    } 20%, 100% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  20%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.canvasplus-small-notification {
+  border-radius: 8px;
+  padding: 12px;
+  width: min-content;
+}
+
+.small-notification__button-container {
+  display: flex;
+  grid-gap: 10px;
+}
+
+.small-notification__button {
+  padding: 10px 30px;
+  border-radius: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: 0.3s background linear;
+}
+
+.small-notification__button:hover {
+  background-color: var(--hoverColor) !important;
+}
+
+.small-notification__notification-image {
+  width: 48px;
+  height: 48px;
+  background-image: var(--src);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.small-notification__text-container {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.small-notification__notification-text {
+  margin: 0;
 }

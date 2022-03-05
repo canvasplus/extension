@@ -61,62 +61,149 @@ chrome.storage.local.get(["installDate"], (data) => {
 })
 */
 
-const notificationContainer = document.createElement('div')
-    notificationContainer.className = 'notification-container'
-    document.body.appendChild(notificationContainer)
+const notificationContainer = document.createElement("div");
+notificationContainer.className = "notification-container";
+document.body.appendChild(notificationContainer);
 
-const notification = async(text, emoji, fill, border, button1callback, button1text, button2callback, button2text, alternativeButtonColor) => {
-    const notification = document.createElement('div')
-        notification.className = 'canvasplus-notification'
-        notification.style.border = '1px solid' +  border
-        notification.style.backgroundColor = fill
-        notificationContainer.appendChild(notification)
+const notification = async (
+  text,
+  emoji,
+  fill,
+  border,
+  button1callback,
+  button1text,
+  button2callback,
+  button2text,
+  alternativeButtonColor
+) => {
+  const notification = document.createElement("div");
+  notification.className = "canvasplus-notification";
+  notification.style.border = "1px solid" + border;
+  notification.style.backgroundColor = fill;
+  notificationContainer.appendChild(notification);
 
-    const dismissMe = () => {
-        notification.classList.add('dismissing')
-        setTimeout(() => {
-            notification.remove()
-        }, 1500)
-    }
+  const dismissMe = () => {
+    notification.classList.add("dismissing");
+    setTimeout(() => {
+      notification.remove();
+    }, 1500);
+  };
 
-    const image = document.createElement('div')
-        image.style = `--src:url(${chrome.extension.getURL(`assets/img/notification-emoji/${emoji}.png`)})`
-        image.className = 'notification-image notification-image-' + emoji
-        notification.appendChild(image)
+  const image = document.createElement("div");
+  image.style = `--src:url(${chrome.extension.getURL(
+    `assets/img/notification-emoji/${emoji}.png`
+  )})`;
+  image.className = "notification-image notification-image-" + emoji;
+  notification.appendChild(image);
 
-    const textcontainer = document.createElement('div')
-        textcontainer.className = 'text-container'
-        notification.appendChild(textcontainer)
+  const textcontainer = document.createElement("div");
+  textcontainer.className = "text-container";
+  notification.appendChild(textcontainer);
 
-    const notificationText = document.createElement('p')
-        notificationText.className = 'notification-text'
-        notificationText.innerText = text
-        textcontainer.appendChild(notificationText)
-        
-    const buttonContainer = document.createElement('div')
-        buttonContainer.className = 'buttoncontainer'
-        textcontainer.appendChild(buttonContainer)
+  const notificationText = document.createElement("p");
+  notificationText.className = "notification-text";
+  notificationText.innerText = text;
+  textcontainer.appendChild(notificationText);
 
-    const notificationButton = document.createElement('button')
-        notificationButton.className = 'notificationButton mainNotificationButton'
-        notificationButton.style.backgroundColor = border
-        notificationButton.innerText = button1text
-        notificationButton.addEventListener('click', (e) => { button1callback(notification, dismissMe, e) })
-        buttonContainer.appendChild(notificationButton)
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = "buttoncontainer";
+  textcontainer.appendChild(buttonContainer);
 
-    if(button2text) {
-        const notificationButton2 = document.createElement('button')
-        notificationButton2.className = 'notificationButton alternativeNotificationButton'
-        notificationButton2.style.backgroundColor = alternativeButtonColor
-        notificationButton2.innerText = button2text
-        notificationButton2.addEventListener('click', (e) => { button2callback(notification, dismissMe, e) })
-        buttonContainer.appendChild(notificationButton2)
+  const notificationButton = document.createElement("button");
+  notificationButton.className = "notificationButton mainNotificationButton";
+  notificationButton.style.backgroundColor = border;
+  notificationButton.innerText = button1text;
+  notificationButton.addEventListener("click", (e) => {
+    button1callback(notification, dismissMe, e);
+  });
+  buttonContainer.appendChild(notificationButton);
 
-        return { notification, dismissMe, image, textcontainer, buttonContainer, notificationButton, notificationButton2}
-    } else {
-        return { notification, dismissMe, image, textcontainer, buttonContainer, notificationButton }
-    }
-}
+  if (button2text) {
+    const notificationButton2 = document.createElement("button");
+    notificationButton2.className =
+      "notificationButton alternativeNotificationButton";
+    notificationButton2.style.backgroundColor = alternativeButtonColor;
+    notificationButton2.innerText = button2text;
+    notificationButton2.addEventListener("click", (e) => {
+      button2callback(notification, dismissMe, e);
+    });
+    buttonContainer.appendChild(notificationButton2);
+
+    return {
+      notification,
+      dismissMe,
+      image,
+      textcontainer,
+      buttonContainer,
+      notificationButton,
+      notificationButton2,
+    };
+  } else {
+    return {
+      notification,
+      dismissMe,
+      image,
+      textcontainer,
+      buttonContainer,
+      notificationButton,
+    };
+  }
+};
+
+const smallNotification = (text, emoji, colors, buttons) => {
+  const notification = document.createElement("div");
+  notification.className = "canvasplus-small-notification";
+  notification.style.border = "1px solid" + colors[1];
+  notification.style.backgroundColor = colors[0];
+  notificationContainer.appendChild(notification);
+
+  const textcontainer = document.createElement("div");
+  textcontainer.className = "small-notification__text-container";
+  notification.appendChild(textcontainer);
+
+  const image = document.createElement("div");
+  image.style = `--src:url(${chrome.extension.getURL(
+    `assets/img/notification-emoji/${emoji}.png`
+  )})`;
+  image.className =
+    "small-notification__notification-image notification-image-" + emoji;
+  textcontainer.appendChild(image);
+
+  const notificationText = document.createElement("p");
+  notificationText.className = "small-notification__notification-text";
+  notificationText.innerText = text;
+  notificationText.style.color = colors[3];
+  textcontainer.appendChild(notificationText);
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = "small-notification__button-container";
+  notification.appendChild(buttonContainer);
+
+  buttons.forEach((btn) => {
+    const button = document.createElement("div");
+    button.className = "small-notification__button";
+    button.innerText = btn.text;
+    button.style.backgroundColor = colors[1];
+    //button.style['--hoverColor'] = colors[2]
+    button.style.color = colors[4];
+    button.style.setProperty("--hoverColor", colors[2]);
+    button.addEventListener("click", () => {
+      btn.callback();
+    });
+    buttonContainer.appendChild(button);
+  });
+
+  notificationContainer.appendChild(notification);
+
+  const dismissMe = () => {
+    notification.classList.add("dismissing");
+    setTimeout(() => {
+      notification.remove();
+    }, 1500);
+  };
+
+  return { notification, dismissMe };
+};
 
 // const injectnoification = async(time) => {
 //     let link = document.createElement('link')
@@ -124,7 +211,7 @@ const notification = async(text, emoji, fill, border, button1callback, button1te
 //         link.type = "text/css";
 //         link.rel = "stylesheet";
 //         document.getElementsByTagName('html')[0].appendChild(link);
-    
+
 //     let notificationContainer = document.createElement('div')
 //     notificationContainer.className = 'notification-container'
 //     document.body.appendChild(notificationContainer)

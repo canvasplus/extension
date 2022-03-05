@@ -5,55 +5,88 @@
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "https://canvasplus.org",
   "web_accessible_resources": [
-         "src/inject/colors/apply-variables.css",
-         "src/inject/colors/dark.css",
-         "src/inject/colors/dim.css",
-         "src/inject/sidebar/sidebar.css",
-         "src/inject/linkcolor/linkcolor.css",
-         "src/inject/roundermodules/roundermodules.css",
-         "src/inject/hidelogo/hidelogo.css",
-         "src/inject/notification/notification.css",
-         "src/inject/quiz/quiz.css",
-         "assets/img/light.png",
-         "assets/img/dim.png",
-         "assets/img/dark.png",
-         "assets/img/extension-menu.png",
-         "assets/img/notification-emoji/heart.png",
-         "assets/img/notification-emoji/cake.png",
-         "assets/img/notification-emoji/draw.png",
-         "assets/img/notification-emoji/star.png",
-         "assets/img/notification-emoji/tada.png",
-         "src/popup/popup.html"
-     ],
+    "src/inject/colors/apply-variables.css",
+    "src/inject/colors/dark.css",
+    "src/inject/colors/dim.css",
+    "src/inject/sidebar/sidebar.css",
+    "src/inject/linkcolor/linkcolor.css",
+    "src/inject/roundermodules/roundermodules.css",
+    "src/inject/hidelogo/hidelogo.css",
+    "src/inject/notification/notification.css",
+    "src/inject/quiz/quiz.css",
+    "assets/img/light.png",
+    "assets/img/dim.png",
+    "assets/img/dark.png",
+    "assets/img/extension-menu.png",
+    "assets/img/notification-emoji/heart.png",
+    "assets/img/notification-emoji/cake.png",
+    "assets/img/notification-emoji/draw.png",
+    "assets/img/notification-emoji/star.png",
+    "assets/img/notification-emoji/tada.png",
+    "assets/img/notification-emoji/magic.png",
+    "assets/img/notification-emoji/siren.png",
+    "src/popup/popup.html"
+  ],
   "content_scripts": [
     {
-      "matches": [ "*://*.instructure.com/*", "*://canvas.*.edu/*" ],
-      "js": ["src/canvas.js", "src/inject/snackbar/snackbar.js", "src/inject/search/search.js", "src/imported/quicklink.js", "src/inject/convopeeker/convopeeker.js", "src/inject/notification/notification.js", "src/inject/roundermodules/roundermodules.js", "src/inject/colors/color-controller-on-load.js", "src/inject/scroll/scroll.js"],
-      "css": ["src/canvas.css", "src/inject/snackbar/snackbar.css", "src/inject/search/search.css", "src/inject/convopeeker/convopeeker.css", "src/inject/notification/notification.css", "src/inject/scroll/scroll.css"]
+      "matches": ["*://*.instructure.com/*", "*://canvas.okstate.edu/*"],
+      "js": [
+        "src/canvas.js",
+        "src/inject/snackbar/snackbar.js",
+        "src/inject/search/search.js",
+        "src/imported/quicklink.js",
+        "src/inject/convopeeker/convopeeker.js",
+        "src/inject/notification/notification.js",
+        "src/inject/roundermodules/roundermodules.js",
+        "src/inject/colors/color-controller-on-load.js",
+        "src/inject/scroll/scroll.js"
+      ],
+      "css": [
+        "src/canvas.css",
+        "src/inject/snackbar/snackbar.css",
+        "src/inject/search/search.css",
+        "src/inject/convopeeker/convopeeker.css",
+        "src/inject/notification/notification.css",
+        "src/inject/scroll/scroll.css"
+      ]
     },
     {
-      "matches": [ "*://*.instructure.com/*", "*://canvas.*.edu/*" ],
-      "js": ["src/util.js", "src/inject/colors/color-controller.js", "src/inject/sidebar/sidebar.js", "src/inject/linkcolor/linkcolor.js", "src/inject/hidelogo/hidelogo.js"],
+      "matches": ["*://*.instructure.com/*", "*://canvas.okstate.edu/*"],
+      "js": [
+        "src/util.js",
+        "src/inject/colors/color-controller.js",
+        "src/inject/sidebar/sidebar.js",
+        "src/inject/linkcolor/linkcolor.js",
+        "src/inject/hidelogo/hidelogo.js"
+      ],
       "run_at": "document_start",
       "all_frames": true
     },
     {
-      "matches": [ "*://*.instructure.com/conversations?*", "*://canvas.*.edu/conversations?*" ],
+      "matches": [
+        "*://*.instructure.com/conversations?*",
+        "*://canvas.okstate.edu/conversations?*"
+      ],
       "js": ["src/inject/convopeeker/conversation-param-utils.js"]
     },
     {
-      "matches": [ "*://*.instructure.com/courses/*/quizzes/*/take*", "*://canvas.*.edu/courses/*/quizzes/*/take*" ],
+      "matches": [
+        "*://*.instructure.com/courses/*/quizzes/*/take*",
+        "*://canvas.okstake.edu/courses/*/quizzes/*/take*"
+      ],
       "js": ["src/inject/quiz/quiz.js"]
     }
   ],
   "browser_action": {
-   "default_popup": "src/popup/popup.html"
- },
- "background": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "background": {
     "scripts": ["src/background.js"]
   },
- "permissions": ["storage"],
-  "icons": { "16": "assets/icons/canvas-plus-favicon-active-16.png",
-           "48": "assets/icons/canvas-plus-favicon-active-48.png",
-          "128": "assets/icons/canvas-plus-favicon-active-128.png" }
+  "permissions": ["storage"],
+  "icons": {
+    "16": "assets/icons/canvas-plus-favicon-active-16.png",
+    "48": "assets/icons/canvas-plus-favicon-active-48.png",
+    "128": "assets/icons/canvas-plus-favicon-active-128.png"
+  }
 }

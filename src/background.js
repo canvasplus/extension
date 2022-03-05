@@ -5,16 +5,26 @@ const oldDefaults = {
   "canvasplus-display-appearance": "light",
   "canvasplus-setting-convopeeker": true,
   "canvasplus-setting-hidelogo": true,
-  "canvasplus-setting-sidebar-color": '#1b7ecf',
-  "canvasplus-setting-active-sidebar-color": {"background": "darker", "icon": "white"},
+  "canvasplus-setting-sidebar-color": "#1b7ecf",
+  "canvasplus-setting-active-sidebar-color": {
+    background: "darker",
+    icon: "white",
+  },
   "canvasplus-setting-sidebar-icon-color": "white",
   "canvasplus-setting-sidebar-more-spacing": true,
   "canvasplus-setting-roundermodules": true,
-  "canvasplus-setting-linkcolor": 'use default',
+  "canvasplus-setting-linkcolor": "use default",
   "canvasplus-setup-stage": 0,
   "canvasplus-current-version": "0.4.2",
   "canvasplus-setting-sidebar-drawer": true,
-  "canvasplus-setting-sidebar-drawer-excluded": ["Dashboard", "Courses", "Calendar", "Inbox", "Settings", "Search"],
+  "canvasplus-setting-sidebar-drawer-excluded": [
+    "Dashboard",
+    "Courses",
+    "Calendar",
+    "Inbox",
+    "Settings",
+    "Search",
+  ],
   "canvasplus-setting-sidebar-drawer-all-items": ["Settings", "Search"],
   "canvasplus-birthday-confetti": false,
   "canvasplus-allow-surveys": true,
@@ -22,29 +32,31 @@ const oldDefaults = {
   "canvasplus-survey": 0,
   "canvasplus-rating": false,
   "canvasplus-setting-sidebar-icon-size": 3,
-  "canvasplus-setting-sidebar-show-settings": true
-}
+  "canvasplus-setting-sidebar-show-settings": true,
+};
 
 const newDefaults = {
-  "canvasplus-setting-quizrefill": false,
-}
+  "canvasplus-setting-quizrefill": true,
+};
 
 chrome.runtime.onInstalled.addListener((details) => {
-    if(details.reason === "install"){
-      chrome.tabs.create({
-        url:"https://canvasplus.org/welcome"
-      });
-      chrome.storage.local.set(newDefaults);
-      chrome.storage.local.set(oldDefaults);
-      chrome.storage.local.set({
-        "installDate": {
-          "timestamp": Date.now(),
-          "from": "install"
-        }
-      })
-    }
-    else if (details.reason === "update" && details.previousVersion === "0.4.1") {
-      //chrome.storage.local.set({"canvasplus-current-version": "0.4"}) // canvasjs will detect new version
-      chrome.storage.local.set(newDefaults);
-    }
+  if (details.reason === "install") {
+    chrome.tabs.create({
+      url: "https://canvasplus.org/welcome",
+    });
+    chrome.storage.local.set(newDefaults);
+    chrome.storage.local.set(oldDefaults);
+    chrome.storage.local.set({
+      installDate: {
+        timestamp: Date.now(),
+        from: "install",
+      },
+    });
+  } else if (
+    details.reason === "update" &&
+    details.previousVersion === "0.4.1"
+  ) {
+    //chrome.storage.local.set({"canvasplus-current-version": "0.4"}) // canvasjs will detect new version
+    chrome.storage.local.set(newDefaults);
+  }
 });
