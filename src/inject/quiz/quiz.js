@@ -150,7 +150,7 @@ useReactiveFeatures([
         document.documentElement.appendChild(quizlink);
 
         fetch(
-          `/courses/${window.location.pathname.split("/")[2]}/quizzes/${
+          `https://${window.location.hostname}/courses/${window.location.pathname.split("/")[2]}/quizzes/${
             window.location.pathname.split("/")[4]
           }/submission_versions`
         )
