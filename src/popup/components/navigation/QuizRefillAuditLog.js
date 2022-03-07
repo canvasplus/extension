@@ -8,7 +8,7 @@ export default function QuizRefillAuditLog({ hide }) {
 
   useEffect(() => {
     chrome.storage.sync.get(["canvasplus-quiz-refill-audit-log"], (log) => {
-      setRefills(log["canvasplus-quiz-refill-audit-log"]);
+      setRefills(log["canvasplus-quiz-refill-audit-log"] ?? []);
     });
   }, []);
 
