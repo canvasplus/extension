@@ -1,11 +1,11 @@
 // chrome.storage.local.get(['canvasplus-display-appearance'], function(data) {
 //   var link = document.createElement("link");
-//   link.href = chrome.extension.getURL("src/inject/colors/dark.css");
+//   link.href = chrome.runtime.getURL("src/inject/colors/dark.css");
 //   link.type = "text/css";
 //   link.rel = "stylesheet";
 //   link.setAttribute("class", "cpt-iframe-style")
 //   var link2 = document.createElement("link");
-//   link2.href = chrome.extension.getURL("src/inject/colors/dim.css");
+//   link2.href = chrome.runtime.getURL("src/inject/colors/dim.css");
 //   link2.type = "text/css";
 //   link2.rel = "stylesheet";
 //   link2.setAttribute("class", "cpt-iframe-style")

@@ -90,7 +90,7 @@ const notification = async (
   };
 
   const image = document.createElement("div");
-  image.style = `--src:url(${chrome.extension.getURL(
+  image.style = `--src:url(${chrome.runtime.getURL(
     `assets/img/notification-emoji/${emoji}.png`
   )})`;
   image.className = "notification-image notification-image-" + emoji;
@@ -162,7 +162,7 @@ const smallNotification = (text, emoji, colors, buttons) => {
   notification.appendChild(textcontainer);
 
   const image = document.createElement("div");
-  image.style = `--src:url(${chrome.extension.getURL(
+  image.style = `--src:url(${chrome.runtime.getURL(
     `assets/img/notification-emoji/${emoji}.png`
   )})`;
   image.className =
@@ -207,7 +207,7 @@ const smallNotification = (text, emoji, colors, buttons) => {
 
 // const injectnoification = async(time) => {
 //     let link = document.createElement('link')
-//         link.href = chrome.extension.getURL("src/inject/notification/notification.css");
+//         link.href = chrome.runtime.getURL("src/inject/notification/notification.css");
 //         link.type = "text/css";
 //         link.rel = "stylesheet";
 //         document.getElementsByTagName('html')[0].appendChild(link);

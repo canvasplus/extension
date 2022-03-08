@@ -1,14 +1,16 @@
-const LogoDisplay = addStylingRule('')
+const LogoDisplay = addStylingRule("");
 
 let hidelogo = document.createElement("link");
-    hidelogo.href = chrome.extension.getURL("src/inject/hidelogo/hidelogo.css");
-    hidelogo.type = "text/css";
-    hidelogo.rel = "stylesheet";
-    document.documentElement.appendChild(hidelogo);
+hidelogo.href = chrome.runtime.getURL("src/inject/hidelogo/hidelogo.css");
+hidelogo.type = "text/css";
+hidelogo.rel = "stylesheet";
+document.documentElement.appendChild(hidelogo);
 
-useReactiveFeatures([{
-    settingName: 'canvasplus-setting-hidelogo',
+useReactiveFeatures([
+  {
+    settingName: "canvasplus-setting-hidelogo",
     onChanged: (value) => {
-        LogoDisplay.setRule(value ? '--logo-display: none' : '')
-    }
-}])
+      LogoDisplay.setRule(value ? "--logo-display: none" : "");
+    },
+  },
+]);

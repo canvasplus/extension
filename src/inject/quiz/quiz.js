@@ -2,7 +2,7 @@ useReactiveFeatures([
   {
     settingName: "canvasplus-setting-quizrefill",
     onChanged: (value) => {
-      if (value) {
+      if (false) {
         const FetchData = (response, onlyCorrect) => {
           fetch(response)
             .then((data) => data.text())
@@ -144,7 +144,7 @@ useReactiveFeatures([
         };
 
         const quizlink = document.createElement("link");
-        quizlink.href = chrome.extension.getURL("src/inject/quiz/quiz.css");
+        quizlink.href = chrome.runtime.getURL("src/inject/quiz/quiz.css");
         quizlink.type = "text/css";
         quizlink.rel = "stylesheet";
         document.documentElement.appendChild(quizlink);

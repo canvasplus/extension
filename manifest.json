@@ -1,31 +1,37 @@
 {
   "name": "Canvas+",
-  "version": "0.4.2",
-  "manifest_version": 2,
+  "version": "0.4.3",
+  "manifest_version": 3,
   "description": "CanvasPlus: Power up your learning with color themes, navigation shortcuts, and improved performance.",
   "homepage_url": "https://canvasplus.org",
   "web_accessible_resources": [
-    "src/inject/colors/apply-variables.css",
-    "src/inject/colors/dark.css",
-    "src/inject/colors/dim.css",
-    "src/inject/sidebar/sidebar.css",
-    "src/inject/linkcolor/linkcolor.css",
-    "src/inject/roundermodules/roundermodules.css",
-    "src/inject/hidelogo/hidelogo.css",
-    "src/inject/notification/notification.css",
-    "src/inject/quiz/quiz.css",
-    "assets/img/light.png",
-    "assets/img/dim.png",
-    "assets/img/dark.png",
-    "assets/img/extension-menu.png",
-    "assets/img/notification-emoji/heart.png",
-    "assets/img/notification-emoji/cake.png",
-    "assets/img/notification-emoji/draw.png",
-    "assets/img/notification-emoji/star.png",
-    "assets/img/notification-emoji/tada.png",
-    "assets/img/notification-emoji/magic.png",
-    "assets/img/notification-emoji/siren.png",
-    "src/popup/popup.html"
+    {
+      "resources": [
+        "src/inject/colors/apply-variables.css",
+        "src/inject/colors/dark.css",
+        "src/inject/colors/dim.css",
+        "src/inject/sidebar/sidebar.css",
+        "src/inject/linkcolor/linkcolor.css",
+        "src/inject/roundermodules/roundermodules.css",
+        "src/inject/hidelogo/hidelogo.css",
+        "src/inject/notification/notification.css",
+        "src/inject/quiz/quiz.css",
+        "assets/img/light.png",
+        "assets/img/dim.png",
+        "assets/img/dark.png",
+        "assets/img/extension-menu.png",
+        "assets/img/notification-emoji/heart.png",
+        "assets/img/notification-emoji/cake.png",
+        "assets/img/notification-emoji/draw.png",
+        "assets/img/notification-emoji/star.png",
+        "assets/img/notification-emoji/tada.png",
+        "assets/img/notification-emoji/magic.png",
+        "assets/img/notification-emoji/siren.png",
+        "src/popup/popup.html"
+      ],
+      "matches": ["*://*/*"],
+      "extension_ids": []
+    }
   ],
   "content_scripts": [
     {
@@ -77,13 +83,14 @@
       "js": ["src/inject/quiz/quiz.js"]
     }
   ],
-  "browser_action": {
+  "action": {
     "default_popup": "src/popup/popup.html"
   },
   "background": {
-    "scripts": ["src/background.js"]
+    "service_worker": "src/background.js"
   },
   "permissions": ["storage"],
+  "host_permissions": ["*://*.instructure.com/*", "*://canvas.okstake.edu/*"],
   "icons": {
     "16": "assets/icons/canvas-plus-favicon-active-16.png",
     "48": "assets/icons/canvas-plus-favicon-active-48.png",

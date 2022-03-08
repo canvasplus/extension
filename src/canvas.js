@@ -62,13 +62,13 @@ const createFinishSettingUp = (selectedAppearance) => {
         <div class='canvasplus-finish-setting-up__DisplayOption light ${
           selectedAppearance === "light" ? "selected" : ""
         }'>
-          <img src='${chrome.extension.getURL("assets/img/light.png")}' />
+          <img src='${chrome.runtime.getURL("assets/img/light.png")}' />
           <p>Default</p>
         </div>
         <div class='canvasplus-finish-setting-up__DisplayOption dim ${
           selectedAppearance.startsWith("dim") ? "selected" : ""
         }'>
-          <img src='${chrome.extension.getURL("assets/img/dim.png")}' />
+          <img src='${chrome.runtime.getURL("assets/img/dim.png")}' />
           <p>Dim</p>
           <label><input type="checkbox" ${
             selectedAppearance.startsWith("dim") &&
@@ -80,7 +80,7 @@ const createFinishSettingUp = (selectedAppearance) => {
         <div class='canvasplus-finish-setting-up__DisplayOption dark ${
           selectedAppearance.startsWith("dark") ? "selected" : ""
         }'>
-          <img src='${chrome.extension.getURL("assets/img/dark.png")}' />
+          <img src='${chrome.runtime.getURL("assets/img/dark.png")}' />
           <p>Dark</p>
           <label><input type="checkbox" ${
             selectedAppearance.startsWith("dark") &&
@@ -91,7 +91,7 @@ const createFinishSettingUp = (selectedAppearance) => {
         </div>
       </div>
       <div class='canvasplus-finish-setting-up__ExtensionMenu'>
-        <img src='${chrome.extension.getURL("assets/img/extension-menu.png")}'/>
+        <img src='${chrome.runtime.getURL("assets/img/extension-menu.png")}'/>
         <div>
           <p>Extension Settings</p>
           <p>If you need to recolor your sidebar, toggle features, or change your appearance later, you can do it all from the extension settings.</p>
@@ -106,7 +106,7 @@ const createFinishSettingUp = (selectedAppearance) => {
     if (originalappearance == "auto") {
       document.querySelector(
         ".canvasplus-finish-setting-up__DisplayOption.auto"
-      ).children[0].src = chrome.extension.getURL(
+      ).children[0].src = chrome.runtime.getURL(
         "assets/img/" + (e.matches ? "light" : "dark") + ".png"
       );
     }
@@ -406,35 +406,35 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
 chrome.storage.local.get(["canvasplus-current-version"], (data) => {
   const current = data["canvasplus-current-version"];
 
-  if (current !== "0.4.2") {
-    notification(
-      "Speed up your productivity! Quiz refill imports your previous quiz response with the press of a button.",
-      "tada",
-      "#dff2c9",
-      "#85ba49",
-      (notification, dismissMe, e) => {
-        chrome.storage.local.set({ "canvasplus-current-version": "0.4.2" });
-        dismissMe();
-      },
-      "Dismiss"
-    );
-    notification(
-      "As a proactive measure, we've updated our academic honesty policy and security.",
-      "siren",
-      "#ffd9db",
-      "#ba1c24",
-      (notification, dismissMe, e) => {
-        chrome.storage.local.set({ "canvasplus-current-version": "0.4.2" });
-        dismissMe();
-      },
-      "Dismiss",
-      (notification, dismissMe, e) => {
-        window.open("https://canvasplus.org/update/academic-honesty");
-        dismissMe();
-      },
-      "More Info",
-      "#deb8ba"
-    );
+  if (current !== "0.4.3") {
+    // notification(
+    //   "Speed up your productivity! Quiz refill imports your previous quiz response with the press of a button.",
+    //   "tada",
+    //   "#dff2c9",
+    //   "#85ba49",
+    //   (notification, dismissMe, e) => {
+    //     chrome.storage.local.set({ "canvasplus-current-version": "0.4.3" });
+    //     dismissMe();
+    //   },
+    //   "Dismiss"
+    // );
+    // notification(
+    //   "As a proactive measure, we've updated our academic honesty policy and security.",
+    //   "siren",
+    //   "#ffd9db",
+    //   "#ba1c24",
+    //   (notification, dismissMe, e) => {
+    //     chrome.storage.local.set({ "canvasplus-current-version": "0.4.3" });
+    //     dismissMe();
+    //   },
+    //   "Dismiss",
+    //   (notification, dismissMe, e) => {
+    //     window.open("https://canvasplus.org/update/academic-honesty");
+    //     dismissMe();
+    //   },
+    //   "More Info",
+    //   "#deb8ba"
+    // );
   }
 });
 
