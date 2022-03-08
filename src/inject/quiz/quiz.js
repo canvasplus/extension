@@ -2,7 +2,7 @@ useReactiveFeatures([
   {
     settingName: "canvasplus-setting-quizrefill",
     onChanged: (value) => {
-      if (false) {
+      if (value) {
         const FetchData = (response, onlyCorrect) => {
           fetch(response)
             .then((data) => data.text())
@@ -15,8 +15,8 @@ useReactiveFeatures([
                 )
                 .forEach((element) => {
                   if (
-                    element.querySelector(".answer_arrow.incorrect") &&
-                    onlyCorrect
+                    (element.querySelector(".answer_arrow.incorrect") &&
+                    onlyCorrect) || element.classList.contains("unanswered")
                   )
                     return;
                   Array[element.id] = GetInput(element);
@@ -87,7 +87,7 @@ useReactiveFeatures([
           const value =
             element.classList.contains("multiple_choice_question") ||
             element.classList.contains("true_false_question")
-              ? element.querySelector(".answer_text").innerText
+              ? element.querySelector(".selected_answer").querySelector(".answer_text").innerText
               : element.classList.contains("short_answer_question")
               ? element.querySelector(".question_input").value
               : element.classList.contains("fill_in_multiple_blanks_question")
