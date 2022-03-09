@@ -14,10 +14,8 @@ useReactiveFeatures([
                   ".question:not(.text_only_question, .file_upload_question, .essay_question)"
                 )
                 .forEach((element) => {
-                  if (
-                    (element.querySelector(".answer_arrow.incorrect") &&
-                    onlyCorrect) || element.classList.contains("unanswered")
-                  )
+                  if
+                    (((element.classList.contains("incorrect") || element.classList.contains("partial_credit") ) && onlyCorrect) || element.classList.contains("unanswered"))
                     return;
                   Array[element.id] = GetInput(element);
                 });
