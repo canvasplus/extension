@@ -163,7 +163,7 @@ useReactiveFeatures([
           .then((response) => {
             if (response) {
               const { dismissMe } = smallNotification(
-                "Quiz Refill lets you import the answers from your previous attempt.",
+                "Quiz Refill lets you import the answers from your previous attempt. (Experimental)",
                 "magic",
                 ["#E6F8FF", "#0086BA", "#006c96", "#656565", "#FFFFFF"],
                 [
