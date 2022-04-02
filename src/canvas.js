@@ -406,14 +406,14 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
 chrome.storage.local.get(["canvasplus-current-version"], (data) => {
   const current = data["canvasplus-current-version"];
 
-  if (current !== "0.4.3") {
+  if (current !== "0.4.4") {
     // notification(
     //   "Speed up your productivity! Quiz refill imports your previous quiz response with the press of a button.",
     //   "tada",
     //   "#dff2c9",
     //   "#85ba49",
     //   (notification, dismissMe, e) => {
-    //     chrome.storage.local.set({ "canvasplus-current-version": "0.4.3" });
+    //     chrome.storage.local.set({ "canvasplus-current-version": "0.4.4" });
     //     dismissMe();
     //   },
     //   "Dismiss"
@@ -424,7 +424,7 @@ chrome.storage.local.get(["canvasplus-current-version"], (data) => {
     //   "#ffd9db",
     //   "#ba1c24",
     //   (notification, dismissMe, e) => {
-    //     chrome.storage.local.set({ "canvasplus-current-version": "0.4.3" });
+    //     chrome.storage.local.set({ "canvasplus-current-version": "0.4.4" });
     //     dismissMe();
     //   },
     //   "Dismiss",

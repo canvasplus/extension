@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     "canvasplus-setting-roundermodules": true,
     "canvasplus-setting-linkcolor": "use default",
     "canvasplus-setup-stage": 0,
-    "canvasplus-current-version": "0.4.3",
+    "canvasplus-current-version": "0.4.4",
     "canvasplus-setting-sidebar-drawer": true,
     "canvasplus-setting-sidebar-drawer-excluded": [
       "Dashboard",
@@ -54,7 +54,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   } else if (
     details.reason === "update" &&
-    (details.previousVersion === "0.4.1" || details.previousVersion === "0.4.2")
+    (details.previousVersion === "0.4.1")
   ) {
     //chrome.storage.local.set({"canvasplus-current-version": "0.4"}) // canvasjs will detect new version
     chrome.storage.local.set(newDefaults);
