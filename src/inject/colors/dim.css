@@ -7,7 +7,7 @@
   --cpt-dark-nav-tray-color: #16161a;
   --cpt-dark-line-color: #444b5a;
 
-  --cpt-dark-dashboard-header-color: rgba(42,43,47,0.95);
+  --cpt-dark-dashboard-header-color: rgba(42, 43, 47, 0.95);
 
   --cpt-dark-odd-tr-background-color: #2a2a30;
   --cpt-dark-hovered-email-background-color: #1f2930;
@@ -36,4 +36,6 @@
   --cpt-dark-search-ui-glass-color: rgba(40, 45, 51, 0.5);
 
   --cpt-dark-snackbar-code-segment-color: #232a2e;
+
+  --cpt-dark-highlight-color: #386f8991;
 }

@@ -35,7 +35,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://*.instructure.com/*", "*://canvas.okstate.edu/*"],
+      "matches": ["*://*.instructure.com/*"],
       "js": [
         "src/canvas.js",
         "src/inject/snackbar/snackbar.js",
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "matches": ["*://*.instructure.com/*", "*://canvas.okstate.edu/*"],
+      "matches": ["*://*.instructure.com/*"],
       "js": [
         "src/util.js",
         "src/inject/colors/color-controller.js",
@@ -69,17 +69,11 @@
       "all_frames": true
     },
     {
-      "matches": [
-        "*://*.instructure.com/conversations?*",
-        "*://canvas.okstate.edu/conversations?*"
-      ],
+      "matches": ["*://*.instructure.com/conversations?*"],
       "js": ["src/inject/convopeeker/conversation-param-utils.js"]
     },
     {
-      "matches": [
-        "*://*.instructure.com/courses/*/quizzes/*/take*",
-        "*://canvas.okstake.edu/courses/*/quizzes/*/take*"
-      ],
+      "matches": ["*://*.instructure.com/courses/*/quizzes/*/take*"],
       "js": ["src/inject/quiz/quiz.js"]
     }
   ],
@@ -90,7 +84,7 @@
     "service_worker": "src/background.js"
   },
   "permissions": ["storage"],
-  "host_permissions": ["*://*.instructure.com/*", "*://canvas.okstake.edu/*"],
+  "host_permissions": ["*://*.instructure.com/*"],
   "icons": {
     "16": "assets/icons/canvas-plus-favicon-active-16.png",
     "48": "assets/icons/canvas-plus-favicon-active-48.png",

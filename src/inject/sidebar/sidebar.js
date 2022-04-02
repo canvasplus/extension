@@ -337,11 +337,13 @@ delayedQuerySelector("#global_nav_courses_link").then((element) => {
   element.addEventListener(
     "click",
     (e) => {
-      if (!fullscreenCoursesEnabled) {
-        e.stopPropagation();
-        searchUI.openUI();
-        searchUI.mode = "navigator";
-        searchUpdateUI("");
+      if (searchButtonEnabled) {
+        if (!fullscreenCoursesEnabled) {
+          e.stopPropagation();
+          searchUI.openUI();
+          searchUI.mode = "navigator";
+          searchUpdateUI("");
+        }
       }
     },
     true
