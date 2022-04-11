@@ -1257,8 +1257,8 @@ class SearchUI {
         text: searchUI.mode === "navigator" ? "Search" : "Courses",
         icon:
           searchUI.mode === "navigator"
-            ? '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><line id="Line_3" style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;stroke-linecap:round;" x1="693.83" y1="707.5" x2="529.83" y2="543.5"/><g id="Ellipse_1"><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:0.8605;stroke-miterlimit:10;" cx="372.67" cy="359" r="266.5"/><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;" cx="372.67" cy="359" r="239.17"/></g></g></svg>'
-            : '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="523.3" y1="150.7" x2="453.2" y2="649.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="346.8" y1="150.7" x2="276.7" y2="649.3"/>	</g>	<g>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="636.8" y1="488.3" x2="138.3" y2="488.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="661.7" y1="311.7" x2="163.2" y2="311.7"/></g></g></svg>',
+          ? '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><line id="Line_3" style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;stroke-linecap:round;" x1="693.83" y1="707.5" x2="529.83" y2="543.5"/><g id="Ellipse_1"><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:0.8605;stroke-miterlimit:10;" cx="372.67" cy="359" r="266.5"/><circle style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:54.6663;" cx="372.67" cy="359" r="239.17"/></g></g></svg>'
+          : '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 800 800" xml:space="preserve" class="ic-icon-svg menu-item__icon"><g><g><line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="523.3" y1="150.7" x2="453.2" y2="649.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="346.8" y1="150.7" x2="276.7" y2="649.3"/>	</g>	<g>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="636.8" y1="488.3" x2="138.3" y2="488.3"/>		<line style="fill:none;stroke:var(--cpt-dark-search-ui-header-icon-color, #888);;stroke-width:60;stroke-linecap:round;stroke-miterlimit:10;" x1="661.7" y1="311.7" x2="163.2" y2="311.7"/></g></g></svg>',
         buttonCallback: () => {
           (searchUI.mode =
             searchUI.mode === "navigator" ? "search" : "navigator"),
@@ -1273,6 +1273,17 @@ class SearchUI {
           this.buildControls();
         },
       },
+      {
+        text: searchUI.mode != "navigator" ? "All Courses" : null,
+        icon: searchUI.mode != "navigator" ? '<svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--courses" style="fill:var(--cpt-dark-search-ui-header-icon-color, #888)" version="1.1" x="0" y="0" viewBox="0 0 280 259" enable-background="new 0 0 280 259" xml:space="preserve"><path d="M73.31,198c-11.93,0-22.22,8-24,18.73a26.67,26.67,0,0,0-.3,3.63v.3a22,22,0,0,0,5.44,14.65,22.47,22.47,0,0,0,17.22,8H200V228.19h-134V213.08H200V198Zm21-105.74h90.64V62H94.3ZM79.19,107.34V46.92H200v60.42Zm7.55,30.21V122.45H192.49v15.11ZM71.65,16.71A22.72,22.72,0,0,0,49,39.36V190.88a41.12,41.12,0,0,1,24.32-8h157V16.71ZM33.88,39.36A37.78,37.78,0,0,1,71.65,1.6H245.36V198H215.15v45.32h22.66V258.4H71.65a37.85,37.85,0,0,1-37.76-37.76Z"></path></svg>': null,
+        buttonCallback: () => {
+          if(searchUI.mode != "navigator") {
+            window.location.href = window.location.protocol + "//" + window.location.host + "/getCourseAssignments"
+          } else {
+            return;
+          }
+        }
+      }
     ].reverse();
 
     controls.forEach((control) => {
