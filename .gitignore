@@ -1,8 +1,7 @@
-
-*.TMP
-*.DS_Store
+.DS_Store
+.cache
 node_modules
-dist
-firefox.zip
-sc
-sc.zip
+coverage
+/dist
+stats.html
+.vscode
