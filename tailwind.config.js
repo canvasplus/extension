@@ -1,8 +1,9 @@
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.tsx"
+    "./src/index/index.html",
+    "./src/permissions/permissions.html",
+    "./src/**/*.tsx",
   ],
   theme: {},
-  plugins: []
-}
+  plugins: [],
+};

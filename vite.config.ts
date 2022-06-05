@@ -1,22 +1,18 @@
-import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { defineConfig } from "vite";
+import solidPlugin from "vite-plugin-solid";
+const { resolve } = require("path");
 
 const Config = defineConfig({
   build: {
-    outDir: 'dist/pages',
+    outDir: "dist",
+    rollupOptions: {
+      input: {
+        index: resolve(__dirname, "src/index/index.html"),
+        permissions: resolve(__dirname, "src/permissions/permissions.html"),
+      },
+    },
   },
-  plugins: [
-    solidPlugin(),
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'public/*',
-          dest: '..',
-        },
-      ],
-    }),
-  ],
+  plugins: [solidPlugin()],
 });
 
 export default Config;
