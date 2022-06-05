@@ -1,0 +1,20 @@
+{
+  "name": "Canvas+",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "description": "CanvasPlus: Power up Canvas with color themes, navigation shortcuts, and improved performance.",
+  "homepage_url": "https://canvasplus.org",
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.instructure.com/*"],
+  "icons": {
+    "16": "assets/icons/sm.png",
+    "48": "assets/icons/md.png",
+    "128": "assets/icons/lg.png"
+  }
+}
