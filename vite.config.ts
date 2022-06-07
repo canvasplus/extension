@@ -8,7 +8,7 @@ const Config = defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, "src/index/index.html"),
-        permissions: resolve(__dirname, "src/permissions/permissions.html"),
+        permissions: resolve(__dirname, "src/setup/setup.html"),
       },
     },
   },

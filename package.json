@@ -1,7 +1,7 @@
 {
   "name": "canvas-plus",
   "version": "1.0.0",
-  "main": "./src/index.tsx",
+  "main": "./src/index/index.tsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
@@ -9,12 +9,14 @@
   "devDependencies": {
     "@types/node": "^17.0.39",
     "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
     "tailwindcss": "^3.0.24",
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
     "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
+    "@types/chrome": "^0.0.188",
     "solid-js": "^1.4.3"
   }
 }
