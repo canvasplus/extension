@@ -4,6 +4,7 @@ import { createSignal, Show } from "solid-js";
 import { checkPermissions, PermissionRequest } from "../lib/permissionsCheck";
 import "tailwindcss/tailwind.css";
 import { Permissions } from "./components/permissions";
+import { Domains } from "./components/Domains";
 
 const Index: Function = () => {
   const [stage, setStage] = createSignal(0);
@@ -14,9 +15,9 @@ const Index: Function = () => {
         <Permissions next={setStage(1)} />
       </Show>
 
-      {/* <Show when={stage() === 1}>
-        <={setStage(1)} />
-      </Show> */}
+      <Show when={stage() === 1}>
+        <Domains next={setStage(2)} />
+      </Show>
     </div>
   );
 };
