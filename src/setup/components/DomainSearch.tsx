@@ -48,7 +48,9 @@ export default function DomainSearch(props: {
             ])
 
             setSuggestions([...res[0].data].map(({ name, domain }) => {
-              return { name: name, url: domain }
+                return { name: name, url: domain }
+            }).filter((node, index, array) => {
+              return ![...array.slice(0, index), ...array.slice(index + 1)].includes(node) && !props.domains().map(({ url }) => url ).includes(node.url);
             }));
           }}
           placeholder="Find your school or district"

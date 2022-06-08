@@ -3,11 +3,11 @@ export type CanvasDomain = {
   url: string;
 };
 
-export type SearchDomain = [{
+export type SearchDomain = {
   data: [
     {
       name: string;
       domain: string;
     }
   ]
-}]
+}[]
