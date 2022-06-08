@@ -9,5 +9,5 @@ export type SearchDomain = {
       name: string;
       domain: string;
     }
-  ]
-}[]
+  ];
+}[];
