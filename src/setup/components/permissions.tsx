@@ -7,7 +7,7 @@ import {
 } from "../../lib/permissionsCheck";
 import "tailwindcss/tailwind.css";
 
-export const Permissions: Function = (props: { next(): void }) => {
+export default (props: { next(): void }) => {
   const [permissions, setPermissions] = createSignal<
     PermissionRequest | undefined
   >(undefined);
@@ -26,7 +26,7 @@ export const Permissions: Function = (props: { next(): void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-8 text-sm">
+    <div className="flex flex-col gap-8">
       <div className="text-center flex flex-col gap-4">
         <h1 className="text-3xl">More Permissions</h1>
         <p>Canvas+ needs the following permissions for a new update:</p>

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@types/chrome": "^0.0.188",
+    "solid-icons": "github:canvasplus/solid-icons",
     "solid-js": "^1.4.3"
   }
 }
