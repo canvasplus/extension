@@ -19,6 +19,26 @@ export default function DomainSearch(props: {
   const [focused, setFocused] = createSignal(false);
   const [byURL, setByURL] = createSignal(false);
 
+  const updateResults = async (val: string) => {
+    const res: SearchDomain = await Axios.all([
+      Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
+        params: {
+          domain: val,
+        },
+      }),
+      Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
+        params: {
+          name: val,
+        },
+      }),
+    ]);
+
+    setSuggestions(
+      res[byURL() ? 0 : 1].data.map(({ name, domain }) => {
+        return { name: name, url: domain };
+      })
+    );
+  };
   return (
     <div>
       <div className="flex flex-row justify-between text-gray-dark">
@@ -28,6 +48,7 @@ export default function DomainSearch(props: {
             className={`cursor-pointer ${byURL() ? "" : "underline"}`}
             onClick={() => {
               setByURL(false);
+              updateResults(query());
             }}
           >
             Search Name
@@ -36,6 +57,7 @@ export default function DomainSearch(props: {
             className={`cursor-pointer ${byURL() ? "underline" : ""}`}
             onClick={() => {
               setByURL(true);
+              updateResults(query());
             }}
           >
             Search URL
@@ -53,33 +75,9 @@ export default function DomainSearch(props: {
           className="w-full outline-none bg-inherit"
           type="text"
           value={query()}
-          onInput={async (e) => {
+          onInput={(e) => {
             setQuery(e.currentTarget.value);
-
-            const res: SearchDomain = await Axios.all([
-              Axios.get(
-                `https://canvas.instructure.com/api/v1/accounts/search`,
-                {
-                  params: {
-                    domain: e.currentTarget.value,
-                  },
-                }
-              ),
-              Axios.get(
-                `https://canvas.instructure.com/api/v1/accounts/search`,
-                {
-                  params: {
-                    name: e.currentTarget.value,
-                  },
-                }
-              ),
-            ]);
-
-            setSuggestions(
-              res[byURL() ? 0 : 1].data.map(({ name, domain }) => {
-                return { name: name, url: domain };
-              })
-            );
+            updateResults(e.currentTarget.value);
           }}
           placeholder="Find your school or district"
           onFocus={() => {
