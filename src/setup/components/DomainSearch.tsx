@@ -1,6 +1,6 @@
 import "../../global.css";
 import { Accessor, createSignal, Setter, Show } from "solid-js";
-import Axios, { AxiosError } from "axios"
+import Axios, { AxiosError } from "axios";
 import "tailwindcss/tailwind.css";
 import {
   IoAddCircle,
@@ -17,9 +17,31 @@ export default function DomainSearch(props: {
   const [query, setQuery] = createSignal("");
   const [suggestions, setSuggestions] = createSignal<CanvasDomain[]>([]);
   const [focused, setFocused] = createSignal(false);
+  const [byURL, setByURL] = createSignal(false);
 
   return (
     <div>
+      <div className="flex flex-row justify-between text-gray-dark">
+        <p className="mb-2">Add New Domain</p>
+        <div className="flex flex-row gap-4">
+          <p
+            className={`cursor-pointer ${byURL() ? "" : "underline"}`}
+            onClick={() => {
+              setByURL(false);
+            }}
+          >
+            Search Name
+          </p>
+          <p
+            className={`cursor-pointer ${byURL() ? "underline" : ""}`}
+            onClick={() => {
+              setByURL(true);
+            }}
+          >
+            Search URL
+          </p>
+        </div>
+      </div>
       <div
         className={`flex flex-row justify-between p-4 bg-white items-center focus-within:bg-slate-50 transition-colors duration-150 peer ${
           suggestions().length === 0
@@ -31,25 +53,33 @@ export default function DomainSearch(props: {
           className="w-full outline-none bg-inherit"
           type="text"
           value={query()}
-          onInput={async(e) => {
+          onInput={async (e) => {
             setQuery(e.currentTarget.value);
 
             const res: SearchDomain = await Axios.all([
-              Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
-                params: {
-                  domain: e.currentTarget.value
+              Axios.get(
+                `https://canvas.instructure.com/api/v1/accounts/search`,
+                {
+                  params: {
+                    domain: e.currentTarget.value,
+                  },
                 }
-              }),
-              Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
-                params: {
-                  name: e.currentTarget.value
+              ),
+              Axios.get(
+                `https://canvas.instructure.com/api/v1/accounts/search`,
+                {
+                  params: {
+                    name: e.currentTarget.value,
+                  },
                 }
-              })
-            ])
+              ),
+            ]);
 
-            setSuggestions([...res[0].data].map(({ name, domain }) => {
-              return { name: name, url: domain }
-            }));
+            setSuggestions(
+              res[byURL() ? 0 : 1].data.map(({ name, domain }) => {
+                return { name: name, url: domain };
+              })
+            );
           }}
           placeholder="Find your school or district"
           onFocus={() => {

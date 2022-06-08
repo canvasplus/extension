@@ -53,7 +53,6 @@ export default function Domains(props: { next(): void }) {
           </div>
         </div>
         <div>
-          <p className="text-gray-dark mb-2">Add New Domain</p>
           <DomainSearch domains={domains} setDomains={setDomains} />
         </div>
       </div>
