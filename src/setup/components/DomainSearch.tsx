@@ -1,5 +1,6 @@
 import "../../global.css";
 import { Accessor, createSignal, Setter, Show } from "solid-js";
+import Axios from "axios"
 import "tailwindcss/tailwind.css";
 import {
   IoAddCircle,
@@ -7,7 +8,7 @@ import {
   IoRemoveCircle,
   IoSearch,
 } from "solid-icons/io";
-import { CanvasDomain } from "../../lib/CanvasDomain";
+import { CanvasDomain, SearchDomain } from "../../lib/CanvasDomain";
 
 export default function DomainSearch(props: {
   domains: Accessor<CanvasDomain[]>;
@@ -16,11 +17,6 @@ export default function DomainSearch(props: {
   const [query, setQuery] = createSignal("");
   const [suggestions, setSuggestions] = createSignal<CanvasDomain[]>([]);
   const [focused, setFocused] = createSignal(false);
-
-  setSuggestions([
-    { name: "School A", url: "school-a.instructure.com" },
-    { name: "School B", url: "school-b.instructure.com" },
-  ]);
 
   return (
     <div>
@@ -35,8 +31,25 @@ export default function DomainSearch(props: {
           className="w-full outline-none bg-inherit"
           type="text"
           value={query()}
-          onInput={(e) => {
+          onInput={async(e) => {
             setQuery(e.currentTarget.value);
+
+            const [...res] = await Axios.all([
+              Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
+                params: {
+                  domain: e.currentTarget.value
+                }
+              }),
+              Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
+                params: {
+                  name: e.currentTarget.value
+                }
+              })
+            ])
+            
+            setSuggestions([...res.map(({ data }) => data).flat()].map(({ name, domain }) => {
+              return { name: name, url: domain }
+            }));
           }}
           placeholder="Find your school or district"
           onFocus={() => {
