@@ -1,6 +1,6 @@
 import "../../global.css";
 import { Accessor, createSignal, Setter, Show } from "solid-js";
-import Axios from "axios"
+import Axios, { AxiosError } from "axios"
 import "tailwindcss/tailwind.css";
 import {
   IoAddCircle,
@@ -34,7 +34,7 @@ export default function DomainSearch(props: {
           onInput={async(e) => {
             setQuery(e.currentTarget.value);
 
-            const [...res] = await Axios.all([
+            const res: SearchDomain = await Axios.all([
               Axios.get(`https://canvas.instructure.com/api/v1/accounts/search`, {
                 params: {
                   domain: e.currentTarget.value
@@ -46,8 +46,8 @@ export default function DomainSearch(props: {
                 }
               })
             ])
-            
-            setSuggestions([...res.map(({ data }) => data).flat()].map(({ name, domain }) => {
+
+            setSuggestions([...res[0].data].map(({ name, domain }) => {
               return { name: name, url: domain }
             }));
           }}

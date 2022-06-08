@@ -4,6 +4,10 @@ export type CanvasDomain = {
 };
 
 export type SearchDomain = [{
-  name: string;
-  domain: string;
+  data: [
+    {
+      name: string;
+      domain: string;
+    }
+  ]
 }]
