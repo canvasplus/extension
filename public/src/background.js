@@ -15,7 +15,17 @@ const main = async () => {
           target: { tabId: id },
           files: ["src/content.js"],
         });
+        chrome.scripting.insertCSS({
+          target: { tabId: id },
+          files: ["src/content.css"],
+        });
       }
+    }
+  });
+
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "redirect" || message.action === "sendTo") {
+      chrome.tabs.sendMessage(sender.tab.id, message);
     }
   });
 };

@@ -8,7 +8,12 @@ const Config = defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, "src/index/index.html"),
-        permissions: resolve(__dirname, "src/setup/setup.html"),
+        setup: resolve(__dirname, "src/setup/setup.html"),
+      },
+      output: {
+        entryFileNames: "src/[name].js",
+        chunkFileNames: "src/[name].js",
+        assetFileNames: "assets/[name][extname]",
       },
     },
   },

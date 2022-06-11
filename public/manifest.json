@@ -16,5 +16,11 @@
     "16": "assets/icons/sm.png",
     "48": "assets/icons/md.png",
     "128": "assets/icons/lg.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/index/index.html"],
+      "matches": ["https://*/*"]
+    }
+  ]
 }

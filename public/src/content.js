@@ -3,25 +3,25 @@ if (window["cpxstate"] == null) {
     window["cpxstate"] = "loading";
 
     const url = new URL(window.location.href);
-    url.searchParams.set("cpxstate", "loading");
-
+    url.searchParams.set("cpxstate", "1");
     window.history.replaceState({}, "Loading", url.toString());
 
-    console.log("script");
-    window.stop();
-
-    let timeout = window.setTimeout(function () {}, 0);
-
-    while (timeout--) {
-      window.clearTimeout(timeout);
-    }
-
-    let interval = window.setInterval(function () {}, 0);
-
-    while (interval--) {
-      window.clearInterval(interval);
-    }
-
     document.documentElement.innerHTML = "";
+
+    const frame = document.createElement("iframe");
+    frame.id = "cpx-frame";
+    frame.src = chrome.runtime.getURL(
+      `src/index/index.html?ourl=${url.toString()}`
+    );
+
+    document.body.appendChild(frame);
+
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.action === "redirect") {
+        window.history.replaceState({}, message.title, message.to);
+      } else if (message.action === "sendTo") {
+        window.history.pushState({}, message.title, message.to);
+      }
+    });
   })();
 }
