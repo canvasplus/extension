@@ -1,16 +1,23 @@
 const main = async () => {
-  const scriptingPermission = await chrome.permissions.contains({
-    permissions: ["scripting"],
-  });
+  const domains =
+    (await chrome.storage.sync.get(["canvas-domains"]))["canvas-domains"]?.map(
+      (domain) => {
+        return domain?.url;
+      }
+    ) ?? [];
 
-  if (scriptingPermission) {
-    // chrome.scripting.executeScript({
-    //   target: { tabId: tab.id },
-    //   files: ["content-script.js"],
-    // });
-  } else {
-    // chrome.permissions.request({ permissions: ["scripting"] });
-  }
+  chrome.tabs.onUpdated.addListener((id, change, tab) => {
+    if (tab.url) {
+      const url = new URL(tab.url);
+
+      if (domains.includes(url.host)) {
+        chrome.scripting.executeScript({
+          target: { tabId: id },
+          files: ["src/content.js"],
+        });
+      }
+    }
+  });
 };
 
 main();

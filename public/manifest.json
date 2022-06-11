@@ -10,15 +10,8 @@
   "background": {
     "service_worker": "src/background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["src/content.js"]
-    }
-  ],
-  "permissions": ["storage"],
-  "optional_permissions": ["webRequest", "scripting"],
-  "host_permissions": ["*://*.instructure.com/*", "https://*/"],
+  "permissions": ["storage", "webRequest", "scripting"],
+  "host_permissions": ["<all_urls>"],
   "icons": {
     "16": "assets/icons/sm.png",
     "48": "assets/icons/md.png",

@@ -34,11 +34,16 @@ export default function DomainSearch(props: {
     ]);
 
     setSuggestions(
-      res[byURL() ? 0 : 1].data.map(({ name, domain }) => {
-        return { name: name, url: domain };
-      }).filter(node => {
-        return !props.domains().map(({ url }) => url).includes(node.url);
-      })
+      res[byURL() ? 0 : 1].data
+        .map(({ name, domain }) => {
+          return { name: name, url: domain };
+        })
+        .filter((node) => {
+          return !props
+            .domains()
+            .map(({ url }) => url)
+            .includes(node.url);
+        })
     );
   };
   return (
@@ -107,11 +112,21 @@ export default function DomainSearch(props: {
 
                 chrome.storage.sync.set({ "canvas-domains": newDomains });
               } else {
-                const newDomains = props.domains();
-                newDomains.push(suggestion);
-                props.setDomains(newDomains);
+                const permissions = {
+                  origins: [`*://${suggestion.url}/*`],
+                };
 
-                chrome.storage.sync.set({ "canvas-domains": newDomains });
+                chrome.permissions.contains(permissions, async (result) => {
+                  if (
+                    result ||
+                    (await chrome.permissions.request(permissions))
+                  ) {
+                    const newDomains = props.domains();
+                    newDomains.push(suggestion);
+                    props.setDomains(newDomains);
+                    chrome.storage.sync.set({ "canvas-domains": newDomains });
+                  }
+                });
               }
             };
 

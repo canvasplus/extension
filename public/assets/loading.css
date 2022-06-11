@@ -1,0 +1,5 @@
+/* coming later: content script */
+
+body:not(.cpx-allow, .cpx-deny) {
+  display: none;
+}
