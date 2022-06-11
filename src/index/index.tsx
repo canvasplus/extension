@@ -2,6 +2,8 @@ import { render } from "solid-js/web";
 import "../global.css";
 import "tailwindcss/tailwind.css";
 import { createSignal } from "solid-js";
+import Sidebar from "./components/base/Sidebar";
+import SplitScreen from "./components/base/SplitScreen";
 
 const Index: Function = () => {
   const [titleState, setTitleState] = createSignal("");
@@ -67,15 +69,17 @@ const Index: Function = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-red-500">Canvas+</h1>
+    <div className="">
+      <SplitScreen />
+      {/* <h1 className="text-red-500">Canvas+</h1>
       <button
         onClick={() => {
+          setTitle("Dashboard", false);
           setPathname("dashboard", true);
         }}
       >
         Dashboard
-      </button>
+      </button> */}
     </div>
   );
 };
