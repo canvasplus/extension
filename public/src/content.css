@@ -1,8 +1,16 @@
-body {
+body,
+html {
   margin: 0;
 }
 
-#cpx-frame {
+#cpx-top-frame,
+#cpx-main-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#cpx-framing-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,5 +18,14 @@ body {
   bottom: 0;
   width: 100%;
   height: 100%;
-  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#cpx-top-frame {
+  height: 50px;
+}
+
+#cpx-main-frame {
+  height: 100%;
 }

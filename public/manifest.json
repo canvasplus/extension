@@ -19,7 +19,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["src/index/index.html"],
+      "resources": ["src/index/index.html", "src/top/top.html"],
       "matches": ["https://*/*"]
     }
   ]

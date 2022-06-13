@@ -8,13 +8,23 @@ if (window["cpxstate"] == null) {
 
     document.documentElement.innerHTML = "";
 
+    const framingContainer = document.createElement("div");
+    framingContainer.id = "cpx-framing-container";
+
+    const top = document.createElement("iframe");
+    top.id = "cpx-top-frame";
+    top.src = chrome.runtime.getURL(`src/top/top.html?ourl=${url.toString()}`);
+
     const frame = document.createElement("iframe");
-    frame.id = "cpx-frame";
+    frame.id = "cpx-main-frame";
     frame.src = chrome.runtime.getURL(
       `src/index/index.html?ourl=${url.toString()}`
     );
 
-    document.body.appendChild(frame);
+    framingContainer.appendChild(top);
+    framingContainer.appendChild(frame);
+
+    document.body.appendChild(framingContainer);
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.action === "redirect") {

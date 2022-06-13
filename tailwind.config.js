@@ -4,6 +4,7 @@ module.exports = {
   content: [
     "./src/index/index.html",
     "./src/setup/setup.html",
+    "./src/top/top.html",
     "./src/**/*.tsx",
   ],
   theme: {

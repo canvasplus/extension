@@ -9,6 +9,7 @@ const Config = defineConfig({
       input: {
         index: resolve(__dirname, "src/index/index.html"),
         setup: resolve(__dirname, "src/setup/setup.html"),
+        top: resolve(__dirname, "src/top/top.html"),
       },
       output: {
         entryFileNames: "src/[name].js",
