@@ -1,7 +1,7 @@
 import { render } from "solid-js/web";
 import "../global.css";
 import "tailwindcss/tailwind.css";
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import Sidebar from "./components/base/Sidebar";
 import SplitScreen from "./components/base/SplitScreen";
 import { isPathnameCompatible } from "./lib/compatibility";
@@ -69,16 +69,23 @@ const Index: Function = () => {
     setURL(asURL.toString(), addToHistory);
   };
 
-  if (!isPathnameCompatible(route())) {
-    setTimeout(() => {
+  createEffect(() => {
+    if (!isPathnameCompatible(route())) {
       setParam("view", "original", true);
       location.href = route();
-    }, 1000);
-  }
+    }
+  });
 
   return (
     <div className="">
-      <SplitScreen />
+      <button
+        onClick={() => {
+          setPathname("/incompatible_page", true);
+        }}
+      >
+        Incompatible Page
+      </button>
+      {/* <SplitScreen /> */}
       {/* <h1 className="text-red-500">Canvas+</h1>
       <button
         onClick={() => {

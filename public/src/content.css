@@ -23,9 +23,86 @@ html {
 }
 
 #cpx-top-frame {
-  height: 50px;
+  height: 0;
 }
 
 #cpx-main-frame {
   height: 100%;
+}
+
+#cpx-incompatible-overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 20px;
+  right: 20px;
+
+  background-color: rgb(254 226 226);
+  border-radius: 10px;
+  color: rgb(185 28 28);
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+
+  animation: cpx-incompatible-overlay 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#cpx-incompatible-overlay p {
+  margin: 0;
+}
+
+#cpx-incompatible-overlay
+  .cpx-incompatible-overlay__right-button-array
+  #cpx-incompatible-overlay__close {
+  padding: 0;
+  height: 2rem;
+  width: 2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+}
+
+#cpx-incompatible-overlay
+  .cpx-incompatible-overlay__right-button-array
+  #cpx-incompatible-overlay__close
+  svg {
+  position: absolute;
+  color: rgb(185 28 28);
+}
+
+#cpx-incompatible-overlay
+  .cpx-incompatible-overlay__right-button-array
+  #cpx-incompatible-overlay__close
+  .cpx-incompatible-overlay__close__background {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgb(254 202 202);
+  transform: scale(0);
+}
+
+#cpx-incompatible-overlay
+  .cpx-incompatible-overlay__right-button-array
+  #cpx-incompatible-overlay__close:hover
+  .cpx-incompatible-overlay__close__background {
+  transform: scale(1);
+}
+
+@keyframes cpx-incompatible-overlay {
+  0%,
+  75% {
+    transform: translateY(-25%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
 }
