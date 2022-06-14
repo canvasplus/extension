@@ -4,7 +4,6 @@ import "tailwindcss/tailwind.css";
 import { createEffect, createSignal } from "solid-js";
 import Sidebar from "./components/base/Sidebar";
 import SplitScreen from "./components/base/SplitScreen";
-import { isPathnameCompatible } from "./lib/compatibility";
 
 const Index: Function = () => {
   const [titleState, setTitleState] = createSignal("");
@@ -68,13 +67,6 @@ const Index: Function = () => {
     asURL.searchParams.delete(k);
     setURL(asURL.toString(), addToHistory);
   };
-
-  createEffect(() => {
-    if (!isPathnameCompatible(route())) {
-      setParam("view", "original", true);
-      location.href = route();
-    }
-  });
 
   return (
     <div className="">

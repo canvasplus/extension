@@ -4,12 +4,18 @@ if (window["cpxstate"] == null) {
 
     const isPathnameCompatible = (fullUrl) => {
       const asUrl = new URL(fullUrl);
-      console.log(asUrl.pathname);
 
-      return (
-        asUrl.pathname !== "/incompatible_page" &&
-        asUrl.pathname !== "/incompatible_page_2"
-      );
+      if (asUrl.hostname !== new URL(location.href).hostname) return false;
+
+      const supportedPathnames = [""];
+
+      const pathname = asUrl.pathname.replace(/\/+$/, "");
+
+      if (supportedPathnames.includes(pathname)) {
+        return true;
+      }
+
+      return false;
     };
 
     const runWithViewer = async () => {
