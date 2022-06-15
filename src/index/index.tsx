@@ -2,12 +2,22 @@ import { render } from "solid-js/web";
 import "../global.css";
 import "tailwindcss/tailwind.css";
 import { createEffect, createSignal } from "solid-js";
-import Sidebar from "./components/base/Sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
 import SplitScreen from "./components/base/SplitScreen";
-import Router from "./components/base/Router";
-import Case from "./components/base/Case";
+import Router from "./components/router/Router";
+import Case from "./components/router/Case";
+import DefaultView from "./components/base/DefaultView";
+import { getLastUpdated, initiate } from "./lib/database";
+import axios from "axios";
+import { fetchCourses, getCourses } from "./lib/courseList";
 
 const Index: Function = () => {
+  const [dbReady, setDbReady] = createSignal(false);
+
+  initiate().then(() => {
+    setDbReady(true);
+  });
+
   const [titleState, setTitleState] = createSignal("");
 
   const [route, setRoute] = createSignal(
@@ -72,14 +82,33 @@ const Index: Function = () => {
 
   const routePathname = () => new URL(route()).pathname.replace(/\/+$/, "");
 
-  return (
-    <Router redirect={redirectFullURL} route={route}>
-      <></>
+  axios.defaults.baseURL = `${new URL(route()).origin}/api/v1`;
 
-      <Case filter={routePathname() === ""}>
-        <h1>Dashboard</h1>
-      </Case>
-    </Router>
+  const appReady = () => {
+    return dbReady();
+  };
+
+  createEffect(() => {
+    if (appReady()) {
+    }
+  });
+
+  return (
+    <>
+      {appReady() ? (
+        <Router redirect={redirectFullURL} route={route}>
+          <></>
+
+          <Case filter={routePathname() === ""}>
+            <DefaultView>
+              <h1>Dashboard</h1>
+            </DefaultView>
+          </Case>
+        </Router>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </>
   );
 };
 
