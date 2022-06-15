@@ -5,7 +5,11 @@ if (window["cpxstate"] == null) {
     const isPathnameCompatible = (fullUrl) => {
       const asUrl = new URL(fullUrl);
 
-      if (asUrl.hostname !== new URL(location.href).hostname) return false;
+      if (
+        asUrl.hostname !== new URL(location.href).hostname ||
+        asUrl.searchParams.get("view")?.startsWith("original")
+      )
+        return false;
 
       const supportedPathnames = [""];
 

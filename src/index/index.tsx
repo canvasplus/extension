@@ -4,6 +4,8 @@ import "tailwindcss/tailwind.css";
 import { createEffect, createSignal } from "solid-js";
 import Sidebar from "./components/base/Sidebar";
 import SplitScreen from "./components/base/SplitScreen";
+import Router from "./components/base/Router";
+import Case from "./components/base/Case";
 
 const Index: Function = () => {
   const [titleState, setTitleState] = createSignal("");
@@ -68,26 +70,16 @@ const Index: Function = () => {
     setURL(asURL.toString(), addToHistory);
   };
 
+  const routePathname = () => new URL(route()).pathname.replace(/\/+$/, "");
+
   return (
-    <div className="">
-      <button
-        onClick={() => {
-          setPathname("/incompatible_page", true);
-        }}
-      >
-        Incompatible Page
-      </button>
-      {/* <SplitScreen /> */}
-      {/* <h1 className="text-red-500">Canvas+</h1>
-      <button
-        onClick={() => {
-          setTitle("Dashboard", false);
-          setPathname("dashboard", true);
-        }}
-      >
-        Dashboard
-      </button> */}
-    </div>
+    <Router redirect={redirectFullURL} route={route}>
+      <></>
+
+      <Case filter={routePathname() === ""}>
+        <h1>Dashboard</h1>
+      </Case>
+    </Router>
   );
 };
 
