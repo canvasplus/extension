@@ -6,6 +6,6 @@
     "explainFiles": true,
     "jsx": "preserve",
     "moduleResolution": "node",
-    "lib": ["es2015", "es2016", "dom", "es2018.promise"]
+    "lib": ["es2015", "es2016", "dom", "es2018.promise", "dom.iterable"]
   }
 }

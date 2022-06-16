@@ -10,8 +10,14 @@ import DefaultView from "./components/base/DefaultView";
 import { getLastUpdated, initiate } from "./lib/database";
 import axios from "axios";
 import { fetchCourses, getCourses } from "./lib/courseList";
+import { LocationProvider, useLocation } from "./lib/context/location";
 
 const Index: Function = () => {
+  const [
+    { getCurrentLocation, getFullLocation },
+    { goTo, setFullLocation, doneLoading },
+  ] = useLocation();
+
   const [dbReady, setDbReady] = createSignal(false);
 
   initiate().then(() => {
@@ -20,9 +26,16 @@ const Index: Function = () => {
 
   const [titleState, setTitleState] = createSignal("");
 
-  const [route, setRoute] = createSignal(
-    new URL(location.href).searchParams.get("ourl")
-  );
+  setFullLocation({
+    route: new URL(location.href).searchParams.get("ourl"),
+  });
+
+  const setRoute = (route: string) => {
+    setFullLocation({ route });
+  };
+  // const [route, setRoute] = createSignal(
+  //   new URL(location.href).searchParams.get("ourl")
+  // );
 
   const redirectFullURL = (to?: string, title?: string) => {
     if (to != null) setRoute(to);
@@ -30,7 +43,7 @@ const Index: Function = () => {
 
     chrome.runtime.sendMessage({
       action: "redirect",
-      to: to ?? route(),
+      to: to ?? getCurrentLocation(),
       titleState: title ?? titleState(),
     });
   };
@@ -41,7 +54,7 @@ const Index: Function = () => {
 
     chrome.runtime.sendMessage({
       action: "sendTo",
-      to: to ?? route(),
+      to: to ?? getCurrentLocation(),
       titleState: title ?? titleState(),
     });
   };
@@ -63,26 +76,27 @@ const Index: Function = () => {
   };
 
   const setPathname = (pathname: string, addToHistory: boolean) => {
-    const asURL = new URL(route());
+    const asURL = new URL(getCurrentLocation());
     asURL.pathname = pathname;
     setURL(asURL.toString(), addToHistory);
   };
 
   const setParam = (k: string, v: string, addToHistory: boolean) => {
-    const asURL = new URL(route());
+    const asURL = new URL(getCurrentLocation());
     asURL.searchParams.set(k, v);
     setURL(asURL.toString(), addToHistory);
   };
 
   const removeParam = (k: string, v: string, addToHistory: boolean) => {
-    const asURL = new URL(route());
+    const asURL = new URL(getCurrentLocation());
     asURL.searchParams.delete(k);
     setURL(asURL.toString(), addToHistory);
   };
 
-  const routePathname = () => new URL(route()).pathname.replace(/\/+$/, "");
+  const routePathname = () =>
+    new URL(getCurrentLocation()).pathname.replace(/\/+$/, "");
 
-  axios.defaults.baseURL = `${new URL(route()).origin}/api/v1`;
+  axios.defaults.baseURL = `${new URL(getCurrentLocation()).origin}/api/v1`;
 
   const appReady = () => {
     return dbReady();
@@ -90,13 +104,14 @@ const Index: Function = () => {
 
   createEffect(() => {
     if (appReady()) {
+      console.log(getCurrentLocation);
     }
   });
 
   return (
     <>
       {appReady() ? (
-        <Router redirect={redirectFullURL} route={route}>
+        <Router redirect={redirectFullURL} route={getCurrentLocation}>
           <></>
 
           <Case filter={routePathname() === ""}>
@@ -112,4 +127,6 @@ const Index: Function = () => {
   );
 };
 
-render(() => <Index />, document.querySelector("#root")!);
+render(() => {
+  return <LocationProvider children={<Index />} />;
+}, document.querySelector("#root")!);
