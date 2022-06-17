@@ -8,7 +8,7 @@ export default function SidebarToggleIcon(props: {
   if (props.type === "DEFAULT" || true) {
     return (
       <div
-        className={`transition-transform block w-fit ${
+        className={`transition-transform flex justify-center items-center w-4 h-4 ${
           props.expanded() ? "rotate-90" : "rotate-0"
         }`}
       >

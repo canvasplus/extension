@@ -7,9 +7,14 @@ export default function TabOnSidebar(props: {
   tab: CourseTab;
   courseId: number;
 }) {
+  const iconType = () => {
+    if (props.tab.type === "external") return "EXTERNAL";
+    else return "DEFAULT";
+  };
+
   return (
     <SidebarRedirect indent={1} title={props.tab.label}>
-      <SidebarRedirectIcon type="DEFAULT" />
+      <SidebarRedirectIcon type={iconType()} />
     </SidebarRedirect>
   );
   // if (props.tab.type === "internal") {

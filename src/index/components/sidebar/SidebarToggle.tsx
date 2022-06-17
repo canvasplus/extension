@@ -35,7 +35,9 @@ export default function SidebarToggle(props: {
                 <SidebarToggleIcon expanded={expanded} type="DEFAULT" />
               </div>
             </div>
-            <p className="pl-0.5 pr-2">{props.title}</p>
+            <p className="pl-0.5 pr-2 overflow-ellipsis whitespace-nowrap overflow-hidden">
+              {props.title}
+            </p>
           </div>
         </SidebarItem>
       </div>

@@ -11,19 +11,16 @@ export default function CourseOnSidebar(props: { course: Course }) {
   const expandedSignal = createSignal(false);
   const [expanded, setExpanded] = expandedSignal;
 
-  const path = new URL(
-    "https://aisdblend.instructure.com/courses/344723/pages/"
-  ).pathname
-    .split("/")
-    .filter((n) => n);
+  const path = () =>
+    new URL(getCurrentLocation()).pathname.split("/").filter((n) => n);
 
   return (
     <SidebarToggle
       highlighted={
-        path[0] === "courses" && path[1] === props.course.id.toString()
+        path()[0] === "courses" && path()[1] === props.course.id.toString()
       }
       indent={0}
-      title={props.course.name}
+      title={getCurrentLocation()}
       expandedSignal={expandedSignal}
     >
       {props.course.tabs.map((tab) => {
