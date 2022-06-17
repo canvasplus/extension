@@ -8,6 +8,7 @@ import {
 } from "solid-js";
 import { useLocation } from "../../lib/context/location";
 import Loading from "../util/Loading";
+import VLink from "../util/VLink";
 import SidebarItem from "./SidebarItem";
 import SidebarToggleIcon from "./SidebarToggleIcon";
 
@@ -19,7 +20,7 @@ export default function SidebarRedirect(props: {
 }) {
   const [get, { goTo }] = useLocation();
   return (
-    <div>
+    <VLink href={props.redirect}>
       <div
         className={`rounded-lg hover:bg-cyan-200 group`}
         onClick={(e) => {
@@ -37,6 +38,6 @@ export default function SidebarRedirect(props: {
           </div>
         </SidebarItem>
       </div>
-    </div>
+    </VLink>
   );
 }

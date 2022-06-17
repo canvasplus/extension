@@ -17,7 +17,7 @@ export default function CourseOnSidebar(props: { course: Course }) {
     new URL(getCurrentLocation()).pathname.split("/").filter((n) => n);
 
   const url = new URL(getCurrentLocation());
-  url.pathname = `course/${props.course.id}`;
+  url.pathname = `courses/${props.course.id}`;
 
   return (
     <SidebarToggle
