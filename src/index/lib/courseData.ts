@@ -1,10 +1,13 @@
 import axios from "axios";
 import { getDatabase, getLastUpdated, useCollection } from "./database";
 import { Course } from "./types/Course";
+import { CourseTab } from "./types/CourseTab";
 import { toMs } from "./util";
 
 export const fetchCourses = async (): Promise<Course[]> => {
-  const { data } = await axios.get("users/self/favorites/courses");
+  const { data } = await axios.get("users/self/favorites/courses", {
+    params: { include: ["tabs"] },
+  });
 
   if (data.errors) {
     throw data;
@@ -15,7 +18,7 @@ export const fetchCourses = async (): Promise<Course[]> => {
 
 export const getCourses = (): Promise<Course[]> => {
   return new Promise((resolve) => {
-    getLastUpdated("courses", toMs(1, "D")).then((lastUpdated) => {
+    getLastUpdated("courses", toMs(0, "D")).then((lastUpdated) => {
       if (lastUpdated) {
         console.log("getting from cache");
 

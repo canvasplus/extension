@@ -1,6 +1,10 @@
 import { createSignal } from "solid-js";
-import { getCourses } from "../../lib/courseList";
+import { getCourses } from "../../lib/courseData";
 import { Course } from "../../lib/types/Course";
+import CourseOnSidebar from "./CourseOnSidebar";
+import SidebarItem from "./SidebarItem";
+import SidebarToggle from "./SidebarToggle";
+import SidebarToggleIcon from "./SidebarToggleIcon";
 
 export default function Sidebar(props) {
   const [courses, setCourses] = createSignal<Course[] | undefined>(undefined);
@@ -16,8 +20,14 @@ export default function Sidebar(props) {
   });
 
   return (
-    <div className="w-60 h-full bg-cyan-100">
-      {placeholder() ?? <p>other</p>}
+    <div className="w-80 bg-cyan-50 h-full text-sm p-2">
+      {placeholder() ?? (
+        <div>
+          {courses()?.map((c) => (
+            <CourseOnSidebar course={c} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

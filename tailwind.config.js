@@ -29,6 +29,9 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      animation: {
+        "spin-slow": "spin 2s linear infinite",
+      },
     },
   },
   plugins: [

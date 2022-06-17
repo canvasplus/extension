@@ -9,10 +9,13 @@ import Case from "./components/router/Case";
 import DefaultView from "./components/base/DefaultView";
 import { getLastUpdated, initiate } from "./lib/database";
 import axios from "axios";
-import { fetchCourses, getCourses } from "./lib/courseList";
+import { fetchCourses, getCourses } from "./lib/courseData";
 import { LocationProvider, useLocation } from "./lib/context/location";
 
+import sync from "css-animation-sync";
 const Index: Function = () => {
+  sync("spin");
+
   const [
     { getCurrentLocation, getFullLocation },
     { goTo, setFullLocation, doneLoading },
