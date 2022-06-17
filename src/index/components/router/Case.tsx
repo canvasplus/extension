@@ -5,7 +5,7 @@ export default function Case(props) {
 }
 
 export function NoCase(props: {
-  redirect(to?: string, title?: string): void;
+  redirect(to: string): void;
   route: Accessor<string>;
 }) {
   const url = new URL(props.route());

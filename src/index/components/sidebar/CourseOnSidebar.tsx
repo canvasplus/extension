@@ -1,3 +1,4 @@
+import * as exp from "constants";
 import { createSignal } from "solid-js";
 import { useLocation } from "../../lib/context/location";
 import { Course } from "../../lib/types/Course";
@@ -20,7 +21,7 @@ export default function CourseOnSidebar(props: { course: Course }) {
         path()[0] === "courses" && path()[1] === props.course.id.toString()
       }
       indent={0}
-      title={getCurrentLocation()}
+      title={props.course.name}
       expandedSignal={expandedSignal}
     >
       {props.course.tabs.map((tab) => {

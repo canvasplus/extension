@@ -13,6 +13,7 @@ type Store = [
   },
   {
     goTo(newRoute: string): void;
+    goToPath(newRoute: string): void;
     doneLoading(): void;
     setFullLocation: Setter<CPXLocation | undefined>;
   }
@@ -26,10 +27,15 @@ export type CPXLocation = {
 };
 
 export function LocationProvider(props) {
-  const [location, setLocation] = createSignal<CPXLocation | undefined>({
-    route: "hi",
-    prev: "no",
-  });
+  const [location, setLocation] = createSignal<CPXLocation | undefined>(
+    {
+      route: "hi",
+      prev: "no",
+    },
+    {
+      equals: false,
+    }
+  );
 
   const store: Store = [
     {
@@ -42,6 +48,16 @@ export function LocationProvider(props) {
       goTo(newRoute: string) {
         const current = location();
         current.prev = newRoute;
+
+        setLocation(current);
+      },
+      goToPath(newRoute: string) {
+        const current = location();
+        const url = new URL(current.route);
+
+        url.pathname = newRoute;
+
+        current.prev = url.toString();
 
         setLocation(current);
       },

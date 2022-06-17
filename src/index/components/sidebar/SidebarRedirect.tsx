@@ -1,4 +1,11 @@
-import { children, createSignal, JSX, Show, Signal } from "solid-js";
+import {
+  children,
+  createSignal,
+  JSX,
+  PropsWithChildren,
+  Show,
+  Signal,
+} from "solid-js";
 import { useLocation } from "../../lib/context/location";
 import Loading from "../util/Loading";
 import SidebarItem from "./SidebarItem";
@@ -8,18 +15,15 @@ export default function SidebarRedirect(props: {
   title: string;
   children?: JSX.Element;
   indent: 0 | 1 | 2 | 3 | 4;
+  redirect: string;
 }) {
-  const [get, { setFullLocation }] = useLocation();
+  const [get, { goTo }] = useLocation();
   return (
     <div>
       <div
         className={`rounded-lg hover:bg-cyan-200 group`}
         onClick={(e) => {
-          // setFullLocation({
-          //   route: "",
-          // });
-          // doneLoading();
-          console.log(get.getCurrentLocation());
+          goTo(props.redirect);
         }}
       >
         <SidebarItem indent={props.indent}>

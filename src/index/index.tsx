@@ -18,7 +18,7 @@ const Index: Function = () => {
 
   const [
     { getCurrentLocation, getFullLocation },
-    { goTo, setFullLocation, doneLoading },
+    { setFullLocation, doneLoading },
   ] = useLocation();
 
   const [dbReady, setDbReady] = createSignal(false);
@@ -27,8 +27,6 @@ const Index: Function = () => {
     setDbReady(true);
   });
 
-  const [titleState, setTitleState] = createSignal("");
-
   setFullLocation({
     route: new URL(location.href).searchParams.get("ourl"),
   });
@@ -36,65 +34,83 @@ const Index: Function = () => {
   const setRoute = (route: string) => {
     setFullLocation({ route });
   };
+
+  createEffect(() => {
+    console.log("doing done loading");
+
+    const location = getFullLocation();
+
+    if (location.prev) {
+      doneLoading();
+    }
+  });
+
+  createEffect(() => {
+    chrome.runtime.sendMessage({
+      action: "sendTo",
+      to: getCurrentLocation(),
+    });
+  });
+
   // const [route, setRoute] = createSignal(
   //   new URL(location.href).searchParams.get("ourl")
   // );
 
-  const redirectFullURL = (to?: string, title?: string) => {
-    if (to != null) setRoute(to);
-    if (title != null) setTitleState(title);
+  // const redirectFullURL = (to?: string, title?: string) => {
+  //   if (to != null) setRoute(to);
+  //   if (title != null) setTitleState(title);
 
-    chrome.runtime.sendMessage({
-      action: "redirect",
-      to: to ?? getCurrentLocation(),
-      titleState: title ?? titleState(),
-    });
-  };
+  //   chrome.runtime.sendMessage({
+  //     action: "redirect",
+  //     to: to ?? getCurrentLocation(),
+  //     titleState: title ?? titleState(),
+  //   });
+  // };
 
-  const sendToFullURL = (to?: string, title?: string) => {
-    if (to != null) setRoute(to);
-    if (title != null) setTitleState(title);
+  // const sendToFullURL = (to?: string, title?: string) => {
+  //   if (to != null) setRoute(to);
+  //   if (title != null) setTitleState(title);
 
-    chrome.runtime.sendMessage({
-      action: "sendTo",
-      to: to ?? getCurrentLocation(),
-      titleState: title ?? titleState(),
-    });
-  };
+  //   chrome.runtime.sendMessage({
+  //     action: "sendTo",
+  //     to: to ?? getCurrentLocation(),
+  //     titleState: title ?? titleState(),
+  //   });
+  // };
 
-  const setTitle = (newTitle: string, addToHistory: boolean) => {
-    if (addToHistory) {
-      sendToFullURL(undefined, newTitle);
-    } else {
-      redirectFullURL(undefined, newTitle);
-    }
-  };
+  // const setTitle = (newTitle: string, addToHistory: boolean) => {
+  //   if (addToHistory) {
+  //     sendToFullURL(undefined, newTitle);
+  //   } else {
+  //     redirectFullURL(undefined, newTitle);
+  //   }
+  // };
 
-  const setURL = (url: string, addToHistory: boolean) => {
-    if (url) {
-      sendToFullURL(url, undefined);
-    } else {
-      redirectFullURL(url, undefined);
-    }
-  };
+  // const setURL = (url: string, addToHistory: boolean) => {
+  //   if (url) {
+  //     sendToFullURL(url, undefined);
+  //   } else {
+  //     redirectFullURL(url, undefined);
+  //   }
+  // };
 
-  const setPathname = (pathname: string, addToHistory: boolean) => {
-    const asURL = new URL(getCurrentLocation());
-    asURL.pathname = pathname;
-    setURL(asURL.toString(), addToHistory);
-  };
+  // const setPathname = (pathname: string, addToHistory: boolean) => {
+  //   const asURL = new URL(getCurrentLocation());
+  //   asURL.pathname = pathname;
+  //   setURL(asURL.toString(), addToHistory);
+  // };
 
-  const setParam = (k: string, v: string, addToHistory: boolean) => {
-    const asURL = new URL(getCurrentLocation());
-    asURL.searchParams.set(k, v);
-    setURL(asURL.toString(), addToHistory);
-  };
+  // const setParam = (k: string, v: string, addToHistory: boolean) => {
+  //   const asURL = new URL(getCurrentLocation());
+  //   asURL.searchParams.set(k, v);
+  //   setURL(asURL.toString(), addToHistory);
+  // };
 
-  const removeParam = (k: string, v: string, addToHistory: boolean) => {
-    const asURL = new URL(getCurrentLocation());
-    asURL.searchParams.delete(k);
-    setURL(asURL.toString(), addToHistory);
-  };
+  // const removeParam = (k: string, v: string, addToHistory: boolean) => {
+  //   const asURL = new URL(getCurrentLocation());
+  //   asURL.searchParams.delete(k);
+  //   setURL(asURL.toString(), addToHistory);
+  // };
 
   const routePathname = () =>
     new URL(getCurrentLocation()).pathname.replace(/\/+$/, "");
@@ -114,7 +130,7 @@ const Index: Function = () => {
   return (
     <>
       {appReady() ? (
-        <Router redirect={redirectFullURL} route={getCurrentLocation}>
+        <Router route={getCurrentLocation}>
           <></>
 
           <Case filter={routePathname() === ""}>

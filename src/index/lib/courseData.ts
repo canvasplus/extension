@@ -18,7 +18,7 @@ export const fetchCourses = async (): Promise<Course[]> => {
 
 export const getCourses = (): Promise<Course[]> => {
   return new Promise((resolve) => {
-    getLastUpdated("courses", toMs(0, "D")).then((lastUpdated) => {
+    getLastUpdated("courses", toMs(3, "D")).then((lastUpdated) => {
       if (lastUpdated) {
         console.log("getting from cache");
 

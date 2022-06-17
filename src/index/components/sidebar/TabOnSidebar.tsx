@@ -13,7 +13,11 @@ export default function TabOnSidebar(props: {
   };
 
   return (
-    <SidebarRedirect indent={1} title={props.tab.label}>
+    <SidebarRedirect
+      indent={1}
+      title={props.tab.label}
+      redirect={props.tab.full_url}
+    >
       <SidebarRedirectIcon type={iconType()} />
     </SidebarRedirect>
   );
