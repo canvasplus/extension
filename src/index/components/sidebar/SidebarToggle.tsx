@@ -13,6 +13,7 @@ export default function SidebarToggle(props: {
   highlighted: boolean;
   indent: 0 | 1 | 2 | 3 | 4;
   expandedSignal?: Signal<boolean>;
+  iconType?: string;
 }) {
   const [{}, { goTo }] = useLocation();
   const [expanded, setExpanded] = props.expandedSignal ?? createSignal(false);
@@ -43,7 +44,11 @@ export default function SidebarToggle(props: {
                 }}
               >
                 <div className="p-1 rounded-md group-hover:bg-cyan-300">
-                  <SidebarToggleIcon expanded={expanded} type="DEFAULT" />
+                  <SidebarToggleIcon
+                    expanded={expanded}
+                    // @ts-ignore
+                    type={props.iconType ?? "DEFAULT"}
+                  />
                 </div>
               </div>
               <p className="pl-0.5 pr-2 overflow-ellipsis whitespace-nowrap overflow-hidden">
