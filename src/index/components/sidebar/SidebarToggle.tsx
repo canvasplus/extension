@@ -22,7 +22,7 @@ export default function SidebarToggle(props: {
     <div>
       <VLink href={props.href}>
         <div
-          className={`rounded-lg ${
+          className={`rounded-lg group-1 ${
             props.highlighted ? "bg-cyan-200" : "hover:bg-cyan-200"
           }`}
           onClick={() => {
@@ -36,15 +36,16 @@ export default function SidebarToggle(props: {
               }`}
             >
               <div
-                className="p-1.5 group cursor-pointer"
+                className="p-1.5 group-2 cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   setExpanded(!expanded());
                 }}
               >
-                <div className="p-1 rounded-md group-hover:bg-cyan-300">
+                <div className="p-1 rounded-md group-2-hover:bg-cyan-300">
                   <SidebarToggleIcon
+                    highlighted={props.highlighted}
                     expanded={expanded}
                     // @ts-ignore
                     type={props.iconType ?? "DEFAULT"}
