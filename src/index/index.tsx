@@ -23,12 +23,14 @@ const Index: Function = () => {
 
   const [dbReady, setDbReady] = createSignal(false);
 
-  initiate().then(() => {
-    setDbReady(true);
-  });
+  const initialURL = new URL(location.href).searchParams.get("ourl");
 
   setFullLocation({
-    route: new URL(location.href).searchParams.get("ourl"),
+    route: initialURL,
+  });
+
+  initiate(new URL(initialURL).hostname).then(() => {
+    setDbReady(true);
   });
 
   const setRoute = (route: string) => {

@@ -1,9 +1,9 @@
-export const initiate = (): Promise<void> => {
+export const initiate = (hostname: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     const indexedDb = window.indexedDB;
 
     if (indexedDb) {
-      const request = indexedDb.open("cpx-caching");
+      const request = indexedDb.open(`cpx-caching-${hostname}`);
 
       request.onerror = (event) => {
         console.log("error");
