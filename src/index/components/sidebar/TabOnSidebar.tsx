@@ -30,8 +30,7 @@ export default function TabOnSidebar(props: {
         <SidebarRedirectIcon type={"EXTERNAL"} />
       </SidebarRedirect>
     );
-  }
-  if (id === "home") {
+  } else if (id === "home") {
     return (
       <SidebarToggle
         indent={1}
@@ -42,6 +41,16 @@ export default function TabOnSidebar(props: {
       >
         <Loading />
       </SidebarToggle>
+    );
+  } else {
+    return (
+      <SidebarRedirect
+        indent={1}
+        title={props.tab.label}
+        redirect={props.tab.full_url}
+      >
+        <SidebarRedirectIcon type={"DEFAULT"} />
+      </SidebarRedirect>
     );
   }
   // const icon = (): { icon: string; type: "REDIRECT" | "TOGGLE" } => {
