@@ -8,7 +8,7 @@ export default function HomeTab(props: TabComponentProps) {
       indent={1}
       title={props.tab.label}
       href={props.tab.full_url}
-      highlighted={props.parentHighlighted()}
+      highlighted={props.parentHighlighted() && props.path().length === 2}
       iconType={"HOME"}
     >
       <Loading />

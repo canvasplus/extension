@@ -1,8 +1,14 @@
-import { IoCaretForward, IoHomeOutline } from "solid-icons/io";
+import {
+  IoBookOutline,
+  IoCaretForward,
+  IoGridOutline,
+  IoHomeOutline,
+  IoNewspaperOutline,
+} from "solid-icons/io";
 import { Accessor } from "solid-js";
 
 export default function SidebarToggleIcon(props: {
-  type: "DEFAULT" | "HOME";
+  type: "DEFAULT" | "HOME" | "PAGES";
   expanded: Accessor<boolean>;
   highlighted: boolean;
 }) {
@@ -55,6 +61,20 @@ export default function SidebarToggleIcon(props: {
     return (
       <div className={`relative flex justify-center items-center w-4 h-4`}>
         <IoHomeOutline className="text-base" />
+        {smallArrow()}
+      </div>
+    );
+  } else if (props.type === "PAGES") {
+    return (
+      <div className={`relative flex justify-center items-center w-4 h-4`}>
+        <IoBookOutline className="text-base" />
+        {smallArrow()}
+      </div>
+    );
+  } else if (props.type === "MODULES") {
+    return (
+      <div className={`relative flex justify-center items-center w-4 h-4`}>
+        <IoGridOutline className="text-base" />
         {smallArrow()}
       </div>
     );

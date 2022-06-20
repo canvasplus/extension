@@ -6,6 +6,8 @@ import SidebarToggleIcon from "./SidebarToggleIcon";
 import SidebarToggle from "./SidebarToggle";
 import { useLocation } from "../../lib/context/location";
 import HomeTab from "./tabs/HomeTab";
+import PagesTab from "./tabs/PagesTab";
+import ModulesTab from "./tabs/ModulesTab";
 
 export default function TabOnSidebar(props: {
   tab: CourseTab;
@@ -34,6 +36,24 @@ export default function TabOnSidebar(props: {
   } else if (id === "home") {
     return (
       <HomeTab
+        courseId={props.courseId}
+        parentHighlighted={highlighted}
+        path={path}
+        tab={props.tab}
+      />
+    );
+  } else if (id === "pages") {
+    return (
+      <PagesTab
+        courseId={props.courseId}
+        parentHighlighted={highlighted}
+        path={path}
+        tab={props.tab}
+      />
+    );
+  } else if (id === "modules") {
+    return (
+      <ModulesTab
         courseId={props.courseId}
         parentHighlighted={highlighted}
         path={path}
