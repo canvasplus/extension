@@ -5,6 +5,7 @@ import SidebarRedirect from "./SidebarRedirect";
 import SidebarToggleIcon from "./SidebarToggleIcon";
 import SidebarToggle from "./SidebarToggle";
 import { useLocation } from "../../lib/context/location";
+import HomeTab from "./tabs/HomeTab";
 
 export default function TabOnSidebar(props: {
   tab: CourseTab;
@@ -32,15 +33,12 @@ export default function TabOnSidebar(props: {
     );
   } else if (id === "home") {
     return (
-      <SidebarToggle
-        indent={1}
-        title={props.tab.label}
-        href={props.tab.full_url}
-        highlighted={highlighted()}
-        iconType={"HOME"}
-      >
-        <Loading />
-      </SidebarToggle>
+      <HomeTab
+        courseId={props.courseId}
+        parentHighlighted={highlighted}
+        path={path}
+        tab={props.tab}
+      />
     );
   } else {
     return (
