@@ -1,20 +1,28 @@
 import { render } from "solid-js/web";
 import "../global.css";
 import "tailwindcss/tailwind.css";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import Sidebar from "./components/sidebar/Sidebar";
 import SplitScreen from "./components/base/SplitScreen";
 import Router from "./components/router/Router";
 import Case from "./components/router/Case";
 import DefaultView from "./components/base/DefaultView";
 import { getLastUpdated, initiate } from "./lib/database";
-import axios from "axios";
+import Axios from "axios";
 import { fetchCourses, getCourses } from "./lib/courseData";
 import { LocationProvider, useLocation } from "./lib/context/location";
-
+import { SetToken, SetID } from "./lib/token";
 import sync from "css-animation-sync";
+import GraphQL from "./lib/graphQL";
+
 const Index: Function = () => {
   sync("spin");
+
+  GraphQL(`
+    allCourses {
+      name
+    }
+  `)
 
   const [
     { getCurrentLocation, getFullLocation },
@@ -53,6 +61,12 @@ const Index: Function = () => {
       to: getCurrentLocation(),
     });
   });
+
+  chrome.runtime.onMessage.addListener((message) => {
+    message.action == "setToken" ? SetToken(message.token) : null;
+  });
+
+  SetID();
 
   // const [route, setRoute] = createSignal(
   //   new URL(location.href).searchParams.get("ourl")
@@ -117,7 +131,7 @@ const Index: Function = () => {
   const routePathname = () =>
     new URL(getCurrentLocation()).pathname.replace(/\/+$/, "");
 
-  axios.defaults.baseURL = `${new URL(getCurrentLocation()).origin}/api/v1`;
+  Axios.defaults.baseURL = `${new URL(getCurrentLocation()).origin}`;
 
   const appReady = () => {
     return dbReady();
