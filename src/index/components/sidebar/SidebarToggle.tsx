@@ -1,4 +1,5 @@
-import { IoOpenOutline } from "solid-icons/io";
+import { IoOpenOutline, IoGlobeOutline } from "solid-icons/io";
+import { FiExternalLink } from "solid-icons/fi";
 import { children, createSignal, JSX, Show, Signal } from "solid-js";
 import { useLocation } from "../../lib/context/location";
 import Loading from "../util/Loading";
@@ -11,12 +12,18 @@ export default function SidebarToggle(props: {
   href: string;
   children?: JSX.Element;
   highlighted: boolean;
+  primaryFunction: "TOGGLE" | "LINK";
   indent: 0 | 1 | 2 | 3 | 4;
   expandedSignal?: Signal<boolean>;
+  loadingSignal?: Signal<boolean>;
   iconType?: string;
 }) {
   const [{}, { goTo }] = useLocation();
-  const [expanded, setExpanded] = props.expandedSignal ?? createSignal(false);
+  const expandedSignal = props.expandedSignal ?? createSignal(false);
+  const loadingSignal = props.loadingSignal ?? createSignal(false);
+
+  const [expanded, setExpanded] = expandedSignal;
+  const [loading, setLoading] = loadingSignal;
 
   return (
     <div>
@@ -26,35 +33,51 @@ export default function SidebarToggle(props: {
             props.highlighted ? "bg-cyan-200" : "hover:bg-cyan-200"
           }`}
           onClick={() => {
-            goTo(props.href);
+            if (props.primaryFunction === "LINK") {
+              goTo(props.href);
+            } else {
+              setExpanded(!expanded());
+            }
           }}
         >
           <SidebarItem indent={props.indent}>
             <div
-              className={`flex flex-row items-center w-full text-gray  ${
+              className={`flex flex-row justify-between items-center w-full text-gray  ${
                 props.highlighted ? "text-cyan-700" : "hover:text-cyan-700"
               }`}
             >
-              <div
-                className="p-1.5 group-2 cursor-pointer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setExpanded(!expanded());
-                }}
-              >
-                <div className="p-1 rounded-md group-2-hover:bg-cyan-300">
-                  <SidebarToggleIcon
-                    highlighted={props.highlighted}
-                    expanded={expanded}
-                    // @ts-ignore
-                    type={props.iconType ?? "DEFAULT"}
-                  />
-                </div>
+              <div className="flex flex-row items-center">
+                <SidebarToggleIcon
+                  expandedSignal={expandedSignal}
+                  highlighted={props.highlighted}
+                />
+
+                <p className="pl-0.5 pr-2 overflow-ellipsis whitespace-nowrap overflow-hidden">
+                  {props.title}
+                </p>
               </div>
-              <p className="pl-0.5 pr-2 overflow-ellipsis whitespace-nowrap overflow-hidden">
-                {props.title}
-              </p>
+
+              {/* @ts-ignore */}
+              <Show when={loading()}>
+                <div className="p-2.5">
+                  <Loading size={16} />
+                </div>
+              </Show>
+
+              {/* @ts-ignore */}
+              <Show when={props.primaryFunction === "TOGGLE" && !loading()}>
+                <div
+                  className="p-1.5 group-2"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goTo(props.href);
+                  }}
+                >
+                  <div className="p-[5px] group-2-hover:bg-cyan-300 rounded-md">
+                    <FiExternalLink className="text-sm hidden group-1-hover:block" />
+                  </div>
+                </div>
+              </Show>
             </div>
           </SidebarItem>
         </div>

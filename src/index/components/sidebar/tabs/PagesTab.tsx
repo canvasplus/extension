@@ -49,6 +49,7 @@ export default function PagesTab(props: TabComponentProps) {
 
   return (
     <SidebarToggle
+      primaryFunction="TOGGLE"
       expandedSignal={expandedSignal}
       indent={1}
       title={props.tab.label}

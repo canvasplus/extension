@@ -1,4 +1,4 @@
-export default function Loading(props) {
+export default function Loading(props: { size?: number }) {
   const size = props.size ?? 20;
 
   return (
@@ -21,12 +21,32 @@ export default function Loading(props) {
           gradientTransform="matrix(1, 0, 0, 1, 0, 0)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="gray" stop-opacity="0" />
-          <stop offset=".22" stop-color="gray" stop-opacity=".32" />
-          <stop offset=".45" stop-color="gray" stop-opacity=".62" />
-          <stop offset=".66" stop-color="gray" stop-opacity=".83" />
-          <stop offset=".85" stop-color="gray" stop-opacity=".95" />
-          <stop offset="1" stop-color="gray" />
+          <stop
+            offset="0"
+            stop-color="var(--stop-color, gray)"
+            stop-opacity="0"
+          />
+          <stop
+            offset=".22"
+            stop-color="var(--stop-color, gray)"
+            stop-opacity=".32"
+          />
+          <stop
+            offset=".45"
+            stop-color="var(--stop-color, gray)"
+            stop-opacity=".62"
+          />
+          <stop
+            offset=".66"
+            stop-color="var(--stop-color, gray)"
+            stop-opacity=".83"
+          />
+          <stop
+            offset=".85"
+            stop-color="var(--stop-color, gray)"
+            stop-opacity=".95"
+          />
+          <stop offset="1" stop-color="var(--stop-color, gray)" />
         </linearGradient>
       </defs>
       <path
