@@ -20,6 +20,8 @@ export default function PagesTab(props: TabComponentProps) {
   const [expanded] = expandedSignal;
 
   createEffect(() => {
+    console.log(expanded() && pages() == null);
+
     if (expanded() && pages() == null) {
       getPages(props.courseId).then(setPages);
     }

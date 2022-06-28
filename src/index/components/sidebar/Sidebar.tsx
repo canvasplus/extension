@@ -20,7 +20,7 @@ export default function Sidebar(props) {
   });
 
   return (
-    <div className="w-80 bg-cyan-50 h-full text-sm p-2">
+    <div className="fixed w-80 bg-cyan-50 h-full text-sm p-2 overflow-scroll">
       {placeholder() ?? (
         <div>
           {courses()?.map((c) => (

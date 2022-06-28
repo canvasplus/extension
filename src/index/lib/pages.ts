@@ -11,7 +11,7 @@ export const fetchPages = async (courseId: number): Promise<Page[]> => {
 
   for (let i = 1; ; i++) {
     const { data } = await axios.get(
-      `/courses/${courseId}/pages?page=${i}&per_page=50`
+      `/api/v1/courses/${courseId}/pages?page=${i}&per_page=50`
     );
 
     if (data.errors) {
@@ -35,13 +35,11 @@ export const getPages = (courseId: number): Promise<Page[]> => {
         const query = getDatabase()
           .transaction(["pages"])
           .objectStore("pages")
-          .getAll([courseId]);
+          .getAll(courseId);
 
         query.onsuccess = () => resolve(query.result);
       } else {
         fetchPages(courseId).then((pages) => {
-          console.log(pages);
-
           const transaction = getDatabase().transaction(["pages"], "readwrite");
 
           const objectStore = transaction.objectStore("pages");
@@ -56,7 +54,7 @@ export const getPages = (courseId: number): Promise<Page[]> => {
           );
 
           transaction.oncomplete = () => {
-            useCollection("pages");
+            useCollection(`pages/${courseId}`);
             resolve(pages);
           };
         });
