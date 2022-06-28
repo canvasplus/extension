@@ -19,6 +19,10 @@ export const initiate = (hostname: string): Promise<void> => {
         if (oldVersion < 1) {
           db.createObjectStore("courses", { keyPath: "id" });
           db.createObjectStore("collectionsLastUpdated", { keyPath: "name" });
+          db.createObjectStore("pages", { keyPath: ["courseId", "id"] });
+          db.createObjectStore("itemBodies", {
+            keyPath: ["courseId", "itemType", "id"],
+          });
         }
       };
 
