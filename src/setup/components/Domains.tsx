@@ -17,7 +17,6 @@ export default function Domains(props: { next(): void }) {
     return () => {
       const newDomains = domains();
       newDomains.splice(idx, 1);
-      console.log(newDomains);
 
       setDomains(newDomains);
 

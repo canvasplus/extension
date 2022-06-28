@@ -33,30 +33,29 @@ export const getPages = (courseId: number): Promise<Page[]> => {
     getLastUpdated(`pages/${courseId}`, toMs(1, "D")).then((lastUpdated) => {
       if (lastUpdated) {
         const query = getDatabase()
-          .transaction(["pages"])
-          .objectStore("pages")
-          .getAll(courseId);
+          .table("pages")
+          .where("courseId")
+          .equals(courseId)
+          .toArray();
 
-        query.onsuccess = () => resolve(query.result);
+        query.then(resolve);
       } else {
         fetchPages(courseId).then((pages) => {
-          const transaction = getDatabase().transaction(["pages"], "readwrite");
-
-          const objectStore = transaction.objectStore("pages");
-
-          pages.forEach((c) =>
-            objectStore.put({
-              ...c,
+          const reformatted = pages.map((page) => {
+            return {
+              ...page,
               courseId,
-              id: c["page_id"],
+              id: page["page_id"],
               page_id: undefined,
-            })
-          );
+            };
+          });
 
-          transaction.oncomplete = () => {
+          const transaction = getDatabase().table("pages").bulkPut(reformatted);
+
+          transaction.then(() => {
             useCollection(`pages/${courseId}`);
-            resolve(pages);
-          };
+            resolve(reformatted);
+          });
         });
       }
     });

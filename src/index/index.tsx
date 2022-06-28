@@ -22,7 +22,7 @@ const Index: Function = () => {
     allCourses {
       name
     }
-  `)
+  `);
 
   const [
     { getCurrentLocation, getFullLocation },
@@ -46,8 +46,6 @@ const Index: Function = () => {
   };
 
   createEffect(() => {
-    console.log("doing done loading");
-
     const location = getFullLocation();
 
     if (location.prev) {
@@ -136,12 +134,6 @@ const Index: Function = () => {
   const appReady = () => {
     return dbReady();
   };
-
-  createEffect(() => {
-    if (appReady()) {
-      console.log(getCurrentLocation);
-    }
-  });
 
   return (
     <>

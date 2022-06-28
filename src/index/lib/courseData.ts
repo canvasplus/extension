@@ -20,30 +20,18 @@ export const getCourses = (): Promise<Course[]> => {
   return new Promise((resolve) => {
     getLastUpdated("courses", toMs(3, "D")).then((lastUpdated) => {
       if (lastUpdated) {
-        console.log("getting from cache");
+        const query = getDatabase().table("courses").toArray();
 
-        const query = getDatabase()
-          .transaction(["courses"])
-          .objectStore("courses")
-          .getAll();
-
-        query.onsuccess = () => resolve(query.result);
+        query.then(resolve);
       } else {
-        console.log("getching");
         fetchCourses().then((courses) => {
-          const transaction = getDatabase().transaction(
-            ["courses"],
-            "readwrite"
-          );
-
-          const objectStore = transaction.objectStore("courses");
-
-          courses.forEach((c) => objectStore.put(c));
-
-          transaction.oncomplete = () => {
-            useCollection("courses");
-            resolve(courses);
-          };
+          getDatabase()
+            .table("courses")
+            .bulkPut(courses)
+            .then(() => {
+              useCollection("courses");
+              resolve(courses);
+            });
         });
       }
     });

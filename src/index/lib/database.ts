@@ -1,44 +1,26 @@
-export const initiate = (hostname: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    const indexedDb = window.indexedDB;
+import * as assert from "assert";
+import Dexie from "dexie";
 
-    if (indexedDb) {
-      const request = indexedDb.open(`cpx-caching-${hostname}`);
+export const initiate = async (hostname: string): Promise<void> => {
+  const db = new Dexie(`cpx-caching-${hostname}`);
 
-      request.onerror = (event) => {
-        console.log("error");
-        return false;
-      };
+  window["cpxCachingDb"] = {
+    db,
+    clear: () => {
+      Dexie.delete(`cpx-caching-${hostname}`);
+    },
+  };
 
-      request.onupgradeneeded = (event) => {
-        const { oldVersion } = event;
-
-        // @ts-ignore
-        const db: IDBDatabase = event.target.result;
-
-        if (oldVersion < 1) {
-          db.createObjectStore("courses", { keyPath: "id" });
-          db.createObjectStore("collectionsLastUpdated", { keyPath: "name" });
-          db.createObjectStore("pages", { keyPath: ["courseId", "id"] });
-          db.createObjectStore("itemBodies", {
-            keyPath: ["courseId", "itemType", "id"],
-          });
-        }
-      };
-
-      request.onsuccess = (event) => {
-        // @ts-ignore
-        window["cpxCachingDb"] = event.target.result;
-        resolve();
-      };
-    } else {
-      reject();
-    }
+  db.version(1).stores({
+    courses: "id",
+    collectionsLastUpdated: "name",
+    pages: "[courseId+id]",
+    itemBodies: "[courseId+itemType+id]",
   });
 };
 
-export const getDatabase = (): IDBDatabase => {
-  return window["cpxCachingDb"];
+export const getDatabase = (): Dexie => {
+  return window["cpxCachingDb"].db;
 };
 
 export const getLastUpdated = (
@@ -53,21 +35,19 @@ export const getLastUpdated = (
     });
   } else {
     return new Promise((resolve) => {
-      const query = getDatabase()
-        .transaction(["collectionsLastUpdated"])
-        .objectStore("collectionsLastUpdated")
-        .get(name);
-
-      query.onsuccess = (e) => {
-        resolve(query.result?.timestamp ?? 0);
-      };
+      getDatabase()
+        .table("collectionsLastUpdated")
+        .get(name)
+        .then((u) => {
+          resolve(u?.timestamp ?? 0);
+        });
     });
   }
 };
 
 export const useCollection = (name: string) => {
-  getDatabase()
-    .transaction(["collectionsLastUpdated"], "readwrite")
-    .objectStore("collectionsLastUpdated")
-    .put({ name, timestamp: Date.now() });
+  getDatabase().table("collectionsLastUpdated").put({
+    name,
+    timestamp: Date.now(),
+  });
 };
