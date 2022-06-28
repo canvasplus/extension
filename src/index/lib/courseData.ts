@@ -5,7 +5,7 @@ import { CourseTab } from "./types/CourseTab";
 import { toMs } from "./util";
 
 export const fetchCourses = async (): Promise<Course[]> => {
-  const { data } = await axios.get("users/self/favorites/courses", {
+  const { data } = await axios.get("/api/v1/users/self/favorites/courses", {
     params: { include: ["tabs"] },
   });
 

@@ -52,7 +52,9 @@ if (window["cpxstate"] == null) {
             window.history.replaceState({}, message.title, message.to);
           if (message.action === "sendTo")
             window.history.pushState({}, message.title, message.to);
-        }
+        } else if (message.action == "getToken") {
+          sendResponse(Object.fromEntries(document.cookie.split("; ").map(cookie => cookie.split("=")))._csrf_token.replace(/%3D/g, "="));
+        };
       });
     };
 
