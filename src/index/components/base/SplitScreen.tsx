@@ -4,7 +4,7 @@ export default function SplitScreen(props) {
   return (
     <div className="h-full w-full flex flex-row">
       <Sidebar />
-      {props.children}
+      <div className="pl-80">{props.children}</div>
     </div>
   );
 }

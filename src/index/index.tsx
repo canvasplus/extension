@@ -7,13 +7,14 @@ import SplitScreen from "./components/base/SplitScreen";
 import Router from "./components/router/Router";
 import Case from "./components/router/Case";
 import DefaultView from "./components/base/DefaultView";
-import { getLastUpdated, initiate } from "./lib/database";
+import { getDatabase, getLastUpdated, initiate } from "./lib/database";
 import Axios from "axios";
 import { fetchCourses, getCourses } from "./lib/courseData";
 import { LocationProvider, useLocation } from "./lib/context/location";
 import { SetToken, SetID } from "./lib/token";
 import sync from "css-animation-sync";
 import GraphQL from "./lib/graphQL";
+import Dexie from "dexie";
 
 const Index: Function = () => {
   sync("spin");
@@ -144,6 +145,15 @@ const Index: Function = () => {
           <Case filter={routePathname() === ""}>
             <DefaultView>
               <h1>Dashboard</h1>
+              <button
+                onClick={() => {
+                  Dexie.delete(getDatabase().name);
+
+                  location.reload();
+                }}
+              >
+                Clear IndexedDB
+              </button>
             </DefaultView>
           </Case>
         </Router>

@@ -15,6 +15,7 @@ export const initiate = async (hostname: string): Promise<void> => {
     courses: "id",
     collectionsLastUpdated: "name",
     pages: "[courseId+id]",
+    modules: "[courseId+id]",
     itemBodies: "[courseId+itemType+id]",
   });
 };

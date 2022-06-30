@@ -19,9 +19,17 @@ export default function PagesTab(props: TabComponentProps) {
   const expandedSignal = createSignal(false);
   const [expanded] = expandedSignal;
 
+  const loadingSignal = createSignal(false);
+  const [loading, setLoading] = loadingSignal;
+
   createEffect(() => {
     if (expanded() && pages() == null) {
-      getPages(props.courseId).then(setPages);
+      setLoading(true);
+
+      getPages(props.courseId).then((pages) => {
+        setPages(pages);
+        setLoading(false);
+      });
     }
   });
 
@@ -29,7 +37,7 @@ export default function PagesTab(props: TabComponentProps) {
     const p = pages();
 
     if (p == null) {
-      return <Loading />;
+      return <></>;
     } else if (p.length === 0) {
       return <div>No pages</div>;
     } else {
@@ -58,6 +66,7 @@ export default function PagesTab(props: TabComponentProps) {
         props.parentHighlighted() && props.path()[2] === "pages" && !onModule()
       }
       iconType={"PAGES"}
+      loadingSignal={loadingSignal}
     >
       {inner()}
     </SidebarToggle>
