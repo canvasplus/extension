@@ -1,7 +1,12 @@
-import { Accessor, children } from "solid-js";
+import { Accessor, children, JSX, Show } from "solid-js";
 
-export default function Case(props) {
-  return !!props.filter ? props.children : <></>;
+export interface CaseDetails {
+  filter(url: string, pathname: string, path: string[]): boolean;
+  element(): JSX.Element;
+}
+
+export default function Case(props: CaseDetails): CaseDetails {
+  return props;
 }
 
 export function NoCase(props: {

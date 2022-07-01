@@ -13,9 +13,12 @@ export const toMs = (quantity: number, unit: "m" | "H" | "D"): number => {
 
 export const getCSRFToken = () => {
   let res: string;
-  chrome.runtime.sendMessage({ action: "getToken" }, (data: { token: string }) => {
-    data ? res = data.token : null;
-  });
+  chrome.runtime.sendMessage(
+    { action: "getToken" },
+    (data: { token: string }) => {
+      data ? (res = data.token) : null;
+    }
+  );
   return res;
 };
 

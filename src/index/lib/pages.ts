@@ -61,3 +61,70 @@ export const getPages = (courseId: number): Promise<Page[]> => {
     });
   });
 };
+
+export const fetchSinglePage = async (
+  courseId: number,
+  urlOrId: string
+): Promise<Page> => {
+  const { data } = await axios.get(
+    `/api/v1/courses/${courseId}/pages/${urlOrId}`
+  );
+
+  if (data.errors) {
+    throw data;
+  }
+
+  const reformatted = {
+    id: data["url"],
+    numberId: data["page_id"],
+    title: data["title"],
+    updated: data["updated_at"],
+    created: data["created_at"],
+    body: data["body"],
+    published: data["published"],
+    isFrontPage: data["front_page"],
+    isLocked: data["locked_for_user"],
+    lockExplanation: data["lock_explanation"],
+  };
+
+  return reformatted;
+};
+
+export const getSinglePage = (
+  courseId: number,
+  urlOrId: string
+): Promise<Page> => {
+  return new Promise((resolve) => {
+    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(3, "H")).then(
+      (lastUpdated) => {
+        if (lastUpdated) {
+          const query = getDatabase()
+            .table("itemBodies")
+            .get({ courseId, itemType: "pages", id: urlOrId });
+
+          query.then(resolve);
+        } else {
+          fetchSinglePage(courseId, urlOrId).then((page) => {
+            const reformatted = {
+              ...page,
+              courseId,
+              itemType: "pages",
+            };
+
+            const transaction = getDatabase()
+              .table("itemBodies")
+              .put(reformatted);
+
+            transaction.then((e) => {
+              if (page.id === urlOrId) {
+                useCollection(`pages/${courseId}/${page.id}`);
+              }
+
+              resolve(page);
+            });
+          });
+        }
+      }
+    );
+  });
+};

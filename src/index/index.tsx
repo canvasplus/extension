@@ -15,6 +15,8 @@ import { SetToken, SetID } from "./lib/token";
 import sync from "css-animation-sync";
 import GraphQL from "./lib/graphQL";
 import Dexie from "dexie";
+import PageContent from "./components/content/page/PageContent";
+import isNumber from "is-number";
 
 const Index: Function = () => {
   sync("spin");
@@ -67,68 +69,12 @@ const Index: Function = () => {
 
   SetID();
 
-  // const [route, setRoute] = createSignal(
-  //   new URL(location.href).searchParams.get("ourl")
-  // );
+  const routePathname = () => {
+    return new URL(getCurrentLocation()).pathname.replace(/\/+$/, "");
+  };
 
-  // const redirectFullURL = (to?: string, title?: string) => {
-  //   if (to != null) setRoute(to);
-  //   if (title != null) setTitleState(title);
-
-  //   chrome.runtime.sendMessage({
-  //     action: "redirect",
-  //     to: to ?? getCurrentLocation(),
-  //     titleState: title ?? titleState(),
-  //   });
-  // };
-
-  // const sendToFullURL = (to?: string, title?: string) => {
-  //   if (to != null) setRoute(to);
-  //   if (title != null) setTitleState(title);
-
-  //   chrome.runtime.sendMessage({
-  //     action: "sendTo",
-  //     to: to ?? getCurrentLocation(),
-  //     titleState: title ?? titleState(),
-  //   });
-  // };
-
-  // const setTitle = (newTitle: string, addToHistory: boolean) => {
-  //   if (addToHistory) {
-  //     sendToFullURL(undefined, newTitle);
-  //   } else {
-  //     redirectFullURL(undefined, newTitle);
-  //   }
-  // };
-
-  // const setURL = (url: string, addToHistory: boolean) => {
-  //   if (url) {
-  //     sendToFullURL(url, undefined);
-  //   } else {
-  //     redirectFullURL(url, undefined);
-  //   }
-  // };
-
-  // const setPathname = (pathname: string, addToHistory: boolean) => {
-  //   const asURL = new URL(getCurrentLocation());
-  //   asURL.pathname = pathname;
-  //   setURL(asURL.toString(), addToHistory);
-  // };
-
-  // const setParam = (k: string, v: string, addToHistory: boolean) => {
-  //   const asURL = new URL(getCurrentLocation());
-  //   asURL.searchParams.set(k, v);
-  //   setURL(asURL.toString(), addToHistory);
-  // };
-
-  // const removeParam = (k: string, v: string, addToHistory: boolean) => {
-  //   const asURL = new URL(getCurrentLocation());
-  //   asURL.searchParams.delete(k);
-  //   setURL(asURL.toString(), addToHistory);
-  // };
-
-  const routePathname = () =>
-    new URL(getCurrentLocation()).pathname.replace(/\/+$/, "");
+  const path = () =>
+    new URL(getCurrentLocation()).pathname.split("/").filter((n) => n);
 
   Axios.defaults.baseURL = `${new URL(getCurrentLocation()).origin}`;
 
@@ -140,9 +86,37 @@ const Index: Function = () => {
     <>
       {appReady() ? (
         <Router route={getCurrentLocation}>
-          <></>
+          <Case
+            filter={(u, n, p) => n === ""}
+            element={() => (
+              <DefaultView>
+                <h1>Dashboard</h1>
+                <button
+                  onClick={() => {
+                    Dexie.delete(getDatabase().name);
 
-          <Case filter={routePathname() === ""}>
+                    location.reload();
+                  }}
+                >
+                  Clear IndexedDB
+                </button>
+              </DefaultView>
+            )}
+          />
+
+          <Case
+            filter={(u, n, p) => p[2] === "pages" && isNumber(p[1])}
+            element={() => (
+              <DefaultView>
+                <PageContent
+                  courseId={Number.parseInt(path()[1])}
+                  pageId={path()[3]}
+                />
+              </DefaultView>
+            )}
+          />
+
+          {/* <Case filter={() => routePathname() === ""}>
             <DefaultView>
               <h1>Dashboard</h1>
               <button
@@ -156,6 +130,12 @@ const Index: Function = () => {
               </button>
             </DefaultView>
           </Case>
+
+          <Case filter={() => path()[2] === "pages"}>
+            <DefaultView>
+              <PageContent courseId={path()[1]} pageId={path()[3]} />
+            </DefaultView>
+          </Case> */}
         </Router>
       ) : (
         <p>Loading...</p>

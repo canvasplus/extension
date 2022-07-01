@@ -11,11 +11,11 @@ if (window["cpxstate"] == null) {
       )
         return false;
 
-      const supportedPathnames = [""];
-
       const pathname = asUrl.pathname.replace(/\/+$/, "");
 
-      if (supportedPathnames.includes(pathname)) {
+      const path = new URL(asUrl).pathname.split("/").filter((n) => n);
+
+      if (pathname === "" || path[2] === "pages") {
         return true;
       }
 
@@ -23,24 +23,6 @@ if (window["cpxstate"] == null) {
     };
 
     const runWithViewer = async () => {
-      const url = new URL(window.location.href);
-      window.history.replaceState({}, "", url.toString());
-
-      document.documentElement.innerHTML = "";
-
-      const framingContainer = document.createElement("div");
-      framingContainer.id = "cpx-framing-container";
-
-      const frame = document.createElement("iframe");
-      frame.id = "cpx-main-frame";
-      frame.src = chrome.runtime.getURL(
-        `src/index/index.html?ourl=${url.toString()}`
-      );
-
-      framingContainer.appendChild(frame);
-
-      document.body.appendChild(framingContainer);
-
       chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.action === "redirect" || message.action === "sendTo") {
           if (!isPathnameCompatible(message.to)) {
@@ -60,6 +42,24 @@ if (window["cpxstate"] == null) {
           );
         }
       });
+
+      const url = new URL(window.location.href);
+      window.history.replaceState({}, "", url.toString());
+
+      document.documentElement.innerHTML = "";
+
+      const framingContainer = document.createElement("div");
+      framingContainer.id = "cpx-framing-container";
+
+      const frame = document.createElement("iframe");
+      frame.id = "cpx-main-frame";
+      frame.src = chrome.runtime.getURL(
+        `src/index/index.html?ourl=${url.toString()}`
+      );
+
+      framingContainer.appendChild(frame);
+
+      document.body.appendChild(framingContainer);
     };
 
     const runWithOverlay = async () => {

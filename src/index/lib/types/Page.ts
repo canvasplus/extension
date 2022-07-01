@@ -1,6 +1,6 @@
 export interface Page {
-  id: number;
-  url: string;
+  id: string;
+  numberId: string;
   title: string;
   updated: number;
   created: number;
