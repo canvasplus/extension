@@ -17,10 +17,10 @@ export default function Router(props) {
     new URL(getCurrentLocation()).pathname.split("/").filter((n) => n);
 
   return (
-    <div>
+    <>
       {cases()
         .find((c) => c.filter(getCurrentLocation(), routePathname(), path()))
         ?.element() ?? <NoCase route={getCurrentLocation} redirect={goTo} />}
-    </div>
+    </>
   );
 }

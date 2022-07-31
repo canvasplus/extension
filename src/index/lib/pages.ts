@@ -94,37 +94,41 @@ export const getSinglePage = (
   courseId: number,
   urlOrId: string
 ): Promise<Page> => {
-  return new Promise((resolve) => {
-    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(3, "H")).then(
-      (lastUpdated) => {
+  return new Promise((resolve, reject) => {
+    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(3, "H"))
+      .then((lastUpdated) => {
         if (lastUpdated) {
           const query = getDatabase()
             .table("itemBodies")
             .get({ courseId, itemType: "pages", id: urlOrId });
 
-          query.then(resolve);
+          query.then(resolve).catch(reject);
         } else {
-          fetchSinglePage(courseId, urlOrId).then((page) => {
-            const reformatted = {
-              ...page,
-              courseId,
-              itemType: "pages",
-            };
+          fetchSinglePage(courseId, urlOrId)
+            .then((page) => {
+              const reformatted = {
+                ...page,
+                courseId,
+                itemType: "pages",
+              };
 
-            const transaction = getDatabase()
-              .table("itemBodies")
-              .put(reformatted);
+              const transaction = getDatabase()
+                .table("itemBodies")
+                .put(reformatted);
 
-            transaction.then((e) => {
-              if (page.id === urlOrId) {
-                useCollection(`pages/${courseId}/${page.id}`);
-              }
+              transaction
+                .then((e) => {
+                  if (page.id === urlOrId) {
+                    useCollection(`pages/${courseId}/${page.id}`);
+                  }
 
-              resolve(page);
-            });
-          });
+                  resolve(page);
+                })
+                .catch(reject);
+            })
+            .catch(reject);
         }
-      }
-    );
+      })
+      .catch(reject);
   });
 };

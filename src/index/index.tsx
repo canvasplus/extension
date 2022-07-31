@@ -17,6 +17,8 @@ import GraphQL from "./lib/graphQL";
 import Dexie from "dexie";
 import PageContent from "./components/content/page/PageContent";
 import isNumber from "is-number";
+import ErrorWrapper from "./components/util/ErrorWrapper";
+import { SidebarProvider } from "./lib/context/sidebar";
 
 const Index: Function = () => {
   sync("spin");
@@ -85,38 +87,39 @@ const Index: Function = () => {
   return (
     <>
       {appReady() ? (
-        <Router route={getCurrentLocation}>
-          <Case
-            filter={(u, n, p) => n === ""}
-            element={() => (
-              <DefaultView>
-                <h1>Dashboard</h1>
-                <button
-                  onClick={() => {
-                    Dexie.delete(getDatabase().name);
+        <SidebarProvider sidebar={<Sidebar />}>
+          <Router route={getCurrentLocation}>
+            <Case
+              filter={(u, n, p) => n === ""}
+              element={() => (
+                <DefaultView>
+                  <h1>Dashboard</h1>
+                  <button
+                    onClick={() => {
+                      Dexie.delete(getDatabase().name);
 
-                    location.reload();
-                  }}
-                >
-                  Clear IndexedDB
-                </button>
-              </DefaultView>
-            )}
-          />
+                      location.reload();
+                    }}
+                  >
+                    Clear IndexedDB
+                  </button>
+                </DefaultView>
+              )}
+            />
 
-          <Case
-            filter={(u, n, p) => p[2] === "pages" && isNumber(p[1])}
-            element={() => (
-              <DefaultView>
-                <PageContent
-                  courseId={Number.parseInt(path()[1])}
-                  pageId={path()[3]}
-                />
-              </DefaultView>
-            )}
-          />
+            <Case
+              filter={(u, n, p) => p[2] === "pages" && isNumber(p[1])}
+              element={() => (
+                <DefaultView>
+                  <PageContent
+                    courseId={Number.parseInt(path()[1])}
+                    pageId={path()[3]}
+                  />
+                </DefaultView>
+              )}
+            />
 
-          {/* <Case filter={() => routePathname() === ""}>
+            {/* <Case filter={() => routePathname() === ""}>
             <DefaultView>
               <h1>Dashboard</h1>
               <button
@@ -136,7 +139,8 @@ const Index: Function = () => {
               <PageContent courseId={path()[1]} pageId={path()[3]} />
             </DefaultView>
           </Case> */}
-        </Router>
+          </Router>
+        </SidebarProvider>
       ) : (
         <p>Loading...</p>
       )}
@@ -145,5 +149,9 @@ const Index: Function = () => {
 };
 
 render(() => {
-  return <LocationProvider children={<Index />} />;
+  return (
+    <LocationProvider>
+      <Index />
+    </LocationProvider>
+  );
 }, document.querySelector("#root")!);

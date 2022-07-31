@@ -16,6 +16,8 @@ export default function Sidebar(props) {
   };
 
   getCourses().then((c) => {
+    console.log(c);
+
     setCourses(c);
   });
 
