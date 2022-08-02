@@ -95,7 +95,7 @@ export const getSinglePage = (
   urlOrId: string
 ): Promise<Page> => {
   return new Promise((resolve, reject) => {
-    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(3, "H"))
+    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(0, "H"))
       .then((lastUpdated) => {
         if (lastUpdated) {
           const query = getDatabase()

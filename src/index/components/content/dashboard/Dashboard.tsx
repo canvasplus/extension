@@ -6,11 +6,7 @@ import { getDatabase } from "../../../lib/database";
 export default function Dashboard() {
   const [startLoading, stopLoading, progress] = useProgress();
 
-  createEffect(() => {
-    if (progress() === "LOADING") {
-      stopLoading();
-    }
-  });
+  stopLoading();
 
   return (
     <>

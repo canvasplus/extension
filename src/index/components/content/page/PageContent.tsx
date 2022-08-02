@@ -18,7 +18,7 @@ export default function PageContent(props: {
   const [startLoading, stopLoading, progress] = useProgress();
 
   createEffect(() => {
-    if (page() && progress() === "LOADING") {
+    if (page()) {
       stopLoading();
     }
   });

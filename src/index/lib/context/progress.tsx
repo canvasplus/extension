@@ -5,6 +5,7 @@ import {
   JSX,
   Accessor,
   Setter,
+  createEffect,
 } from "solid-js";
 import ProgressBar from "../../components/router/ProgressBar";
 
@@ -26,20 +27,28 @@ const ProgressContext = createContext<Store>();
 
 export function ProgressProvider(props: { children?: JSX.Element }) {
   const [progress, setProgress] = createSignal<ProgressState>("RESTING");
+  const [done, setDone] = createSignal(false);
 
   const [element] = createSignal<JSX.Element>(
     <ProgressBar progress={progress} setProgress={setProgress} />
   );
 
+  createEffect(() => {
+    if (progress() === "LOADING" && done()) {
+      setProgress("RESTING");
+      setDone(false);
+    }
+  });
+
   function start() {
     setProgress("START_LOADING");
   }
 
-  function done() {
-    setProgress("RESTING");
+  function stop() {
+    setDone(true);
   }
 
-  const value: Store = [start, done, progress, setProgress, element];
+  const value: Store = [start, stop, progress, setProgress, element];
 
   return <ProgressContext.Provider value={value} children={props.children} />;
 }
