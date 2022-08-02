@@ -1,3 +1,33 @@
+// import { createSignal } from "solid-js";
+// import { render } from "solid-js/web";
+// import { LocationProvider, useLocation } from "./lib/context/location";
+
+// function Index() {
+//   const [
+//     { getCurrentLocation, getFullLocation },
+//     { setFullLocation, doneLoading },
+//   ] = useLocation();
+
+//   const [dbReady, setDbReady] = createSignal(false);
+
+//   const initialURL = location.href;
+
+//   setFullLocation({
+//     route: initialURL,
+//   });
+
+//   console.log(getCurrentLocation());
+
+//   return <p>Loading ...</p>;
+// }
+// render(() => {
+//   return (
+//     <LocationProvider>
+//       <Index />
+//     </LocationProvider>
+//   );
+// }, document.querySelector("#root")!);
+
 import { render } from "solid-js/web";
 import "../global.css";
 import "tailwindcss/tailwind.css";
@@ -36,7 +66,7 @@ const Index: Function = () => {
 
   const [dbReady, setDbReady] = createSignal(false);
 
-  const initialURL = new URL(location.href).searchParams.get("ourl");
+  const initialURL = location.href;
 
   setFullLocation({
     route: initialURL,

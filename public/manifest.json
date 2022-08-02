@@ -19,7 +19,14 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["src/index/index.html"],
+      "resources": [
+        "src/index/index.html",
+        "src/index.js",
+        "src/io.js",
+        "assets/io.css",
+        "assets/font/NunitoSans-Regular.ttf",
+        "assets/font/NunitoSans-SemiBold.ttf"
+      ],
       "matches": ["https://*/*"]
     }
   ]

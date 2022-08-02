@@ -85,8 +85,31 @@ if (window["cpxstate"] == null) {
       document.body.appendChild(overlay);
     };
 
+    const runTestMode = async () => {
+      document.documentElement.innerHTML = "";
+
+      document.documentElement.classList.add("h-full", "w-full");
+
+      document.body.classList.add("h-full", "w-full", "font-sans", "text-base");
+
+      const root = document.createElement("div");
+      root.classList.add("h-full", "w-full");
+      root.id = "root";
+
+      document.body.appendChild(root);
+
+      const style = document.createElement("link");
+      style.rel = "stylesheet";
+      style.href = chrome.runtime.getURL("assets/io.css");
+      console.log(style);
+      document.head.appendChild(style);
+
+      const script = chrome.runtime.getURL("src/index.js");
+      await import(script);
+    };
+
     if (isPathnameCompatible(location.href)) {
-      runWithViewer();
+      runTestMode();
     } else {
       runWithOverlay();
     }
