@@ -17,3 +17,23 @@ body {
   right: 0;
   overflow: scroll;
 }
+
+.PROGRESS_BAR.RESTING {
+  width: 100%;
+  transition: background 0.5s ease-out, width 0.1s ease-out;
+}
+
+.PROGRESS_BAR.LOADING {
+  width: 70%;
+  transition: width 2s linear;
+}
+
+.PROGRESS_BAR.START_LOADING {
+  width: 0%;
+  transition: none;
+}
+
+.PROGRESS_BAR.START_LOADING,
+.PROGRESS_BAR.LOADING {
+  background: blue;
+}

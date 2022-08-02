@@ -1,33 +1,3 @@
-// import { createSignal } from "solid-js";
-// import { render } from "solid-js/web";
-// import { LocationProvider, useLocation } from "./lib/context/location";
-
-// function Index() {
-//   const [
-//     { getCurrentLocation, getFullLocation },
-//     { setFullLocation, doneLoading },
-//   ] = useLocation();
-
-//   const [dbReady, setDbReady] = createSignal(false);
-
-//   const initialURL = location.href;
-
-//   setFullLocation({
-//     route: initialURL,
-//   });
-
-//   console.log(getCurrentLocation());
-
-//   return <p>Loading ...</p>;
-// }
-// render(() => {
-//   return (
-//     <LocationProvider>
-//       <Index />
-//     </LocationProvider>
-//   );
-// }, document.querySelector("#root")!);
-
 import { render } from "solid-js/web";
 import "../global.css";
 import "tailwindcss/tailwind.css";
@@ -50,6 +20,8 @@ import isNumber from "is-number";
 import ErrorWrapper from "./components/util/ErrorWrapper";
 import { SidebarProvider } from "./lib/context/sidebar";
 import { isPathnameCompatible } from "./lib/compatibility";
+import { ProgressProvider, useProgress } from "./lib/context/progress";
+import ProgressBar from "./components/router/ProgressBar";
 
 const Index: Function = () => {
   sync("spin");
@@ -64,6 +36,8 @@ const Index: Function = () => {
     { getCurrentLocation, getFullLocation },
     { setFullLocation, doneLoading },
   ] = useLocation();
+
+  const [startLoading, stopLoading] = useProgress();
 
   const [dbReady, setDbReady] = createSignal(false);
 
@@ -94,6 +68,7 @@ const Index: Function = () => {
 
     if (isPathnameCompatible(current)) {
       window.history.pushState({}, "", current);
+      startLoading();
     } else {
       location.href = current;
     }
@@ -118,6 +93,8 @@ const Index: Function = () => {
     return dbReady();
   };
 
+  startLoading();
+
   return (
     <>
       {appReady() ? (
@@ -125,20 +102,24 @@ const Index: Function = () => {
           <Router route={getCurrentLocation}>
             <Case
               filter={(u, n, p) => n === ""}
-              element={() => (
-                <DefaultView>
-                  <h1>Dashboard</h1>
-                  <button
-                    onClick={() => {
-                      Dexie.delete(getDatabase().name);
+              element={() => {
+                stopLoading();
 
-                      location.reload();
-                    }}
-                  >
-                    Clear IndexedDB
-                  </button>
-                </DefaultView>
-              )}
+                return (
+                  <DefaultView>
+                    <h1>Dashboard</h1>
+                    <button
+                      onClick={() => {
+                        Dexie.delete(getDatabase().name);
+
+                        location.reload();
+                      }}
+                    >
+                      Clear IndexedDB
+                    </button>
+                  </DefaultView>
+                );
+              }}
             />
 
             <Case
@@ -184,8 +165,10 @@ const Index: Function = () => {
 
 render(() => {
   return (
-    <LocationProvider>
-      <Index />
-    </LocationProvider>
+    <ProgressProvider>
+      <LocationProvider>
+        <Index />
+      </LocationProvider>
+    </ProgressProvider>
   );
 }, document.querySelector("#root")!);
