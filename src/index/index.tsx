@@ -22,6 +22,7 @@ import { SidebarProvider } from "./lib/context/sidebar";
 import { isPathnameCompatible } from "./lib/compatibility";
 import { ProgressProvider, useProgress } from "./lib/context/progress";
 import ProgressBar from "./components/router/ProgressBar";
+import Dashboard from "./components/content/dashboard/Dashboard";
 
 const Index: Function = () => {
   sync("spin");
@@ -103,20 +104,9 @@ const Index: Function = () => {
             <Case
               filter={(u, n, p) => n === ""}
               element={() => {
-                stopLoading();
-
                 return (
                   <DefaultView>
-                    <h1>Dashboard</h1>
-                    <button
-                      onClick={() => {
-                        Dexie.delete(getDatabase().name);
-
-                        location.reload();
-                      }}
-                    >
-                      Clear IndexedDB
-                    </button>
+                    <Dashboard />
                   </DefaultView>
                 );
               }}
