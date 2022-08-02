@@ -29,8 +29,8 @@ export type CPXLocation = {
 export function LocationProvider(props) {
   const [location, setLocation] = createSignal<CPXLocation | undefined>(
     {
-      route: "hi",
-      prev: "no",
+      route: undefined,
+      prev: undefined,
     },
     {
       equals: false,

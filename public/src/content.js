@@ -22,46 +22,6 @@ if (window["cpxstate"] == null) {
       return false;
     };
 
-    const runWithViewer = async () => {
-      chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        if (message.action === "redirect" || message.action === "sendTo") {
-          if (!isPathnameCompatible(message.to)) {
-            location.href = message.to;
-            return;
-          }
-
-          if (message.action === "redirect")
-            window.history.replaceState({}, message.title, message.to);
-          if (message.action === "sendTo")
-            window.history.pushState({}, message.title, message.to);
-        } else if (message.action == "getToken") {
-          sendResponse(
-            Object.fromEntries(
-              document.cookie.split("; ").map((cookie) => cookie.split("="))
-            )._csrf_token.replace(/%3D/g, "=")
-          );
-        }
-      });
-
-      const url = new URL(window.location.href);
-      window.history.replaceState({}, "", url.toString());
-
-      document.documentElement.innerHTML = "";
-
-      const framingContainer = document.createElement("div");
-      framingContainer.id = "cpx-framing-container";
-
-      const frame = document.createElement("iframe");
-      frame.id = "cpx-main-frame";
-      frame.src = chrome.runtime.getURL(
-        `src/index/index.html?ourl=${url.toString()}`
-      );
-
-      framingContainer.appendChild(frame);
-
-      document.body.appendChild(framingContainer);
-    };
-
     const runWithOverlay = async () => {
       const overlay = document.createElement("div");
       overlay.id = "cpx-incompatible-overlay";
@@ -85,7 +45,7 @@ if (window["cpxstate"] == null) {
       document.body.appendChild(overlay);
     };
 
-    const runTestMode = async () => {
+    const runWithViewer = async () => {
       document.documentElement.innerHTML = "";
 
       document.documentElement.classList.add("h-full", "w-full");
@@ -109,7 +69,7 @@ if (window["cpxstate"] == null) {
     };
 
     if (isPathnameCompatible(location.href)) {
-      runTestMode();
+      runWithViewer();
     } else {
       runWithOverlay();
     }

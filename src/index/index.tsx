@@ -89,10 +89,7 @@ const Index: Function = () => {
   });
 
   createEffect(() => {
-    chrome.runtime.sendMessage({
-      action: "sendTo",
-      to: getCurrentLocation(),
-    });
+    window.history.pushState({}, "", getCurrentLocation());
   });
 
   chrome.runtime.onMessage.addListener((message) => {
