@@ -49,6 +49,7 @@ import PageContent from "./components/content/page/PageContent";
 import isNumber from "is-number";
 import ErrorWrapper from "./components/util/ErrorWrapper";
 import { SidebarProvider } from "./lib/context/sidebar";
+import { isPathnameCompatible } from "./lib/compatibility";
 
 const Index: Function = () => {
   sync("spin");
@@ -89,7 +90,13 @@ const Index: Function = () => {
   });
 
   createEffect(() => {
-    window.history.pushState({}, "", getCurrentLocation());
+    const current = getCurrentLocation();
+
+    if (isPathnameCompatible(current)) {
+      window.history.pushState({}, "", current);
+    } else {
+      location.href = current;
+    }
   });
 
   chrome.runtime.onMessage.addListener((message) => {
