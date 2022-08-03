@@ -27,11 +27,11 @@ import Dashboard from "./components/content/dashboard/Dashboard";
 const Index: Function = () => {
   sync("spin");
 
-  GraphQL(`
-    allCourses {
-      name
-    }
-  `);
+  // GraphQL(`
+  //   allCourses {
+  //     name
+  //   }
+  // `);
 
   const [
     { getCurrentLocation, getFullLocation },

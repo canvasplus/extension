@@ -30,7 +30,13 @@ module.exports = {
         "4xl": "2rem",
       },
       animation: {
-        "spin-slow": "spin 2s linear infinite",
+        "fade-in": "fade-in 0.3s linear",
+      },
+      keyframes: {
+        "fade-in": {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
       },
     },
   },
