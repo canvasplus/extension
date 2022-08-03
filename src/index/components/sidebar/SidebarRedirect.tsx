@@ -17,12 +17,15 @@ export default function SidebarRedirect(props: {
   children?: JSX.Element;
   indent: 0 | 1 | 2 | 3 | 4;
   redirect: string;
+  highlighted: boolean;
 }) {
   const [get, { goTo }] = useLocation();
   return (
     <VLink href={props.redirect}>
       <div
-        className={`rounded-lg hover:bg-cyan-200 group`}
+        className={`rounded-lg ${
+          props.highlighted ? "bg-cyan-200" : "hover:bg-cyan-200"
+        }`}
         onClick={(e) => {
           goTo(props.redirect);
         }}

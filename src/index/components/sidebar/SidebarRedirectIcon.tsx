@@ -2,12 +2,14 @@ import {
   IoArrowRedo,
   IoArrowRedoOutline,
   IoCaretForward,
+  IoDocument,
+  IoDocumentOutline,
   IoExtensionPuzzleOutline,
 } from "solid-icons/io";
 import { Accessor } from "solid-js";
 
 export default function SidebarRedirectIcon(props: {
-  type: "DEFAULT" | "EXTERNAL";
+  type: "DEFAULT" | "EXTERNAL" | "PAGE";
 }) {
   const smallArrow = () => {
     return (
@@ -41,6 +43,12 @@ export default function SidebarRedirectIcon(props: {
     return (
       <div className="block w-4 h-4">
         <IoExtensionPuzzleOutline className="text-base" />
+      </div>
+    );
+  } else if (props.type === "PAGE") {
+    return (
+      <div className="block w-4 h-4">
+        <IoDocumentOutline className="text-base" />
       </div>
     );
   }

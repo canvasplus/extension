@@ -12,6 +12,7 @@ export default function SidebarToggle(props: {
   href: string;
   children?: JSX.Element;
   highlighted: boolean;
+  highlightedWithin?: boolean;
   primaryFunction: "TOGGLE" | "LINK";
   indent: 0 | 1 | 2 | 3 | 4;
   expandedSignal?: Signal<boolean>;
@@ -77,6 +78,20 @@ export default function SidebarToggle(props: {
                     <FiExternalLink className="text-sm hidden group-1-hover:block" />
                   </div>
                 </div>
+                {props.highlightedWithin && (
+                  <div className="w-2 h-2 mr-4 rounded-full group-1-hover:hidden bg-cyan-300" />
+                )}
+              </Show>
+
+              {/* @ts-ignore */}
+              <Show
+                when={
+                  props.primaryFunction !== "TOGGLE" &&
+                  !loading() &&
+                  props.highlightedWithin
+                }
+              >
+                <div className="w-2 h-2 mr-4 rounded-full group-1-hover:bg-cyan-400 bg-cyan-300"></div>
               </Show>
             </div>
           </SidebarItem>

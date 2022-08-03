@@ -45,7 +45,8 @@ export const getPages = (courseId: number): Promise<Page[]> => {
             return {
               ...page,
               courseId,
-              id: page["page_id"],
+              id: page["url"],
+              numberId: page["page_id"],
               page_id: undefined,
             };
           });
@@ -87,6 +88,8 @@ export const fetchSinglePage = async (
     lockExplanation: data["lock_explanation"],
   };
 
+  console.log(reformatted);
+
   return reformatted;
 };
 
@@ -95,7 +98,7 @@ export const getSinglePage = (
   urlOrId: string
 ): Promise<Page> => {
   return new Promise((resolve, reject) => {
-    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(0, "H"))
+    getLastUpdated(`pages/${courseId}/${urlOrId}`, toMs(3, "H"))
       .then((lastUpdated) => {
         if (lastUpdated) {
           const query = getDatabase()

@@ -43,13 +43,26 @@ export default function PagesTab(props: TabComponentProps) {
     } else {
       return pages().map((page) => (
         <SidebarRedirect
-          title={page.title}
+          title={
+            page.title
+            // props.path()[3] === page.id
+            //   ? "match"
+            //   : `${console.log(props.path()[3], typeof page.id, page)}`
+          }
           redirect={`${new URL(getCurrentLocation()).origin}/courses/${
             props.courseId
-          }/pages/${page.url}`}
+          }/pages/${page.id}`}
           indent={2}
+          highlighted={
+            props.parentHighlighted() &&
+            props.path()[2] === "pages" &&
+            !onModule() &&
+            props.path().length >= 4 &&
+            (props.path()[3] === page.id ||
+              props.path()[3] === page.numberId.toString())
+          }
         >
-          <SidebarRedirectIcon type="DEFAULT" />
+          <SidebarRedirectIcon type="PAGE" />
         </SidebarRedirect>
       ));
     }
@@ -63,6 +76,12 @@ export default function PagesTab(props: TabComponentProps) {
       title={props.tab.label}
       href={props.tab.full_url}
       highlighted={
+        props.parentHighlighted() &&
+        props.path()[2] === "pages" &&
+        !onModule() &&
+        props.path.length === 3
+      }
+      highlightedWithin={
         props.parentHighlighted() && props.path()[2] === "pages" && !onModule()
       }
       iconType={"PAGES"}

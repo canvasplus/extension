@@ -28,6 +28,7 @@ export default function CourseOnSidebar(props: { course: Course }) {
       indent={0}
       title={props.course.name}
       expandedSignal={expandedSignal}
+      primaryFunction="TOGGLE"
     >
       {props.course.tabs.map((tab) => {
         return <TabOnSidebar tab={tab} courseId={props.course.id} />;
