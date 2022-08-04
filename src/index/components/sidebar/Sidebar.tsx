@@ -5,6 +5,7 @@ import CourseOnSidebar from "./CourseOnSidebar";
 import SidebarItem from "./SidebarItem";
 import SidebarToggle from "./SidebarToggle";
 import SidebarToggleIcon from "./SidebarToggleIcon";
+import SidebarTop from "./top/SidebarTop";
 
 export default function Sidebar(props) {
   const [courses, setCourses] = createSignal<Course[] | undefined>(undefined);
@@ -23,6 +24,7 @@ export default function Sidebar(props) {
 
   return (
     <div className="fixed w-80 bg-cyan-50 h-full text-sm overflow-scroll">
+      <SidebarTop />
       {placeholder() ?? (
         <div className="p-1">
           {courses()?.map((c) => (

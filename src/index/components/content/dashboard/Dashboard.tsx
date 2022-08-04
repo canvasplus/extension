@@ -19,15 +19,16 @@ export default function Dashboard() {
     <>
       <h1>Dashboard</h1>
       <button
+        className="bg-blue-500 px-3 py-1 rounded-md hover:bg-blue-600 text-white active:scale-90 transition-all"
         onClick={() => {
           Dexie.delete(getDatabase().name);
 
           location.reload();
         }}
       >
-        Clear IndexedDB
+        Clear Database
       </button>
-      <input
+      {/* <input
         value={hue()}
         onInput={(e) => {
           sethue(parseInt(e.target.value));
@@ -48,7 +49,7 @@ export default function Dashboard() {
           }}
         ></div>
         <div className="h-full w-2/3 bg-dark-sys-bg"></div>
-      </div>
+      </div> */}
     </>
   );
 }
