@@ -20,7 +20,7 @@ export default function SidebarItem(props: {
   };
 
   return (
-    <div className="flex flex-row w-full mb-2">
+    <div className="flex flex-row w-full mb-0.5">
       <div className={`flex-shrink-0 ${indent()}`} />
       {props.children}
     </div>
