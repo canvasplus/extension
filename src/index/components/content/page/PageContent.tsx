@@ -27,7 +27,7 @@ export default function PageContent(props: {
   return (
     <ErrorWrapper error={errorSignal}>
       {page() ? (
-        <div className="text-left m-4">
+        <div className="text-left m-8 flex flex-col gap-4">
           <ContentMeta contentType="Page" titleLine={page().title} />
           <p innerHTML={page()?.body} />
         </div>
