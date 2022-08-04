@@ -21,6 +21,16 @@ module.exports = {
       colors: {
         "gray-dark": "#566275",
         gray: "#7B838F",
+        "light-sys": {
+          bg: "#FFFFFF",
+          heading: "#333",
+          par: "#333",
+        },
+        "dark-sys": {
+          bg: "#313236",
+          heading: "#FFF",
+          par: "#FFF",
+        },
       },
       spacing: {
         128: "32rem",

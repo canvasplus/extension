@@ -22,9 +22,9 @@ export default function Sidebar(props) {
   });
 
   return (
-    <div className="fixed w-80 bg-cyan-50 h-full text-sm p-2 overflow-scroll">
+    <div className="fixed w-80 bg-cyan-50 h-full text-sm overflow-scroll">
       {placeholder() ?? (
-        <div>
+        <div className="p-2">
           {courses()?.map((c) => (
             <CourseOnSidebar course={c} />
           ))}

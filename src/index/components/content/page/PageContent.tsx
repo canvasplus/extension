@@ -3,12 +3,14 @@ import { useProgress } from "../../../lib/context/progress";
 import { getSinglePage } from "../../../lib/pages";
 import { Page } from "../../../lib/types/Page";
 import ErrorWrapper from "../../util/ErrorWrapper";
+import Loading from "../../util/Loading";
+import ContentMeta from "../util/ContentMeta";
 
 export default function PageContent(props: {
   courseId: number;
   pageId: string;
 }) {
-  const [page, setPage] = createSignal<Page | null>(null);
+  const [page, setPage] = createSignal<Page | undefined>(undefined);
 
   const errorSignal = createSignal(null);
   const [error, setError] = errorSignal;
@@ -24,10 +26,14 @@ export default function PageContent(props: {
   });
   return (
     <ErrorWrapper error={errorSignal}>
-      <div className="text-center">
-        <h1 className="text-4xl">PageContent</h1>
-        <p innerHTML={page()?.body} />
-      </div>
+      {page() ? (
+        <div className="text-left m-4">
+          <ContentMeta contentType="Page" titleLine={page().title} />
+          <p innerHTML={page()?.body} />
+        </div>
+      ) : (
+        <Loading />
+      )}
     </ErrorWrapper>
   );
 }

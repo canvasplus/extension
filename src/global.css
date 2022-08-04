@@ -6,6 +6,7 @@ html,
 body {
   height: 100%;
   overflow: hidden;
+  @apply bg-light-sys-bg dark:bg-dark-sys-bg;
 }
 
 #root {

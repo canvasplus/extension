@@ -123,27 +123,6 @@ const Index: Function = () => {
                 </DefaultView>
               )}
             />
-
-            {/* <Case filter={() => routePathname() === ""}>
-            <DefaultView>
-              <h1>Dashboard</h1>
-              <button
-                onClick={() => {
-                  Dexie.delete(getDatabase().name);
-
-                  location.reload();
-                }}
-              >
-                Clear IndexedDB
-              </button>
-            </DefaultView>
-          </Case>
-
-          <Case filter={() => path()[2] === "pages"}>
-            <DefaultView>
-              <PageContent courseId={path()[1]} pageId={path()[3]} />
-            </DefaultView>
-          </Case> */}
           </Router>
         </SidebarProvider>
       ) : (

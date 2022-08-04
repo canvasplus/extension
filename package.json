@@ -18,6 +18,7 @@
   "dependencies": {
     "@types/chrome": "^0.0.188",
     "axios": "^0.27.2",
+    "color-convert": "^2.0.1",
     "css-animation-sync": "^0.5.0",
     "dexie": "^3.2.2",
     "i": "^0.3.7",
