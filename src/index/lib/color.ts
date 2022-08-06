@@ -1,6 +1,8 @@
+import luminance from "relative-luminance";
+
 type RGBArray = [number, number, number];
 
-const RECCOMENDED_READING_CONTRAST = 2;
+const RECCOMENDED_READING_CONTRAST = 4;
 
 const LIGHT_BACKGROUND_RGB: RGBArray = [255, 255, 255];
 const DARK_BACKGROUND_RGB: RGBArray = [49, 50, 54];
@@ -52,9 +54,44 @@ function improveContrast(
   ];
 }
 
+function improveContrast2(
+  foreground: RGBArray,
+  background: RGBArray,
+  contrast: number
+): RGBArray | undefined {
+  const fL = luminance(foreground);
+  const bL = luminance(background);
+
+  const maxL = Math.max(fL, bL);
+  const minL = Math.min(fL, bL);
+
+  const diff = (maxL + 0.05) / (minL + 0.05);
+
+  if (diff > contrast) {
+    return undefined;
+  }
+
+  const step = (contrast - diff) / diff + 1;
+
+  console.log(foreground, maxL, minL, diff, step);
+
+  return [
+    Math.round(Math.min(255, foreground[0] * step)),
+    Math.round(Math.min(255, foreground[1] * step)),
+    Math.round(Math.min(255, foreground[2] * step)),
+  ];
+
+  console.log(
+    "failed contrast for color ",
+    foreground,
+    ". contrast: ",
+    (maxL + 0.05) / (minL + 0.05)
+  );
+}
 export {
   RECCOMENDED_READING_CONTRAST,
   improveContrast,
+  improveContrast2,
   DARK_BACKGROUND_RGB,
   getLuminance,
   LIGHT_BACKGROUND_RGB,

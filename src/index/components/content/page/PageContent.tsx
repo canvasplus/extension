@@ -10,6 +10,7 @@ import {
   DARK_BACKGROUND_RGB,
   getLuminance,
   improveContrast,
+  improveContrast2,
   LIGHT_BACKGROUND_RGB,
   RECCOMENDED_READING_CONTRAST,
 } from "../../../lib/color";
@@ -42,13 +43,17 @@ export default function PageContent(props: {
     body.querySelectorAll("*").forEach((element) => {
       const color = parse(window.getComputedStyle(element).color);
       if (color.space === "rgb") {
-        const improved = improveContrast(
+        const improved = improveContrast2(
           color.values,
-          LIGHT_BACKGROUND_RGB,
+          darkMode() ? DARK_BACKGROUND_RGB : LIGHT_BACKGROUND_RGB,
           RECCOMENDED_READING_CONTRAST
         );
 
+        console.log("------");
+        console.log(color.values, improved);
+
         if (improved) {
+          // element.style.color = "black";
           element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
         }
       }
