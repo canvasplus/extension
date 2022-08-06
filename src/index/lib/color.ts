@@ -1,6 +1,6 @@
 type RGBArray = [number, number, number];
 
-const RECCOMENDED_READING_CONTRAST = 2.25;
+const RECCOMENDED_READING_CONTRAST = 2.4;
 
 const DARK_BACKGROUND_RGB: RGBArray = [49, 50, 54];
 
