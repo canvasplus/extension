@@ -24,12 +24,12 @@ module.exports = {
         "light-sys": {
           bg: "#FFFFFF",
           heading: "#333",
-          par: "#333",
+          par: "#3b3b3d",
         },
         "dark-sys": {
           bg: "#313236",
           heading: "#FFF",
-          par: "#FFF",
+          par: "#e4eced",
         },
       },
       spacing: {

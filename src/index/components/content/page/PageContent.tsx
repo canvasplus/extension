@@ -5,6 +5,13 @@ import { Page } from "../../../lib/types/Page";
 import ErrorWrapper from "../../util/ErrorWrapper";
 import Loading from "../../util/Loading";
 import ContentMeta from "../util/ContentMeta";
+import parse from "color-parse";
+import {
+  DARK_BACKGROUND_RGB,
+  getLuminance,
+  improveContrast,
+  RECCOMENDED_READING_CONTRAST,
+} from "../../../lib/color";
 
 export default function PageContent(props: {
   courseId: number;
@@ -24,12 +31,40 @@ export default function PageContent(props: {
       stopLoading();
     }
   });
+
+  let body: Element | undefined;
+
+  createEffect(() => {
+    console.log(getLuminance(DARK_BACKGROUND_RGB));
+
+    if (page()) {
+      body.querySelectorAll("*").forEach((element) => {
+        const color = parse(window.getComputedStyle(element).color);
+        if (color.space === "rgb") {
+          const improved = improveContrast(
+            color.values,
+            DARK_BACKGROUND_RGB,
+            RECCOMENDED_READING_CONTRAST
+          );
+
+          if (improved) {
+            element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
+          }
+        }
+      });
+    }
+  });
+
   return (
     <ErrorWrapper error={errorSignal}>
       {page() ? (
         <div className="text-left m-8 flex flex-col gap-4">
           <ContentMeta contentType="Page" titleLine={page().title} />
-          <p innerHTML={page()?.body} />
+          <div
+            ref={body}
+            className="text-light-sys-par dark:text-dark-sys-par"
+            innerHTML={page()?.body}
+          />
         </div>
       ) : (
         <Loading />
