@@ -1,7 +1,8 @@
 type RGBArray = [number, number, number];
 
-const RECCOMENDED_READING_CONTRAST = 2.4;
+const RECCOMENDED_READING_CONTRAST = 2;
 
+const LIGHT_BACKGROUND_RGB: RGBArray = [255, 255, 255];
 const DARK_BACKGROUND_RGB: RGBArray = [49, 50, 54];
 
 function getLuminance(rgb: RGBArray) {
@@ -24,18 +25,30 @@ function improveContrast(
   const maxL = Math.max(fL, bL);
   const minL = Math.min(fL, bL);
 
-  if (maxL / minL > contrast && minL !== 0) {
+  if (maxL / minL > contrast) {
     return undefined;
   }
 
   let [r, g, b] = foreground;
 
-  const sum = contrast * bL - fL;
+  let offset = 0;
+
+  if (bL > 127) {
+    // light background
+    offset = fL - bL / contrast;
+    offset *= -1;
+  } else {
+    // dark background
+    offset = contrast * bL - fL;
+  }
+
+  console.log("--------");
+  console.log(foreground, offset, bL, fL);
 
   return [
-    Math.round(Math.min(255, r + sum)),
-    Math.round(Math.min(255, g + sum)),
-    Math.round(Math.min(255, b + sum)),
+    Math.round(Math.min(255, r + offset)),
+    Math.round(Math.min(255, g + offset)),
+    Math.round(Math.min(255, b + offset)),
   ];
 }
 
@@ -44,4 +57,5 @@ export {
   improveContrast,
   DARK_BACKGROUND_RGB,
   getLuminance,
+  LIGHT_BACKGROUND_RGB,
 };

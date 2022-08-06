@@ -10,8 +10,10 @@ import {
   DARK_BACKGROUND_RGB,
   getLuminance,
   improveContrast,
+  LIGHT_BACKGROUND_RGB,
   RECCOMENDED_READING_CONTRAST,
 } from "../../../lib/color";
+import { useDarkMode } from "../../../lib/context/darkMode";
 
 export default function PageContent(props: {
   courseId: number;
@@ -34,24 +36,31 @@ export default function PageContent(props: {
 
   let body: Element | undefined;
 
-  createEffect(() => {
-    console.log(getLuminance(DARK_BACKGROUND_RGB));
+  const [darkMode, setDarkMode] = useDarkMode();
 
-    if (page()) {
-      body.querySelectorAll("*").forEach((element) => {
-        const color = parse(window.getComputedStyle(element).color);
-        if (color.space === "rgb") {
-          const improved = improveContrast(
-            color.values,
-            DARK_BACKGROUND_RGB,
-            RECCOMENDED_READING_CONTRAST
-          );
+  function correctColors() {
+    body.querySelectorAll("*").forEach((element) => {
+      const color = parse(window.getComputedStyle(element).color);
+      if (color.space === "rgb") {
+        const improved = improveContrast(
+          color.values,
+          LIGHT_BACKGROUND_RGB,
+          RECCOMENDED_READING_CONTRAST
+        );
 
-          if (improved) {
-            element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
-          }
+        if (improved) {
+          element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
         }
-      });
+      }
+    });
+  }
+
+  createEffect(() => {
+    const dark = darkMode();
+    if (page()) {
+      body.innerHTML = page().body;
+
+      correctColors();
     }
   });
 
@@ -63,7 +72,6 @@ export default function PageContent(props: {
           <div
             ref={body}
             className="text-light-sys-par dark:text-dark-sys-par"
-            innerHTML={page()?.body}
           />
         </div>
       ) : (

@@ -23,6 +23,7 @@ import { isPathnameCompatible } from "./lib/compatibility";
 import { ProgressProvider, useProgress } from "./lib/context/progress";
 import ProgressBar from "./components/router/ProgressBar";
 import Dashboard from "./components/content/dashboard/Dashboard";
+import { DarkModeProvider, useDarkMode } from "./lib/context/darkMode";
 
 const Index: Function = () => {
   sync("spin");
@@ -96,6 +97,31 @@ const Index: Function = () => {
 
   startLoading();
 
+  const [darkMode, setDarkMode] = useDarkMode();
+
+  function handleColorScheme() {
+    if (localStorage.theme === "dark") {
+      setDarkMode(true);
+    } else if (localStorage.theme !== "light") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+      setDarkMode(mediaQuery.matches);
+
+      mediaQuery.addEventListener("change", (e) => {
+        setDarkMode(e.matches);
+      });
+    }
+  }
+
+  createEffect(() => {
+    if (darkMode()) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  });
+  handleColorScheme();
+
   return (
     <>
       {appReady() ? (
@@ -134,10 +160,12 @@ const Index: Function = () => {
 
 render(() => {
   return (
-    <ProgressProvider>
-      <LocationProvider>
-        <Index />
-      </LocationProvider>
-    </ProgressProvider>
+    <DarkModeProvider>
+      <ProgressProvider>
+        <LocationProvider>
+          <Index />
+        </LocationProvider>
+      </ProgressProvider>
+    </DarkModeProvider>
   );
 }, document.querySelector("#root")!);
