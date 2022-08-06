@@ -24,7 +24,7 @@ function improveContrast(
   const maxL = Math.max(fL, bL);
   const minL = Math.min(fL, bL);
 
-  if (maxL / minL > contrast) {
+  if (maxL / minL > contrast && minL !== 0) {
     return undefined;
   }
 
