@@ -24,6 +24,7 @@
     "dexie": "^3.2.2",
     "i": "^0.3.7",
     "is-number": "^7.0.0",
+    "mathjs": "^11.0.1",
     "npm": "^8.15.1",
     "relative-luminance": "^2.0.1",
     "serialize-error": "^11.0.0",

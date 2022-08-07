@@ -9,10 +9,12 @@ import parse from "color-parse";
 import {
   DARK_BACKGROUND_RGB,
   getLuminance,
+  HSPtoRGB,
   improveContrast,
   improveContrast2,
   LIGHT_BACKGROUND_RGB,
   RECCOMENDED_READING_CONTRAST,
+  RGBtoHSP,
 } from "../../../lib/color";
 import { useDarkMode } from "../../../lib/context/darkMode";
 
@@ -39,6 +41,13 @@ export default function PageContent(props: {
 
   const [darkMode, setDarkMode] = useDarkMode();
 
+  console.log(
+    "HSP blue: ",
+    RGBtoHSP([255, 255, 255]),
+    "and back: ",
+    HSPtoRGB(RGBtoHSP([0, 0, 0]))
+  );
+
   function correctColors() {
     body.querySelectorAll("*").forEach((element) => {
       const color = parse(window.getComputedStyle(element).color);
@@ -49,10 +58,20 @@ export default function PageContent(props: {
           RECCOMENDED_READING_CONTRAST
         );
 
-        console.log("------");
-        console.log(color.values, improved);
+        // console.log("------");
 
         if (improved) {
+          // console.log(
+          //   "%ccolor",
+          //   `color:rgb(${color.values[0]} ${color.values[1]} ${color.values[2]})`
+          // );
+          // console.log(
+          //   "%ccolor",
+          //   `color:rgb(${improved[0]} ${improved[1]} ${improved[2]})`
+          // );
+          // console.log(color, color.values, improved, element);
+          // console.log(improved);
+          // element.remove();
           // element.style.color = "black";
           element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
         }
