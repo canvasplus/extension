@@ -269,13 +269,42 @@ function improveContrast2(
 
   const diff = (maxL + 0.05) / (minL + 0.05);
 
+  // (fL) = (bL + 0.05) / 3.5 - 0.05
+
   if (diff > contrast) {
     return undefined;
   }
 
-  const dL = (fL + 0.05) * (contrast / diff) - 0.05;
+  const darken = bL > fL;
 
-  const step = Math.pow(dL, 5 / 12) * 255;
+  console.log(foreground);
+
+  console.log(fL, bL, diff);
+
+  const dL =
+    (darken ? bL : fL + 0.05) * (darken ? 1 / contrast : contrast / diff) -
+    0.05;
+  // const dL = (fL + 0.05) * (contrast / diff) - 0.05;
+
+  console.log("desired luminance", dL);
+
+  const step =
+    Math.pow(fL + (darken ? -dL : dL), darken ? 12 / 5 : 5 / 12) *
+    (darken ? -255 : 255);
+
+  //   const dL = (fL + 0.05) * (contrast / diff) - 0.05;
+
+  // console.log("desired luminance", dL);
+
+  // const step = Math.pow(dL + fL * (bL > fL ? 1 : 1), 5 / 12) * 255;
+
+  // return [
+  //   Math.round(Math.min(255, foreground[0] + step)),
+  //   Math.round(Math.min(255, foreground[1] + step)),
+  //   Math.round(Math.min(255, foreground[2] + step)),
+  // ];
+
+  console.log("using step", step);
 
   return [
     Math.round(Math.min(255, foreground[0] + step)),
