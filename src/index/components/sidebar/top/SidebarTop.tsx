@@ -6,8 +6,6 @@ function SidebarTop() {
   const [{ getCurrentLocation }, { goToPath }] = useLocation();
 
   function handleDashboardClick() {
-    console.log("handling dashboard click");
-
     goToPath("/");
   }
 

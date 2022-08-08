@@ -41,38 +41,17 @@ export default function PageContent(props: {
 
   const [darkMode, setDarkMode] = useDarkMode();
 
-  console.log(
-    "HSP blue: ",
-    RGBtoHSP([255, 255, 255]),
-    "and back: ",
-    HSPtoRGB(RGBtoHSP([0, 0, 0]))
-  );
-
   function correctColors() {
     body.querySelectorAll("*").forEach((element) => {
       const color = parse(window.getComputedStyle(element).color);
       if (color.space === "rgb") {
-        const improved = improveContrast2(
+        const improved = improveContrast(
           color.values,
           darkMode() ? DARK_BACKGROUND_RGB : LIGHT_BACKGROUND_RGB,
           RECCOMENDED_READING_CONTRAST
         );
 
-        // console.log("------");
-
         if (improved) {
-          // console.log(
-          //   "%ccolor",
-          //   `color:rgb(${color.values[0]} ${color.values[1]} ${color.values[2]})`
-          // );
-          // console.log(
-          //   "%ccolor",
-          //   `color:rgb(${improved[0]} ${improved[1]} ${improved[2]})`
-          // );
-          // console.log(color, color.values, improved, element);
-          // console.log(improved);
-          // element.remove();
-          // element.style.color = "black";
           element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
         }
       }

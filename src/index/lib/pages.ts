@@ -88,8 +88,6 @@ export const fetchSinglePage = async (
     lockExplanation: data["lock_explanation"],
   };
 
-  console.log(reformatted);
-
   return reformatted;
 };
 

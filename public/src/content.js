@@ -61,7 +61,6 @@ if (window["cpxstate"] == null) {
       const style = document.createElement("link");
       style.rel = "stylesheet";
       style.href = chrome.runtime.getURL("assets/io.css");
-      console.log(style);
       document.head.appendChild(style);
 
       const script = chrome.runtime.getURL("src/index.js");

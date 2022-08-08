@@ -43,12 +43,7 @@ export default function PagesTab(props: TabComponentProps) {
     } else {
       return pages().map((page) => (
         <SidebarRedirect
-          title={
-            page.title
-            // props.path()[3] === page.id
-            //   ? "match"
-            //   : `${console.log(props.path()[3], typeof page.id, page)}`
-          }
+          title={page.title}
           redirect={`${new URL(getCurrentLocation()).origin}/courses/${
             props.courseId
           }/pages/${page.id}`}
