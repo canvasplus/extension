@@ -275,16 +275,26 @@ function improveContrast2(
     return undefined;
   }
 
-  const darken = bL > fL;
+  let darken = bL > fL;
 
   console.log(foreground);
 
   console.log(fL, bL, diff);
 
-  const dL =
+  let dL =
     (darken ? bL : fL + 0.05) * (darken ? 1 / contrast : contrast / diff) -
     0.05;
   // const dL = (fL + 0.05) * (contrast / diff) - 0.05;
+
+  if (dL < 0) {
+    // foreground is darker than background, but you cant darken any further
+    dL = contrast * (bL + 0.05) - 0.05;
+    darken = false;
+  } else if (dL > 1) {
+    // foreground is lighter than background, but you cant lighten any further
+    dL = (bL + 0.05) / contrast - 0.05;
+    darken = true;
+  }
 
   console.log("desired luminance", dL);
 
