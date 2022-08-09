@@ -1,31 +1,64 @@
 import { createEffect, JSX } from "solid-js";
 import {
   DARK_BACKGROUND_RGB,
+  getLuminance,
   improveContrast,
   LIGHT_BACKGROUND_RGB,
   RECCOMENDED_READING_CONTRAST,
   RGBArray,
 } from "../../lib/color";
-
+import { rgb, hex } from "color-convert";
 import parse from "color-parse";
 import { useDarkMode } from "../../lib/context/darkMode";
 
 function ColorGuard(props: { children?: JSX.Element }) {
-  let body;
+  let body: HTMLElement;
 
   const [darkMode] = useDarkMode();
 
-  function correctElementColor(element) {
-    const color = parse(window.getComputedStyle(element).color);
-    if (color.space === "rgb") {
-      const improved = improveContrast(
-        color.values,
-        darkMode() ? DARK_BACKGROUND_RGB : LIGHT_BACKGROUND_RGB,
-        RECCOMENDED_READING_CONTRAST
-      );
+  function correctElementColor(element: HTMLElement) {
+    const style = window.getComputedStyle(element);
 
-      if (improved) {
-        element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
+    const backgroundColor = style.getPropertyValue("background-color");
+
+    if (backgroundColor !== "rgba(0, 0, 0, 0)") {
+      const color = parse(backgroundColor);
+      if (color.space === "rgb") {
+        const lightBackground = getLuminance(color.values) > 127;
+
+        if (lightBackground) {
+          element.style.color = "black";
+        } else {
+          element.style.color = "white";
+        }
+
+        element.querySelectorAll("*").forEach((e) => {
+          if (e.nodeType === 1) {
+            (e as HTMLElement).dataset["parent_background"] = lightBackground
+              ? "light"
+              : "dark";
+          }
+        });
+      }
+    } else if (element.dataset["parent_background_color"]) {
+      if (element.dataset["parent_background_color"] === "light") {
+        element.style.color = "black";
+      } else {
+        element.style.color = "white";
+      }
+    } else {
+      const color = parse(style.color);
+
+      if (color.space === "rgb") {
+        const improved = improveContrast(
+          color.values,
+          darkMode() ? DARK_BACKGROUND_RGB : LIGHT_BACKGROUND_RGB,
+          RECCOMENDED_READING_CONTRAST
+        );
+
+        if (improved) {
+          element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
+        }
       }
     }
   }
@@ -40,7 +73,9 @@ function ColorGuard(props: { children?: JSX.Element }) {
             correctElementColor(element);
 
             element.querySelectorAll("*").forEach((child) => {
-              correctElementColor(child);
+              if (child.nodeType === 1) {
+                correctElementColor(child as HTMLElement);
+              }
             });
           }
         });
@@ -53,7 +88,9 @@ function ColorGuard(props: { children?: JSX.Element }) {
           correctElementColor(element);
 
           element.querySelectorAll("*").forEach((child) => {
-            correctElementColor(child);
+            if (child.nodeType === 1) {
+              correctElementColor(child as HTMLElement);
+            }
           });
         }
       }
@@ -62,7 +99,9 @@ function ColorGuard(props: { children?: JSX.Element }) {
 
   function correctColors() {
     body.querySelectorAll("*").forEach((element) => {
-      correctElementColor(element);
+      if (element.nodeType === 1) {
+        correctElementColor(element as HTMLElement);
+      }
     });
   }
 
@@ -76,6 +115,7 @@ function ColorGuard(props: { children?: JSX.Element }) {
     observer.observe(body, {
       attributes: true,
       childList: true,
+      subtree: true,
     });
 
     return observer;
