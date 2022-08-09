@@ -30,11 +30,9 @@ function ColorGuard(props: { children?: JSX.Element }) {
     }
   }
 
-  const callback = function (mutationList: MutationRecord[], observer) {
+  const observerCallback = function (mutationList: MutationRecord[], observer) {
     mutationList.forEach((mutation) => {
-      console.log(mutation);
-
-      mutation.type === "childList" &&
+      if (mutation.type === "childList") {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === 1) {
             const element = node as HTMLElement;
@@ -46,6 +44,7 @@ function ColorGuard(props: { children?: JSX.Element }) {
             });
           }
         });
+      }
 
       if (mutation.type === "attributes") {
         if (mutation.target.nodeType === 1) {
@@ -72,12 +71,11 @@ function ColorGuard(props: { children?: JSX.Element }) {
 
     correctColors();
 
-    const observer = new MutationObserver(callback);
+    const observer = new MutationObserver(observerCallback);
 
     observer.observe(body, {
       attributes: true,
       childList: true,
-      subtree: true,
     });
 
     return observer;
