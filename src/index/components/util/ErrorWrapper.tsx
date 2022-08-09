@@ -20,7 +20,7 @@ function ErrorComponent(props: { error: any }) {
       };
     } else {
       return {
-        title: "A Page Occurred",
+        title: "A Page Error Occurred",
         subheading:
           "This is an unspecified error that is likely a bug in Canvas+.",
       };
@@ -42,6 +42,8 @@ function ErrorWrapper(props: { children?: JSX.Element; error?: Signal<any> }) {
   const [error, setError] = props.error || createSignal<any>(null);
 
   function handleError(e) {
+    console.error(e);
+
     setError(e);
     return <ErrorComponent error={error()} />;
   }

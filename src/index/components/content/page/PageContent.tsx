@@ -5,18 +5,17 @@ import { Page } from "../../../lib/types/Page";
 import ErrorWrapper from "../../util/ErrorWrapper";
 import Loading from "../../util/Loading";
 import ContentMeta from "../util/ContentMeta";
-import parse from "color-parse";
 import {
   DARK_BACKGROUND_RGB,
   getLuminance,
   HSPtoRGB,
   improveContrast,
-  improveContrast2,
   LIGHT_BACKGROUND_RGB,
   RECCOMENDED_READING_CONTRAST,
   RGBtoHSP,
 } from "../../../lib/color";
 import { useDarkMode } from "../../../lib/context/darkMode";
+import ColorGuard from "../../util/ColorGuard";
 
 export default function PageContent(props: {
   courseId: number;
@@ -41,41 +40,27 @@ export default function PageContent(props: {
 
   const [darkMode, setDarkMode] = useDarkMode();
 
-  function correctColors() {
-    body.querySelectorAll("*").forEach((element) => {
-      const color = parse(window.getComputedStyle(element).color);
-      if (color.space === "rgb") {
-        const improved = improveContrast(
-          color.values,
-          darkMode() ? DARK_BACKGROUND_RGB : LIGHT_BACKGROUND_RGB,
-          RECCOMENDED_READING_CONTRAST
-        );
-
-        if (improved) {
-          element.style.color = `rgb(${improved[0]} ${improved[1]} ${improved[2]})`;
-        }
-      }
-    });
-  }
-
   createEffect(() => {
     const dark = darkMode();
     if (page()) {
       body.innerHTML = page().body;
-
-      correctColors();
     }
   });
+
+  // darkMode() ? DARK_BACKGROUND_RGB : LIGHT_BACKGROUND_RGB
 
   return (
     <ErrorWrapper error={errorSignal}>
       {page() ? (
         <div className="text-left m-8 flex flex-col gap-4">
           <ContentMeta contentType="Page" titleLine={page().title} />
-          <div
-            ref={body}
-            className="text-light-sys-par dark:text-dark-sys-par"
-          />
+
+          <ColorGuard>
+            <div
+              ref={body}
+              className="text-light-sys-par dark:text-dark-sys-par"
+            />
+          </ColorGuard>
         </div>
       ) : (
         <Loading />

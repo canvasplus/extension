@@ -248,7 +248,9 @@ function improveContrast(
     Math.round(Math.min(255, foreground[2] + step)),
   ];
 }
+
 export {
+  RGBArray,
   RECCOMENDED_READING_CONTRAST,
   improveContrast,
   DARK_BACKGROUND_RGB,

@@ -6,7 +6,7 @@ export default function DefaultView(props) {
   const progessBarElement = progressBar[4];
 
   return (
-    <div>
+    <div className="h-full">
       {progessBarElement()}
       <SplitScreen>{props.children}</SplitScreen>;
     </div>
