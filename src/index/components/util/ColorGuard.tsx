@@ -29,13 +29,27 @@ function ColorGuard(props: { children?: JSX.Element }) {
       }
     }
   }
+
   const callback = function (mutationList: MutationRecord[], observer) {
     mutationList.forEach((mutation) => {
-      mutation.type === "childList" && console.log(mutation);
+      console.log(mutation);
 
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === 1) {
-          const element = node as HTMLElement;
+      mutation.type === "childList" &&
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) {
+            const element = node as HTMLElement;
+
+            correctElementColor(element);
+
+            element.querySelectorAll("*").forEach((child) => {
+              correctElementColor(child);
+            });
+          }
+        });
+
+      if (mutation.type === "attributes") {
+        if (mutation.target.nodeType === 1) {
+          const element = mutation.target as HTMLElement;
 
           correctElementColor(element);
 
@@ -43,7 +57,7 @@ function ColorGuard(props: { children?: JSX.Element }) {
             correctElementColor(child);
           });
         }
-      });
+      }
     });
   };
 
