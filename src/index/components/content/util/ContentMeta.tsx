@@ -1,4 +1,4 @@
-import ContentMetaToolbar from "./ContentMetaToolbar";
+import { ContentMetaToolbar } from "./toolbar/ContentMetaToolbar";
 
 function ContentMeta(props: { contentType: string; titleLine: string }) {
   return (

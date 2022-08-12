@@ -20,8 +20,14 @@ import {
 } from "solid-icons/io";
 import { HiSolidEye } from "solid-icons/hi";
 import ContentTopButton from "./ContentTopButton";
-import { createSignal } from "solid-js";
+import { createSignal, Signal } from "solid-js";
 import ContentMoreButton from "./ContentMoreButton";
+import ToggleDarkModeButton from "./buttons/ToggleDarkModeButton";
+
+type ContentToolbarButtonProps = {
+  dragSignal: Signal<boolean>;
+  removingSignal: Signal<boolean>;
+};
 
 function ContentMetaToolbar() {
   const dragSignal = createSignal(false);
@@ -29,6 +35,7 @@ function ContentMetaToolbar() {
   const removingSignal = createSignal(false);
   const [_, setRemoving] = removingSignal;
 
+  const props = { dragSignal, removingSignal };
   return (
     <div className="flex flex-row gap-2">
       <ContentTopButton
@@ -85,14 +92,7 @@ function ContentMetaToolbar() {
         <FiEye />
       </ContentTopButton>
 
-      <ContentTopButton
-        tooltip="Toggle Dark Mode"
-        removingSignal={removingSignal}
-        onClick={() => {}}
-        dragSignal={dragSignal}
-      >
-        <IoContrast />
-      </ContentTopButton>
+      <ToggleDarkModeButton {...props} />
 
       <ContentMoreButton
         tooltip="More Options"
@@ -104,4 +104,4 @@ function ContentMetaToolbar() {
   );
 }
 
-export default ContentMetaToolbar;
+export { ContentMetaToolbar, ContentToolbarButtonProps };
