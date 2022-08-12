@@ -77,6 +77,13 @@ module.exports = {
         },
       });
     }),
+    plugin(function ({ addVariant, e }) {
+      addVariant("next", ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`next${separator}${className}`)} + *`;
+        });
+      });
+    }),
     // eslint-disable-next-line global-require
     require("tailwindcss-scoped-groups")({
       groups: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],

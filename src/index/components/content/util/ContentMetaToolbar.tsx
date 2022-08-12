@@ -26,11 +26,15 @@ import ContentMoreButton from "./ContentMoreButton";
 function ContentMetaToolbar() {
   const dragSignal = createSignal(false);
 
+  const removingSignal = createSignal(false);
+  const [_, setRemoving] = removingSignal;
+
   return (
     <div className="flex flex-row gap-2">
       <ContentTopButton
         tooltip="Previous Page"
         onClick={() => {}}
+        removingSignal={removingSignal}
         dragSignal={dragSignal}
       >
         <FiArrowLeft />
@@ -38,6 +42,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Next Page"
+        removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
       >
@@ -46,6 +51,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Reload"
+        removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
       >
@@ -54,6 +60,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Back to Course"
+        removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
       >
@@ -62,6 +69,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Search"
+        removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
       >
@@ -70,6 +78,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="View Original"
+        removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
       >
@@ -78,6 +87,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Toggle Dark Mode"
+        removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
       >
@@ -86,6 +96,7 @@ function ContentMetaToolbar() {
 
       <ContentMoreButton
         tooltip="More Options"
+        setRemoving={setRemoving}
         onClick={() => {}}
         dragSignal={dragSignal}
       />

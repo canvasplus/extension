@@ -4,12 +4,13 @@ import {
   IoTrashBinOutline,
   IoTrashOutline,
 } from "solid-icons/io";
-import { children, createSignal, JSX, Signal } from "solid-js";
+import { children, createSignal, JSX, Setter, Signal } from "solid-js";
 
 function ContentMoreButton(props: {
   tooltip: string;
   onClick: () => void;
   dragSignal: Signal<boolean>;
+  setRemoving: Setter<boolean>;
 }) {
   const [showTooltip, setShowTooltip] = createSignal(false);
 
@@ -19,13 +20,19 @@ function ContentMoreButton(props: {
 
   return (
     <div
-      className="relative group"
+      className="relative group z-10 w-8 h-8"
       onMouseOver={() => {
+        if (parentDrag()) {
+          props.setRemoving(true);
+        }
+
         tooltipCallback = setTimeout(() => {
           setShowTooltip(true);
         }, 500);
       }}
       onMouseOut={() => {
+        props.setRemoving(false);
+
         clearTimeout(tooltipCallback);
 
         setShowTooltip(false);
@@ -37,7 +44,7 @@ function ContentMoreButton(props: {
       }}
     >
       <div
-        className={`w-8 h-8 rounded-md flex flex-row justify-center items-center transition-colors cursor-pointer text-sm ${
+        className={`relative z-10 w-8 h-8 rounded-md flex flex-row justify-center items-center transition-colors cursor-pointer text-sm ${
           parentDrag()
             ? "bg-red-500 text-white stroke-white animate-slide-sm-right"
             : "bg-slate-100 text-slate-500 hover:bg-slate-200"
@@ -45,6 +52,14 @@ function ContentMoreButton(props: {
       >
         {parentDrag() ? <IoTrashOutline /> : <IoEllipsisVertical />}
       </div>
+      <div
+        className={`absolute z-50 h-8 w-8 top-0 bg-transparent rounded-md scale-150`}
+      />
+      <div
+        className={`absolute h-8 w-8 top-0 bg-red-500/50 rounded-md scale-0 ${
+          parentDrag() && "group-hover:scale-150"
+        }`}
+      />
       <div
         className={`${
           showTooltip() && !parentDrag() ? "block" : "hidden"
