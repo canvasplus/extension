@@ -1,10 +1,14 @@
-import { IoArrowBackOutline } from "solid-icons/io";
+import {
+  IoArrowBackOutline,
+  IoEllipsisVertical,
+  IoTrashBinOutline,
+  IoTrashOutline,
+} from "solid-icons/io";
 import { children, createSignal, JSX, Signal } from "solid-js";
 
 function ContentMoreButton(props: {
   tooltip: string;
   onClick: () => void;
-  children?: JSX.Element;
   dragSignal: Signal<boolean>;
 }) {
   const [showTooltip, setShowTooltip] = createSignal(false);
@@ -33,9 +37,13 @@ function ContentMoreButton(props: {
       }}
     >
       <div
-        className={`w-8 h-8 rounded-md bg-slate-100 flex flex-row justify-center items-center text-slate-500 hover:bg-slate-200 transition-colors cursor-pointer text-sm`}
+        className={`w-8 h-8 rounded-md flex flex-row justify-center items-center transition-colors cursor-pointer text-sm ${
+          parentDrag()
+            ? "bg-red-500 text-white stroke-white animate-slide-sm-right"
+            : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+        }`}
       >
-        {props.children}
+        {parentDrag() ? <IoTrashOutline /> : <IoEllipsisVertical />}
       </div>
       <div
         className={`${

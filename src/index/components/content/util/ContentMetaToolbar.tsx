@@ -88,9 +88,7 @@ function ContentMetaToolbar() {
         tooltip="More Options"
         onClick={() => {}}
         dragSignal={dragSignal}
-      >
-        <IoEllipsisVerticalOutline />
-      </ContentMoreButton>
+      />
     </div>
   );
 }
