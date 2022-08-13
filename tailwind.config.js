@@ -26,11 +26,17 @@ module.exports = {
           bg: "#FFFFFF",
           heading: "#333",
           par: "#3b3b3d",
+          "btn-bg": "#f1f5f9",
+          "btn-bg-hov": "#e2e8f0",
+          "btn-text": "#64748b",
         },
         "dark-sys": {
           bg: "#313236",
           heading: "#FFF",
           par: "#e4eced",
+          "btn-bg": "#3f424b",
+          "btn-bg-hov": "#393c45",
+          "btn-text": "#d3d3d3",
         },
       },
       spacing: {
