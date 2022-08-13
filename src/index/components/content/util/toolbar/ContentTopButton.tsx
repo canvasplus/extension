@@ -48,21 +48,21 @@ function ContentTopButton(props: {
         }}
         onMouseLeave={() => {
           setShowTooltip(false);
+
           clearTimeout(tooltipCallback);
+          tooltipCallback = undefined;
 
           clearTimeout(dragCallback);
-
-          // if (myDrag()) {
-          //   window.removeEventListener("mousemove", moveListener);
-          //   setMyDrag(false);
-          //   setParentDrag(false);
-          // }
+          dragCallback = undefined;
         }}
         onMouseDown={(e2) => {
+          if (e2.button !== 0) return;
+
           setX(e2.clientX);
           setY(e2.clientY);
 
           clearTimeout(tooltipCallback);
+          tooltipCallback = undefined;
 
           setShowTooltip(false);
 
@@ -75,6 +75,7 @@ function ContentTopButton(props: {
             window.removeEventListener("mousemove", moveListener);
             window.removeEventListener("mouseup", mouseUpCallback);
             setMyDrag(false);
+
             setParentDrag(false);
 
             if (removing()) {
@@ -86,13 +87,21 @@ function ContentTopButton(props: {
           window.addEventListener("mousemove", moveListener);
 
           dragCallback = setTimeout(() => {
+            dragCallback = undefined;
             setMyDrag(true);
             setParentDrag(true);
             window.addEventListener("mouseup", mouseUpCallback);
           }, 500);
         }}
-        onMouseUp={() => {
+        onMouseUp={(e) => {
+          if (e.button !== 0) return;
+
+          if (dragCallback == null || !myDrag()) {
+            props.onClick();
+          }
+
           clearTimeout(dragCallback);
+          dragCallback = undefined;
         }}
       >
         {props.children}
