@@ -1,6 +1,13 @@
-import { IoContrast } from "solid-icons/io";
+import { FiMonitor, FiMoon, FiSun } from "solid-icons/fi";
+import {
+  IoContrast,
+  IoDesktopOutline,
+  IoMoonOutline,
+  IoSunnyOutline,
+} from "solid-icons/io";
 import { createEffect, createSignal } from "solid-js";
 import Dialogue from "../../../../interactive/containers/Dialogue";
+import DropdownOption from "../../../../interactive/form/DropdownOption";
 import { ContentToolbarButtonProps } from "../ContentMetaToolbar";
 import ContentTopButton from "../ContentTopButton";
 
@@ -42,7 +49,17 @@ function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
       {active() && (
         <div className="absolute top-10 right-0">
           <Dialogue>
-            <p>Dialogue</p>
+            <DropdownOption label="Light" select={() => {}} selected={false}>
+              <FiSun />
+            </DropdownOption>
+
+            <DropdownOption label="Dark" select={() => {}} selected={false}>
+              <FiMoon />
+            </DropdownOption>
+
+            <DropdownOption label="System" select={() => {}} selected={false}>
+              <FiMonitor />
+            </DropdownOption>
           </Dialogue>
         </div>
       )}

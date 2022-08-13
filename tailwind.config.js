@@ -29,6 +29,8 @@ module.exports = {
           "btn-bg": "#f1f5f9",
           "btn-bg-hov": "#e2e8f0",
           "btn-text": "#64748b",
+          border: "#cbd5e1",
+          icon: "#8f9cb0",
         },
         "dark-sys": {
           bg: "#313236",
@@ -37,6 +39,8 @@ module.exports = {
           "btn-bg": "#3f424b",
           "btn-bg-hov": "#393c45",
           "btn-text": "#d3d3d3",
+          border: "#4c505c",
+          icon: "#81999c",
         },
       },
       spacing: {
