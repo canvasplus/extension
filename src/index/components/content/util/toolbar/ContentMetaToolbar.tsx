@@ -41,6 +41,7 @@ function ContentMetaToolbar() {
       <ContentTopButton
         tooltip="Previous Page"
         onClick={() => {}}
+        active={() => false}
         removingSignal={removingSignal}
         dragSignal={dragSignal}
       >
@@ -49,6 +50,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Next Page"
+        active={() => false}
         removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
@@ -58,6 +60,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Reload"
+        active={() => false}
         removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
@@ -67,6 +70,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Back to Course"
+        active={() => false}
         removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
@@ -76,6 +80,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="Search"
+        active={() => false}
         removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}
@@ -85,6 +90,7 @@ function ContentMetaToolbar() {
 
       <ContentTopButton
         tooltip="View Original"
+        active={() => false}
         removingSignal={removingSignal}
         onClick={() => {}}
         dragSignal={dragSignal}

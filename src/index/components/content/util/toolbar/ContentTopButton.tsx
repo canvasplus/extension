@@ -5,6 +5,7 @@ function ContentTopButton(props: {
   tooltip: string;
   onClick: () => void;
   children?: JSX.Element;
+  active: Accessor<boolean>;
   dragSignal: Signal<boolean>;
   removingSignal: Signal<boolean>;
 }) {
@@ -37,7 +38,7 @@ function ContentTopButton(props: {
         className={`w-8 h-8 rounded-md flex flex-row justify-center items-center bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors cursor-pointer text-sm${
           myDrag() ? " scale-90" : ""
         }${!parentDrag() || myDrag() ? "" : " opacity-50"} ${
-          showTooltip() && !parentDrag()
+          showTooltip() && !parentDrag() && !props.active()
             ? "next:hidden next:hover:block"
             : "next:hidden"
         }`}

@@ -29,7 +29,7 @@ function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
   return (
     <div className="relative" ref={ref}>
       <ContentTopButton
-        // active={active}
+        active={active}
         tooltip="Toggle Dark Mode"
         removingSignal={props.removingSignal}
         onClick={() => {
