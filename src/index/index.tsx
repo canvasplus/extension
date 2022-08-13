@@ -97,20 +97,21 @@ const Index: Function = () => {
 
   startLoading();
 
-  const [darkMode, setDarkMode] = useDarkMode();
+  const [darkMode, setDarkMode, darkModeMethod, setDarkModeMethod] =
+    useDarkMode();
 
   function handleColorScheme() {
-    if (localStorage.theme === "dark") {
-      setDarkMode(true);
-    } else if (localStorage.theme !== "light") {
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
+    if (darkModeMethod() === "system") {
       setDarkMode(mediaQuery.matches);
-
-      mediaQuery.addEventListener("change", (e) => {
-        setDarkMode(e.matches);
-      });
     }
+
+    mediaQuery.addEventListener("change", (e) => {
+      if (darkModeMethod() === "system") {
+        setDarkMode(e.matches);
+      }
+    });
   }
 
   createEffect(() => {
@@ -120,6 +121,12 @@ const Index: Function = () => {
       document.documentElement.classList.remove("dark");
     }
   });
+
+  createEffect(() => {
+    if (darkModeMethod() === "light") setDarkMode(false);
+    else if (darkModeMethod() === "dark") setDarkMode(true);
+  });
+
   handleColorScheme();
 
   return (

@@ -7,12 +7,28 @@ import {
   Signal,
 } from "solid-js";
 
-const DarkModeContext = createContext<Signal<boolean>>();
+type DarkModeMethod = "system" | "light" | "dark";
+
+type Store = [
+  Accessor<boolean>,
+  Setter<boolean>,
+  Accessor<DarkModeMethod>,
+  Setter<DarkModeMethod>
+];
+
+const DarkModeContext = createContext<Store>();
 
 export function DarkModeProvider(props) {
-  const signal = createSignal<boolean>(false);
+  const [enabled, setEnabled] = createSignal<boolean>(false);
 
-  return <DarkModeContext.Provider value={signal} children={props.children} />;
+  const [method, setMethod] = createSignal<DarkModeMethod>("light");
+
+  return (
+    <DarkModeContext.Provider
+      value={[enabled, setEnabled, method, setMethod]}
+      children={props.children}
+    />
+  );
 }
 
 export function useDarkMode() {
