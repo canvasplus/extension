@@ -108,7 +108,7 @@ function ContentTopButton(props: {
         {props.children}
       </div>
       <div
-        className={`absolute rounded-sm whitespace-nowrap text-sm px-1 top-9 left-1/2 -translate-x-1/2 bg-black/50 text-white`}
+        className={`absolute rounded-sm whitespace-nowrap text-sm px-1 top-9 left-1/2 -translate-x-1/2 bg-black/50 text-white z-10`}
       >
         {props.tooltip}
       </div>

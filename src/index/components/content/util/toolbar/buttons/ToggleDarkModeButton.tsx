@@ -40,7 +40,7 @@ function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
         <IoContrast />
       </ContentTopButton>
       {active() && (
-        <div className="absolute top-9">
+        <div className="absolute top-10 right-0">
           <Dialogue>
             <p>Dialogue</p>
           </Dialogue>
