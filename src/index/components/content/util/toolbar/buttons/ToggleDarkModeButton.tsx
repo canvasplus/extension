@@ -47,7 +47,7 @@ function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
         <IoContrast />
       </ContentTopButton>
       {active() && (
-        <div className="absolute top-10 right-0">
+        <div className="absolute top-10 right-0 animate-slide-sm-down">
           <Dialogue>
             <DropdownOption label="Light" select={() => {}} selected={false}>
               <FiSun />

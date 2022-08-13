@@ -54,6 +54,8 @@ module.exports = {
         "fade-in": "fade-in 0.3s linear",
         "slide-sm-left": "slide-sm-left 0.2s ease-in",
         "slide-sm-right": "slide-sm-right 0.2s ease-in",
+        "slide-sm-up": "slide-sm-up 0.2s ease-out",
+        "slide-sm-down": "slide-sm-down 0.2s ease-out",
       },
       keyframes: {
         "fade-in": {
@@ -66,6 +68,14 @@ module.exports = {
         },
         "slide-sm-right": {
           "0%": { opacity: 0, transform: "translateX(50%)" },
+          "100%": { opacity: 1, transform: "" },
+        },
+        "slide-sm-up": {
+          "0%": { opacity: 0, transform: "translateY(15%)" },
+          "100%": { opacity: 1, transform: "" },
+        },
+        "slide-sm-down": {
+          "0%": { opacity: 0, transform: "translateY(-15%)" },
           "100%": { opacity: 1, transform: "" },
         },
       },
