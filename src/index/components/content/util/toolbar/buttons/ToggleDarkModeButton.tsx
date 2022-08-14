@@ -52,35 +52,37 @@ function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
       {active() && (
         <div className="absolute top-10 right-0 animate-slide-sm-down">
           <Dialogue>
-            <DropdownOption
-              label="Light"
-              select={() => {
-                setDarkModeMethod("light");
-              }}
-              selected={darkModeMethod() === "light"}
-            >
-              <FiSun />
-            </DropdownOption>
+            <div classList="py-1">
+              <DropdownOption
+                label="Light"
+                select={() => {
+                  setDarkModeMethod("light");
+                }}
+                selected={darkModeMethod() === "light"}
+              >
+                <FiSun />
+              </DropdownOption>
 
-            <DropdownOption
-              label="Dark"
-              select={() => {
-                setDarkModeMethod("dark");
-              }}
-              selected={darkModeMethod() === "dark"}
-            >
-              <FiMoon />
-            </DropdownOption>
+              <DropdownOption
+                label="Dark"
+                select={() => {
+                  setDarkModeMethod("dark");
+                }}
+                selected={darkModeMethod() === "dark"}
+              >
+                <FiMoon />
+              </DropdownOption>
 
-            <DropdownOption
-              label="System"
-              select={() => {
-                setDarkModeMethod("system");
-              }}
-              selected={darkModeMethod() === "system"}
-            >
-              <FiMonitor />
-            </DropdownOption>
+              <DropdownOption
+                label="System"
+                select={() => {
+                  setDarkModeMethod("system");
+                }}
+                selected={darkModeMethod() === "system"}
+              >
+                <FiMonitor />
+              </DropdownOption>
+            </div>
           </Dialogue>
         </div>
       )}

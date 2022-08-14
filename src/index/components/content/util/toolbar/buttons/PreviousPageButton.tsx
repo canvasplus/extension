@@ -1,14 +1,10 @@
-import { IoArrowBackOutline } from "solid-icons/io";
+import { FiArrowLeft } from "solid-icons/fi";
+import { IoArrowBackOutline, IoDocumentOutline } from "solid-icons/io";
 import { Accessor, children, createSignal, JSX, Signal } from "solid-js";
+import Dialogue from "../../../../interactive/containers/Dialogue";
+import { ContentToolbarButtonProps } from "../ContentMetaToolbar";
 
-function ContentTopButton(props: {
-  tooltip: string;
-  onClick: () => void;
-  children?: JSX.Element;
-  active: Accessor<boolean>;
-  dragSignal: Signal<boolean>;
-  removingSignal: Signal<boolean>;
-}) {
+function PreviousPageButton(props: ContentToolbarButtonProps) {
   const [showTooltip, setShowTooltip] = createSignal(false);
 
   let tooltipCallback;
@@ -38,7 +34,7 @@ function ContentTopButton(props: {
         className={`w-8 h-8 rounded-md flex flex-row justify-center items-center bg-light-sys-btn-bg dark:bg-dark-sys-btn-bg hover:bg-light-sys-btn-bg-hov dark:hover:bg-dark-sys-btn-bg-hov text-light-sys-btn-text dark:text-dark-sys-btn-text transition-colors cursor-pointer text-sm${
           myDrag() ? " scale-90" : ""
         }${!parentDrag() || myDrag() ? "" : " opacity-50"} ${
-          showTooltip() && !parentDrag() && !props.active()
+          showTooltip() && !parentDrag()
             ? "next:hidden next:hover:block"
             : "next:hidden"
         }`}
@@ -96,23 +92,29 @@ function ContentTopButton(props: {
         onMouseUp={(e) => {
           if (e.button !== 0) return;
 
-          if (dragCallback == null || !myDrag()) {
-            props.onClick();
-          }
-
           clearTimeout(dragCallback);
           dragCallback = undefined;
         }}
       >
-        {props.children}
+        <FiArrowLeft />
       </div>
       <div
-        className={`absolute rounded-sm whitespace-nowrap text-sm px-1 top-9 left-1/2 -translate-x-1/2 bg-black/50 text-white z-10`}
+        className={`absolute rounded-sm whitespace-nowrap text-sm px-1 top-10 right-0 z-10`}
       >
-        {props.tooltip}
+        <Dialogue large={true}>
+          <div className="bg-light-sys-btn-bg dark:bg-dark-sys-btn-bg text-light-sys-btn-text dark:text-dark-sys-btn-text py-1 px-3 border-b border-light-sys-border dark:border-dark-sys-border">
+            <p>Previous Page</p>
+          </div>
+          <div className="py-2 px-3 items-center flex flex-row gap-3 text-light-sys-par dark:text-dark-sys-par">
+            <div className="text-light-sys-icon dark:text-dark-sys-icon">
+              <IoDocumentOutline />
+            </div>
+            <p>Page Name</p>
+          </div>
+        </Dialogue>
       </div>
     </div>
   );
 }
 
-export default ContentTopButton;
+export default PreviousPageButton;
