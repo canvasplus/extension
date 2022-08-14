@@ -11,7 +11,7 @@ export const fetchPages = async (courseId: number): Promise<Page[]> => {
 
   for (let i = 1; ; i++) {
     const { data } = await axios.get(
-      `/api/v1/courses/${courseId}/pages?page=${i}&per_page=50`
+      `/api/v1/courses/${courseId}/pages?page=${i}&per_page=50&sort=title`
     );
 
     if (data.errors) {

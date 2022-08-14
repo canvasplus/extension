@@ -1,6 +1,7 @@
 import { FiArrowLeft } from "solid-icons/fi";
 import { IoArrowBackOutline, IoDocumentOutline } from "solid-icons/io";
 import { Accessor, children, createSignal, JSX, Signal } from "solid-js";
+import { usePreviousPage } from "../../../../../lib/context/previousPage";
 import Dialogue from "../../../../interactive/containers/Dialogue";
 import { ContentToolbarButtonProps } from "../ContentMetaToolbar";
 
@@ -20,6 +21,10 @@ function PreviousPageButton(props: ContentToolbarButtonProps) {
 
   const [removing, setRemoving] = props.removingSignal;
 
+  const previousPage = usePreviousPage();
+
+  const disabled = !previousPage;
+
   return (
     <div
       className={`group ${
@@ -31,10 +36,14 @@ function PreviousPageButton(props: ContentToolbarButtonProps) {
       }}
     >
       <div
-        className={`w-8 h-8 rounded-md flex flex-row justify-center items-center bg-light-sys-btn-bg dark:bg-dark-sys-btn-bg hover:bg-light-sys-btn-bg-hov dark:hover:bg-dark-sys-btn-bg-hov text-light-sys-btn-text dark:text-dark-sys-btn-text transition-colors cursor-pointer text-sm${
+        className={`w-8 h-8 rounded-md flex flex-row justify-center items-center bg-light-sys-btn-bg dark:bg-dark-sys-btn-bg text-light-sys-btn-text dark:text-dark-sys-btn-text transition-colors text-sm${
           myDrag() ? " scale-90" : ""
-        }${!parentDrag() || myDrag() ? "" : " opacity-50"} ${
-          showTooltip() && !parentDrag()
+        }${
+          (!parentDrag() || myDrag()) && !disabled
+            ? " cursor-pointer hover:bg-light-sys-btn-bg-hov dark:hover:bg-dark-sys-btn-bg-hov"
+            : " opacity-50"
+        } ${
+          showTooltip() && !parentDrag() && !disabled
             ? "next:hidden next:hover:block"
             : "next:hidden"
         }`}
@@ -105,11 +114,11 @@ function PreviousPageButton(props: ContentToolbarButtonProps) {
           <div className="bg-light-sys-btn-bg dark:bg-dark-sys-btn-bg text-light-sys-btn-text dark:text-dark-sys-btn-text py-1 px-3 border-b border-light-sys-border dark:border-dark-sys-border">
             <p>Previous Page</p>
           </div>
-          <div className="py-2 px-3 items-center flex flex-row gap-3 text-light-sys-par dark:text-dark-sys-par">
+          <div className="py-2 px-3 items-center flex flex-row gap-3 text-light-sys-par dark:text-dark-sys-par overflow-ellipsis overflow-hidden">
             <div className="text-light-sys-icon dark:text-dark-sys-icon">
-              <IoDocumentOutline />
+              {previousPage?.icon}
             </div>
-            <p>Page Name</p>
+            <p>{previousPage?.label}</p>
           </div>
         </Dialogue>
       </div>
