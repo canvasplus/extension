@@ -68,7 +68,7 @@ const Index: Function = () => {
   createEffect((previous) => {
     const current = getCurrentLocation();
 
-    if (previous === current) return previous;
+    if (previous === current || location.href === current) return current;
 
     if (isPathnameCompatible(current)) {
       window.history.pushState({}, "", current);
@@ -127,8 +127,11 @@ const Index: Function = () => {
   });
 
   window.addEventListener("popstate", function (e) {
-    console.log(e);
+    setFullLocation({
+      route: location.href,
+    });
   });
+
   return (
     <>
       {appReady() ? (
