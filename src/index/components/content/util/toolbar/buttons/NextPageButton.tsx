@@ -1,4 +1,4 @@
-import { FiArrowLeft } from "solid-icons/fi";
+import { FiArrowLeft, FiArrowRight } from "solid-icons/fi";
 import { IoArrowBackOutline, IoDocumentOutline } from "solid-icons/io";
 import { Accessor, children, createSignal, JSX, Signal } from "solid-js";
 import { useLocation } from "../../../../../lib/context/location";
@@ -7,7 +7,7 @@ import Dialogue from "../../../../interactive/containers/Dialogue";
 import VLink from "../../../../util/VLink";
 import { ContentToolbarButtonProps } from "../ContentMetaToolbar";
 
-function PreviousPageButton(props: ContentToolbarButtonProps) {
+function NextPageButton(props: ContentToolbarButtonProps) {
   const [showTooltip, setShowTooltip] = createSignal(false);
 
   let tooltipCallback;
@@ -23,14 +23,14 @@ function PreviousPageButton(props: ContentToolbarButtonProps) {
 
   const [removing, setRemoving] = props.removingSignal;
 
-  const [previousPage] = useAdjacdentPages();
+  const [{}, nextPage] = useAdjacdentPages();
 
-  const disabled = !previousPage || !previousPage.href;
+  const disabled = !nextPage || !nextPage.href;
 
   const [{}, { goTo }] = useLocation();
 
   return (
-    <VLink href={previousPage?.href}>
+    <VLink href={nextPage?.href}>
       <div
         className={`group ${
           myDrag() ? "fixed -translate-x-1/2 -translate-y-1/2" : "relative"
@@ -107,27 +107,27 @@ function PreviousPageButton(props: ContentToolbarButtonProps) {
             if (e.button !== 0) return;
 
             if ((dragCallback == null || !myDrag()) && !disabled) {
-              goTo(previousPage?.href);
+              goTo(nextPage?.href);
             }
 
             clearTimeout(dragCallback);
             dragCallback = undefined;
           }}
         >
-          <FiArrowLeft />
+          <FiArrowRight />
         </div>
         <div
           className={`absolute rounded-sm whitespace-nowrap text-sm px-1 top-10 right-0 z-10`}
         >
           <Dialogue large={true}>
             <div className="bg-light-sys-btn-bg dark:bg-dark-sys-btn-bg text-light-sys-btn-text dark:text-dark-sys-btn-text py-1 px-3 border-b border-light-sys-border dark:border-dark-sys-border">
-              <p>Previous Page</p>
+              <p>Next Page</p>
             </div>
             <div className="py-2 px-3 items-center flex flex-row gap-3 text-light-sys-par dark:text-dark-sys-par overflow-ellipsis overflow-hidden">
               <div className="text-light-sys-icon dark:text-dark-sys-icon">
-                {previousPage?.icon}
+                {nextPage?.icon}
               </div>
-              <p>{previousPage?.label ?? "Unknown Page"}</p>
+              <p>{nextPage?.label ?? "Unknown Page"}</p>
             </div>
           </Dialogue>
         </div>
@@ -136,4 +136,4 @@ function PreviousPageButton(props: ContentToolbarButtonProps) {
   );
 }
 
-export default PreviousPageButton;
+export default NextPageButton;

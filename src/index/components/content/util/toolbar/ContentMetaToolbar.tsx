@@ -24,6 +24,7 @@ import { createSignal, Signal } from "solid-js";
 import ContentMoreButton from "./ContentMoreButton";
 import ToggleDarkModeButton from "./buttons/ToggleDarkModeButton";
 import PreviousPageButton from "./buttons/PreviousPageButton";
+import NextPageButton from "./buttons/NextPageButton";
 
 type ContentToolbarButtonProps = {
   dragSignal: Signal<boolean>;
@@ -41,15 +42,7 @@ function ContentMetaToolbar() {
     <div className="flex flex-row gap-2">
       <PreviousPageButton {...props} />
 
-      <ContentTopButton
-        tooltip="Next Page"
-        active={() => false}
-        removingSignal={removingSignal}
-        onClick={() => {}}
-        dragSignal={dragSignal}
-      >
-        <FiArrowRight />
-      </ContentTopButton>
+      <NextPageButton {...props} />
 
       <ContentTopButton
         tooltip="Reload"

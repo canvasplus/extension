@@ -16,7 +16,7 @@ import {
 } from "../../../lib/color";
 import { useDarkMode } from "../../../lib/context/darkMode";
 import ColorGuard from "../../util/ColorGuard";
-import { PreviousPageProvider } from "../../../lib/context/previousPage";
+import { AdjacentPagesProvider } from "../../../lib/context/adjacentPages";
 import { IoDocumentOutline } from "solid-icons/io";
 import { useLocation } from "../../../lib/context/location";
 
@@ -25,7 +25,12 @@ export default function PageContent(props: {
   pageId: string;
 }) {
   const [page, setPage] = createSignal<Page | undefined>(undefined);
+
   const [previousPage, setPreviousPage] = createSignal<Page | undefined | null>(
+    undefined
+  );
+
+  const [nextPage, setNextPage] = createSignal<Page | undefined | null>(
     undefined
   );
 
@@ -37,11 +42,14 @@ export default function PageContent(props: {
   getPages(props.courseId).then((pages) => {
     const myIndex = pages.findIndex((page) => page.id === props.pageId);
 
-    console.log(myIndex, pages, pages[2]);
-
     if (myIndex <= 0) setPreviousPage(null);
-    else if (pages[myIndex - 1]) {
-      setPreviousPage(pages[myIndex - 1]);
+    else {
+      setPreviousPage(pages[myIndex - 1] ?? null);
+    }
+
+    if (myIndex >= pages.length - 1) setNextPage(null);
+    else {
+      setNextPage(pages[myIndex + 1] ?? null);
     }
   });
 
@@ -71,17 +79,26 @@ export default function PageContent(props: {
   return (
     <ErrorWrapper error={errorSignal}>
       <>
-        {page() && previousPage() !== undefined ? (
-          <PreviousPageProvider
-            href={
+        {page() && previousPage() !== undefined && nextPage() !== undefined ? (
+          <AdjacentPagesProvider
+            hrefPrev={
               previousPage()
                 ? `${new URL(getCurrentLocation()).origin}/courses/${
                     props.courseId
                   }/pages/${previousPage()?.id}`
                 : null
             }
-            icon={<IoDocumentOutline />}
-            label={previousPage()?.title}
+            iconPrev={<IoDocumentOutline />}
+            labelPrev={previousPage()?.title}
+            hrefNext={
+              nextPage()
+                ? `${new URL(getCurrentLocation()).origin}/courses/${
+                    props.courseId
+                  }/pages/${nextPage()?.id}`
+                : null
+            }
+            iconNext={<IoDocumentOutline />}
+            labelNext={nextPage()?.title}
           >
             <div className="text-left m-8 flex flex-col gap-4">
               <ContentMeta contentType="Page" titleLine={page().title} />
@@ -97,7 +114,7 @@ export default function PageContent(props: {
                 })()}
               </ColorGuard>
             </div>
-          </PreviousPageProvider>
+          </AdjacentPagesProvider>
         ) : (
           <Loading />
         )}
