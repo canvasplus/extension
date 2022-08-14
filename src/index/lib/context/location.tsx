@@ -46,13 +46,16 @@ export function LocationProvider(props) {
     },
     {
       goTo(newRoute: string) {
-        const current = location();
+        console.log("doing goTo");
+        const current = { ...location() };
         current.prev = newRoute;
 
         setLocation(current);
       },
       goToPath(newRoute: string) {
-        const current = location();
+        console.log("doing goToPath");
+        const current = { ...location() };
+
         const url = new URL(current.route);
 
         url.pathname = newRoute;
@@ -62,6 +65,7 @@ export function LocationProvider(props) {
         setLocation(current);
       },
       doneLoading() {
+        console.log("doing doneLoading");
         const current = location();
         current.route = current.prev;
         current.prev = undefined;

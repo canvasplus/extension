@@ -65,8 +65,10 @@ const Index: Function = () => {
     }
   });
 
-  createEffect(() => {
+  createEffect((previous) => {
     const current = getCurrentLocation();
+
+    if (previous === current) return previous;
 
     if (isPathnameCompatible(current)) {
       window.history.pushState({}, "", current);
@@ -74,6 +76,8 @@ const Index: Function = () => {
     } else {
       location.href = current;
     }
+
+    return current;
   });
 
   chrome.runtime.onMessage.addListener((message) => {
@@ -100,19 +104,13 @@ const Index: Function = () => {
   const [darkMode, setDarkMode, darkModeMethod, setDarkModeMethod] =
     useDarkMode();
 
-  function handleColorScheme() {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
+  mediaQuery.addEventListener("change", (e) => {
     if (darkModeMethod() === "system") {
-      setDarkMode(mediaQuery.matches);
+      setDarkMode(e.matches);
     }
-
-    mediaQuery.addEventListener("change", (e) => {
-      if (darkModeMethod() === "system") {
-        setDarkMode(e.matches);
-      }
-    });
-  }
+  });
 
   createEffect(() => {
     if (darkMode()) {
@@ -125,10 +123,12 @@ const Index: Function = () => {
   createEffect(() => {
     if (darkModeMethod() === "light") setDarkMode(false);
     else if (darkModeMethod() === "dark") setDarkMode(true);
+    else if (darkModeMethod() === "system") setDarkMode(mediaQuery.matches);
   });
 
-  handleColorScheme();
-
+  window.addEventListener("popstate", function (e) {
+    console.log(e);
+  });
   return (
     <>
       {appReady() ? (

@@ -6,6 +6,7 @@ import {
   IoSunnyOutline,
 } from "solid-icons/io";
 import { createEffect, createSignal } from "solid-js";
+import { useDarkMode } from "../../../../../lib/context/darkMode";
 import Dialogue from "../../../../interactive/containers/Dialogue";
 import DropdownOption from "../../../../interactive/form/DropdownOption";
 import { ContentToolbarButtonProps } from "../ContentMetaToolbar";
@@ -14,6 +15,8 @@ import ContentTopButton from "../ContentTopButton";
 function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
   const [active, setActive] = createSignal(false);
 
+  const [darkMode, setDarkMode, darkModeMethod, setDarkModeMethod] =
+    useDarkMode();
   let ref;
 
   createEffect((listener) => {
@@ -49,15 +52,33 @@ function ToggleDarkModeButton(props: ContentToolbarButtonProps) {
       {active() && (
         <div className="absolute top-10 right-0 animate-slide-sm-down">
           <Dialogue>
-            <DropdownOption label="Light" select={() => {}} selected={false}>
+            <DropdownOption
+              label="Light"
+              select={() => {
+                setDarkModeMethod("light");
+              }}
+              selected={darkModeMethod() === "light"}
+            >
               <FiSun />
             </DropdownOption>
 
-            <DropdownOption label="Dark" select={() => {}} selected={false}>
+            <DropdownOption
+              label="Dark"
+              select={() => {
+                setDarkModeMethod("dark");
+              }}
+              selected={darkModeMethod() === "dark"}
+            >
               <FiMoon />
             </DropdownOption>
 
-            <DropdownOption label="System" select={() => {}} selected={false}>
+            <DropdownOption
+              label="System"
+              select={() => {
+                setDarkModeMethod("system");
+              }}
+              selected={darkModeMethod() === "system"}
+            >
               <FiMonitor />
             </DropdownOption>
           </Dialogue>

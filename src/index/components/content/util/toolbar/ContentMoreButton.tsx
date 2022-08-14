@@ -20,7 +20,9 @@ function ContentMoreButton(props: {
 
   return (
     <div
-      className="relative group z-10 w-8 h-8"
+      className={`relative group z-10 w-8 h-8${
+        parentDrag() ? " cursor-grab" : " cursor-pointer"
+      }`}
       onMouseOver={() => {
         if (parentDrag()) {
           props.setRemoving(true);
@@ -44,10 +46,10 @@ function ContentMoreButton(props: {
       }}
     >
       <div
-        className={`relative z-10 w-8 h-8 rounded-md flex flex-row justify-center items-center transition-colors cursor-pointer text-sm ${
+        className={`relative z-10 w-8 h-8 rounded-md flex flex-row justify-center items-center transition-colors text-sm ${
           parentDrag()
             ? "bg-red-500 text-white stroke-white animate-slide-sm-right"
-            : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+            : "bg-light-sys-btn-bg group-hover:bg-light-sys-btn-bg-hov text-light-sys-btn-text dark:bg-dark-sys-btn-bg dark:group-hover:bg-dark-sys-btn-bg-hov dark:text-dark-sys-btn-text"
         }`}
       >
         {parentDrag() ? <IoTrashOutline /> : <IoEllipsisVertical />}
