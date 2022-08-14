@@ -18,6 +18,7 @@ import { useDarkMode } from "../../../lib/context/darkMode";
 import ColorGuard from "../../util/ColorGuard";
 import { PreviousPageProvider } from "../../../lib/context/previousPage";
 import { IoDocumentOutline } from "solid-icons/io";
+import { useLocation } from "../../../lib/context/location";
 
 export default function PageContent(props: {
   courseId: number;
@@ -65,11 +66,20 @@ export default function PageContent(props: {
     }
   });
 
+  const [{ getCurrentLocation }] = useLocation();
+
   return (
     <ErrorWrapper error={errorSignal}>
       <>
         {page() && previousPage() !== undefined ? (
           <PreviousPageProvider
+            href={
+              previousPage()
+                ? `${new URL(getCurrentLocation()).origin}/courses/${
+                    props.courseId
+                  }/pages/${previousPage()?.id}`
+                : null
+            }
             icon={<IoDocumentOutline />}
             label={previousPage()?.title}
           >
