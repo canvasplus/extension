@@ -3,9 +3,11 @@ import { useLocation } from "../../../lib/context/location";
 import { getModules } from "../../../lib/modules";
 import { Module } from "../../../lib/types/Module";
 import Loading from "../../util/Loading";
+import ModuleContainerItem from "../items/ModuleContainerItem";
 import SidebarRedirect from "../SidebarRedirect";
 import SidebarRedirectIcon from "../SidebarRedirectIcon";
 import SidebarToggle from "../SidebarToggle";
+import SidebarToggleIcon from "../SidebarToggleIcon";
 import TabComponentProps from "./TabComponentProps";
 
 export default function ModulesTab(props: TabComponentProps) {
@@ -42,15 +44,7 @@ export default function ModulesTab(props: TabComponentProps) {
       return <div>No modules</div>;
     } else {
       return modules().map((module) => (
-        <SidebarRedirect
-          title={module.name}
-          redirect={`${new URL(getCurrentLocation()).origin}/courses/${
-            props.courseId
-          }/modules/${module.id}`}
-          indent={2}
-        >
-          <SidebarRedirectIcon type="DEFAULT" />
-        </SidebarRedirect>
+        <ModuleContainerItem module={module} courseId={props.courseId} />
       ));
     }
   };
@@ -61,6 +55,11 @@ export default function ModulesTab(props: TabComponentProps) {
       title={props.tab.label}
       href={props.tab.full_url}
       highlighted={
+        props.parentHighlighted() &&
+        props.path()[2] === "modules" &&
+        props.path().length === 3
+      }
+      highlightedWithin={
         props.parentHighlighted() &&
         (props.path()[2] === "modules" || onModule())
       }

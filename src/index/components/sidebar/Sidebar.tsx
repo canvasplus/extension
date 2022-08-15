@@ -3,34 +3,17 @@ import { SidebarContentProvider } from "../../lib/context/sidebarContent";
 import { getCourses } from "../../lib/courseData";
 import { Course } from "../../lib/types/Course";
 import CourseOnSidebar from "./CourseOnSidebar";
+import SidebarBottom from "./SidebarBottom";
 import SidebarItem from "./SidebarItem";
 import SidebarToggle from "./SidebarToggle";
 import SidebarToggleIcon from "./SidebarToggleIcon";
 import SidebarTop from "./top/SidebarTop";
 
 function SidebarInner(props) {
-  const [courses, setCourses] = createSignal<Course[] | undefined>(undefined);
-
-  const placeholder = () => {
-    if (courses() === undefined) return <p>Loading</p>;
-    else if (courses().length === 0) return <p>Nothing to see here</p>;
-    else return undefined;
-  };
-
-  getCourses().then((c) => {
-    setCourses(c);
-  });
-
   return (
     <div className="fixed w-80 bg-cyan-50 h-full text-sm overflow-scroll">
       <SidebarTop />
-      {placeholder() ?? (
-        <div className="p-1">
-          {courses()?.map((c) => (
-            <CourseOnSidebar course={c} />
-          ))}
-        </div>
-      )}
+      <SidebarBottom />
     </div>
   );
 }
