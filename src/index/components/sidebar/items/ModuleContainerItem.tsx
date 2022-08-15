@@ -19,22 +19,17 @@ function ModuleContainerItem(props: { module: Module; courseId: number }) {
   const { setBottom } = useSidebarContent();
 
   createEffect(() => {
-    console.log("event fired");
-
     if (expanded()) {
-      console.log("expanded is true");
-
       setBottom(
         <div
           onClick={() => {
-            setBottom(undefined);
+            setExpanded(false);
           }}
         >
           Click me to Close
         </div>
       );
     } else {
-      console.log("expanded is false");
       setBottom(undefined);
     }
   });

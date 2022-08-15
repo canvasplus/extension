@@ -21,7 +21,11 @@ function SidebarBottomDefault() {
 function SidebarBottom() {
   const { bottom } = useSidebarContent();
 
-  return <>{bottom() || <SidebarBottomDefault />}</>;
+  const [defaultBottom, setDefaultBottom] = createSignal(
+    <SidebarBottomDefault />
+  );
+
+  return <>{bottom() || defaultBottom()}</>;
 }
 
 export default SidebarBottom;
