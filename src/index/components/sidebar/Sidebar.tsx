@@ -1,4 +1,5 @@
 import { createSignal } from "solid-js";
+import { SidebarContentProvider } from "../../lib/context/sidebarContent";
 import { getCourses } from "../../lib/courseData";
 import { Course } from "../../lib/types/Course";
 import CourseOnSidebar from "./CourseOnSidebar";
@@ -7,7 +8,7 @@ import SidebarToggle from "./SidebarToggle";
 import SidebarToggleIcon from "./SidebarToggleIcon";
 import SidebarTop from "./top/SidebarTop";
 
-export default function Sidebar(props) {
+function SidebarInner(props) {
   const [courses, setCourses] = createSignal<Course[] | undefined>(undefined);
 
   const placeholder = () => {
@@ -33,3 +34,11 @@ export default function Sidebar(props) {
     </div>
   );
 }
+
+const Sidebar = () => (
+  <SidebarContentProvider>
+    <SidebarInner />
+  </SidebarContentProvider>
+);
+
+export default Sidebar;
