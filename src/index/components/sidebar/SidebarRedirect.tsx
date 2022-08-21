@@ -23,7 +23,7 @@ export default function SidebarRedirect(props: {
   return (
     <VLink href={props.redirect}>
       <div
-        className={`rounded-lg ${
+        className={`rounded-lg cursor-pointer ${
           props.highlighted ? "bg-cyan-200" : "hover:bg-cyan-200"
         }`}
         onClick={(e) => {

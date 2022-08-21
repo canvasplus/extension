@@ -1,4 +1,5 @@
 import { Module } from "../../../lib/types/Module";
+import SidebarHeader from "../SidebarHeader";
 import SidebarRedirect from "../SidebarRedirect";
 import SidebarRedirectIcon from "../SidebarRedirectIcon";
 import SidebarToggle from "../SidebarToggle";
@@ -14,11 +15,17 @@ function ModuleOnSidebar(props: { module: Module; courseId: number }) {
         primaryFunction="TOGGLE"
       >
         {module.items?.map((item) => {
+          const indent = Math.min(item.indent + 1, 4);
+
+          if (item.type === "SubHeader") {
+            // @ts-ignore
+            return <SidebarHeader title={item.title} indent={indent} />;
+          }
           return (
             <SidebarRedirect
               highlighted={false}
               // @ts-ignore
-              indent={Math.min(item.indent + 1, 4)}
+              indent={indent}
               redirect={item.htmlUrl}
               title={item.title}
             >

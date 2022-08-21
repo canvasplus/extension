@@ -30,7 +30,7 @@ export default function SidebarToggle(props: {
     <div>
       <VLink href={props.href}>
         <div
-          className={`rounded-lg group-1 ${
+          className={`rounded-lg group-1 cursor-pointer  ${
             props.highlighted ? "bg-cyan-200" : "hover:bg-cyan-200"
           }`}
           onClick={() => {
