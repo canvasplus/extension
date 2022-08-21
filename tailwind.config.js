@@ -63,19 +63,19 @@ module.exports = {
           "100%": { opacity: 1 },
         },
         "slide-sm-left": {
-          "0%": { opacity: 0, transform: "translateX(-50%)" },
+          "0%": { opacity: 0, transform: "translateX(-20px)" },
           "100%": { opacity: 1, transform: "" },
         },
         "slide-sm-right": {
-          "0%": { opacity: 0, transform: "translateX(50%)" },
+          "0%": { opacity: 0, transform: "translateX(20px)" },
           "100%": { opacity: 1, transform: "" },
         },
         "slide-sm-up": {
-          "0%": { opacity: 0, transform: "translateY(15%)" },
+          "0%": { opacity: 0, transform: "translateY(20px)" },
           "100%": { opacity: 1, transform: "" },
         },
         "slide-sm-down": {
-          "0%": { opacity: 0, transform: "translateY(-15%)" },
+          "0%": { opacity: 0, transform: "translateY(-20px)" },
           "100%": { opacity: 1, transform: "" },
         },
       },

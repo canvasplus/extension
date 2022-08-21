@@ -3,6 +3,7 @@ import { useLocation } from "../../../lib/context/location";
 import { getModules } from "../../../lib/modules";
 import { Module } from "../../../lib/types/Module";
 import Loading from "../../util/Loading";
+import AllModulesContainerItem from "../items/AllModulesContainerItem";
 import ModuleContainerItem from "../items/ModuleContainerItem";
 import SidebarRedirect from "../SidebarRedirect";
 import SidebarRedirectIcon from "../SidebarRedirectIcon";
@@ -43,9 +44,15 @@ export default function ModulesTab(props: TabComponentProps) {
     } else if (m.length === 0) {
       return <div>No modules</div>;
     } else {
-      return modules().map((module) => (
-        <ModuleContainerItem module={module} courseId={props.courseId} />
-      ));
+      return (
+        <>
+          <AllModulesContainerItem courseId={props.courseId} modules={m} />
+
+          {m.map((module) => (
+            <ModuleContainerItem module={module} courseId={props.courseId} />
+          ))}
+        </>
+      );
     }
   };
 

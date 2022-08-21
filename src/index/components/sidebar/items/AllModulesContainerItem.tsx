@@ -5,13 +5,16 @@ import { Module } from "../../../lib/types/Module";
 import ModulesContainer from "../modules/ModulesContainer";
 import SidebarToggle from "../SidebarToggle";
 
-function ModuleContainerItem(props: { module: Module; courseId: number }) {
+function AllModulesContainerItem(props: {
+  modules: Module[];
+  courseId: number;
+}) {
   const [{ getCurrentLocation }] = useLocation();
 
   const onModule = () =>
     new URL(getCurrentLocation()).searchParams.get("module_item_id") != null;
 
-  const { module } = props;
+  const { modules } = props;
 
   const expandedSignal = createSignal(false);
 
@@ -23,7 +26,7 @@ function ModuleContainerItem(props: { module: Module; courseId: number }) {
     if (expanded()) {
       setBottom(
         <ModulesContainer
-          modules={[module]}
+          modules={modules}
           courseId={props.courseId}
           close={() => {
             setExpanded(false);
@@ -37,10 +40,7 @@ function ModuleContainerItem(props: { module: Module; courseId: number }) {
 
   return (
     <SidebarToggle
-      title={module.name}
-      href={`${new URL(getCurrentLocation()).origin}/courses/${
-        props.courseId
-      }/modules/${module.id}`}
+      title={"View All"}
       indent={2}
       primaryFunction="TOGGLE"
       expandedSignal={expandedSignal}
@@ -49,4 +49,4 @@ function ModuleContainerItem(props: { module: Module; courseId: number }) {
   );
 }
 
-export default ModuleContainerItem;
+export default AllModulesContainerItem;

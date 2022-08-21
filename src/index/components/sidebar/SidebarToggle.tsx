@@ -9,7 +9,7 @@ import SidebarToggleIcon from "./SidebarToggleIcon";
 
 export default function SidebarToggle(props: {
   title: string;
-  href: string;
+  href?: string;
   children?: JSX.Element;
   highlighted: boolean;
   highlightedWithin?: boolean;
@@ -34,7 +34,7 @@ export default function SidebarToggle(props: {
             props.highlighted ? "bg-cyan-200" : "hover:bg-cyan-200"
           }`}
           onClick={() => {
-            if (props.primaryFunction === "LINK") {
+            if (props.primaryFunction === "LINK" && props.href != null) {
               goTo(props.href);
             } else {
               setExpanded(!expanded());
@@ -71,7 +71,10 @@ export default function SidebarToggle(props: {
                   className="p-1.5 group-2"
                   onClick={(e) => {
                     e.stopPropagation();
-                    goTo(props.href);
+
+                    if (props.href) {
+                      goTo(props.href);
+                    }
                   }}
                 >
                   <div className="p-[5px] group-2-hover:bg-cyan-300 rounded-md">
