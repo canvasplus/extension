@@ -18,7 +18,7 @@ function ModuleOnSidebar(props: { module: Module; courseId: number }) {
             <SidebarRedirect
               highlighted={false}
               // @ts-ignore
-              indent={item.indent + 1}
+              indent={Math.min(item.indent + 1, 4)}
               redirect={item.htmlUrl}
               title={item.title}
             >
@@ -26,7 +26,7 @@ function ModuleOnSidebar(props: { module: Module; courseId: number }) {
                 if (item.type === "Page") {
                   return <SidebarRedirectIcon type="PAGE" />;
                 } else {
-                  <SidebarRedirectIcon type="DEFAULT" />;
+                  return <SidebarRedirectIcon type="DEFAULT" />;
                 }
               })()}
             </SidebarRedirect>

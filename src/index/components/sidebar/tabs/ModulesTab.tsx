@@ -1,10 +1,12 @@
 import { createEffect, createSignal } from "solid-js";
 import { useLocation } from "../../../lib/context/location";
+import { useSidebarContent } from "../../../lib/context/sidebarContent";
 import { getModules } from "../../../lib/modules";
 import { Module } from "../../../lib/types/Module";
 import Loading from "../../util/Loading";
 import AllModulesContainerItem from "../items/AllModulesContainerItem";
 import ModuleContainerItem from "../items/ModuleContainerItem";
+import ModulesContainer from "../modules/ModulesContainer";
 import SidebarRedirect from "../SidebarRedirect";
 import SidebarRedirectIcon from "../SidebarRedirectIcon";
 import SidebarToggle from "../SidebarToggle";
@@ -20,10 +22,12 @@ export default function ModulesTab(props: TabComponentProps) {
   const [modules, setModules] = createSignal<undefined | Module[]>(undefined);
 
   const expandedSignal = createSignal(false);
-  const [expanded] = expandedSignal;
+  const [expanded, setExpanded] = expandedSignal;
 
   const loadingSignal = createSignal(false);
   const [loading, setLoading] = loadingSignal;
+
+  const { setBottom } = useSidebarContent();
 
   createEffect(() => {
     if (expanded() && modules() == null) {
@@ -32,7 +36,33 @@ export default function ModulesTab(props: TabComponentProps) {
       getModules(props.courseId).then((modules) => {
         setModules(modules);
         setLoading(false);
+
+        setBottom(
+          <ModulesContainer
+            modules={modules}
+            courseId={props.courseId}
+            close={() => {
+              setExpanded(false);
+            }}
+          />
+        );
       });
+    }
+  });
+
+  createEffect(() => {
+    if (expanded() && modules() != null) {
+      setBottom(
+        <ModulesContainer
+          modules={modules() || []}
+          courseId={props.courseId}
+          close={() => {
+            setExpanded(false);
+          }}
+        />
+      );
+    } else if (!expanded()) {
+      setBottom(undefined);
     }
   });
 
@@ -60,7 +90,7 @@ export default function ModulesTab(props: TabComponentProps) {
     <SidebarToggle
       indent={1}
       title={props.tab.label}
-      href={props.tab.full_url}
+      // href={props.tab.full_url}
       highlighted={
         props.parentHighlighted() &&
         props.path()[2] === "modules" &&
@@ -74,8 +104,6 @@ export default function ModulesTab(props: TabComponentProps) {
       primaryFunction={"TOGGLE"}
       expandedSignal={expandedSignal}
       loadingSignal={loadingSignal}
-    >
-      {inner()}
-    </SidebarToggle>
+    ></SidebarToggle>
   );
 }
