@@ -1,6 +1,6 @@
 {
   "name": "canvasplus",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Canvas+ chrome extension",
   "main": "src/popup/App.js",
   "scripts": {
