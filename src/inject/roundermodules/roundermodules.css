@@ -1,0 +1,8 @@
+:root:root {
+    --modules-open: 10px 10px 0 0;
+    --modules-close: 10px 10px 10px 10px;
+}
+
+.content .context_module_items li:last-child .ig-row, .assignment-list li:last-child .ig-row {
+    border-radius: 0 0 10px 10px;
+} 

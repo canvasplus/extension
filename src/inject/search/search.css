@@ -1,0 +1,305 @@
+.canvasplus-search-ui {
+  position: fixed;
+  height: 100px;
+  width: clamp(min(calc(100% - 20px), 500px), 70%, 850px);
+  min-height: min(calc(100% - 20px), 600px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px);
+  background: var(--cpt-dark-search-ui-glass-color, rgba(204, 219, 239, 75%));
+  border-radius: 20px;
+  border: 1px solid
+    var(--cpt-dark-interactable-border-color, rgb(255, 255, 255));
+  overflow: hidden;
+  z-index: 201;
+}
+
+.canvasplus-search-ui-wrapper {
+  position: fixed;
+  display: block;
+  content: "";
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  z-index: 200;
+}
+
+.canvasplus-search-ui-header {
+  background: var(--cpt-dark-search-ui-header-background-color, #f8f8f8);
+  width: 100%;
+  padding: 22.5px 0;
+  height: 35px;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+}
+
+.canvasplus-search-ui-controls {
+  border-top: 1px solid
+    var(--cpt-dark-interactable-border-color, rgb(255, 255, 255));
+  width: calc(100% - 20px);
+  background: var(--cpt-dark-search-ui-header-background-color, #f8f8f8);
+  height: 35px;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  gap: 10px;
+}
+.canvasplus-search-ui-controls__control {
+  display: flex;
+  background: var(--cpt-dark-background-color, #e8e8e8);
+  width: fit-content;
+  border-radius: 10px;
+  padding: 5px 12px 5px 10px;
+  grid-gap: 8px;
+  border: 1px solid transparent;
+  opacity: 1;
+}
+
+.canvasplus-search-ui-controls__Disabled
+  .canvasplus-search-ui-controls__control {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.canvasplus-search-ui-controls__control__icon {
+  padding-top: 2px;
+  height: 17px;
+  width: 17px;
+}
+
+.canvasplus-search-ui-query-wrapper {
+  transition: 0.3s background ease;
+}
+
+.canvasplus-search-ui-query-wrapper.selected {
+  background: var(--cpt-dark-highlight-color, #a7d1e68c);
+}
+
+.canvasplus-search-ui-controls__control__label {
+  color: var(--ic-brand-font-color-dark);
+}
+
+.canvasplus-search-ui-controls__control-clickable {
+  cursor: pointer;
+}
+
+.canvasplus-search-ui-controls__control-clickable:hover {
+  /* background: var(--cpt-dark-search-ui-selected-result-background-color, #e2efff); */
+  /* border-color: var(--cpt-dark-interactable-border-color, rgb(255, 255, 255)); */
+}
+
+.canvasplus-search-ui-header-icon {
+  margin: 5px 25px 5px 25px;
+  height: 25px;
+  width: 25px;
+}
+
+.canvasplus-search-ui-header-icon.hide-for-animation {
+  visibility: hidden;
+}
+
+.canvasplus-search-ui-header-icon.run-animation {
+  animation: canvasplus-search-ui-header-icon 0.15s ease;
+}
+
+@keyframes canvasplus-search-ui-header-icon {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.95;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.canvasplus-search-ui-query-wrapper,
+.canvasplus-search-ui-query-wrapper-right,
+.canvasplus-search-ui-query-wrapper-autocomplete {
+  height: 35px;
+  font-size: 18px;
+  line-height: 35px;
+  position: relative;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: pre-wrap;
+  color: var(--cpt-dark-important-text-color, #000);
+}
+
+.canvasplus-search-ui-query-wrapper-autocomplete {
+  color: #aaa;
+  cursor: text;
+}
+
+.canvasplus-search-ui-results-single-result {
+  width: 100%;
+  background: var(--cpt-dark-search-ui-result-background-color, #f0f7ff);
+  height: 72px;
+  position: relative;
+  border-top: 1px solid var(--cpt-dark-interactable-border-color, #cccccc);
+  font-size: 15px;
+}
+
+.compact-results .canvasplus-search-ui-results-single-result {
+  height: 48px;
+}
+
+.compact-results .canvasplus-search-ui-results-single-result-left-inner {
+  font-size: 15px !important;
+}
+
+.canvasplus-search-ui-results-single-result.result-selected,
+.canvasplus-search-ui-results-single-result.canvasplus-search-ui-results-single-result:hover {
+  background: var(
+    --cpt-dark-search-ui-selected-result-background-color,
+    #e2efff
+  );
+}
+
+.canvasplus-search-ui-results-single-result-left {
+  float: left;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 20px;
+  max-width: 55%;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--cpt-dark-important-text-color, #000);
+  display: flex;
+}
+
+.canvasplus-search-ui-results-single-result-left-topmeta {
+  color: var(--ic-brand-font-color-dark, #808080);
+  padding-bottom: 3px;
+}
+
+.canvasplus-search-ui-results-single-result:not(.includes-top-meta)
+  .canvasplus-search-ui-results-single-result-left-inner {
+  font-size: 18px;
+}
+
+.canvasplus-search-ui-results-single-result-left-inner {
+  padding-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.canvasplus-search-ui-results-single-result-right {
+  position: relative;
+  padding: 10px 20px 0 0;
+  width: fit-content;
+  margin-left: auto;
+  max-width: 30%;
+}
+
+.canvasplus-search-ui-results-single-result-right-breadcrumb {
+  color: var(--ic-brand-font-color-dark, #808080);
+  text-align: right;
+}
+
+.canvasplus-search-ui-results-single-result-right-course {
+  color: var(--course-card-color);
+  position: relative;
+  padding: 3px 0 0 16px;
+  width: fit-content;
+  float: right;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.canvasplus-search-ui-results-single-result-right-breadcrumb {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.canvasplus-search-ui-results-single-result-right-course::before {
+  background: var(--course-card-color);
+  content: "";
+  position: absolute;
+  display: block;
+  left: 5px;
+  top: calc(50% + 3px);
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.canvasplus-search-ui-query-wrapper::before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: var(--data-caret-position);
+  width: 1px;
+  height: 75%;
+  background: var(--ic-brand-font-color-dark, #808080);
+  content: "";
+  transition: 0.1s left linear;
+}
+
+.canvasplus-search-ui-widget-center {
+  padding: 30px;
+  display: inline-block;
+  grid-gap: 30px;
+}
+
+.canvasplus-search-ui-widget {
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 250px;
+  max-height: 250px;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.canvasplus-search-ui-results-single-result-left-course-card-color {
+  width: 12px;
+  height: 12px;
+  background: var(--course-card-color);
+  border-radius: 4px;
+  top: 50%;
+  position: relative;
+  margin: 6px 10px 0 0;
+}
+
+.canvasplus-search-ui-header-icon__loading svg {
+  animation: canvasplus-search-ui-header-icon__loading 1.5s ease 0s infinite;
+}
+
+@keyframes canvasplus-search-ui-header-icon__loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.canvasplus-search-ui-results {
+  height: calc(100% - 136px);
+  overflow: scroll;
+}
+
+.canvasplus-search-ui-results-single-result-hotkey {
+  text-align: center;
+  width: fit-content;
+  margin-left: auto;
+  border: 1px solid var(--cpt-dark-interactable-border-color, #cccccc);
+  padding: 5px;
+  min-width: 22px;
+  border-radius: 8px;
+  margin-top: 6.5px;
+  margin-right: 6.5px;
+}

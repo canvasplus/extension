@@ -1,0 +1,40 @@
+:root:root {
+  --ic-brand-font-color-dark: #ccc;
+  --ic-brand-font-color-dark-lightened: #e5e5e5;
+  --ic-brand-font-color-dark-darkened: #777;
+
+  --cpt-dark-background-color: #131313;
+  --cpt-dark-nav-tray-color: #16161a;
+  --cpt-dark-line-color: #383a42;
+
+  --cpt-dark-dashboard-header-color: rgba(29, 29, 29, 0.95);
+
+  --cpt-dark-odd-tr-background-color: #2a2a30;
+  --cpt-dark-hovered-email-background-color: #1f2930;
+
+  --cpt-dark-interactable-color: #1e1e1e;
+  --cpt-dark-interactable-text-color: #fff;
+  --cpt-dark-interactable-border-color: #7c7c7c;
+
+  --cpt-dark-interactable-hover-color: #141414;
+  --cpt-dark-interactable-hover-text-color: #ededed;
+  --cpt-dark-interactable-hover-border-color: #090d0f;
+
+  --cpt-dark-module-item-color: #1a1a1a;
+
+  --cpt-dark-important-text-color: #fff;
+
+  --cpt-dark-important-link-color: #b9b9b9;
+
+  --cpt-dark-current-page: #fff;
+
+  --cpt-dark-dashboard-header: rgba(10, 10, 12, 0.95);
+
+  --cpt-dark-search-ui-header-background-color: #1e2427;
+  --cpt-dark-search-ui-result-background-color: #2d3235;
+  --cpt-dark-search-ui-selected-result-background-color: #162333;
+  --cpt-dark-search-ui-glass-color: rgba(40, 45, 51, 0.5);
+  --cpt-dark-snackbar-code-segment-color: #232a2e;
+
+  --cpt-dark-highlight-color: #386f8991;
+}

@@ -1,0 +1,43 @@
+.ToggleSwitch {
+  width: 28px;
+  height: 18px;
+  border-radius: 64px;
+  
+  background-color: #aaa;
+  position: relative;
+
+  cursor: pointer;
+  transition: 0.3s background-color;
+  border: none;
+}
+
+.ToggleSwitch__Handle {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 4px;
+  transition: left 0.3s;
+
+  background-color: white;
+
+  position: absolute;
+}
+
+.ToggleSwitch.on {
+  background-color: #096dca;
+}
+
+.ToggleSwitch.on:hover {
+  background-color: rgb(0, 76, 148);
+}
+
+.ToggleSwitch:hover {
+  background-color: #888;
+}
+
+.ToggleSwitch.on .ToggleSwitch__Handle {
+  left: 14px;
+}

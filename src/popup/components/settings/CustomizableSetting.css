@@ -1,0 +1,84 @@
+.CustomizableSetting:not(.SettingGroup .CustomizableSetting), .SettingGroup {
+  border: 1px solid var(--setting-line-color);
+  border-radius: 3px;  
+}
+
+.CustomizableSetting:not(.SettingGroup .CustomizableSetting) {
+  padding: 7px;
+}
+
+.CustomizableSetting:last-child:not(.SettingGroup .CustomizableSetting), .SettingGroup:last-child {
+  margin: 12px 12px 0 12px;
+}
+
+.CustomizableSetting:not(:last-child):not(.SettingGroup .CustomizableSetting), .SettingGroup:not(:last-child) {
+  margin: 12px 12px 0 12px;
+}
+
+.CustomizableSetting__description {
+  width: 150px;
+  margin: 10px 0 0 0;
+}
+
+.CustomizableSetting__info {
+  width: calc(100% - 38px);
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.CustomizableSetting__customize_enabled, .CustomizableSetting__customize_disabled {
+  transition: background 0.3s;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-family: 'Open Sans';
+    font-size: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.CustomizableSetting__customize_enabled {
+  background: #5f5e65;
+}
+
+.CustomizableSetting__customize_enabled:hover {
+  background: #48474e;
+}
+
+.CustomizableSetting__customize_disabled {
+  background: #c0bfc5;
+}
+
+.CustomizableSetting > .SettingInput {
+  display: inline-block;
+}
+
+.CustomizableSetting__Customization {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.CustomizableSetting__Customization__Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+}
+
+.CustomizableSetting__Customization__Content {
+  position: absolute;
+  width: calc(100% - 20px);
+  min-height: 20px;
+  max-height: calc(100% - 20px);;
+  background: white;
+  margin: 10px;
+  border-radius: 4px;
+  overflow: scroll;
+}

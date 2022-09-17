@@ -1,0 +1,262 @@
+.canvasplus-centertext {
+  text-align: center;
+}
+
+.canvasplus-block {
+  display: block;
+}
+
+#canvasplus-alert {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 103;
+  position: fixed;
+  transition: visibility 0.15s, opacity 0.15s linear;
+}
+
+#canvasplus-alert-settings-update {
+  height: min-content;
+  max-width: fit-content;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: auto;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+  text-align: center;
+  padding: 8px 0px 16px 0px;
+}
+
+#canvasplus-alert-settings-update h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+#canvasplus-alert-settings-update p {
+  color: #888;
+  width: 70%;
+  margin: auto;
+}
+
+#canvasplus-alert-settings-update button {
+  font-size: 0.875rem;
+}
+
+.canvasplus-finish-setting-up-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  opacity: 1;
+  transition: 1s opacity linear;
+}
+
+.canvasplus-finish-setting-up-wrapper.closing {
+  opacity: 0;
+}
+
+.canvasplus-finish-setting-up::-webkit-scrollbar {
+  display: none;
+}
+
+.canvasplus-finish-setting-up {
+  scrollbar-width: none;
+  position: relative;
+  height: 100px;
+  width: clamp(min(calc(100% - 20px), 500px),70%,850px);
+  min-height: min(calc(100% - 20px), 600px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  overflow: scroll;
+}
+
+.canvasplus-finish-setting-up__Header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.9);
+  text-align: center;
+  padding: 15px 0;
+  color: #000 !important;
+}
+
+.canvasplus-finish-setting-up-wrapper::before {
+  display: block;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+}
+
+.canvasplus-finish-setting-up__DisplayOption {
+  padding: 10px 10px 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.canvasplus-finish-setting-up__DisplayWrapper {
+  justify-content: center;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > p {
+  font-weight: 700;
+  width: fit-content;
+  margin: 12px auto;
+  position: relative;
+  transition: 0.3s padding-left linear;
+}
+
+.canvasplus-finish-setting-up__DisplayOption.selected > p {
+  padding-left: 16px;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > p::before {
+  position: absolute;
+  content: '';
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0392ff;
+  opacity: 0;
+  transition: 0.3s opacity linear;
+}
+
+.canvasplus-finish-setting-up__DisplayOption.selected > p::before {
+  opacity: 1;
+}
+
+.canvasplus-finish-setting-up__DisplayOption.light {
+  background: #EEE;
+  color: #444444;
+}
+
+.canvasplus-finish-setting-up__DisplayOption.dim {
+  background: #45484e;
+  color: #FFFFFF;
+}
+
+.canvasplus-finish-setting-up__DisplayOption.dark {
+  background: #050d26;
+  color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: light) {
+  .canvasplus-finish-setting-up__DisplayOption.auto {
+    background: #EEE;
+    color: #444444;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .canvasplus-finish-setting-up__DisplayOption.auto {
+    background: #050d26;
+    color: #FFFFFF;
+  }
+}
+
+.canvasplus-finish-setting-up__DisplayOption img {
+  width: 160px;
+}
+
+.canvasplus-finish-setting-up__DisplayWrapper {
+  display: flex;
+  grid-gap: 10px;
+}
+
+.canvasplus-finish-setting-up__DisplayHeader {
+  text-align: center;
+  color: #000 !important;
+  padding-bottom: 20px;
+}
+
+.canvasplus-finish-setting-up__ExtensionMenu {
+  display: flex;
+  margin: auto;
+  width: fit-content;
+  grid-gap: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .canvasplus-finish-setting-up__ExtensionMenu {
+    display: block;
+  }
+  .canvasplus-finish-setting-up__ExtensionMenu img {
+    padding-bottom: 22px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.canvasplus-finish-setting-up__ExtensionMenu {
+  margin-top: 25px;
+}
+
+.canvasplus-finish-setting-up__ExtensionMenu img {
+  width: 80px;
+  margin-right: 20px;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.canvasplus-finish-setting-up__ExtensionMenu div {
+  width: 250px;
+}
+
+.canvasplus-finish-setting-up__ExtensionMenu div p:first-child {
+  color: #000 !important;
+}
+
+.canvasplus-finish-setting-up__ExtensionMenu div p:last-child {
+  color: #999 !important;
+}
+
+.canvasplus-finish-setting-up__Done {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label {
+  display: flex;
+  width: fit-content;
+  margin: auto;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label > input:not(:checked) + p {
+  text-decoration: line-through;
+  color: #aaa;
+  border-bottom: 1px transparent;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label > input + p {
+  cursor: pointer;
+  height: 18px;
+  margin: 0;
+}
+
+.canvasplus-finish-setting-up__DisplayOption > label > input:checked + p {
+  border-bottom: 1px #ccc dotted;
+}
+
+.canvasplus-finish-setting-up__Footer {
+  position: sticky;
+    bottom: 0px;
+    padding: 15px 0px;
+    background: rgba(255, 255, 255, 0.9);
+}

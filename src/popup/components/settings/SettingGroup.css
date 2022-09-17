@@ -1,0 +1,50 @@
+.SettingGroup__Name {
+  width: calc(100% - 14px);
+  padding: 7px;
+
+  background-color: var(--setting-group-label-background-color);
+  color: var(--setting-group-label-text-color);
+
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  display: block;
+  transition: background-color 0.3s;
+
+  cursor: pointer;
+}
+
+.SettingGroup__SettingsContainer .Setting, .SettingGroup__SettingsContainer .CustomizableSetting {
+  padding: 7px;
+}
+
+.SettingGroup__SettingsContainer .Setting:not(:last-child), .SettingGroup__SettingsContainer .CustomizableSetting:not(:last-child) { 
+  border-bottom: 1px solid var(--setting-line-color);
+}
+
+.SettingGroup__Name:hover:not(.closed .SettingGroup__Name){
+  background-color: #444;
+}
+
+.closed .SettingGroup__Name {
+  animation-name: groupLabelFlash;
+  animation-duration: 0.3s;
+  border-radius: 3px;
+}
+
+.closed .SettingGroup__SettingsContainer {
+  display: none;
+}
+
+.SettingGroup__SettingsContainerWrapper {
+  overflow: hidden;
+}
+
+@keyframes groupLabelFlash {
+  0% {
+    background-color: #444;
+  }
+  100% {
+    background-color: #000;
+  }
+}

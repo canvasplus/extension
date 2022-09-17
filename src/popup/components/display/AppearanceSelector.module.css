@@ -1,0 +1,27 @@
+.AppearanceSelector__SyncLabel, .AppearanceSelector__SyncLabel_Disabled {
+    display: flex;
+    width: fit-content;
+    margin: 6px auto 0 auto;
+}
+
+.AppearanceSelector__SyncLabel_Disabled {
+    color: #888;
+    display: none;
+}
+
+.AppearanceSelector__SyncLabel > p {
+    height: 18px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.AppearanceSelector__SyncLabel > p {
+    border-bottom: 1px transparent;
+    text-decoration: line-through;
+    color: #888;
+}
+
+.AppearanceSelector__SyncLabel > input:checked + p {
+    text-decoration: none;
+    border-bottom: 1px #888 dotted;
+}

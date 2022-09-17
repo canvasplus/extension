@@ -1,0 +1,100 @@
+.ColorSwitch_Shortcut {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1)), var(--color);
+    cursor: pointer;
+}
+
+.ColorSwitch_Popup {
+    position: absolute;
+    background-color: white;
+    border-radius: 3px;
+    border-bottom-right-radius: 0;
+    border: 1px solid var(--setting-line-color);
+    top: -49px;
+    left: -182px;
+    
+    display: grid;
+    grid-template-areas:
+        'color-1-1 color-1-2 color-1-3 color-1-4 color-1-5 color-1-6 color-1-7 color-1-8 color-1-9'
+        'color-2-1 color-2-2 color-2-3 color-2-4 color-2-5 color-2-6 color-custom-input color-custom-input color-custom-input';
+    grid-gap: 6px;
+    padding: 6px;
+    cursor: default;
+}
+
+.ColorSwitch_Popup__ColorOption {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1)), var(--color);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.cs_p_co_unset::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-left: 16px solid transparent;
+    border-bottom: 16px solid rgb(216, 44, 31);
+    top: -16px;
+}
+
+.cs_s_h_unset::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-left: 24px solid transparent;
+    border-bottom: 24px solid rgb(216, 44, 31);
+    top: -24px;
+}
+
+.ColorSwitch_Popup__ColorCustomInput {
+    width: 54px;
+    height: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font: 10px 'Open Sans';
+}
+
+.ColorSwitch_Popup__ColorCustomInput:focus-visible {
+    outline: var(--color-custom-input-result-outline);
+}
+
+.SettingInput.ColorSwitch_Shortcut__Hover {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 3px;
+}
+
+.SettingInput.ColorSwitch_Shortcut__Hover::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    border-radius: 3px;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.overlay + .ColorSwitch_Shortcut .SettingInput.ColorSwitch_Shortcut__Hover::before {
+    opacity: 0 !important;
+}
+
+.SettingInput.ColorSwitch_Shortcut__Hover:hover::before {
+    opacity: 1;
+}
