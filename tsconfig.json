@@ -1,11 +1,26 @@
 {
-  //change this
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "explainFiles": true,
-    "jsx": "preserve",
     "moduleResolution": "node",
-    "lib": ["es2015", "es2016", "dom", "es2018.promise", "dom.iterable"]
-  }
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
 }
