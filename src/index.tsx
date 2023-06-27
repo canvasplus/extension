@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./style.css";
 import Sidebar from "./sidebar/Sidebar";
+import "./style.css";
 
 const header =
   document.querySelector("#header") ?? document.createElement("div");
