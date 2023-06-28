@@ -1,8 +1,12 @@
 import React, { useRef } from "react";
 import { Transition } from "react-transition-group";
 import { TransitionStyles } from "../util/TransitionStyles";
+import MailDrawer from "./drawers/mail/MailDrawer";
 
-export default function SidebarDrawer(props: { show: boolean }) {
+export default function SidebarDrawer(props: {
+  show: boolean;
+  drawer?: string;
+}) {
   const nodeRef = useRef(null);
 
   const transitionStyles: TransitionStyles = {
@@ -40,8 +44,10 @@ export default function SidebarDrawer(props: { show: boolean }) {
           style={{
             ...transitionStyles[state],
           }}
-          className="bg-rose-50 w-60 h-full shadow-lg p-2 transform duration-300"
-        ></div>
+          className="bg-rose-50 w-80 h-full shadow-lg transform duration-300 overflow-scroll"
+        >
+          {props.drawer === "mail" && <MailDrawer />}
+        </div>
       )}
     </Transition>
   );
