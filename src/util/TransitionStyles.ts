@@ -1,6 +1,6 @@
 // default export
 type TransitionStyles = Record<
-  string,
+  "entering" | "entered" | "exiting" | "exited" | "unmounted",
   React.HTMLAttributes<HTMLDivElement>["style"]
 >;
 

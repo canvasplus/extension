@@ -65,7 +65,11 @@ export default function Sidebar() {
           onClick={() => setScreen("more")}
         />
       </div>
-      <SidebarDrawer show={show} drawer={screen} />
+      <SidebarDrawer
+        show={show}
+        drawer={screen}
+        close={() => setScreen(undefined)}
+      />
     </div>
   );
 }

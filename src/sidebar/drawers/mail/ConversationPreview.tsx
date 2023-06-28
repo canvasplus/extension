@@ -11,9 +11,16 @@ export type Conversation = {
     id: number;
     name: string;
   }[];
+  messages: {
+    id: number;
+    authorId: number;
+    createdAt: string;
+    body: string;
+  }[];
 };
 export default function ConversationPreview(props: {
   conversation: Conversation;
+  onClick: () => void;
 }) {
   const lastUpdated = useMemo(() => {
     if (props.conversation.lastMessageAt == null) {
@@ -50,7 +57,10 @@ export default function ConversationPreview(props: {
   }, [props.conversation.lastMessageAt]);
 
   return (
-    <div className="text-sm py-4 px-6 border-b-2 border-b-rose-700/10">
+    <div
+      className="text-sm py-4 px-6 border-b-2 border-b-rose-700/10 hover:bg-rose-700/10 cursor-pointer"
+      onClick={props.onClick}
+    >
       <div className="flex flex-row justify-between items-center">
         <h2 className="">
           {props.conversation.participants[0]?.name ?? "No participants"}

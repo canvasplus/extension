@@ -5,6 +5,7 @@ import MailDrawer from "./drawers/mail/MailDrawer";
 
 export default function SidebarDrawer(props: {
   show: boolean;
+  close: () => void;
   drawer?: string;
 }) {
   const nodeRef = useRef(null);
@@ -27,6 +28,7 @@ export default function SidebarDrawer(props: {
     exited: {
       display: "none",
     },
+    unmounted: {},
   };
 
   return (
@@ -44,9 +46,9 @@ export default function SidebarDrawer(props: {
           style={{
             ...transitionStyles[state],
           }}
-          className="bg-rose-50 w-80 h-full shadow-lg transform duration-300 overflow-scroll"
+          className="bg-rose-50 w-80 h-full shadow-lg transform duration-300 overflow-hidden"
         >
-          {props.drawer === "mail" && <MailDrawer />}
+          {props.drawer === "mail" && <MailDrawer close={props.close} />}
         </div>
       )}
     </Transition>

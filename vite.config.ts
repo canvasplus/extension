@@ -10,11 +10,11 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, "./src/index.html"),
       },
-
       output: {
         entryFileNames: "src/[name].js",
         chunkFileNames: "src/[name].js",
       },
+      external: ["sanitize-html"],
     },
   },
   plugins: [react(), cssInjectedByJsPlugin({ topExecutionPriority: false })],
