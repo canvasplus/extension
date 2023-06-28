@@ -17,10 +17,16 @@ export default function Sidebar() {
   function setScreen(newScreen?: string) {
     if (newScreen == null) {
       __setShow(false);
-      __setScreen(undefined);
+
+      setTimeout(() => {
+        __setScreen(undefined);
+      }, 150);
     } else if (screen === newScreen) {
       __setShow(false);
-      __setScreen(undefined);
+
+      setTimeout(() => {
+        __setScreen(undefined);
+      }, 150);
     } else if (screen == null) {
       __setShow(true);
       __setScreen(newScreen);

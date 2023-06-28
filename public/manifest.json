@@ -5,7 +5,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/index.js"]
+      "js": ["src/index.js"],
+      "run_at": "document_end"
     }
   ]
 }

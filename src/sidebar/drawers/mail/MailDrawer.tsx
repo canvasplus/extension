@@ -42,7 +42,7 @@ export default function MailDrawer(props: { close: () => void }) {
 
   return (
     <div className="h">
-      <div className="w-full h-screen pt-24">
+      <div className="w-full h-screen">
         <div className="absolute top-0 left-0 z-50 bg-rose-50 w-full border-b-2 border-rose-700/10">
           <BinaryCarousel index={currentConversation == null ? 0 : 1}>
             <div className="flex flex-col gap-2 p-4">
@@ -85,7 +85,7 @@ export default function MailDrawer(props: { close: () => void }) {
           </BinaryCarousel>
         </div>
         <BinaryCarousel index={currentConversation == null ? 0 : 1}>
-          <div className="relative h-screen overflow-y-scroll">
+          <div className="relative h-screen overflow-y-scroll pt-24">
             {conversations.map((conversation) => (
               <ConversationPreview
                 conversation={conversation}
@@ -93,7 +93,7 @@ export default function MailDrawer(props: { close: () => void }) {
               />
             ))}
           </div>
-          <div className="relative h-screen overflow-y-scroll">
+          <div className="relative h-screen overflow-y-scroll pt-24">
             {currentConversation != null && (
               <ConversationView
                 conversation={currentConversation}
