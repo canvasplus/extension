@@ -3,6 +3,7 @@ import SidebarButton from "./SidebarButton";
 import {
   FiBook,
   FiCalendar,
+  FiCheckSquare,
   FiCompass,
   FiMail,
   FiMoreHorizontal,
@@ -67,6 +68,13 @@ export default function Sidebar() {
           onClick={() => setScreen("search")}
         >
           Search
+        </SidebarButton>
+        <SidebarButton
+          active={screen === "tasks"}
+          icon={<FiCheckSquare />}
+          onClick={() => setScreen("tasks")}
+        >
+          Tasks
         </SidebarButton>
         <div className="mx-2">
           <div className="w-full h-0.5 my-2 bg-rose-900/30" />

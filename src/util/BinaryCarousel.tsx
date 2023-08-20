@@ -55,7 +55,7 @@ export default function BinaryCarousel(props: {
   };
 
   return (
-    <div className="flex">
+    <div className="flex overflow-hidden">
       <Transition
         in={props.index === 0}
         timeout={{

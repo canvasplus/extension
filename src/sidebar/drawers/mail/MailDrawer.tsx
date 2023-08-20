@@ -41,7 +41,7 @@ export default function MailDrawer(props: { close: () => void }) {
   >(undefined);
 
   return (
-    <div className="h">
+    <div className="">
       <div className="w-full h-screen">
         <div className="absolute top-0 left-0 z-50 bg-rose-50 w-full border-b-2 border-rose-700/10">
           <BinaryCarousel index={currentConversation == null ? 0 : 1}>

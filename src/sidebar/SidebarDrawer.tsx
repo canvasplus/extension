@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Transition } from "react-transition-group";
 import { TransitionStyles } from "../util/TransitionStyles";
 import MailDrawer from "./drawers/mail/MailDrawer";
+import CalendarDrawer from "./drawers/calendar/CalendarDrawer";
 
 export default function SidebarDrawer(props: {
   show: boolean;
@@ -46,9 +47,12 @@ export default function SidebarDrawer(props: {
           style={{
             ...transitionStyles[state],
           }}
-          className="bg-rose-50 w-80 h-full shadow-lg transform duration-300 overflow-hidden"
+          className="bg-rose-50 w-80 h-full shadow-lg transform duration-300"
         >
           {props.drawer === "mail" && <MailDrawer close={props.close} />}
+          {props.drawer === "calendar" && (
+            <CalendarDrawer close={props.close} />
+          )}
         </div>
       )}
     </Transition>
