@@ -3,6 +3,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { CalendarEvent } from "./CalendarDrawer";
 import { TransitionStyles } from "../../../util/TransitionStyles";
 import { Transition } from "react-transition-group";
+import color from "color";
 
 function numDaysInPreviousMonth(month: number, year: number) {
   if (month === 0) return numDaysInMonth(11, year - 1);
@@ -71,10 +72,33 @@ function getDay(
   };
 }
 
+function getAverageColor(calendarDates: CalendarEvent[]) {
+  let r = 0;
+  let g = 0;
+  let b = 0;
+
+  for (const event of calendarDates) {
+    const eventColor = event.color;
+
+    r += color(eventColor).red() ** 2;
+    g += color(eventColor).green() ** 2;
+    b += color(eventColor).blue() ** 2;
+  }
+
+  r = Math.sqrt(r / calendarDates.length);
+
+  g = Math.sqrt(g / calendarDates.length);
+
+  b = Math.sqrt(b / calendarDates.length);
+
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 export default function MonthView(props: {
   month: number;
   year: number;
   calendarDates: Record<string, CalendarEvent[]>;
+  selectedDate: string | undefined;
 }) {
   const numberWeekLines = useMemo(() => {
     const firstDay = new Date(props.year, props.month, 1);
@@ -135,6 +159,8 @@ export default function MonthView(props: {
     unmounted: {},
   };
 
+  const today = new Date();
+
   return (
     <div className="flex flex-col gap-2 relative mx-6 w-fit">
       <Transition
@@ -145,7 +171,7 @@ export default function MonthView(props: {
       >
         {(state) => (
           <div
-            className={`absolute top-1/2 -translate-y-1/2 left-full transform duration-150 transition-none origin-left flex items-start z-50`}
+            className={`absolute top-0 left-full transform duration-150 transition-none origin-left flex items-start z-50`}
             ref={tooltipRef}
             style={tooltipStyles[state]}
           >
@@ -164,16 +190,28 @@ export default function MonthView(props: {
                       })}
                   </p>
                 </div>
-                <div className="w-40 text-gray-500">
+                <div className="w-44 text-gray-500 overflow-hidden">
                   {hoveredDateDisplay &&
                   props.calendarDates?.[hoveredDateDisplay]?.length > 0 ? (
-                    props.calendarDates?.[hoveredDateDisplay]?.map((event) => {
-                      return (
-                        <div>
-                          <p>{event.title}</p>
-                        </div>
-                      );
-                    })
+                    <div className="flex flex-col gap-2 py-2">
+                      {props.calendarDates?.[hoveredDateDisplay]?.map(
+                        (event) => {
+                          return (
+                            <div className="flex items-center gap-2">
+                              <div
+                                className="w-2 h-3 rounded-r-full flex-shrink-0"
+                                style={{
+                                  backgroundColor: event.color,
+                                }}
+                              />
+                              <p className="whitespace-nowrap overflow-ellipsis overflow-hidden pr-2">
+                                {event.title}
+                              </p>
+                            </div>
+                          );
+                        }
+                      )}
+                    </div>
                   ) : (
                     <div className="px-4 py-2 text-gray-400">
                       <p>No events</p>
@@ -203,36 +241,65 @@ export default function MonthView(props: {
               const month = dayResponse.month;
               const year = dayResponse.year;
 
-              const numAssignments =
-                props.calendarDates?.[`${year}-${month + 1}-${day}`]?.length;
+              const dateAsString = `${year}-${month + 1}-${day}`;
+
+              const events = props.calendarDates?.[dateAsString];
+
+              const numEvents = events?.length ?? 0;
+
+              const today = new Date();
+              const todayAsString = `${today.getFullYear()}-${
+                today.getMonth() + 1
+              }-${today.getDate()}`;
+
+              const isToday = dateAsString === todayAsString;
+              const isSelected = props.selectedDate === dateAsString;
 
               return (
                 <div
-                  className="w-8 h-8 flex items-center justify-center relative"
+                  className="w-8 h-8 flex items-center justify-center relative cursor-pointer"
                   onMouseOver={() => {
-                    setHoveredDate(`${year}-${month + 1}-${day}`);
+                    setHoveredDate(dateAsString);
                   }}
                   onMouseLeave={() => {
                     setHoveredDate(undefined);
                   }}
                 >
-                  <span className={inMonth ? "text-black" : "text-gray-400"}>
-                    {day}
-                  </span>
+                  {isSelected && (
+                    <span
+                      className={`absolute -top-2 -left-2 -right-2 -bottom-2 p-2 rounded-full ${
+                        isToday ? "bg-red-500" : "bg-black"
+                      } scale-[55%]`}
+                    ></span>
+                  )}
                   <span
-                    className={`absolute -top-2 -left-2 -right-2 -bottom-2 p-2 rounded-full origin-center transition-transform ease-in-out duration-1000 ${
-                      numAssignments === 0 || numAssignments == null
-                        ? ""
-                        : "bg-orange-500/30 hover:bg-orange-500/50"
-                    }`}
+                    className={`absolute -top-2 -left-2 -right-2 -bottom-2 p-2 rounded-full origin-center ease-in-out duration-1000 opacity-20 hover:opacity-40`}
                     style={{
+                      display: isSelected ? "none" : "",
+                      transitionProperty: "transform, background",
                       transform: `scale(${
-                        numAssignments === 0 || numAssignments == null
+                        numEvents === 0
                           ? 0
-                          : Math.min(numAssignments / 5 + 0.35, 1.35)
+                          : Math.min(numEvents / 5 + 0.35, 1.35)
                       })`,
+                      background:
+                        numEvents === 0 ? "" : getAverageColor(events),
                     }}
                   ></span>
+
+                  <span
+                    className={`${
+                      isToday && !isSelected
+                        ? "text-black italic"
+                        : isSelected
+                        ? "text-white"
+                        : inMonth
+                        ? "text-black"
+                        : "text-gray-400"
+                    } ${isToday || isSelected ? "font-bold" : ""} z-10`}
+                  >
+                    {day}
+                  </span>
                 </div>
               );
             })}

@@ -9,21 +9,21 @@ export default function DayPicker(props: {
   return (
     <div className="flex w-full justify-between h-12 border-y-2 border-b-rose-700/10">
       <div
-        className="w-12 flex items-center justify-center hover:bg-rose-700/5 cursor-pointer flex-shrink-0"
+        className="w-12 flex items-center justify-center hover:bg-rose-700/5 cursor-pointer flex-shrink-0 select-none"
         onClick={(e) => {
-          e.preventDefault();
           props.onClickLeft();
+          e.preventDefault();
         }}
       >
         <FiChevronLeft className="text-lg" />
       </div>
 
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex items-center justify-center select-none">
         <p>{props.label}</p>
       </div>
 
       <div
-        className="w-12 flex items-center justify-center hover:bg-rose-700/5 cursor-pointer flex-shrink-0"
+        className="w-12 flex items-center justify-center hover:bg-rose-700/5 cursor-pointer flex-shrink-0 select-none"
         onClick={(e) => {
           e.preventDefault();
           props.onClickRight();

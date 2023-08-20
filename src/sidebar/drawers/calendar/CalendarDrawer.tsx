@@ -18,6 +18,7 @@ export type CalendarEvent = {
   workflowState?: "active" | "deleted" | "locked";
   hidden?: boolean;
   htmlUrl?: string;
+  color?: string;
 };
 
 export default function CalendarDrawer(props: { close: () => void }) {
@@ -46,55 +47,60 @@ export default function CalendarDrawer(props: { close: () => void }) {
         axios.get("/api/v1/users/self").then((res) => {
           const userId = res.data.id;
 
-          const baseUrl = `/api/v1/calendar_events?context_codes[]=user_${userId}${
-            courseIds.length > 0 ? courseIds.join("") : ""
-          }&start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}&type=event`;
+          axios.get("/api/v1/users/self/colors").then((res) => {
+            const colors = res.data.custom_colors;
 
-          const baseAssignmentsUrl = `/api/v1/calendar_events?context_codes[]=user_${userId}${
-            courseIds.length > 0 ? courseIds.join("") : ""
-          }&start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}&type=assignment`;
+            const baseUrl = `/api/v1/calendar_events?context_codes[]=user_${userId}${
+              courseIds.length > 0 ? courseIds.join("") : ""
+            }&start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}&type=event`;
 
-          const events = getAllPages(baseUrl);
+            const baseAssignmentsUrl = `/api/v1/calendar_events?context_codes[]=user_${userId}${
+              courseIds.length > 0 ? courseIds.join("") : ""
+            }&start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}&type=assignment`;
 
-          const assignents = getAllPages(baseAssignmentsUrl);
+            const events = getAllPages(baseUrl);
 
-          Promise.all([events, assignents]).then((res) => {
-            const allEvents = res[0]
-              .concat(res[1])
-              .map((e: any): CalendarEvent => {
-                return {
-                  id: e.id,
-                  title: e.title,
-                  description: e.description,
-                  endAt: new Date(e.end_at),
-                  startAt: new Date(e.start_at),
-                  locationName: e.location_name,
-                  locationAddress: e.location_address,
-                  workflowState: e.workflow_state,
-                  hidden: e.hidden,
-                  htmlUrl: e.html_url,
-                };
+            const assignents = getAllPages(baseAssignmentsUrl);
+
+            Promise.all([events, assignents]).then((res) => {
+              const allEvents = res[0]
+                .concat(res[1])
+                .map((e: any): CalendarEvent => {
+                  return {
+                    id: e.id,
+                    title: e.title,
+                    description: e.description,
+                    endAt: new Date(e.end_at),
+                    startAt: new Date(e.start_at),
+                    locationName: e.location_name,
+                    locationAddress: e.location_address,
+                    workflowState: e.workflow_state,
+                    hidden: e.hidden,
+                    htmlUrl: e.html_url,
+                    color: colors[e.context_code] || "#5A92DE",
+                  };
+                });
+
+              const dates: { [date: string]: CalendarEvent[] } = {
+                ...calendarDates,
+              };
+
+              const dontFillDates = Object.keys(dates);
+
+              allEvents.forEach((event: CalendarEvent) => {
+                const date = new Date(event.startAt!);
+                const dateString = `${date.getFullYear()}-${
+                  date.getMonth() + 1
+                }-${date.getDate()}`;
+
+                if (dontFillDates.includes(dateString)) return;
+
+                if (!dates[dateString]) dates[dateString] = [];
+                dates[dateString].push(event);
               });
 
-            const dates: { [date: string]: CalendarEvent[] } = {
-              ...calendarDates,
-            };
-
-            const dontFillDates = Object.keys(dates);
-
-            allEvents.forEach((event: CalendarEvent) => {
-              const date = new Date(event.startAt!);
-              const dateString = `${date.getFullYear()}-${
-                date.getMonth() + 1
-              }-${date.getDate()}`;
-
-              if (dontFillDates.includes(dateString)) return;
-
-              if (!dates[dateString]) dates[dateString] = [];
-              dates[dateString].push(event);
+              setCalendarDates(dates);
             });
-
-            setCalendarDates(dates);
           });
         });
       });
@@ -129,6 +135,12 @@ export default function CalendarDrawer(props: { close: () => void }) {
         <div className="pt-24">
           <DayPicker
             label={date.toLocaleString("default", { weekday: "long" })}
+            onClickLeft={() => {
+              setDate(new Date(date.getTime() - 86400000));
+            }}
+            onClickRight={() => {
+              setDate(new Date(date.getTime() + 86400000));
+            }}
           />
         </div>
 
@@ -166,6 +178,9 @@ export default function CalendarDrawer(props: { close: () => void }) {
           month={monthViewMonth}
           year={monthViewYear}
           calendarDates={calendarDates}
+          selectedDate={`${date.getFullYear()}-${
+            date.getMonth() + 1
+          }-${date.getDate()}`}
         />
       </div>
     </div>

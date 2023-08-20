@@ -13,6 +13,7 @@
     "@types/react-transition-group": "^4.4.6",
     "@vitejs/plugin-react": "^4.0.1",
     "clean-html": "^2.0.1",
+    "color": "^4.2.3",
     "i": "^0.3.7",
     "npm": "^9.7.2",
     "react": "^18.2.0",
@@ -52,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/color": "^3.0.3",
     "@types/sanitize-html": "^2.9.0",
     "@types/style-inject": "^0.3.0",
     "autoprefixer": "^10.4.14",
