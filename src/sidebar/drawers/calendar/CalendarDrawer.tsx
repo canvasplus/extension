@@ -6,12 +6,14 @@ import axios from "redaxios";
 import { useEffect } from "react";
 import getAllPages from "../../../util/getAllPages";
 import MonthView from "./MonthView";
+import DayView from "./DayView";
 
 export type CalendarEvent = {
   id: number;
   title: string;
   startAt?: Date;
   endAt?: Date;
+  allDay: boolean;
   description?: string;
   locationName?: string;
   locationAddress?: string;
@@ -19,6 +21,8 @@ export type CalendarEvent = {
   hidden?: boolean;
   htmlUrl?: string;
   color?: string;
+  __firstThisHour?: boolean;
+  __lastThisHour?: boolean;
 };
 
 export default function CalendarDrawer(props: { close: () => void }) {
@@ -78,6 +82,7 @@ export default function CalendarDrawer(props: { close: () => void }) {
                     hidden: e.hidden,
                     htmlUrl: e.html_url,
                     color: colors[e.context_code] || "#5A92DE",
+                    allDay: e.all_day || false,
                   };
                 });
 
@@ -132,17 +137,25 @@ export default function CalendarDrawer(props: { close: () => void }) {
             </div>
           </div>
         </div>
-        <div className="pt-24">
-          <DayPicker
-            label={date.toLocaleString("default", { weekday: "long" })}
-            onClickLeft={() => {
-              setDate(new Date(date.getTime() - 86400000));
-            }}
-            onClickRight={() => {
-              setDate(new Date(date.getTime() + 86400000));
-            }}
-          />
-        </div>
+        <div className="pt-24" />
+        <DayPicker
+          label={date.toLocaleString("default", { weekday: "long" })}
+          onClickLeft={() => {
+            setDate(new Date(date.getTime() - 86400000));
+          }}
+          onClickRight={() => {
+            setDate(new Date(date.getTime() + 86400000));
+          }}
+        />
+
+        <DayView
+          date={date}
+          events={
+            calendarDates[
+              `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+            ] || []
+          }
+        />
 
         <DayPicker
           onClickLeft={() => {
