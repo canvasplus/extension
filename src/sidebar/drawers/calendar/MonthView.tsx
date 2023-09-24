@@ -162,7 +162,7 @@ export default function MonthView(props: {
   const today = new Date();
 
   return (
-    <div className="flex flex-col gap-2 relative mx-6 w-fit">
+    <div className="flex flex-col gap-2 relative mx-6 w-fit pt-2">
       <Transition
         nodeRef={tooltipRef}
         in={showTooltip}

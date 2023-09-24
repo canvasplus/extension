@@ -7,7 +7,7 @@ export default function DayPicker(props: {
   label: string;
 }) {
   return (
-    <div className="flex w-full justify-between h-12 border-y-2 border-b-rose-700/10">
+    <div className="flex w-full justify-between h-12 border-y-2 border-y-rose-700/10">
       <div
         className="w-12 flex items-center justify-center hover:bg-rose-700/5 cursor-pointer flex-shrink-0 select-none"
         onClick={(e) => {

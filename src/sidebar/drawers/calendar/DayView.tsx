@@ -66,7 +66,7 @@ export default function DayView(props: {
   }, [events, date]);
 
   return (
-    <div className="bg-white">
+    <div className="">
       {numEvents > 0 ? (
         <div className="h-60 overflow-scroll">
           <div className="relative">
@@ -133,7 +133,7 @@ export default function DayView(props: {
 
                   return (
                     <div
-                      className={`min-h-[24px] flex bg-white pl-2 ${
+                      className={`min-h-[24px] flex pl-2 ${
                         allEventsFirst ? "pt-2" : ""
                       }`}
                     >
@@ -191,8 +191,8 @@ export default function DayView(props: {
           </div>
         </div>
       ) : (
-        <div>
-          <p className="box-b">No events</p>
+        <div className="h-60 flex justify-center items-center">
+          <p className="box-b text-gray-400">No events</p>
         </div>
       )}
     </div>
