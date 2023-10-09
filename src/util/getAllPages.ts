@@ -4,8 +4,10 @@ const PER_PAGE = 100;
 
 async function requestPage(url: string, page: number): Promise<any> {
   try {
+    const hasURLParams = url.includes("?");
+
     const { data } = await axios.get(
-      url + `&page=${page}&per_page=${PER_PAGE}`
+      url + `${hasURLParams ? "&" : "?"}page=${page}&per_page=${PER_PAGE}`
     );
 
     if (data.length < PER_PAGE) {

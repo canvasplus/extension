@@ -8,5 +8,6 @@
       "js": ["src/index.js"],
       "run_at": "document_end"
     }
-  ]
+  ],
+  "permissions": ["storage"]
 }
