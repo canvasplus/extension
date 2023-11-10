@@ -13,6 +13,94 @@ export interface CacheStatus {
   stale: boolean;
 }
 
+export interface Course {
+  id: number;
+  name: string;
+  tabs: CourseTab[];
+}
+
+export interface CourseTab {
+  id: string;
+  type: "INTERNAL" | "EXTERNAL";
+  url: string;
+  label: string;
+}
+export interface ModuleItem {
+  courseId: number;
+  id: number;
+  moduleId: number;
+  title: string;
+  type:
+    | "PAGE"
+    | "DISCUSSION"
+    | "ASSIGNMENT"
+    | "QUIZ"
+    | "FILE"
+    | "EXTERNAL_TOOL"
+    | "EXTERNAL_URL";
+  contentId: number;
+  pureUrl: string;
+  htmlUrl: string;
+}
+
+export interface Module {
+  id: number;
+  courseId: number;
+  name: string;
+  itemCount: number;
+  items: ModuleItem[];
+}
+
+export interface Page {
+  courseId: number;
+  pageId: number;
+  pageLocator: string;
+  title: string;
+  body?: string;
+  htmlUrl: string;
+  pureUrl: string;
+}
+
+export interface DiscussionTopic {
+  courseId: number;
+  id: number;
+  title: string;
+  message: string;
+  htmlUrl: string;
+  pureUrl: string;
+}
+
+export interface Assignment {
+  id: number;
+  name: string;
+  description: string;
+  dueAt: string;
+  courseId: number;
+  htmlUrl: string;
+  pureUrl: string;
+}
+
+export interface Quiz {
+  id: number;
+  title: string;
+  htmlUrl: string;
+  pureUrl: string;
+}
+
+export interface File {
+  id: number;
+  displayName: string;
+  url: string;
+  pureUrl: string;
+}
+
+export interface SearchItem {
+  url: string;
+  courseId: number;
+  title: string;
+  moduleId: number[];
+}
+
 export type ToleranceLevel = "5MIN" | "1HOUR" | "1DAY" | "1WEEK" | "1MONTH";
 
 export const TOLERANCE_LEVELS = {
@@ -117,10 +205,94 @@ export async function getCourses() {
 
   if (cacheItem.status.stale) {
     const courses = await getAllPages(
-      "/api/v1/courses?include[]=tabs&include[]=favorites"
+      "/api/v1/users/self/favorites/courses?include[]=tabs"
     );
     await setCacheItem("courses", courses);
     return courses;
+  } else {
+    return cacheItem.data;
+  }
+}
+
+export async function getModules(courseId: number, items: boolean) {
+  const cacheItem = await getCacheItem("modules." + courseId, "1HOUR");
+
+  if (cacheItem.status.stale) {
+    const modules = await getAllPages(
+      `/api/v1/courses/${courseId}/modules${items ? "?include[]=items" : ""}`
+    );
+    await setCacheItem("modules." + courseId, modules);
+    return modules;
+  } else {
+    return cacheItem.data;
+  }
+}
+
+export async function getPages(courseId: number) {
+  const cacheItem = await getCacheItem("pages." + courseId, "1HOUR");
+
+  if (cacheItem.status.stale) {
+    const pages = await getAllPages(
+      `/api/v1/courses/${courseId}/pages?per_page=100`
+    );
+    await setCacheItem("pages." + courseId, pages);
+    return pages;
+  } else {
+    return cacheItem.data;
+  }
+}
+
+export async function getDiscussions(courseId: number) {
+  const cacheItem = await getCacheItem("discussions." + courseId, "1HOUR");
+
+  if (cacheItem.status.stale) {
+    const discussions = await getAllPages(
+      `/api/v1/courses/${courseId}/discussion_topics?per_page=100`
+    );
+    await setCacheItem("discussions." + courseId, discussions);
+    return discussions;
+  } else {
+    return cacheItem.data;
+  }
+}
+
+export async function getAssignments(courseId: number) {
+  const cacheItem = await getCacheItem("assignments." + courseId, "1HOUR");
+
+  if (cacheItem.status.stale) {
+    const assignments = await getAllPages(
+      `/api/v1/courses/${courseId}/assignments?per_page=100`
+    );
+    await setCacheItem("assignments." + courseId, assignments);
+    return assignments;
+  } else {
+    return cacheItem.data;
+  }
+}
+
+export async function getQuizzes(courseId: number) {
+  const cacheItem = await getCacheItem("quizzes." + courseId, "1HOUR");
+
+  if (cacheItem.status.stale) {
+    const quizzes = await getAllPages(
+      `/api/v1/courses/${courseId}/quizzes?per_page=100`
+    );
+    await setCacheItem("quizzes." + courseId, quizzes);
+    return quizzes;
+  } else {
+    return cacheItem.data;
+  }
+}
+
+export async function getFiles(courseId: number) {
+  const cacheItem = await getCacheItem("files." + courseId, "1HOUR");
+
+  if (cacheItem.status.stale) {
+    const files = await getAllPages(
+      `/api/v1/courses/${courseId}/files?per_page=100`
+    );
+    await setCacheItem("files." + courseId, files);
+    return files;
   } else {
     return cacheItem.data;
   }

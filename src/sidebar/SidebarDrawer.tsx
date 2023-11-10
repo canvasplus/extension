@@ -4,6 +4,7 @@ import { TransitionStyles } from "../util/TransitionStyles";
 import MailDrawer from "./drawers/mail/MailDrawer";
 import CalendarDrawer from "./drawers/calendar/CalendarDrawer";
 import TodoDrawer from "./drawers/todo/TasksDrawer";
+import SearchDrawer from "./drawers/search/SearchDrawer";
 
 export default function SidebarDrawer(props: {
   show: boolean;
@@ -55,6 +56,7 @@ export default function SidebarDrawer(props: {
           {props.drawer === "calendar" && (
             <CalendarDrawer close={props.close} />
           )}
+          {props.drawer === "search" && <SearchDrawer close={props.close} />}
         </div>
       )}
     </Transition>

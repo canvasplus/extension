@@ -14,6 +14,7 @@
     "@vitejs/plugin-react": "^4.0.1",
     "clean-html": "^2.0.1",
     "color": "^4.2.3",
+    "damerau-levenshtein": "^1.0.8",
     "i": "^0.3.7",
     "npm": "^9.7.2",
     "react": "^18.2.0",
@@ -23,6 +24,7 @@
     "react-transition-group": "^4.4.5",
     "redaxios": "^0.5.1",
     "style-inject": "^0.3.0",
+    "trigram-similarity": "^1.0.7",
     "typescript": "^4.9.5",
     "vite": "^4.3.9",
     "vite-plugin-css-injected-by-js": "^3.1.2",
@@ -54,6 +56,7 @@
   },
   "devDependencies": {
     "@types/color": "^3.0.3",
+    "@types/damerau-levenshtein": "^1.0.2",
     "@types/sanitize-html": "^2.9.0",
     "@types/style-inject": "^0.3.0",
     "autoprefixer": "^10.4.14",
