@@ -318,6 +318,31 @@ export async function search(
   query: string,
   items: number
 ): Promise<SearchItem[]> {
+  if (query.length < 2) {
+    const courses: Course[] = await getCourses();
+
+    return courses
+      .filter((course: Course) => {
+        return course.name.toLowerCase().includes(query.toLowerCase());
+      })
+      .sort((a: Course, b: Course) => {
+        return (
+          a.name.toLowerCase().indexOf(query.toLowerCase()) -
+          b.name.toLowerCase().indexOf(query.toLowerCase())
+        );
+      })
+      .slice(0, items)
+      .map((course: Course): SearchItem => {
+        return {
+          title: course.name,
+          url: `/courses/${course.id}`,
+          courseId: course.id,
+          moduleId: [],
+          isCourse: true,
+        };
+      });
+  }
+
   const results: SearchItem[] = [];
   const scoredResults: {
     [url: string]: {
@@ -336,6 +361,22 @@ export async function search(
       item: searchItem,
     };
   }
+
+  const courses = await getCourses();
+
+  courses.forEach((course: Course) => {
+    const courseScore = trigramSimilarity(query, course.name);
+
+    scoredResults[course.name] = {
+      score: courseScore,
+      item: {
+        title: course.name,
+        url: `/courses/${course.id}`,
+        courseId: course.id,
+        moduleId: [],
+      },
+    };
+  });
 
   const scoredResultsArray = Object.values(scoredResults);
 

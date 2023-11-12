@@ -99,6 +99,7 @@ export interface SearchItem {
   courseId: number;
   title: string;
   moduleId: number[];
+  isCourse?: boolean;
 }
 
 export type ToleranceLevel = "5MIN" | "1HOUR" | "1DAY" | "1WEEK" | "1MONTH";

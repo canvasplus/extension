@@ -4,7 +4,7 @@ export default function Button(props: {
   children: React.ReactNode[] | React.ReactNode;
   onClick?: () => void;
   type: "primary" | "secondary";
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   href?: string;
 }) {
   const styleMap = {
@@ -13,6 +13,7 @@ export default function Button(props: {
   };
 
   const sizeMap = {
+    xs: "px-1 py-0.5 text-xs",
     sm: "px-2 py-1 text-sm",
     md: "px-4 py-2 text-md",
     lg: "px-6 py-3 text-lg",
