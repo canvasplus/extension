@@ -27,7 +27,9 @@
         "assets/img/notification-emoji/tada.png",
         "assets/img/notification-emoji/magic.png",
         "assets/img/notification-emoji/siren.png",
-        "src/popup/popup.html"
+        "assets/img/notification-emoji/scorecard.png",
+        "src/popup/popup.html",
+        "src/start/start.html"
       ],
       "matches": ["*://*/*"],
       "extension_ids": []
@@ -89,5 +91,6 @@
     "16": "assets/icons/canvas-plus-favicon-active-16.png",
     "48": "assets/icons/canvas-plus-favicon-active-48.png",
     "128": "assets/icons/canvas-plus-favicon-active-128.png"
-  }
+  },
+  "optional_host_permissions": ["<all_urls>"]
 }

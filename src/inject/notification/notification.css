@@ -14,6 +14,8 @@
   border-radius: 10px;
   margin-bottom: 20px;
   position: relative;
+  border: none !important;
+  drop-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin-left: auto;
 }
 
@@ -175,6 +177,14 @@
 .notification-image {
   width: 50px;
   height: 50px;
+  background: var(--src);
+  background-size: cover;
+  margin: 30px;
+}
+
+.notification-image.notification-image-scorecard {
+  width: 65px;
+  height: 65px;
   background: var(--src);
   background-size: cover;
   margin: 30px;

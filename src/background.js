@@ -43,6 +43,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === "install") {
     chrome.tabs.create({
       url: "https://canvasplus.org/welcome",
+      // url: chrome.runtime.getURL("src/start/start.html"),
     });
     chrome.storage.local.set(newDefaults);
     chrome.storage.local.set(oldDefaults);
@@ -54,7 +55,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   } else if (
     details.reason === "update" &&
-    (details.previousVersion === "0.4.1")
+    details.previousVersion === "0.4.1"
   ) {
     //chrome.storage.local.set({"canvasplus-current-version": "0.4"}) // canvasjs will detect new version
     chrome.storage.local.set(newDefaults);

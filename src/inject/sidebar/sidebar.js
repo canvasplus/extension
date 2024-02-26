@@ -337,8 +337,10 @@ delayedQuerySelector("#global_nav_courses_link").then((element) => {
   element.addEventListener(
     "click",
     (e) => {
+      console.log("clicked");
       if (searchButtonEnabled) {
         if (!fullscreenCoursesEnabled) {
+          e.preventDefault();
           e.stopPropagation();
           searchUI.openUI();
           searchUI.mode = "navigator";

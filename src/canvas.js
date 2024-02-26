@@ -403,6 +403,53 @@ chrome.storage.local.get(["canvasplus-birthday-confetti"], (data) => {
   }
 });
 
+chrome.storage.local.get(["canvasplus-scorecard-message"], (data) => {
+  const hostName = window.location.hostname;
+  const date = data["canvasplus-scorecard-message"]?.nextShowDate ?? 0;
+
+  const numTimesShown =
+    data["canvasplus-scorecard-message"]?.numTimesShown ?? 0;
+
+  const now = Date.now();
+
+  if (now > 1710461038000) return;
+
+  if (
+    numTimesShown >= 3 ||
+    date > now ||
+    hostName !== "aisdblend.instructure.com"
+  ) {
+    return;
+  }
+
+  notification(
+    "Canvas+ has created a new app called Scorecard, which lets you see Austin ISD grades in a more fun way, without having to login. ",
+    "scorecard",
+    "#cfefff",
+    "#1569b7",
+    (notification, dismissMe, e) => {
+      chrome.storage.local.set({
+        "canvasplus-scorecard-message": {
+          numTimesShown: 10,
+        },
+      });
+      dismissMe();
+      window.open("https://scorecardgrades.com");
+    },
+    "Open",
+    (notification, dismissMe, e) => {
+      chrome.storage.local.set({
+        "canvasplus-scorecard-message": {
+          numTimesShown: numTimesShown + 1,
+          nextShowDate: Date.now() + 1000 * 60 * 60 * 16 * 2 ** numTimesShown,
+        },
+      });
+      dismissMe();
+    },
+    numTimesShown >= 2 ? "Don't Ask Again" : "Remind Me Later"
+  );
+});
+
 chrome.storage.local.get(["canvasplus-current-version"], (data) => {
   const current = data["canvasplus-current-version"];
 
